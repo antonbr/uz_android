@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">UzApp</string>
+    <string name="pathFrom">Откуда</string>
+    <string name="pathTo">Куда</string>
 </resources>
