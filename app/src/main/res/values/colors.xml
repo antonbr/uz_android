@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="accentColor">#4183d7</color>
-    <color name="background">#f5f7fa</color>
+    <color name="backgroundColor">#f5f7fa</color>
     <color name="textColor">#434a54</color>
-    <color name="divider">#E6E9ED</color>
+    <color name="stationsFromToDividerColor">#E6E9ED</color>
+    <color name="textColorHint">#aab2bd</color>
+    <color name="searchDividerColor">#d8d8d8</color>
+    <color name="stationsListDividerColor">#a4aeb2</color>
 </resources>

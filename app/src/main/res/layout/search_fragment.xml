@@ -15,7 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@drawable/select_path_divider"
+            android:divider="@drawable/select_stations_divider"
             android:orientation="vertical"
             android:showDividers="middle">
 
@@ -43,7 +43,7 @@
 
                 </android.support.design.widget.TextInputLayout>
 
-                <com.uzapp.view.search.CheckableImageView
+                <com.uzapp.view.search.utils.CheckableImageView
                     android:id="@+id/useLocationBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

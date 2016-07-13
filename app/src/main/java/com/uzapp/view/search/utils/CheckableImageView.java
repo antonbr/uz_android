@@ -1,4 +1,4 @@
-package com.uzapp.view.search;
+package com.uzapp.view.search.utils;
 
 import android.content.Context;
 import android.util.AttributeSet;

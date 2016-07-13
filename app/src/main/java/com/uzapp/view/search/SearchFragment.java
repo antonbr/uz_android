@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.uzapp.R;
+import com.uzapp.view.search.utils.CheckableImageView;
 
 import butterknife.BindDimen;
 import butterknife.BindView;

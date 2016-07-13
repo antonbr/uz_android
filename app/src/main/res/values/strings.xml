@@ -2,4 +2,7 @@
     <string name="app_name">UzApp</string>
     <string name="pathFrom">Откуда</string>
     <string name="pathTo">Куда</string>
+    <string name="select_station_hint">Выберите город</string>
+    <string name="popular_destinations">Частые маршруты</string>
+    <string name="search_result">Результаты поиска</string>
 </resources>
