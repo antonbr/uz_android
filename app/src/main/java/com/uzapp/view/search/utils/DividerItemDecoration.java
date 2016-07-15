@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -24,10 +25,10 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         setupDefaultDivider(context);
     }
 
-    public DividerItemDecoration(Context context, Drawable divider, int paddingLeft) {
-        this.paddingLeft = paddingLeft;
+    public DividerItemDecoration(Context context, int dividerRes, int paddingLeftRes) {
+        this.paddingLeft = (int) context.getResources().getDimension(paddingLeftRes);
         if (divider != null) {
-            this.divider = divider;
+            this.divider = ContextCompat.getDrawable(context, dividerRes);
         } else {
             setupDefaultDivider(context);
         }
@@ -45,7 +46,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         int right = parent.getWidth() - parent.getPaddingRight();
 
         int childCount = parent.getChildCount();
-        for (int i = 0; i < childCount; i++) {
+        for (int i = 0; i < childCount-1; i++) {
             View child = parent.getChildAt(i);
 
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
