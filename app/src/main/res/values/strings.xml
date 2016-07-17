@@ -6,4 +6,7 @@
     <string name="popular_destinations">Частые маршруты</string>
     <string name="search_result">Результаты поиска</string>
     <string name="api_endpoint">http://52.59.64.77/v1/</string>
+    <string name="search_date_title">Отправление</string>
+    <string name="back">+ Обратно</string>
+    <string name="see_full_calendar">Весь календарь</string>
 </resources>

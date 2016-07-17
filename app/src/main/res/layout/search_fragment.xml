@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
@@ -35,7 +36,7 @@
                     android:textColorHint="@color/accentColor"
                     app:hintTextAppearance="@style/HintStyle">
 
-                    <EditText
+                    <android.support.design.widget.TextInputEditText
                         android:id="@+id/pathFrom"
                         style="@style/PathTextFieldStyle"
                         android:hint="@string/pathFrom"
@@ -44,7 +45,7 @@
 
                 </android.support.design.widget.TextInputLayout>
 
-                <com.uzapp.view.search.utils.CheckableImageView
+                <com.uzapp.view.utils.CheckableImageView
                     android:id="@+id/useLocationBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -65,12 +66,91 @@
                 android:textColorHint="@color/accentColor"
                 app:hintTextAppearance="@style/HintStyle">
 
-                <EditText
+                <android.support.design.widget.TextInputEditText
                     android:id="@+id/pathTo"
                     style="@style/PathTextFieldStyle"
                     android:hint="@string/pathTo"/>
 
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                        android:id="@+id/dateCardView"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="@dimen/small_padding"
+                                        android:layout_marginLeft="@dimen/small_padding"
+                                        android:layout_marginRight="@dimen/small_padding"
+                                        card_view:cardBackgroundColor="@android:color/white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/searchDateTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/backRouteBtn"
+                android:layout_alignTop="@+id/backRouteBtn"
+                android:layout_marginLeft="@dimen/big_padding"
+                android:gravity="center_vertical"
+                android:text="@string/search_date_title"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_size"/>
+
+            <ToggleButton
+                android:id="@+id/backRouteBtn"
+                style="@style/ButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="14dp"
+                android:background="@drawable/button_background_selector"
+                android:checked="true"
+                android:stateListAnimator="@null"
+                android:textColor="@drawable/button_text_color_selector"
+                android:textOff="@string/back"
+                android:textOn="@string/back"/>
+
+            <TextView
+                android:id="@+id/monthName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/searchDateTitle"
+                android:layout_below="@+id/backRouteBtn"
+                android:text="Июнь"
+                android:textAllCaps="true"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/button_text_size"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/datePickerList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/monthName"
+                android:minHeight="0dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:overScrollMode="never"/>
+
+            <Button
+                android:id="@+id/seeFullCalendarBtn"
+                style="@style/ButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/datePickerList"
+                android:layout_marginBottom="7dp"
+                android:layout_marginLeft="@dimen/medium_padding"
+                android:layout_marginTop="7dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/next"
+                android:stateListAnimator="@null"
+                android:text="@string/see_full_calendar"
+                android:textColor="@color/accentColor"/>
+        </RelativeLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>
