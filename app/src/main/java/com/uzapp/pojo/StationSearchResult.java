@@ -1,12 +1,15 @@
 package com.uzapp.pojo;
 
+import org.parceler.Parcel;
+
 /**
  * Created by vika on 14.07.16.
  */
+@Parcel
 public class StationSearchResult {
-    private int code;
-    private String name;
-    private String railway;
+    int code;
+    String name;
+    String railway;
 
     public int getCode() {
         return code;

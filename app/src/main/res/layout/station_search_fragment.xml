@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/backgroundColor"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,7 +11,7 @@
         android:background="@android:color/white"
         android:orientation="horizontal">
 
-        <EditText
+        <com.uzapp.view.search.utils.SearchEditText
             android:id="@+id/cityEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -21,7 +22,10 @@
             android:singleLine="true"
             android:textColor="@color/textColor"
             android:textColorHint="@color/textColorHint"
-            android:textSize="@dimen/text_size" />
+            android:textSize="@dimen/text_size">
+
+            <requestFocus/>
+        </com.uzapp.view.search.utils.SearchEditText>
 
         <ProgressBar
             android:id="@+id/searchProgress"
@@ -31,28 +35,28 @@
             android:layout_marginRight="17dp"
             android:indeterminate="true"
             android:indeterminateTint="@color/textColorHint"
-            android:indeterminateTintMode="src_in" />
+            android:indeterminateTintMode="src_in"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider_height"
-        android:background="@color/searchDividerColor" />
+        android:background="@color/searchDividerColor"/>
 
     <TextView
         android:id="@+id/stationsHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/medium_padding"
         android:layout_marginLeft="@dimen/big_padding"
         android:layout_marginTop="@dimen/medium_padding"
         android:text="@string/popular_destinations"
         android:textAllCaps="true"
         android:textColor="@color/accentColor"
-        android:textSize="@dimen/text_size_small" />
+        android:textSize="@dimen/text_size_small"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/stationsList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 </LinearLayout>

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/routeCardView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/small_padding"
-        card_view:cardBackgroundColor="@android:color/white">
+                                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                        android:id="@+id/routeCardView"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="@dimen/small_padding"
+                                        card_view:cardBackgroundColor="@android:color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,7 +24,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <android.support.design.widget.TextInputLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                <android.support.design.widget.TextInputLayout
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -38,7 +39,7 @@
                         android:id="@+id/pathFrom"
                         style="@style/PathTextFieldStyle"
                         android:hint="@string/pathFrom"
-                        android:translationY="@dimen/hint_padding" />
+                        android:translationY="@dimen/hint_padding"/>
 
 
                 </android.support.design.widget.TextInputLayout>
@@ -49,12 +50,13 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:padding="@dimen/big_padding"
-                    android:src="@drawable/location_selector" />
+                    android:src="@drawable/location_selector"/>
 
             </LinearLayout>
 
 
-            <android.support.design.widget.TextInputLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            <android.support.design.widget.TextInputLayout
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/big_padding"
@@ -66,7 +68,7 @@
                 <EditText
                     android:id="@+id/pathTo"
                     style="@style/PathTextFieldStyle"
-                    android:hint="@string/pathTo" />
+                    android:hint="@string/pathTo"/>
 
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>

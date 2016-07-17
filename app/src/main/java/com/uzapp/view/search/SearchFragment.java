@@ -1,6 +1,7 @@
 package com.uzapp.view.search;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -15,10 +16,13 @@ import android.widget.EditText;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.uzapp.MainActivity;
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.StationSearchResult;
 import com.uzapp.view.search.utils.CheckableImageView;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -35,7 +39,9 @@ import retrofit2.Response;
  * Created by vika on 13.07.16.
  */
 public class SearchFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-    private static final int PERMISSION_ACESS_FINE_LOCATION = 1;
+    protected static final int SELECT_STATION_FROM_REQUEST_CODE = 11;
+    protected static final int SELECT_STATION_TO_REQUEST_CODE = 12;
+    private static final int PERMISSION_ACCESS_FINE_LOCATION = 1;
     @BindView(R.id.pathFrom) EditText pathFrom;
     @BindView(R.id.pathTo) EditText pathTo;
     @BindView(R.id.useLocationBtn) CheckableImageView useLocationBtn;
@@ -43,6 +49,8 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
     private Unbinder unbinder;
     private GoogleApiClient googleApiClient;
     private StationSearchResult nearestStation;
+    private StationSearchResult fromStation;
+    private StationSearchResult toStation;
 
     @Nullable
     @Override
@@ -58,12 +66,20 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
         useLocationBtn.toggle();
         pathFrom.setTranslationY(useLocationBtn.isChecked() ? hintPadding : 0);
         if (useLocationBtn.isChecked() && nearestStation != null) {
+            fromStation = nearestStation;
             pathFrom.setText(nearestStation.getName());
         } else if (!useLocationBtn.isChecked()) {
             pathFrom.setText("");
         } else if (nearestStation == null) {
             loadNearestStation();
         }
+    }
+
+    @OnClick({R.id.pathTo, R.id.pathFrom})
+    void onSelectPathFromClick(View view) {
+        StationSearchFragment fragment = new StationSearchFragment();
+        fragment.setTargetFragment(this, view.getId() == R.id.pathFrom ? SELECT_STATION_FROM_REQUEST_CODE : SELECT_STATION_TO_REQUEST_CODE);
+        ((MainActivity) getActivity()).addFragment(fragment, R.anim.slide_up, R.anim.slide_down);
     }
 
     private boolean isLocationPermissionGranted() {
@@ -73,7 +89,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
 
     private void requestLocationPermission() {
         this.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                PERMISSION_ACESS_FINE_LOCATION);
+                PERMISSION_ACCESS_FINE_LOCATION);
     }
 
 
@@ -83,12 +99,12 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
                 requestLocationPermission();
             } else {
                 Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-                if(lastLocation!=null){
-                    double lat = lastLocation.getLatitude(), lon = lastLocation.getLongitude();
-                    //double lat = 50.43994904, lon = 30.48856926; //TODO nothing found in vinnytsia, use kyiv for now
+                if (lastLocation != null) {
+                    //double lat = lastLocation.getLatitude(), lon = lastLocation.getLongitude();
+                    double lat = 50.43994904, lon = 30.48856926; //TODO nothing found in vinnytsia, use kyiv for now
                     Call<List<StationSearchResult>> call = ApiManager.getApi(getContext()).getNearestStations(lat, lon);
                     call.enqueue(nearestStationCallback);
-                } else{
+                } else {
                     useLocationBtn.setChecked(false);
                     //todo location not found message
                 }
@@ -117,16 +133,29 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
         super.onStop();
     }
 
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
-            case PERMISSION_ACESS_FINE_LOCATION:
+            case PERMISSION_ACCESS_FINE_LOCATION:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     loadNearestStation();
                 } else {
                     useLocationBtn.setChecked(false);
                 }
                 break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SELECT_STATION_FROM_REQUEST_CODE) {
+            fromStation = Parcels.unwrap(data.getParcelableExtra("station"));
+            pathFrom.setText(fromStation.getName());
+        } else if (requestCode == SELECT_STATION_TO_REQUEST_CODE) {
+            toStation = Parcels.unwrap(data.getParcelableExtra("station"));
+            pathTo.setText(toStation.getName());
         }
     }
 
@@ -159,6 +188,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
                 nearestStation = result.get(0);
                 if (useLocationBtn.isChecked()) {
                     pathFrom.setText(nearestStation.getName());
+                    fromStation = nearestStation;
                 }
             } else if (response.isSuccessful() && response.body().size() == 0) {
                 //TODO show message no stations found
@@ -173,4 +203,5 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
             //TODO
         }
     };
+
 }
