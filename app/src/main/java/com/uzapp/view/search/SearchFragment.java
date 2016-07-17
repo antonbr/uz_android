@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -64,6 +65,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
     @BindView(R.id.backRouteBtn) ToggleButton backRouteBtn;
     @BindView(R.id.datePickerList) RecyclerView datePickerList;
     @BindView(R.id.monthName) TextView monthName;
+    @BindView(R.id.findTicketsBtn) Button findTicketsBtn;
     @BindDimen(R.dimen.hint_padding) int hintPadding;
     private Unbinder unbinder;
     private GoogleApiClient googleApiClient;
@@ -105,6 +107,11 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
 
     @OnClick(R.id.seeFullCalendarBtn)
     void seeFullCalendarBtn() {
+
+    }
+
+    @OnClick(R.id.findTicketsBtn)
+    void onFintTicketsBtnClicked() {
 
     }
 

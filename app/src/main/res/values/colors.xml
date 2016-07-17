@@ -8,4 +8,6 @@
     <color name="searchDividerColor">#d8d8d8</color>
     <color name="stationsListDividerColor">#aeb2a4</color>
     <color name="dayOfWeekTextColor">#656D78</color>
+    <color name="disabledButtonColor">#4D4183d7</color>
+    <color name="colorControlHighlightDarkTheme">#40ffffff</color>
 </resources>
