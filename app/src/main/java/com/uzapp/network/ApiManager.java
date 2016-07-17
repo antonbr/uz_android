@@ -3,7 +3,7 @@ package com.uzapp.network;
 import android.content.Context;
 
 import com.uzapp.R;
-import com.uzapp.pojo.Languages;
+import com.uzapp.util.CommonUtils;
 
 import java.io.IOException;
 
@@ -28,7 +28,7 @@ public class ApiManager {
         if (api == null) {
             OkHttpClient client = new OkHttpClient.Builder().
                     addInterceptor(getLoggingInterceptor()).
-                    addInterceptor(getHeaderInterceptor(context)).
+                    addInterceptor(getHeaderInterceptor()).
                     build();
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(context.getString(R.string.api_endpoint))
@@ -40,12 +40,12 @@ public class ApiManager {
         return api;
     }
 
-    private static Interceptor getHeaderInterceptor(final Context context) {
+    private static Interceptor getHeaderInterceptor() {
         return new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request().newBuilder().
-                        header("Accept-Language", Languages.UA.name()). //TODO use current locale
+                        header("Accept-Language", CommonUtils.getLanguage()).
                         build();
                 return chain.proceed(request);
             }
@@ -57,4 +57,6 @@ public class ApiManager {
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
         return loggingInterceptor;
     }
+
+
 }

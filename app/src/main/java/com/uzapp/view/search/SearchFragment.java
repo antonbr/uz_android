@@ -19,7 +19,7 @@ import com.google.android.gms.location.LocationServices;
 import com.uzapp.MainActivity;
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
-import com.uzapp.pojo.StationSearchResult;
+import com.uzapp.pojo.Station;
 import com.uzapp.view.search.utils.CheckableImageView;
 
 import org.parceler.Parcels;
@@ -48,9 +48,9 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
     @BindDimen(R.dimen.hint_padding) int hintPadding;
     private Unbinder unbinder;
     private GoogleApiClient googleApiClient;
-    private StationSearchResult nearestStation;
-    private StationSearchResult fromStation;
-    private StationSearchResult toStation;
+    private Station nearestStation;
+    private Station fromStation;
+    private Station toStation;
 
     @Nullable
     @Override
@@ -102,7 +102,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
                 if (lastLocation != null) {
                     //double lat = lastLocation.getLatitude(), lon = lastLocation.getLongitude();
                     double lat = 50.43994904, lon = 30.48856926; //TODO nothing found in vinnytsia, use kyiv for now
-                    Call<List<StationSearchResult>> call = ApiManager.getApi(getContext()).getNearestStations(lat, lon);
+                    Call<List<Station>> call = ApiManager.getApi(getContext()).getNearestStations(lat, lon);
                     call.enqueue(nearestStationCallback);
                 } else {
                     useLocationBtn.setChecked(false);
@@ -180,11 +180,11 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
 
     }
 
-    private Callback<List<StationSearchResult>> nearestStationCallback = new Callback<List<StationSearchResult>>() {
+    private Callback<List<Station>> nearestStationCallback = new Callback<List<Station>>() {
         @Override
-        public void onResponse(Call<List<StationSearchResult>> call, Response<List<StationSearchResult>> response) {
+        public void onResponse(Call<List<Station>> call, Response<List<Station>> response) {
             if (response.isSuccessful() && response.body().size() > 0) {
-                List<StationSearchResult> result = response.body();
+                List<Station> result = response.body();
                 nearestStation = result.get(0);
                 if (useLocationBtn.isChecked()) {
                     pathFrom.setText(nearestStation.getName());
@@ -199,7 +199,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
         }
 
         @Override
-        public void onFailure(Call<List<StationSearchResult>> call, Throwable t) {
+        public void onFailure(Call<List<Station>> call, Throwable t) {
             //TODO
         }
     };

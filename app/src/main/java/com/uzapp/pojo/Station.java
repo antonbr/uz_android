@@ -6,10 +6,19 @@ import org.parceler.Parcel;
  * Created by vika on 14.07.16.
  */
 @Parcel
-public class StationSearchResult {
+public class Station {
     int code;
     String name;
     String railway;
+
+    public Station(int code, String name, String railway) {
+        this.code = code;
+        this.name = name;
+        this.railway = railway;
+    }
+
+    public Station() {
+    }
 
     public int getCode() {
         return code;

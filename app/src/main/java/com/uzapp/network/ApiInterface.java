@@ -1,6 +1,6 @@
 package com.uzapp.network;
 
-import com.uzapp.pojo.StationSearchResult;
+import com.uzapp.pojo.Station;
 
 import java.util.List;
 
@@ -13,9 +13,9 @@ import retrofit2.http.Query;
  */
 public interface ApiInterface {
     @GET("order/nearest_stations")
-    Call<List<StationSearchResult>> getNearestStations(@Query("latitude") double latitude,
-                                                       @Query("longitude") double longitude);
+    Call<List<Station>> getNearestStations(@Query("latitude") double latitude,
+                                           @Query("longitude") double longitude);
 
     @GET("order/stations")
-    Call<List<StationSearchResult>> searchStations(@Query("name") String name);
+    Call<List<Station>> searchStations(@Query("name") String name);
 }
