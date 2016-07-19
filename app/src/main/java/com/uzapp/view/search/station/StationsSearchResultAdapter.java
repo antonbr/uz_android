@@ -19,8 +19,9 @@ public class StationsSearchResultAdapter extends RecyclerView.Adapter<StationsSe
     private List<Station> stationsList = new ArrayList<>();
     private OnStationClickListener listener;
 
+
     public interface OnStationClickListener {
-        void onItemClick(Station station);
+        void onStationItemClick(Station station);
     }
 
     public StationsSearchResultAdapter(OnStationClickListener listener) {
@@ -42,6 +43,7 @@ public class StationsSearchResultAdapter extends RecyclerView.Adapter<StationsSe
         notifyDataSetChanged();
     }
 
+
     public void clearStations() {
         this.stationsList.clear();
         notifyDataSetChanged();
@@ -62,7 +64,7 @@ public class StationsSearchResultAdapter extends RecyclerView.Adapter<StationsSe
             holder.name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onItemClick(station);
+                    listener.onStationItemClick(station);
                 }
             });
         }

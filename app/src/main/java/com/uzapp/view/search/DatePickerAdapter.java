@@ -1,5 +1,6 @@
 package com.uzapp.view.search;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +23,34 @@ public class DatePickerAdapter extends RecyclerView.Adapter<DatePickerAdapter.Da
     private List<Date> dateList;
     private SimpleDateFormat dayOfMonthFormatter = new SimpleDateFormat("dd");
     private SimpleDateFormat dayOfWeekFormatter = new SimpleDateFormat("EE");
+    private int selectedFirstPosition = -1, selectedSecondPosition = -1;
+    private OnDateClickListener clickListener;
 
-    public DatePickerAdapter(List<Date> dateList) {
+    public interface OnDateClickListener {
+        void onDateItemClick(int position, Date date);
+    }
+
+    public DatePickerAdapter(List<Date> dateList, OnDateClickListener clickListener) {
         this.dateList = dateList;
+        this.clickListener = clickListener;
+    }
+
+    public void setSelectedFirstPosition(int selectedFirstPosition) {
+        int oldSelection = this.selectedFirstPosition;
+        this.selectedFirstPosition = selectedFirstPosition;
+        if (selectedFirstPosition >= 0 && selectedFirstPosition < getItemCount()) {
+            notifyItemChanged(selectedFirstPosition);
+            notifyItemChanged(oldSelection);
+        }
+    }
+
+    public void setSelectedSecondPosition(int selectedSecondPosition) {
+        int oldSelection = this.selectedSecondPosition;
+        this.selectedSecondPosition = selectedSecondPosition;
+        if (selectedSecondPosition >=0 && selectedSecondPosition < getItemCount()) {
+            notifyItemChanged(selectedSecondPosition);
+            notifyItemChanged(oldSelection);
+        }
     }
 
     @Override
@@ -35,15 +61,27 @@ public class DatePickerAdapter extends RecyclerView.Adapter<DatePickerAdapter.Da
     }
 
     @Override
-    public void onBindViewHolder(DateHolder holder, int position) {
-        Date date = dateList.get(position);
+    public void onBindViewHolder(DateHolder holder, final int position) {
+        final Date date = dateList.get(position);
         holder.dayOfMonth.setText(dayOfMonthFormatter.format(date));
         holder.dayOfWeek.setText(dayOfWeekFormatter.format(date));
-//        if (position == 0) {
-//            holder.itemView.setBackgroundResource(R.drawable.today_background);
-//        } else {
-//            holder.itemView.setBackgroundResource(0);
-//        }
+        if (position == selectedFirstPosition) {
+            holder.itemView.setBackgroundResource(R.drawable.selected_day_background);
+        } else if (position == selectedSecondPosition) {
+            holder.itemView.setBackgroundResource(R.drawable.selected_day_background);
+        } else if (position == 0 && position!=selectedFirstPosition && position!=selectedSecondPosition) {
+            holder.itemView.setBackgroundResource(R.drawable.today_background);
+        } else {
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+        }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clickListener != null) {
+                    clickListener.onDateItemClick(position, date);
+                }
+            }
+        });
     }
 
     @Override

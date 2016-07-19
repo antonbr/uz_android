@@ -180,7 +180,7 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
     }
 
     @Override
-    public void onItemClick(Station station) {
+    public void onStationItemClick(Station station) {
         selectedStation = station;
         cityEditText.setText(selectedStation.getName());
         cityEditText.setSelection(selectedStation.getName().length());

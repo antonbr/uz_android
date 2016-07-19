@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -25,7 +27,9 @@ import com.uzapp.MainActivity;
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.Station;
+import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
+import com.uzapp.view.search.date.PickDateFragment;
 import com.uzapp.view.search.station.StationSearchFragment;
 import com.uzapp.view.utils.CheckableImageView;
 import com.uzapp.view.utils.HorizontalSpaceItemDecoration;
@@ -54,27 +58,38 @@ import retrofit2.Response;
 /**
  * Created by vika on 13.07.16.
  */
-public class SearchFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class SearchFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, DatePickerAdapter.OnDateClickListener {
     protected static final int SELECT_STATION_FROM_REQUEST_CODE = 11;
     protected static final int SELECT_STATION_TO_REQUEST_CODE = 12;
+    protected static final int SELECT_FIRST_DATE = 13;
+    protected static final int SELECT_SECOND_DATE = 14;
     private static final int PERMISSION_ACCESS_FINE_LOCATION = 1;
-    private SimpleDateFormat monthDateFormatter = new SimpleDateFormat("LLLL", Locale.getDefault());
+    private SimpleDateFormat monthFormatter = new SimpleDateFormat("LLLL", Locale.getDefault());
+    private SimpleDateFormat dayOfMonthFormatter = new SimpleDateFormat("dd");
+    private SimpleDateFormat dayOfWeekFormatter = new SimpleDateFormat("EE");
     @BindView(R.id.pathFrom) EditText pathFrom;
     @BindView(R.id.pathTo) EditText pathTo;
     @BindView(R.id.useLocationBtn) CheckableImageView useLocationBtn;
-    @BindView(R.id.backRouteBtn) ToggleButton backRouteBtn;
+    @BindView(R.id.backRouteToggle) ToggleButton backRouteToggle;
     @BindView(R.id.datePickerList) RecyclerView datePickerList;
     @BindView(R.id.monthName) TextView monthName;
     @BindView(R.id.findTicketsBtn) Button findTicketsBtn;
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
+    @BindView(R.id.selectedDateLayout) RelativeLayout selectedDateLayout;
+    @BindView(R.id.firstMonthName) TextView firstMonthName;
+    @BindView(R.id.secondMonthName) TextView secondMonthName;
+    @BindView(R.id.firstDate) LinearLayout firstDateLayout;
+    @BindView(R.id.secondDate) LinearLayout secondDateLayout;
+    @BindView(R.id.inDays) TextView inDays;
+    @BindView(R.id.seeFullCalendarBtn) Button seeFullCalendarBtn;
     @BindDimen(R.dimen.hint_padding) int hintPadding;
     private Unbinder unbinder;
     private GoogleApiClient googleApiClient;
-    private Station nearestStation;
-    private Station fromStation;
-    private Station toStation;
+    private Station nearestStation, fromStation, toStation;
+    private Date firstDate, secondDate;
     private Map<Integer, String> monthPositionMap;
     private LinearLayoutManager datePickerLayoutManager;
+    private DatePickerAdapter datePickerAdapter;
 
     @Nullable
     @Override
@@ -109,7 +124,9 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
 
     @OnClick(R.id.seeFullCalendarBtn)
     void seeFullCalendarBtn() {
-
+        PickDateFragment fragment = new PickDateFragment();
+        fragment.setTargetFragment(this, backRouteToggle.isChecked() ? SELECT_SECOND_DATE : SELECT_FIRST_DATE);
+        ((MainActivity) getActivity()).addFragment(fragment, R.anim.slide_up, R.anim.slide_down);
     }
 
     @OnClick(R.id.findTicketsBtn)
@@ -120,6 +137,12 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
     @OnClick(R.id.resetBtn)
     void onResetBtnClicked() {
 
+    }
+
+    @OnClick(R.id.resetDateBtn)
+    void onResetDateBtnClicked() {
+        secondDate = null;
+        setSelectedDateLayoutVisibility(false);
     }
 
     private boolean isLocationPermissionGranted() {
@@ -160,7 +183,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
         monthPositionMap = new LinkedHashMap<>();
         Calendar calendar = Calendar.getInstance();
         dates.add(calendar.getTime());
-        String currentMonthName = monthDateFormatter.format(calendar.getTime());
+        String currentMonthName = monthFormatter.format(calendar.getTime());
         monthPositionMap.put(0, currentMonthName);
         monthName.setText(currentMonthName);
         int lastMonth = calendar.get(Calendar.MONTH);
@@ -170,10 +193,10 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
             dates.add(date);
             if (calendar.get(Calendar.MONTH) != lastMonth) {
                 lastMonth = calendar.get(Calendar.MONTH);
-                monthPositionMap.put(dates.indexOf(date), monthDateFormatter.format(calendar.getTime()));
+                monthPositionMap.put(dates.indexOf(date), monthFormatter.format(calendar.getTime()));
             }
         }
-        DatePickerAdapter datePickerAdapter = new DatePickerAdapter(dates);
+        datePickerAdapter = new DatePickerAdapter(dates, this);
         datePickerList.setAdapter(datePickerAdapter);
         datePickerList.addItemDecoration(new HorizontalSpaceItemDecoration((int) getResources().getDimension(R.dimen.small_padding)));
         datePickerList.addOnScrollListener(dateScrollListener);
@@ -293,4 +316,41 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
         }
     };
 
+    @Override
+    public void onDateItemClick(int position, Date date) {
+        if (!backRouteToggle.isChecked()) {
+            firstDate = date;
+            datePickerAdapter.setSelectedFirstPosition(position);
+        } else {
+            secondDate = date;
+            datePickerAdapter.setSelectedSecondPosition(position);
+            setSelectedDateLayoutVisibility(true);
+        }
+    }
+
+    private void setSelectedDateLayoutVisibility(boolean visible) {
+        selectedDateLayout.setVisibility(visible ? View.VISIBLE : View.GONE);
+        datePickerList.setVisibility(visible ? View.GONE : View.VISIBLE);
+        monthName.setVisibility(visible ? View.GONE : View.VISIBLE);
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) seeFullCalendarBtn.getLayoutParams();
+        layoutParams.addRule(RelativeLayout.BELOW, visible ? R.id.selectedDateLayout : R.id.datePickerList);
+        seeFullCalendarBtn.setLayoutParams(layoutParams);
+
+        if (visible) {
+            TextView firstDayOfMonth = (TextView) firstDateLayout.findViewById(R.id.dayOfMonth);
+            TextView firstDayOfWeek = (TextView) firstDateLayout.findViewById(R.id.dayOfWeek);
+            TextView secondDayOfMonth = (TextView) secondDateLayout.findViewById(R.id.dayOfMonth);
+            TextView secondDayOfWeek = (TextView) secondDateLayout.findViewById(R.id.dayOfWeek);
+            firstDayOfMonth.setText(dayOfMonthFormatter.format(firstDate));
+            firstDayOfWeek.setText(dayOfWeekFormatter.format(firstDate));
+            secondDayOfMonth.setText(dayOfMonthFormatter.format(secondDate));
+            secondDayOfWeek.setText(dayOfWeekFormatter.format(secondDate));
+            firstMonthName.setText(monthFormatter.format(firstDate));
+            secondMonthName.setText(monthFormatter.format(secondDate));
+            int daysBetween = CommonUtils.getDaysDifference(secondDate, firstDate); //TODO second day must be after first one
+            inDays.setText(getString(R.string.in_n_days, daysBetween)); //TODO show correct ending
+            firstDateLayout.setBackgroundResource(R.drawable.selected_day_background);
+            secondDateLayout.setBackgroundResource(R.drawable.selected_day_background);
+        }
+    }
 }

@@ -14,4 +14,6 @@
     <string name="ready">Готово</string>
     <string name="new_trip">Новая поездка</string>
     <string name="reset">Сбросить</string>
+    <string name="cancel">Отменить</string>
+    <string name="in_n_days">Через %1$d дня</string>
 </resources>

@@ -2,6 +2,7 @@ package com.uzapp.util;
 
 import com.uzapp.pojo.Languages;
 
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -17,9 +18,16 @@ public class CommonUtils {
                 break;
             }
         }
-        if(!isLanguageSupported){
+        if (!isLanguageSupported) {
             lang = Languages.UA.name().toLowerCase();
         }
         return lang;
+    }
+
+    public static final int getDaysDifference(Date firstDate, Date secondDate) {
+        long diff = firstDate.getTime() - secondDate.getTime();
+        int days = (int) (diff / (Constants.HOURS_IN_DAY * Constants.MINUTES_IN_HOUR * Constants.SECONDS_IN_MINUTE
+                * Constants.MILLISECONDS_IN_SECOND));
+        return days;
     }
 }
