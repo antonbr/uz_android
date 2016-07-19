@@ -29,6 +29,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -46,15 +47,21 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
     @BindView(R.id.searchProgress) ProgressBar searchProgress;
     @BindView(R.id.stationsList) RecyclerView stationsList;
     @BindView(R.id.stationsHeader) TextView stationsHeader;
+    @BindView(R.id.toolbarTitle) TextView toolbarTitle;
     private Unbinder unbinder;
     private StationsSearchResultAdapter adapter;
     private Realm realm;
+    private Station selectedStation;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.station_search_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
+        Bundle arguments = getArguments();
+        if (arguments != null && arguments.containsKey("title")) {
+            toolbarTitle.setText(arguments.getString("title"));
+        }
         adapter = new StationsSearchResultAdapter(this);
         stationsList.setLayoutManager(new LinearLayoutManager(getContext()));
         stationsList.setAdapter(adapter);
@@ -62,6 +69,14 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
         cityEditText.setContentChangedListener(this);
         showPopularStations();
         return view;
+    }
+
+    public static StationSearchFragment getInstance(String title) {
+        StationSearchFragment fragment = new StationSearchFragment();
+        Bundle args = new Bundle();
+        args.putString("title", title);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     private void searchStations(String query) {
@@ -80,8 +95,29 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
             }
             adapter.setStations(stationList);
             stationsHeader.setText(R.string.popular_destinations);
-        } else{
+        } else {
             stationsHeader.setText("");
+        }
+    }
+
+    @OnClick(R.id.closeBtn)
+    void onCloseBtnClick() {
+        getActivity().onBackPressed();
+    }
+
+    @OnClick(R.id.okBtn)
+    void onOkBtnClick() {
+        if (selectedStation != null) {
+            saveToPopularStations(selectedStation);
+            Fragment targetFragment = getTargetFragment();
+            if (targetFragment != null) {
+                Intent i = new Intent();
+                i.putExtra("station", Parcels.wrap(selectedStation));
+                targetFragment.onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, i);
+            }
+            getActivity().onBackPressed();
+        } else {
+            //todo show message
         }
     }
 
@@ -135,7 +171,7 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
             popularStation.setAccessTime(Calendar.getInstance().getTime());
             realm.commitTransaction();
         } else if (popularStation == null) {
-            PopularStation oldestStation = realm.where(PopularStation.class).findAll().sort("accessTime",Sort.DESCENDING).last();
+            PopularStation oldestStation = realm.where(PopularStation.class).findAll().sort("accessTime", Sort.DESCENDING).last();
             realm.beginTransaction();
             oldestStation.setValues(station.getCode(), station.getName(), station.getRailway(),
                     Calendar.getInstance().getTime());
@@ -145,18 +181,16 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
 
     @Override
     public void onItemClick(Station station) {
-        saveToPopularStations(station);
-        Fragment targetFragment = getTargetFragment();
-        if (targetFragment != null) {
-            Intent i = new Intent();
-            i.putExtra("station", Parcels.wrap(station));
-            targetFragment.onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, i);
-        }
-        getActivity().onBackPressed();
+        selectedStation = station;
+        cityEditText.setText(selectedStation.getName());
+        cityEditText.setSelection(selectedStation.getName().length());
     }
 
     @Override
     public void onSearchLetterEntered(String msg) {
+        if (selectedStation!=null && !selectedStation.getName().equals(msg)) {
+            selectedStation = null;
+        }
         if (msg.length() >= Constants.SEARCH_MIN_LENGTH) {
             searchStations(msg);
         } else {

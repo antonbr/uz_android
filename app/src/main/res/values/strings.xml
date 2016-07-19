@@ -10,4 +10,8 @@
     <string name="back">+ Обратно</string>
     <string name="see_full_calendar">Весь календарь</string>
     <string name="find_tickets">Найти билеты</string>
+    <string name="when">Когда</string>
+    <string name="ready">Готово</string>
+    <string name="new_trip">Новая поездка</string>
+    <string name="reset">Сбросить</string>
 </resources>

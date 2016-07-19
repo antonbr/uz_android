@@ -66,6 +66,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
     @BindView(R.id.datePickerList) RecyclerView datePickerList;
     @BindView(R.id.monthName) TextView monthName;
     @BindView(R.id.findTicketsBtn) Button findTicketsBtn;
+    @BindView(R.id.toolbarTitle) TextView toolbarTitle;
     @BindDimen(R.dimen.hint_padding) int hintPadding;
     private Unbinder unbinder;
     private GoogleApiClient googleApiClient;
@@ -80,6 +81,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.search_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
+        toolbarTitle.setText(R.string.new_trip);
         initDatePickerList();
         return view;
     }
@@ -100,7 +102,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
 
     @OnClick({R.id.pathTo, R.id.pathFrom})
     void onSelectPathFromClick(View view) {
-        StationSearchFragment fragment = new StationSearchFragment();
+        StationSearchFragment fragment = StationSearchFragment.getInstance(getString(view.getId() == R.id.pathFrom ? R.string.pathFrom : R.string.pathTo));
         fragment.setTargetFragment(this, view.getId() == R.id.pathFrom ? SELECT_STATION_FROM_REQUEST_CODE : SELECT_STATION_TO_REQUEST_CODE);
         ((MainActivity) getActivity()).addFragment(fragment, R.anim.slide_up, R.anim.slide_down);
     }
@@ -112,6 +114,11 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
 
     @OnClick(R.id.findTicketsBtn)
     void onFintTicketsBtnClicked() {
+
+    }
+
+    @OnClick(R.id.resetBtn)
+    void onResetBtnClicked() {
 
     }
 

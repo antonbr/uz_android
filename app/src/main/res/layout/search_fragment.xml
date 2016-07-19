@@ -5,6 +5,8 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
+    <include layout="@layout/toolbar_edit_page"/>
+
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                                         xmlns:card_view="http://schemas.android.com/apk/res-auto"
                                         android:id="@+id/routeCardView"
