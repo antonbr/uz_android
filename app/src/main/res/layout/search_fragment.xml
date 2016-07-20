@@ -116,13 +116,14 @@
                 android:stateListAnimator="@null"
                 android:textColor="@drawable/button_text_color_selector"
                 android:textOff="@string/back"
-                android:textOn="@string/back"/>
+                android:textOn="@string/back"
+                android:enabled="false"/>
 
             <TextView
                 android:id="@+id/monthName"
+                style="@style/MonthNameStyle"
                 android:layout_alignLeft="@+id/searchDateTitle"
-                android:layout_below="@+id/backRouteToggle"
-                style="@style/MonthNameStyle"/>
+                android:layout_below="@+id/backRouteToggle"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/datePickerList"
@@ -132,7 +133,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:minHeight="0dp"
-                android:overScrollMode="never"/>
+                android:overScrollMode="never"
+                />
 
             <RelativeLayout
                 android:id="@+id/selectedDateLayout"
@@ -144,15 +146,14 @@
 
                 <TextView
                     android:id="@+id/firstMonthName"
+                    style="@style/MonthNameStyle"
                     android:layout_alignLeft="@+id/firstDate"
                     android:layout_alignRight="@+id/firstDate"
-                    android:text="Июнь"
-                    style="@style/MonthNameStyle"/>
+                    android:gravity="center_horizontal"
+                    android:text="Июнь"/>
 
-                <include
+                <com.uzapp.view.search.DateItemView
                     android:id="@+id/firstDate"
-                    layout="@layout/date_list_item"
-                    android:layout_marginTop="6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/firstMonthName"/>
@@ -175,7 +176,6 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:singleLine="true"
-                        android:text="@string/in_n_days"
                         android:textAllCaps="true"
                         android:textColor="@color/textColorHint"
                         android:textSize="@dimen/text_size_small"/>
@@ -190,15 +190,14 @@
 
                 <TextView
                     android:id="@+id/secondMonthName"
+                    style="@style/MonthNameStyle"
                     android:layout_alignLeft="@+id/secondDate"
                     android:layout_alignRight="@+id/secondDate"
-                    android:text="Июнь"
-                    style="@style/MonthNameStyle"/>
+                    android:gravity="center_horizontal"
+                    android:text="Июнь"/>
 
-                <include
+                <com.uzapp.view.search.DateItemView
                     android:id="@+id/secondDate"
-                    layout="@layout/date_list_item"
-                    android:layout_marginTop="6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/secondMonthName"
@@ -208,15 +207,19 @@
                     android:id="@+id/resetDateBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/secondDate"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
                     android:background="?attr/selectableItemBackground"
                     android:drawablePadding="8dp"
                     android:drawableTop="@drawable/date_close"
                     android:minWidth="0dp"
-                    android:padding="18dp"
+                    android:paddingBottom="9dp"
+                    android:paddingLeft="18dp"
+                    android:paddingRight="18dp"
+                    android:paddingTop="9dp"
                     android:stateListAnimator="@null"
                     android:text="@string/cancel"
+                    android:textAllCaps="true"
                     android:textColor="@color/textColorHint"
                     android:textSize="@dimen/text_size_small"/>
             </RelativeLayout>
@@ -235,8 +238,7 @@
                 android:drawableRight="@drawable/next"
                 android:stateListAnimator="@null"
                 android:text="@string/see_full_calendar"
-                android:textColor="@color/accentColor"
-                />
+                android:textColor="@color/accentColor"/>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
@@ -250,6 +252,7 @@
         android:paddingBottom="22dp"
         android:paddingTop="22dp"
         android:text="@string/find_tickets"
+        android:enabled="false"
         android:textColor="@android:color/white"
         android:textSize="@dimen/text_size"/>
 </LinearLayout>

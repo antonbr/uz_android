@@ -15,5 +15,12 @@
     <string name="new_trip">Новая поездка</string>
     <string name="reset">Сбросить</string>
     <string name="cancel">Отменить</string>
-    <string name="in_n_days">Через %1$d дня</string>
+    <string name="stations_not_valid">Станції відправлення та призначення співпадають</string>
+    <plurals name="in_n_days">
+        <item quantity="one">Через %1$d день</item>
+        <item quantity="two">Через %1$d дня</item>
+        <item quantity="few">Через %1$d дня</item>
+        <item quantity="many">Через %1$d дней</item>
+        <item quantity="other">Через %1$d дней</item>
+    </plurals>
 </resources>

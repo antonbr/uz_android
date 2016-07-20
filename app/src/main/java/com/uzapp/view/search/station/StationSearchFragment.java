@@ -52,7 +52,7 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
     private StationsSearchResultAdapter adapter;
     private Realm realm;
     private Station selectedStation;
-
+    private Call<List<Station>> searchStationCall;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -82,8 +82,8 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
     private void searchStations(String query) {
         stationsHeader.setText(R.string.search_result);
         searchProgress.setVisibility(View.VISIBLE);
-        Call<List<Station>> call = ApiManager.getApi(getContext()).searchStations(query);
-        call.enqueue(searchCallback);
+        searchStationCall = ApiManager.getApi(getContext()).searchStations(query);
+        searchStationCall.enqueue(searchCallback);
     }
 
     private void showPopularStations() {
@@ -102,6 +102,7 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
 
     @OnClick(R.id.closeBtn)
     void onCloseBtnClick() {
+        cityEditText.hideKeyboard();
         getActivity().onBackPressed();
     }
 
@@ -115,6 +116,7 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
                 i.putExtra("station", Parcels.wrap(selectedStation));
                 targetFragment.onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, i);
             }
+            cityEditText.hideKeyboard();
             getActivity().onBackPressed();
         } else {
             //todo show message
@@ -137,6 +139,9 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if(searchStationCall!=null){
+            searchStationCall.cancel();
+        }
         unbinder.unbind();
     }
 
@@ -151,7 +156,9 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
 
         @Override
         public void onFailure(Call<List<Station>> call, Throwable t) {
-            searchProgress.setVisibility(View.GONE);
+            if(!call.isCanceled()) {
+                searchProgress.setVisibility(View.GONE);
+            }
         }
     };
 
@@ -188,7 +195,7 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
 
     @Override
     public void onSearchLetterEntered(String msg) {
-        if (selectedStation!=null && !selectedStation.getName().equals(msg)) {
+        if (selectedStation != null && !selectedStation.getName().equals(msg)) {
             selectedStation = null;
         }
         if (msg.length() >= Constants.SEARCH_MIN_LENGTH) {
