@@ -65,7 +65,7 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
         adapter = new StationsSearchResultAdapter(this);
         stationsList.setLayoutManager(new LinearLayoutManager(getContext()));
         stationsList.setAdapter(adapter);
-        stationsList.addItemDecoration(new DividerItemDecoration(getContext(), R.drawable.stations_list_divider, R.dimen.big_padding));
+        stationsList.addItemDecoration(new DividerItemDecoration(getContext(), R.drawable.list_divider, R.dimen.big_padding));
         cityEditText.setContentChangedListener(this);
         showPopularStations();
         return view;
