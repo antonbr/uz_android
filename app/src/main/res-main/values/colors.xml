@@ -5,7 +5,7 @@
     <color name="textColor">#434a54</color>
     <color name="stationsFromToDividerColor">#E6E9ED</color>
     <color name="textColorHint">#aab2bd</color>
-    <color name="searchDividerColor">#d8d8d8</color>
+    <color name="dividerColor">#d8d8d8</color>
     <color name="stationsListDividerColor">#aeb2a4</color>
     <color name="dayOfWeekTextColor">#656D78</color>
     <color name="disabledButtonColor">#4D4183d7</color>

@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_checked="true" android:state_enabled="true">
-        <shape android:shape="rectangle">
-            <solid android:color="@color/accentColor"/>
-            <corners android:radius="3dp"/>
-        </shape>
-    </item>
-    <item android:state_checked="true" android:state_enabled="false">
-        <shape android:shape="rectangle">
-            <solid android:color="@color/disabledButtonColor"/>
-            <corners android:radius="3dp"/>
-        </shape>
-    </item>
+    <item android:drawable="@drawable/blue_button_background"
+          android:state_checked="true" android:state_enabled="true"/>
+    <item android:drawable="@drawable/blue_button_disable_background"
+          android:state_checked="true" android:state_enabled="false"/>
     <item android:state_checked="false">
         <shape android:shape="rectangle">
             <solid android:color="@android:color/transparent"/>

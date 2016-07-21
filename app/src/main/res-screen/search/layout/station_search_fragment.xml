@@ -12,7 +12,7 @@
         android:background="@android:color/white"
         android:orientation="horizontal">
 
-        <com.uzapp.view.utils.SearchEditText
+        <com.uzapp.view.search.SearchEditText
             android:id="@+id/cityEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
             android:textSize="@dimen/text_size">
 
             <requestFocus/>
-        </com.uzapp.view.utils.SearchEditText>
+        </com.uzapp.view.search.SearchEditText>
 
         <ProgressBar
             android:id="@+id/searchProgress"
@@ -44,7 +44,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider_height"
-        android:background="@color/searchDividerColor"/>
+        android:background="@color/dividerColor"/>
 
     <TextView
         android:id="@+id/stationsHeader"

@@ -7,23 +7,27 @@
         <item name="colorAccent">@color/accentColor</item>
         <item name="android:windowBackground">@color/backgroundColor</item>
     </style>
+
     <style name="HintStyle" parent="TextAppearance.Design.Hint">
         <item name="android:textSize">11sp</item>
     </style>
 
-    <style name="PathTextFieldStyle">
+    <style name="PathTextFieldStyle" parent="EditTextStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@android:color/transparent</item>
         <item name="android:clickable">false</item>
         <item name="android:cursorVisible">false</item>
         <item name="android:focusable">false</item>
         <item name="android:focusableInTouchMode">false</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:paddingBottom">@dimen/big_padding</item>
+    </style>
+
+    <style name="EditTextStyle">
+        <item name="android:background">@android:color/transparent</item>
         <item name="android:textColor">@color/textColor</item>
         <item name="android:textSize">@dimen/text_size</item>
         <item name="android:singleLine">true</item>
-        <item name="android:ellipsize">end</item>
-        <item name="android:paddingBottom">@dimen/big_padding</item>
         <item name="android:inputType">textNoSuggestions</item>
     </style>
 

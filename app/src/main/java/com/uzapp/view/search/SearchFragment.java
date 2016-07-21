@@ -31,7 +31,6 @@ import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.view.search.date.PickDateFragment;
 import com.uzapp.view.search.station.StationSearchFragment;
-import com.uzapp.view.utils.CheckableImageView;
 
 import org.parceler.Parcels;
 

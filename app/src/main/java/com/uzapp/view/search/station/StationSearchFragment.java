@@ -19,7 +19,7 @@ import com.uzapp.pojo.PopularStation;
 import com.uzapp.pojo.Station;
 import com.uzapp.util.Constants;
 import com.uzapp.view.utils.DividerItemDecoration;
-import com.uzapp.view.utils.SearchEditText;
+import com.uzapp.view.search.SearchEditText;
 
 import org.parceler.Parcels;
 

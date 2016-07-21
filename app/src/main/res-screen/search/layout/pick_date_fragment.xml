@@ -7,5 +7,112 @@
 
     <include layout="@layout/toolbar_picker_page"/>
 
+    <LinearLayout
+        android:id="@+id/calendarTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="13.5dp"
+        android:paddingLeft="21dp"
+        android:paddingRight="21dp"
+        android:paddingTop="13.5dp">
 
+        <EditText
+            android:id="@+id/dateTextField"
+            style="@style/EditTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/calendar_choose_date"
+            android:textColorHint="@color/textColorHint"/>
+
+        <ToggleButton
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/calendar_today_button_selector"
+            android:checked="false"
+            android:textColor="@drawable/back_toggle_text_color_selector"
+            android:textOff="@string/calendar_today"
+            android:textOn="@string/calendar_today"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/calendarTopBar"
+        android:background="@color/dividerColor"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/white"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/tomorrowBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="?attr/selectableItemBackground"
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:paddingBottom="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/calendar_tomorrow"
+                android:textAllCaps="true"
+                android:textColor="@color/textColorHint"
+                android:textSize="@dimen/text_size_small"/>
+
+            <TextView
+                android:id="@+id/tomorrowDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="18 июня, сб"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textColor="@color/accentColor"
+                android:textSize="@dimen/text_size"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dayAfterTomorrowBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="?attr/selectableItemBackground"
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:paddingBottom="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/calendar_day_after_tomorrow"
+                android:textColor="@color/textColorHint"
+                android:textAllCaps="true"
+                android:textSize="@dimen/text_size_small"/>
+
+            <TextView
+                android:id="@+id/dayAfterTomorrowDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="19 июня, вс"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textColor="@color/accentColor"
+                android:textSize="@dimen/text_size"/>
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

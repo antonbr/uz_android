@@ -48,7 +48,7 @@
 
                 </android.support.design.widget.TextInputLayout>
 
-                <com.uzapp.view.utils.CheckableImageView
+                <com.uzapp.view.search.CheckableImageView
                     android:id="@+id/useLocationBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -133,8 +133,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:minHeight="0dp"
-                android:overScrollMode="never"
-            />
+                android:overScrollMode="never"/>
 
             <RelativeLayout
                 android:id="@+id/selectedDateLayout"

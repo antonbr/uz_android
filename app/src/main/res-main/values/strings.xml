@@ -29,5 +29,9 @@
 
     //calendar
     <string name="calendar_when">Когда</string>
+    <string name="calendar_choose_date">Укажите дату</string>
+    <string name="calendar_today">На сегодня</string>
+    <string name="calendar_tomorrow">Завтра</string>
+    <string name="calendar_day_after_tomorrow">Послезавтра</string>
 
 </resources>
