@@ -1,26 +1,33 @@
 <resources>
+    <string name="api_endpoint" translatable="false">http://52.59.64.77/v1/</string>
+
+    //all screens
     <string name="app_name">UzApp</string>
-    <string name="pathFrom">Откуда</string>
-    <string name="pathTo">Куда</string>
-    <string name="select_station_hint">Выберите город</string>
-    <string name="popular_destinations">Частые маршруты</string>
-    <string name="search_result">Результаты поиска</string>
-    <string name="api_endpoint">http://52.59.64.77/v1/</string>
-    <string name="search_date_title">Отправление</string>
-    <string name="back">+ Обратно</string>
-    <string name="see_full_calendar">Весь календарь</string>
-    <string name="find_tickets">Найти билеты</string>
-    <string name="when">Когда</string>
     <string name="ready">Готово</string>
-    <string name="new_trip">Новая поездка</string>
     <string name="reset">Сбросить</string>
     <string name="cancel">Отменить</string>
-    <string name="stations_not_valid">Станції відправлення та призначення співпадають</string>
-    <plurals name="in_n_days">
+
+    //search
+    <string name="search_path_from">Откуда</string>
+    <string name="search_path_to">Куда</string>
+    <string name="search_select_station_hint">Выберите город</string>
+    <string name="search_popular_destinations">Частые маршруты</string>
+    <string name="search_result">Результаты поиска</string>
+    <string name="search_date_title">Отправление</string>
+    <string name="search_backward_button">+ Обратно</string>
+    <string name="search_see_full_calendar">Весь календарь</string>
+    <string name="search_find_tickets">Найти билеты</string>
+    <string name="search_title">Новая поездка</string>
+    <string name="search_stations_not_valid">Станції відправлення та призначення співпадають</string>
+    <plurals name="search_in_n_days">
         <item quantity="one">Через %1$d день</item>
         <item quantity="two">Через %1$d дня</item>
         <item quantity="few">Через %1$d дня</item>
         <item quantity="many">Через %1$d дней</item>
         <item quantity="other">Через %1$d дней</item>
     </plurals>
+
+    //calendar
+    <string name="calendar_when">Когда</string>
+
 </resources>

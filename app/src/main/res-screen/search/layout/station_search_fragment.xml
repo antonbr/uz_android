@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:hint="@string/select_station_hint"
+            android:hint="@string/search_select_station_hint"
             android:padding="@dimen/big_padding"
             android:singleLine="true"
             android:inputType="textNoSuggestions"
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/big_padding"
         android:layout_marginTop="@dimen/medium_padding"
-        android:text="@string/popular_destinations"
+        android:text="@string/search_popular_destinations"
         android:textAllCaps="true"
         android:textColor="@color/accentColor"
         android:textSize="@dimen/text_size_small"/>

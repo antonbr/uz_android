@@ -98,7 +98,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.search_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
-        toolbarTitle.setText(R.string.new_trip);
+        toolbarTitle.setText(R.string.search_title);
         initDatePickerList();
         return view;
     }
@@ -119,7 +119,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
 
     @OnClick({R.id.pathTo, R.id.pathFrom})
     void onSelectPathFromClick(View view) {
-        StationSearchFragment fragment = StationSearchFragment.getInstance(getString(view.getId() == R.id.pathFrom ? R.string.pathFrom : R.string.pathTo));
+        StationSearchFragment fragment = StationSearchFragment.getInstance(getString(view.getId() == R.id.pathFrom ? R.string.search_path_from : R.string.search_path_to));
         fragment.setTargetFragment(this, view.getId() == R.id.pathFrom ? SELECT_STATION_FROM_REQUEST_CODE : SELECT_STATION_TO_REQUEST_CODE);
         ((MainActivity) getActivity()).addFragment(fragment, R.anim.slide_up, R.anim.slide_down);
     }
@@ -143,7 +143,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
 
     @OnClick(R.id.findTicketsBtn)
     void onFindTicketsBtnClicked() {
-        Snackbar.make(getView(), R.string.stations_not_valid, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(getView(), R.string.search_stations_not_valid, Snackbar.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.resetBtn)
@@ -389,7 +389,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
             firstMonthName.setText(monthFormatter.format(firstDate));
             secondMonthName.setText(monthFormatter.format(secondDate));
             int daysBetween = CommonUtils.getDaysDifference(secondDate, firstDate); //TODO second day must be after first one
-            inDays.setText(getResources().getQuantityString(R.plurals.in_n_days, daysBetween, daysBetween));
+            inDays.setText(getResources().getQuantityString(R.plurals.search_in_n_days, daysBetween, daysBetween));
         } else {
             secondDate = null;
             datePickerAdapter.setSelectedSecondPosition(-1);

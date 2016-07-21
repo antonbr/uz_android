@@ -28,7 +28,7 @@ public class PickDateFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.pick_date_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
-        toolbarTitle.setText(R.string.when);
+        toolbarTitle.setText(R.string.calendar_when);
         return view;
     }
 

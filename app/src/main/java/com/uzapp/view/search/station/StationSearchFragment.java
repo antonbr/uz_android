@@ -94,7 +94,7 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
                 stationList.add(new Station(popularStation.getCode(), popularStation.getName(), popularStation.getRailway()));
             }
             adapter.setStations(stationList);
-            stationsHeader.setText(R.string.popular_destinations);
+            stationsHeader.setText(R.string.search_popular_destinations);
         } else {
             stationsHeader.setText("");
         }

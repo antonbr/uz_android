@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="sans-serif-medium"
-            android:text="@string/when"
+            android:text="@string/calendar_when"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_size"/>
 
