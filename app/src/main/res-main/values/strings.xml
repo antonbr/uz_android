@@ -33,5 +33,12 @@
     <string name="calendar_today">На сегодня</string>
     <string name="calendar_tomorrow">Завтра</string>
     <string name="calendar_day_after_tomorrow">Послезавтра</string>
+    <string name="calendar_first_day_of_week">Пн</string>
+    <string name="calendar_second_day_of_week">Вт</string>
+    <string name="calendar_third_day_of_week">Ср</string>
+    <string name="calendar_fourth_day_of_week">Чт</string>
+    <string name="calendar_fifth_day_of_week">Пт</string>
+    <string name="calendar_sixth_day_of_week">Сб</string>
+    <string name="calendar_seventh_day_of_week">Вс</string>
 
 </resources>

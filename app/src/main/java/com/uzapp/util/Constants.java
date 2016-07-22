@@ -13,4 +13,6 @@ public class Constants {
     public static final int SECONDS_IN_MINUTE = 60;
     public static final int MILLISECONDS_IN_SECOND = 1000;
     public static final int DAYS_TO_SHOW_SMALL_CALENDAR = 5;
+    public static final int DAYS_IN_WEEK = 7;
+    public static final int MAX_WEEKS_IN_CALENDAR = 6;
 }

@@ -10,4 +10,5 @@
     <color name="dayOfWeekTextColor">#656D78</color>
     <color name="disabledButtonColor">#4D4183d7</color>
     <color name="colorControlHighlightDarkTheme">#40ffffff</color>
+    <color name="calendarDividerColor">#40a6aeb2</color>
 </resources>

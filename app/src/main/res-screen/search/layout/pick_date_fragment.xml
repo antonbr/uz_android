@@ -41,12 +41,21 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/calendarTopBar"
         android:background="@color/dividerColor"/>
 
+    <include
+        layout="@layout/calendar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/divider"
+        android:layout_above="@+id/bottomBar"/>
+
     <LinearLayout
+        android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -58,11 +67,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
             android:background="?attr/selectableItemBackground"
+            android:gravity="center"
             android:orientation="vertical"
-            android:paddingTop="10dp"
-            android:paddingBottom="12dp">
+            android:paddingBottom="12dp"
+            android:paddingTop="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -76,10 +85,10 @@
                 android:id="@+id/tomorrowDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:text="18 июня, сб"
-                android:singleLine="true"
                 android:ellipsize="end"
+                android:fontFamily="sans-serif-medium"
+                android:singleLine="true"
+                android:text="18 июня, сб"
                 android:textColor="@color/accentColor"
                 android:textSize="@dimen/text_size"/>
         </LinearLayout>
@@ -89,28 +98,28 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
             android:background="?attr/selectableItemBackground"
+            android:gravity="center"
             android:orientation="vertical"
-            android:paddingTop="10dp"
-            android:paddingBottom="12dp">
+            android:paddingBottom="12dp"
+            android:paddingTop="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/calendar_day_after_tomorrow"
-                android:textColor="@color/textColorHint"
                 android:textAllCaps="true"
+                android:textColor="@color/textColorHint"
                 android:textSize="@dimen/text_size_small"/>
 
             <TextView
                 android:id="@+id/dayAfterTomorrowDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:text="19 июня, вс"
-                android:singleLine="true"
                 android:ellipsize="end"
+                android:fontFamily="sans-serif-medium"
+                android:singleLine="true"
+                android:text="19 июня, вс"
                 android:textColor="@color/accentColor"
                 android:textSize="@dimen/text_size"/>
         </LinearLayout>

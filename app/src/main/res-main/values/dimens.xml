@@ -13,4 +13,5 @@
     <dimen name="text_size_small">11sp</dimen>
 
     <dimen name="button_text_size">13.5sp</dimen>
+    <dimen name="calendar_divider_size">1.2dp</dimen>
 </resources>
