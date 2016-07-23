@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -28,15 +29,22 @@ public class CalendarDaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private static final int VIEW_TYPE_DATE = 2;
     private List<Date> dateList = new ArrayList<>();
     private Calendar calendar;
-    private Date today;
+    private Date firstAvailableDate;
+    private Date lastAvailableDate;
     private int textColor, textColorPast;
     private int selectedPosition = -1;
 
     public CalendarDaysAdapter(List<Date> dateList, Context context) {
         this.dateList.clear();
         this.dateList.addAll(dateList);
-        calendar = Calendar.getInstance();
-        today = calendar.getTime();
+        calendar = GregorianCalendar.getInstance();
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        firstAvailableDate = calendar.getTime();
+        calendar.add(Calendar.DAY_OF_MONTH, Constants.MAX_DAYS-1);
+        lastAvailableDate = calendar.getTime();
         textColor = ContextCompat.getColor(context, R.color.textColor);
         textColorPast = ContextCompat.getColor(context, R.color.textColorHint);
     }
@@ -62,7 +70,7 @@ public class CalendarDaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             Date date = dateList.get(position - 1);
             calendar.setTime(date);
             ((DayHolder) holder).day.setText(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
-            if (date.before(today)) {
+            if (date.before(firstAvailableDate) || date.after(lastAvailableDate)) {
                 ((DayHolder) holder).day.setTextColor(textColorPast);
                 ((DayHolder) holder).day.setBackgroundColor(Color.TRANSPARENT);
             } else if (position == selectedPosition) {
@@ -77,7 +85,7 @@ public class CalendarDaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         int oldSelection = selectedPosition;
                         selectedPosition = position;
                         notifyItemChanged(selectedPosition);
-                        if(oldSelection!=-1){
+                        if (oldSelection != -1) {
                             notifyItemChanged(oldSelection);
                         }
                     }

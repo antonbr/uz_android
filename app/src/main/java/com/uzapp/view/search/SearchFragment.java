@@ -210,7 +210,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
         monthPositionMap.put(0, currentMonthName);
         monthName.setText(currentMonthName);
         int lastMonth = calendar.get(Calendar.MONTH);
-        for (int i = 0; i < Constants.MAX_DAYS; i++) {
+        for (int i = 0; i < Constants.MAX_DAYS-1; i++) {
             calendar.add(Calendar.DAY_OF_YEAR, 1);
             Date date = calendar.getTime();
             dates.add(date);
@@ -219,7 +219,6 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
                 monthPositionMap.put(dates.indexOf(date), monthFormatter.format(calendar.getTime()));
             }
         }
-        //datePickerList.addItemDecoration(new HorizontalSpaceItemDecoration(datePickerItemPadding));
         datePickerList.addOnScrollListener(dateScrollListener);
         datePickerList.post(new Runnable() {
             @Override
@@ -387,7 +386,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
             secondDateLayout.setSelectedDayBackground();
             firstMonthName.setText(monthFormatter.format(firstDate));
             secondMonthName.setText(monthFormatter.format(secondDate));
-            int daysBetween = CommonUtils.getDaysDifference(secondDate, firstDate); //TODO second day must be after first one
+            int daysBetween = CommonUtils.getDaysDifference(secondDate, firstDate);
             inDays.setText(getResources().getQuantityString(R.plurals.search_in_n_days, daysBetween, daysBetween));
         } else {
             secondDate = null;

@@ -2,7 +2,9 @@ package com.uzapp.util;
 
 import com.uzapp.pojo.Languages;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 /**
@@ -30,4 +32,16 @@ public class CommonUtils {
                 * Constants.MILLISECONDS_IN_SECOND));
         return days;
     }
+
+    public static final int getMonthDifference(Date firstDate, Date secondDate) {
+        Calendar startCalendar = new GregorianCalendar();
+        startCalendar.setTime(firstDate);
+        Calendar endCalendar = new GregorianCalendar();
+        endCalendar.setTime(secondDate);
+        int diffYear = endCalendar.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR);
+        int diffMonth = diffYear * 12 + endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH);
+        return diffMonth;
+    }
+
+
 }

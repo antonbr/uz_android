@@ -4,44 +4,6 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:orientation="horizontal"
-        android:paddingBottom="17dp"
-        android:paddingTop="17dp"
-        android:weightSum="7">
-
-        <TextView
-            style="@style/CalendarDayOfWeekStyle"
-            android:text="@string/calendar_first_day_of_week"/>
-
-        <TextView
-            style="@style/CalendarDayOfWeekStyle"
-            android:text="@string/calendar_second_day_of_week"/>
-
-        <TextView
-            style="@style/CalendarDayOfWeekStyle"
-            android:text="@string/calendar_third_day_of_week"/>
-
-        <TextView
-            style="@style/CalendarDayOfWeekStyle"
-            android:text="@string/calendar_fourth_day_of_week"/>
-
-        <TextView
-            style="@style/CalendarDayOfWeekStyle"
-            android:text="@string/calendar_fifth_day_of_week"/>
-
-        <TextView
-            style="@style/CalendarDayOfWeekStyle"
-            android:text="@string/calendar_sixth_day_of_week"/>
-
-        <TextView
-            style="@style/CalendarDayOfWeekStyle"
-            android:text="@string/calendar_seventh_day_of_week"/>
-    </LinearLayout>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/calendarMonthView"
         android:layout_width="match_parent"

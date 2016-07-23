@@ -47,12 +47,52 @@
         android:layout_below="@+id/calendarTopBar"
         android:background="@color/dividerColor"/>
 
-    <include
-        layout="@layout/calendar_layout"
+    <LinearLayout
+        android:id="@+id/daysOfWeekLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/divider"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:paddingBottom="17dp"
+        android:paddingTop="17dp"
+        android:weightSum="7">
+
+        <TextView
+            style="@style/CalendarDayOfWeekStyle"
+            android:text="@string/calendar_first_day_of_week"/>
+
+        <TextView
+            style="@style/CalendarDayOfWeekStyle"
+            android:text="@string/calendar_second_day_of_week"/>
+
+        <TextView
+            style="@style/CalendarDayOfWeekStyle"
+            android:text="@string/calendar_third_day_of_week"/>
+
+        <TextView
+            style="@style/CalendarDayOfWeekStyle"
+            android:text="@string/calendar_fourth_day_of_week"/>
+
+        <TextView
+            style="@style/CalendarDayOfWeekStyle"
+            android:text="@string/calendar_fifth_day_of_week"/>
+
+        <TextView
+            style="@style/CalendarDayOfWeekStyle"
+            android:text="@string/calendar_sixth_day_of_week"/>
+
+        <TextView
+            style="@style/CalendarDayOfWeekStyle"
+            android:text="@string/calendar_seventh_day_of_week"/>
+    </LinearLayout>
+
+    <com.uzapp.view.search.date.VerticalViewPage
+        android:id="@+id/monthPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/divider"
-        android:layout_above="@+id/bottomBar"/>
+        android:layout_above="@+id/bottomBar"
+        android:layout_below="@+id/daysOfWeekLayout"/>
 
     <LinearLayout
         android:id="@+id/bottomBar"

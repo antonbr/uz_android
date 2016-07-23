@@ -3,20 +3,21 @@ package com.uzapp.view.search.date;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.uzapp.R;
+import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,53 +29,46 @@ import butterknife.Unbinder;
  */
 public class PickDateFragment extends Fragment {
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
-    @BindView(R.id.calendarMonthView) RecyclerView calendarMonthView;
+    @BindView(R.id.monthPager) ViewPager monthPager;
     private Unbinder unbinder;
-    private CalendarDaysAdapter adapter;
-    private int daysOffset;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.pick_date_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
         toolbarTitle.setText(R.string.calendar_when);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), Constants.DAYS_IN_WEEK);
-        calendarMonthView.setLayoutManager(layoutManager);
-        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                if (position == 0) {
-                    return Constants.DAYS_IN_WEEK;
-                } else if (position == 1) {
-                    return daysOffset+1;
-                }
-                return 1;
-            }
-        });
-        calendarMonthView.setHasFixedSize(true);
-        adapter = new CalendarDaysAdapter(getDays(), getContext());
-        calendarMonthView.setAdapter(adapter);
-        calendarMonthView.addItemDecoration(new CalendarItemDecorator(getContext(), daysOffset));
+        MonthPagerAdapter monthPagerAdapter = new MonthPagerAdapter(getContext(), getDaysByMonths());
+        monthPager.setAdapter(monthPagerAdapter);
         return view;
     }
 
-    private ArrayList<Date> getDays() {
+    private List<List<Date>> getDaysByMonths() {
+        List<List<Date>> daysByMonths = new ArrayList<>();
 
-        ArrayList<Date> cells = new ArrayList<>();
         Calendar calendar = GregorianCalendar.getInstance();
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        calendar.set(Calendar.MONTH, Calendar.JULY);
-        int daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-        daysOffset = calendar.get(Calendar.DAY_OF_WEEK) - calendar.getFirstDayOfWeek();
-        if (daysOffset == -1) {
-            daysOffset = 6;
+        Date today = calendar.getTime();
+        calendar.add(Calendar.DAY_OF_MONTH, Constants.MAX_DAYS);
+        int monthsCount = CommonUtils.getMonthDifference(today, calendar.getTime());
+
+        for (int i = 0; i <= monthsCount; i++) {
+            calendar = GregorianCalendar.getInstance();
+            calendar.set(Calendar.HOUR, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+
+            calendar.add(Calendar.MONTH, i);
+            calendar.set(Calendar.DAY_OF_MONTH, 1);
+
+            ArrayList<Date> days = new ArrayList<>();
+            int daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+            while (days.size() < daysInMonth) {
+                days.add(calendar.getTime());
+                calendar.add(Calendar.DAY_OF_MONTH, 1);
+            }
+            daysByMonths.add(days);
         }
-        while (cells.size() < daysInMonth) {
-            cells.add(calendar.getTime());
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
-        }
-        return cells;
+        return daysByMonths;
     }
 
     @OnClick(R.id.closeBtn)
