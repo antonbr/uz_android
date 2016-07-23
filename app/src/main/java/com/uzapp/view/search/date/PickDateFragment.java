@@ -45,15 +45,17 @@ public class PickDateFragment extends Fragment {
             @Override
             public int getSpanSize(int position) {
                 if (position == 0) {
-                    return daysOffset + 1;
+                    return Constants.DAYS_IN_WEEK;
+                } else if (position == 1) {
+                    return daysOffset+1;
                 }
                 return 1;
             }
         });
         calendarMonthView.setHasFixedSize(true);
-        adapter = new CalendarDaysAdapter(getDays());
+        adapter = new CalendarDaysAdapter(getDays(), getContext());
         calendarMonthView.setAdapter(adapter);
-        calendarMonthView.addItemDecoration(new CalendarItemDecorator(getContext(),daysOffset ));
+        calendarMonthView.addItemDecoration(new CalendarItemDecorator(getContext(), daysOffset));
         return view;
     }
 

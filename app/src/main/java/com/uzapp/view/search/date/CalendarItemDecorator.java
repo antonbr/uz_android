@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.uzapp.util.Constants;
@@ -38,17 +39,18 @@ public class CalendarItemDecorator extends RecyclerView.ItemDecoration {
         if (parent.getChildCount() == 0) return;
 
         final int childCount = parent.getChildCount();
-        int lastRowElementsCount = (daysOffset + childCount) % Constants.DAYS_IN_WEEK;
+        int headerOffset = Constants.DAYS_IN_WEEK - 1; //header is already counted in child count, but it takes space for 7 items;
+        int lastRowElementsCount = (daysOffset + headerOffset + childCount) % Constants.DAYS_IN_WEEK;
         int lastRowFirstIndex;
         if (lastRowElementsCount == 0) {
             lastRowFirstIndex = childCount - Constants.DAYS_IN_WEEK;
         } else {
             lastRowFirstIndex = childCount - lastRowElementsCount;
         }
+        Log.d("TAG", "child count: " + childCount + " last row element count " + lastRowElementsCount + " first index: " + lastRowFirstIndex);
         for (int i = 0; i < lastRowFirstIndex; i++) {
             final View child = parent.getChildAt(i);
-            final RecyclerView.LayoutParams params =
-                    (RecyclerView.LayoutParams) child.getLayoutParams();
+            final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
 
             final int left = child.getLeft() - params.leftMargin;
             final int right = child.getRight() + params.rightMargin;
