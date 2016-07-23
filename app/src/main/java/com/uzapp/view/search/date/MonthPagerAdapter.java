@@ -24,11 +24,13 @@ public class MonthPagerAdapter extends PagerAdapter {
     private List<CalendarDaysAdapter> daysAdapters = new ArrayList<>();
     private Calendar calendar = Calendar.getInstance();
     private CalendarDaysAdapter.OnDateSelectedListener listener;
+    private Date minDate;
 
-    public MonthPagerAdapter(Context context, List<List<Date>> dateListsForPages,
+    public MonthPagerAdapter(Context context, List<List<Date>> dateListsForPages, Date minDate,
                              CalendarDaysAdapter.OnDateSelectedListener listener) {
         this.context = context;
         this.dateListsForPages = dateListsForPages;
+        this.minDate = minDate;
         this.listener = listener;
     }
 
@@ -65,6 +67,7 @@ public class MonthPagerAdapter extends PagerAdapter {
         });
         recyclerView.setHasFixedSize(true);
         CalendarDaysAdapter adapter = new CalendarDaysAdapter(monthDays, listener, position, context);
+        adapter.setFirstAvailableDate(minDate);
         recyclerView.setAdapter(adapter);
         daysAdapters.add(adapter);
         recyclerView.addItemDecoration(new CalendarItemDecorator(context, daysOffset));

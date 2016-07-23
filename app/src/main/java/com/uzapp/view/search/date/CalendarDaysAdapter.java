@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,10 +51,14 @@ public class CalendarDaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         firstAvailableDate = calendar.getTime();
-        calendar.add(Calendar.DAY_OF_MONTH, Constants.MAX_DAYS - 1);
+        calendar.add(Calendar.DAY_OF_MONTH, Constants.MAX_DAYS);
         lastAvailableDate = calendar.getTime();
         textColor = ContextCompat.getColor(context, R.color.textColor);
         textColorPast = ContextCompat.getColor(context, R.color.textColorHint);
+    }
+
+    public void setFirstAvailableDate(Date firstAvailableDate) {
+        this.firstAvailableDate = firstAvailableDate;
     }
 
     public void updateSelection(int pagePosition, int dayPosition) {

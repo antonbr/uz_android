@@ -15,6 +15,7 @@ import com.uzapp.R;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -28,6 +29,9 @@ public class DateItemView extends RelativeLayout {
     @BindView(R.id.dayOfMonth) TextView dayOfMonth;
     @BindView(R.id.dayOfWeek) TextView dayOfWeek;
     @BindView(R.id.dateView) LinearLayout dateView;
+    @BindColor(R.color.textColorHint) int unavailableTextColor;
+    @BindColor(R.color.textColor) int monthColor;
+    @BindColor(R.color.dayOfWeekTextColor) int dayOfWeekColor;
     private int viewWidth;
 
     public DateItemView(Context context) {
@@ -62,6 +66,16 @@ public class DateItemView extends RelativeLayout {
 
     public void setSelectedDayBackground() {
         dateView.setBackgroundResource(R.drawable.selected_day_background);
+    }
+
+    public void setUnavailableTextColor() {
+        dayOfMonth.setTextColor(unavailableTextColor);
+        dayOfWeek.setTextColor(unavailableTextColor);
+    }
+
+    public void setAvailableTextColor() {
+        dayOfMonth.setTextColor(monthColor);
+        dayOfWeek.setTextColor(dayOfWeekColor);
     }
 
     public void clearBackground() {

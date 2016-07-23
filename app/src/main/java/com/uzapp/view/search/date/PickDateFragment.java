@@ -1,5 +1,7 @@
 package com.uzapp.view.search.date;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -36,12 +38,13 @@ public class PickDateFragment extends Fragment implements CalendarDaysAdapter.On
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
     @BindView(R.id.dateTextField) EditText dateTextField;
     @BindView(R.id.tomorrowDate) TextView tomorrowDateView;
+    @BindView(R.id.tomorrowBtn) ViewGroup tomorrowBtn;
+    @BindView(R.id.dayAfterTomorrowBtn) ViewGroup dayAfterTomorrowBtn;
     @BindView(R.id.dayAfterTomorrowDate) TextView dayAfterTomorrowDateView;
     @BindView(R.id.todayBtn) ToggleButton todayBtn;
     @BindView(R.id.monthPager) VerticalViewPager monthPager;
-    private Date today, tomorrow, dayAfterTomorrow;
+    private Date today, tomorrow, dayAfterTomorrow, minDate, selectedDate;
     private Unbinder unbinder;
-    private Date selectedDate;
     private MonthPagerAdapter monthPagerAdapter;
     private List<List<Date>> allDaysByMonths;
 
@@ -51,12 +54,23 @@ public class PickDateFragment extends Fragment implements CalendarDaysAdapter.On
         View view = inflater.inflate(R.layout.pick_date_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
         toolbarTitle.setText(R.string.calendar_when);
+        if (getArguments() != null && getArguments().containsKey("minDate")) {
+            minDate = (Date) getArguments().getSerializable("minDate");
+        }
         initNearestDates();
         allDaysByMonths = getDaysByMonths();
-        monthPagerAdapter = new MonthPagerAdapter(getContext(), allDaysByMonths, this);
+        monthPagerAdapter = new MonthPagerAdapter(getContext(), allDaysByMonths, minDate, this);
         monthPager.setOffscreenPageLimit(2);
         monthPager.setAdapter(monthPagerAdapter);
         return view;
+    }
+
+    public static PickDateFragment getInstance(Date date) {
+        PickDateFragment fragment = new PickDateFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("minDate", date);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     private void initNearestDates() {
@@ -72,17 +86,27 @@ public class PickDateFragment extends Fragment implements CalendarDaysAdapter.On
         dayAfterTomorrow = calendar.getTime();
         tomorrowDateView.setText(nearestDateFormat.format(tomorrow));
         dayAfterTomorrowDateView.setText(nearestDateFormat.format(dayAfterTomorrow));
+        todayBtn.setEnabled(today.after(minDate) || today.equals(minDate));
+        tomorrowBtn.setEnabled(tomorrow.after(minDate) || tomorrow.equals(minDate));
+        dayAfterTomorrowBtn.setEnabled(dayAfterTomorrow.after(minDate) || dayAfterTomorrow.equals(minDate));
     }
 
     private List<List<Date>> getDaysByMonths() {
         List<List<Date>> daysByMonths = new ArrayList<>();
 
         Calendar calendar = GregorianCalendar.getInstance();
-        calendar.add(Calendar.DAY_OF_MONTH, Constants.MAX_DAYS);
-        int monthsCount = CommonUtils.getMonthDifference(today, calendar.getTime());
+
+        int maxDays = Constants.MAX_DAYS;
+        if (!minDate.equals(today)) {
+            calendar.setTime(minDate);
+            maxDays -= CommonUtils.getDaysDifference(minDate, today);
+        }
+        calendar.add(Calendar.DAY_OF_MONTH, maxDays);
+        int monthsCount = CommonUtils.getMonthDifference(minDate, calendar.getTime());
 
         for (int i = 0; i <= monthsCount; i++) {
             calendar = GregorianCalendar.getInstance();
+            calendar.setTime(minDate);
             calendar.set(Calendar.HOUR, 0);
             calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.SECOND, 0);
@@ -109,7 +133,17 @@ public class PickDateFragment extends Fragment implements CalendarDaysAdapter.On
 
     @OnClick(R.id.okBtn)
     void onOkBtnClick() {
-
+        if (selectedDate != null) {
+            Fragment targetFragment = getTargetFragment();
+            if (targetFragment != null) {
+                Intent i = new Intent();
+                i.putExtra("date", selectedDate);
+                targetFragment.onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, i);
+            }
+            getActivity().onBackPressed();
+        } else {
+            //todo show message
+        }
     }
 
     @OnCheckedChanged(R.id.todayBtn)

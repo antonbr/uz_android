@@ -38,6 +38,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
@@ -91,6 +92,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
     private Map<Integer, String> monthPositionMap;
     private LinearLayoutManager datePickerLayoutManager;
     private DatePickerAdapter datePickerAdapter;
+    private List<Date> dates;
 
     @Nullable
     @Override
@@ -131,11 +133,21 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
     @OnCheckedChanged(R.id.backRouteToggle)
     void onBackRouteToggleChanged() {
         checkAllFieldsFilled();
+        datePickerAdapter.setSelectingSecondDate(backRouteToggle.isChecked());
     }
 
     @OnClick(R.id.seeFullCalendarBtn)
     void seeFullCalendarBtn() {
-        PickDateFragment fragment = new PickDateFragment();
+        Calendar calendar = GregorianCalendar.getInstance();
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        if (backRouteToggle.isChecked()) {
+            calendar.setTime(firstDate);
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        PickDateFragment fragment = PickDateFragment.getInstance(calendar.getTime());
         fragment.setTargetFragment(this, backRouteToggle.isChecked() ? SELECT_SECOND_DATE : SELECT_FIRST_DATE);
         ((MainActivity) getActivity()).addFragment(fragment, R.anim.slide_up, R.anim.slide_down);
     }
@@ -154,6 +166,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
         useLocationBtn.setChecked(false);
         firstDate = null;
         secondDate = null;
+        datePickerAdapter.setSelectingSecondDate(false);
         datePickerAdapter.setSelectedFirstPosition(-1);
         datePickerAdapter.setSelectedSecondPosition(-1);
         setSelectedDateLayoutVisibility(false);
@@ -202,15 +215,19 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
         datePickerLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         datePickerList.setLayoutManager(datePickerLayoutManager);
 
-        final List<Date> dates = new ArrayList<Date>();
+        dates = new ArrayList<Date>();
         monthPositionMap = new LinkedHashMap<>();
         Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
         dates.add(calendar.getTime());
         String currentMonthName = monthFormatter.format(calendar.getTime());
         monthPositionMap.put(0, currentMonthName);
         monthName.setText(currentMonthName);
         int lastMonth = calendar.get(Calendar.MONTH);
-        for (int i = 0; i < Constants.MAX_DAYS-1; i++) {
+        for (int i = 0; i < Constants.MAX_DAYS; i++) {
             calendar.add(Calendar.DAY_OF_YEAR, 1);
             Date date = calendar.getTime();
             dates.add(date);
@@ -277,6 +294,21 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
         } else if (requestCode == SELECT_STATION_TO_REQUEST_CODE) {
             toStation = Parcels.unwrap(data.getParcelableExtra("station"));
             pathTo.setText(toStation.getName());
+        } else if (requestCode == SELECT_FIRST_DATE) {
+            firstDate = (Date) data.getSerializableExtra("date");
+            int selectedPosition = dates.indexOf(firstDate);
+            datePickerAdapter.setSelectedFirstPosition(selectedPosition);
+            if (selectedPosition < datePickerLayoutManager.findFirstCompletelyVisibleItemPosition() ||
+                    selectedPosition > datePickerLayoutManager.findLastCompletelyVisibleItemPosition()) {
+                datePickerLayoutManager.scrollToPositionWithOffset(selectedPosition, 0);
+                updateMonthName(selectedPosition);
+            }
+                backRouteToggle.setEnabled(!firstDate.equals(dates.get(dates.size() - 1)));
+
+            checkAllFieldsFilled();
+        } else if (requestCode == SELECT_SECOND_DATE) {
+            secondDate = (Date) data.getSerializableExtra("date");
+            setSelectedDateLayoutVisibility(true);
         }
     }
 
@@ -330,15 +362,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
             if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                int firstVisiblePosition = datePickerLayoutManager.findFirstCompletelyVisibleItemPosition();
-                ListIterator<Integer> iterator = new ArrayList(monthPositionMap.keySet()).listIterator(monthPositionMap.size());
-                while (iterator.hasPrevious()) {
-                    Integer key = iterator.previous();
-                    if (firstVisiblePosition >= key) {
-                        monthName.setText(monthPositionMap.get(key));
-                        break;
-                    }
-                }
+                updateMonthName(datePickerLayoutManager.findFirstCompletelyVisibleItemPosition());
             }
         }
 
@@ -348,16 +372,27 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
         }
     };
 
+    private void updateMonthName(int firstVisiblePosition) {
+
+        ListIterator<Integer> iterator = new ArrayList(monthPositionMap.keySet()).listIterator(monthPositionMap.size());
+        while (iterator.hasPrevious()) {
+            Integer key = iterator.previous();
+            if (firstVisiblePosition >= key) {
+                monthName.setText(monthPositionMap.get(key));
+                break;
+            }
+        }
+    }
+
     @Override
     public void onDateItemClick(int position, Date date) {
         if (!backRouteToggle.isChecked()) {
             firstDate = date;
             datePickerAdapter.setSelectedFirstPosition(position);
-            backRouteToggle.setEnabled(true);
+            backRouteToggle.setEnabled(!firstDate.equals(dates.get(dates.size() - 1)));
             checkAllFieldsFilled();
         } else if (backRouteToggle.isChecked() && date.after(firstDate)) {
             secondDate = date;
-            datePickerAdapter.setSelectedSecondPosition(position); //todo not necessary
             setSelectedDateLayoutVisibility(true);
         }
     }
@@ -378,6 +413,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) seeFullCalendarBtn.getLayoutParams();
         layoutParams.addRule(RelativeLayout.BELOW, visible ? R.id.selectedDateLayout : R.id.datePickerList);
         seeFullCalendarBtn.setLayoutParams(layoutParams);
+        seeFullCalendarBtn.setEnabled(!visible);
         backRouteToggle.setEnabled(!visible);
         if (visible) {
             firstDateLayout.bindDate(firstDate);

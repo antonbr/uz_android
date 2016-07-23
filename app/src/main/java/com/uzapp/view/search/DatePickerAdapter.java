@@ -15,6 +15,7 @@ public class DatePickerAdapter extends RecyclerView.Adapter<DatePickerAdapter.Da
     private int selectedFirstPosition = -1, selectedSecondPosition = -1;
     private OnDateClickListener clickListener;
     private int itemWidth;
+    private boolean isSelectingSecondDate = false;
 
     public interface OnDateClickListener {
         void onDateItemClick(int position, Date date);
@@ -44,6 +45,11 @@ public class DatePickerAdapter extends RecyclerView.Adapter<DatePickerAdapter.Da
         }
     }
 
+    public void setSelectingSecondDate(boolean selectingSecondDate) {
+        isSelectingSecondDate = selectingSecondDate;
+        notifyDataSetChanged();
+    }
+
     @Override
     public DateHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         DateItemView itemView = new DateItemView(parent.getContext());
@@ -64,6 +70,11 @@ public class DatePickerAdapter extends RecyclerView.Adapter<DatePickerAdapter.Da
             holder.dateItemView.setBackgroundToday();
         } else {
             holder.dateItemView.clearBackground();
+        }
+        if (position <selectedFirstPosition && isSelectingSecondDate) {
+            holder.dateItemView.setUnavailableTextColor();
+        } else {
+            holder.dateItemView.setAvailableTextColor();
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
