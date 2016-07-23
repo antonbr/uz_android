@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,8 +34,16 @@ public class CalendarDaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private Date lastAvailableDate;
     private int textColor, textColorPast;
     private int selectedPosition = -1;
+    private OnDateSelectedListener listener;
+    private int pagePosition;
 
-    public CalendarDaysAdapter(List<Date> dateList, Context context) {
+    public interface OnDateSelectedListener {
+        void onDateSelected(int pagePosition, int dayPosition);
+    }
+
+    public CalendarDaysAdapter(List<Date> dateList, OnDateSelectedListener listener, int pagePosition, Context context) {
+        this.listener = listener;
+        this.pagePosition = pagePosition;
         this.dateList.clear();
         this.dateList.addAll(dateList);
         calendar = GregorianCalendar.getInstance();
@@ -43,10 +52,25 @@ public class CalendarDaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         firstAvailableDate = calendar.getTime();
-        calendar.add(Calendar.DAY_OF_MONTH, Constants.MAX_DAYS-1);
+        calendar.add(Calendar.DAY_OF_MONTH, Constants.MAX_DAYS - 1);
         lastAvailableDate = calendar.getTime();
         textColor = ContextCompat.getColor(context, R.color.textColor);
         textColorPast = ContextCompat.getColor(context, R.color.textColorHint);
+    }
+
+    public void updateSelection(int pagePosition, int dayPosition) {
+        if (pagePosition == this.pagePosition) {
+            int oldSelectedPosition = selectedPosition;
+            selectedPosition = dayPosition + 1; //add 1 because days are shifted with month name
+            notifyItemChanged(selectedPosition);
+            if (oldSelectedPosition != -1) {
+                notifyItemChanged(oldSelectedPosition);
+            }
+        } else if (selectedPosition != -1) {
+            int oldSelectedPosition = selectedPosition;
+            selectedPosition = -1;
+            notifyItemChanged(oldSelectedPosition);
+        }
     }
 
     @Override
@@ -67,7 +91,7 @@ public class CalendarDaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             String monthName = monthFormatter.format(dateList.get(0));
             ((MonthHeaderHolder) holder).month.setText(monthName);
         } else {
-            Date date = dateList.get(position - 1);
+            final Date date = dateList.get(position - 1);
             calendar.setTime(date);
             ((DayHolder) holder).day.setText(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
             if (date.before(firstAvailableDate) || date.after(lastAvailableDate)) {
@@ -78,16 +102,11 @@ public class CalendarDaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 ((DayHolder) holder).day.setBackgroundResource(R.drawable.blue_button_background);
             } else {
                 ((DayHolder) holder).day.setTextColor(textColor);
-                ((DayHolder) holder).day.setBackgroundColor(Color.TRANSPARENT);
+                ((DayHolder) holder).day.setBackgroundResource(0);
                 ((DayHolder) holder).day.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int oldSelection = selectedPosition;
-                        selectedPosition = position;
-                        notifyItemChanged(selectedPosition);
-                        if (oldSelection != -1) {
-                            notifyItemChanged(oldSelection);
-                        }
+                        listener.onDateSelected(pagePosition, position - 1); //use position-1 because dates start from position==1
                     }
                 });
             }
