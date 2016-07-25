@@ -1,30 +1,24 @@
 package com.uzapp.view.search.date;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
-import com.uzapp.util.Constants;
+import com.uzapp.R;
 
 /**
  * Created by vika on 22.07.16.
  */
 public class CalendarItemDecorator extends RecyclerView.ItemDecoration {
-
-    private static final int[] ATTRS = {android.R.attr.listDivider};
-
     private Drawable mDivider;
-    private int daysOffset;
+    private int firstItemPadding;
 
-    public CalendarItemDecorator(Context context, int daysOffset) {
-        TypedArray a = context.obtainStyledAttributes(ATTRS);
-        mDivider = a.getDrawable(0);
-        a.recycle();
-        this.daysOffset = daysOffset;
+    public CalendarItemDecorator(Context context, int firstItemPadding) {
+        mDivider = ContextCompat.getDrawable(context, R.drawable.calendar_divider);
+        this.firstItemPadding = firstItemPadding;
     }
 
     @Override
@@ -32,33 +26,34 @@ public class CalendarItemDecorator extends RecyclerView.ItemDecoration {
         drawVertical(c, parent);
     }
 
-    /**
-     * Draw dividers at each expected grid interval
-     */
     public void drawVertical(Canvas c, RecyclerView parent) {
-        if (parent.getChildCount() == 0) return;
+        if (parent.getAdapter().getItemCount() == 0) return;
 
-        final int childCount = parent.getChildCount();
-        int headerOffset = Constants.DAYS_IN_WEEK - 1; //header is already counted in child count, but it takes space for 7 items;
-        int lastRowElementsCount = (daysOffset + headerOffset + childCount) % Constants.DAYS_IN_WEEK;
-        int lastRowFirstIndex;
-        if (lastRowElementsCount == 0) {
-            lastRowFirstIndex = childCount - Constants.DAYS_IN_WEEK;
-        } else {
-            lastRowFirstIndex = childCount - lastRowElementsCount;
-        }
-        Log.d("TAG", "child count: " + childCount + " last row element count " + lastRowElementsCount + " first index: " + lastRowFirstIndex);
-        for (int i = 0; i < lastRowFirstIndex; i++) {
-            final View child = parent.getChildAt(i);
-            final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+        final int childCount = parent.getAdapter().getItemCount();
+//        int lastRowElementsCount = (firstItemPadding + childCount) % Constants.DAYS_IN_WEEK;
+//
+//        int lastRowFirstIndex;
+//        if (lastRowElementsCount == 0) {
+//            lastRowFirstIndex = childCount - Constants.DAYS_IN_WEEK;
+//        } else {
+//            lastRowFirstIndex = childCount - lastRowElementsCount;
+//        }
 
-            final int left = child.getLeft() - params.leftMargin;
-            final int right = child.getRight() + params.rightMargin;
-            final int top = child.getBottom() + params.bottomMargin;
-            final int bottom = top + mDivider.getIntrinsicHeight();
+        for (int i = 0; i < childCount; i++) {
+            View child = parent.getLayoutManager().findViewByPosition(i);
+            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+
+            int left = child.getLeft() - params.leftMargin;
+            if (i == 0) {
+                left += firstItemPadding;
+            }
+            int right = child.getRight() + params.rightMargin;
+            int top = child.getTop() + params.topMargin;
+            int bottom = top + mDivider.getIntrinsicHeight();
             mDivider.setBounds(left, top, right, bottom);
             mDivider.draw(c);
         }
+
     }
 
 }

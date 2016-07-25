@@ -7,26 +7,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.uzapp.R;
 import com.uzapp.util.Constants;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by vika on 22.07.16.
  */
 public class CalendarDaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private SimpleDateFormat monthFormatter = new SimpleDateFormat("LLLL", Locale.getDefault());
-    private static final int VIEW_TYPE_HEADER = 1;
-    private static final int VIEW_TYPE_DATE = 2;
+
     private List<Date> dateList = new ArrayList<>();
     private Calendar calendar;
     private Date firstAvailableDate;
@@ -64,7 +61,7 @@ public class CalendarDaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void updateSelection(int pagePosition, int dayPosition) {
         if (pagePosition == this.pagePosition) {
             int oldSelectedPosition = selectedPosition;
-            selectedPosition = dayPosition + 1; //add 1 because days are shifted with month name
+            selectedPosition = dayPosition;
             notifyItemChanged(selectedPosition);
             if (oldSelectedPosition != -1) {
                 notifyItemChanged(oldSelectedPosition);
@@ -79,58 +76,38 @@ public class CalendarDaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        if (viewType == VIEW_TYPE_HEADER) {
-            View itemView = layoutInflater.inflate(R.layout.calendar_month_header, parent, false);
-            return new MonthHeaderHolder(itemView, parent.getHeight() / (Constants.MAX_WEEKS_IN_CALENDAR + 1));
-        } else {
-            View itemView = layoutInflater.inflate(R.layout.calendar_day_item, parent, false);
-            return new DayHolder(itemView, parent.getWidth() / Constants.DAYS_IN_WEEK, parent.getHeight() / (Constants.MAX_WEEKS_IN_CALENDAR + 1));
-        }
+        View itemView = layoutInflater.inflate(R.layout.calendar_day_item, parent, false);
+        return new DayHolder(itemView, parent.getWidth() / Constants.DAYS_IN_WEEK, parent.getHeight() / (Constants.MAX_WEEKS_IN_CALENDAR));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if (holder instanceof MonthHeaderHolder) {
-            String monthName = monthFormatter.format(dateList.get(0));
-            ((MonthHeaderHolder) holder).month.setText(monthName);
+        final Date date = dateList.get(position);
+        calendar.setTime(date);
+        ((DayHolder) holder).day.setText(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
+        if (date.before(firstAvailableDate) || date.after(lastAvailableDate)) {
+            ((DayHolder) holder).day.setTextColor(textColorPast);
+            ((DayHolder) holder).day.setBackgroundColor(Color.TRANSPARENT);
+        } else if (position == selectedPosition) {
+            ((DayHolder) holder).day.setTextColor(Color.WHITE);
+            ((DayHolder) holder).day.setBackgroundResource(R.drawable.blue_button_background);
         } else {
-            final Date date = dateList.get(position - 1);
-            calendar.setTime(date);
-            ((DayHolder) holder).day.setText(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
-            if (date.before(firstAvailableDate) || date.after(lastAvailableDate)) {
-                ((DayHolder) holder).day.setTextColor(textColorPast);
-                ((DayHolder) holder).day.setBackgroundColor(Color.TRANSPARENT);
-            } else if (position == selectedPosition) {
-                ((DayHolder) holder).day.setTextColor(Color.WHITE);
-                ((DayHolder) holder).day.setBackgroundResource(R.drawable.blue_button_background);
-            } else {
-                ((DayHolder) holder).day.setTextColor(textColor);
-                ((DayHolder) holder).day.setBackgroundResource(0);
-                ((DayHolder) holder).day.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        listener.onDateSelected(pagePosition, position - 1); //use position-1 because dates start from position==1
-                    }
-                });
-            }
+            ((DayHolder) holder).day.setTextColor(textColor);
+            ((DayHolder) holder).day.setBackgroundResource(0);
+            ((DayHolder) holder).day.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onDateSelected(pagePosition, position);
+                }
+            });
         }
     }
 
     @Override
     public int getItemCount() {
-        if (dateList.size() > 0) {
-            return dateList.size() + 1;
-        }
-        return 0;
+        return dateList.size();
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        if (position == 0) {
-            return VIEW_TYPE_HEADER;
-        }
-        return VIEW_TYPE_DATE;
-    }
 
     public class DayHolder extends RecyclerView.ViewHolder {
         public TextView day;
@@ -143,22 +120,9 @@ public class CalendarDaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             lp.height = height;
             itemView.setLayoutParams(lp);
 
-            ViewGroup.LayoutParams lpText = day.getLayoutParams();
-            lpText.width = width;
+            RelativeLayout.LayoutParams lpText = (RelativeLayout.LayoutParams) day.getLayoutParams();
+            lpText.width = width - lpText.leftMargin - lpText.rightMargin;
             day.setLayoutParams(lpText);
-        }
-    }
-
-    public class MonthHeaderHolder extends RecyclerView.ViewHolder {
-        public TextView month;
-
-        public MonthHeaderHolder(View view, int height) {
-            super(view);
-            month = (TextView) view;
-            ViewGroup.LayoutParams lp = itemView.getLayoutParams();
-            lp.height = height;
-            itemView.setLayoutParams(lp);
-
         }
     }
 

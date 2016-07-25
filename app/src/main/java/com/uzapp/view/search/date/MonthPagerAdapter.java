@@ -5,20 +5,26 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.uzapp.R;
 import com.uzapp.util.Constants;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by vika on 23.07.16.
  */
 public class MonthPagerAdapter extends PagerAdapter {
+    private SimpleDateFormat monthFormatter = new SimpleDateFormat("LLLL", Locale.getDefault());
     private Context context;
     private List<List<Date>> dateListsForPages;
     private List<CalendarDaysAdapter> daysAdapters = new ArrayList<>();
@@ -46,9 +52,9 @@ public class MonthPagerAdapter extends PagerAdapter {
                 daysOffset = 6; //if week starts from monday and first day of month is sunday, than days offset would be -1
             }
         }
-        RecyclerView recyclerView = new RecyclerView(context);
-        recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
-        container.addView(recyclerView);
+        LayoutInflater layoutInflater = LayoutInflater.from(container.getContext());
+        View monthView = layoutInflater.inflate(R.layout.calendar_month_view, container, false);
+        final RecyclerView recyclerView = (RecyclerView) monthView.findViewById(R.id.month);
 
         GridLayoutManager layoutManager = new GridLayoutManager(context, Constants.DAYS_IN_WEEK);
         recyclerView.setLayoutManager(layoutManager);
@@ -58,8 +64,6 @@ public class MonthPagerAdapter extends PagerAdapter {
             @Override
             public int getSpanSize(int position) {
                 if (position == 0) {
-                    return Constants.DAYS_IN_WEEK;
-                } else if (position == 1) {
                     return finalDaysOffset + 1;
                 }
                 return 1;
@@ -70,8 +74,30 @@ public class MonthPagerAdapter extends PagerAdapter {
         adapter.setFirstAvailableDate(minDate);
         recyclerView.setAdapter(adapter);
         daysAdapters.add(adapter);
-        recyclerView.addItemDecoration(new CalendarItemDecorator(context, daysOffset));
-        return recyclerView;
+
+
+        final TextView monthNameView = (TextView) monthView.findViewById(R.id.monthName);
+        monthNameView.setText(monthFormatter.format(monthDays.get(0)));
+        recyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                int monthNameViewPadding, dividerPadding;
+                int padding = (int) context.getResources().getDimension(R.dimen.medium_padding);
+                float textWidth = monthNameView.getWidth();
+                monthNameViewPadding = dividerPadding = recyclerView.getWidth() / Constants.DAYS_IN_WEEK * finalDaysOffset;
+                if (monthNameViewPadding + textWidth + padding >= recyclerView.getWidth()) {
+                    monthNameViewPadding = (int) (recyclerView.getWidth() - textWidth - padding);
+                    dividerPadding = monthNameViewPadding;
+                } else if (monthNameViewPadding == 0) {
+                    monthNameViewPadding = padding;
+                }
+                monthNameView.setPadding(monthNameViewPadding, 0, 0, 0);
+                recyclerView.addItemDecoration(new CalendarItemDecorator(context, dividerPadding));
+            }
+        });
+
+        container.addView(monthView);
+        return monthView;
     }
 
     public void updateSelection(int pagePosition, int monthPosition) {
@@ -83,7 +109,7 @@ public class MonthPagerAdapter extends PagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);
-        RecyclerView recyclerView = (RecyclerView) object;
+        RecyclerView recyclerView = (RecyclerView) ((View) object).findViewById(R.id.month);
         daysAdapters.remove(recyclerView.getAdapter());
     }
 
