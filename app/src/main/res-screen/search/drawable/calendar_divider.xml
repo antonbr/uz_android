@@ -4,5 +4,5 @@
     <solid android:color="@color/calendarDividerColor" />
     <size
         android:width="100dp"
-        android:height="2dp" />
+        android:height="1.5dp" />
 </shape>

@@ -1,6 +1,7 @@
 package com.uzapp.view.search;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -66,8 +67,6 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
     protected static final int SELECT_SECOND_DATE = 14;
     private static final int PERMISSION_ACCESS_FINE_LOCATION = 1;
     private SimpleDateFormat monthFormatter = new SimpleDateFormat("LLLL", Locale.getDefault());
-    private SimpleDateFormat dayOfMonthFormatter = new SimpleDateFormat("dd");
-    private SimpleDateFormat dayOfWeekFormatter = new SimpleDateFormat("EE");
     @BindView(R.id.pathFrom) EditText pathFrom;
     @BindView(R.id.pathTo) EditText pathTo;
     @BindView(R.id.useLocationBtn) CheckableImageView useLocationBtn;
@@ -133,7 +132,9 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
     @OnCheckedChanged(R.id.backRouteToggle)
     void onBackRouteToggleChanged() {
         checkAllFieldsFilled();
-        datePickerAdapter.setSelectingSecondDate(backRouteToggle.isChecked());
+        if (datePickerAdapter != null) {
+            datePickerAdapter.setSelectingSecondDate(backRouteToggle.isChecked());
+        }
     }
 
     @OnClick(R.id.seeFullCalendarBtn)
@@ -258,6 +259,17 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Fragment fragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+        if (fragment != null && fragment instanceof PickDateFragment) {
+            fragment.setTargetFragment(this, fragment.getTargetRequestCode());
+        } else if (fragment != null && fragment instanceof StationSearchFragment) {
+            fragment.setTargetFragment(this, fragment.getTargetRequestCode());
+        }
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         if (googleApiClient != null) {
@@ -303,7 +315,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
                 datePickerLayoutManager.scrollToPositionWithOffset(selectedPosition, 0);
                 updateMonthName(selectedPosition);
             }
-                backRouteToggle.setEnabled(!firstDate.equals(dates.get(dates.size() - 1)));
+            backRouteToggle.setEnabled(!firstDate.equals(dates.get(dates.size() - 1)));
 
             checkAllFieldsFilled();
         } else if (requestCode == SELECT_SECOND_DATE) {
@@ -418,8 +430,10 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
         if (visible) {
             firstDateLayout.bindDate(firstDate);
             secondDateLayout.bindDate(secondDate);
-            firstDateLayout.setSelectedDayBackground();
-            secondDateLayout.setSelectedDayBackground();
+            firstDateLayout.setSelectedDayBackground(true);
+            secondDateLayout.setSelectedDayBackground(false);
+            firstDateLayout.setSelectedTextColor();
+            secondDateLayout.setSelectedTextColor();
             firstMonthName.setText(monthFormatter.format(firstDate));
             secondMonthName.setText(monthFormatter.format(secondDate));
             int daysBetween = CommonUtils.getDaysDifference(secondDate, firstDate);

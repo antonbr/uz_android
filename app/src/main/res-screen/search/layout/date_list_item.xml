@@ -2,37 +2,61 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
-        android:id="@+id/dateView"
+        android:id="@+id/dateArrowContainer"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
-        android:orientation="vertical"
-        android:paddingBottom="9dp"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:paddingTop="7dp">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/dayOfMonth"
+
+        <LinearLayout
+            android:id="@+id/dateContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="30"
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/text_size"/>
+            android:orientation="vertical"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp">
+
+            <TextView
+                android:id="@+id/dayOfMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="30"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_size"/>
+
+            <TextView
+                android:id="@+id/dayOfWeek"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:ems="2"
+                android:gravity="center"
+                android:text="Сб"
+                android:textAllCaps="true"
+                android:textColor="@color/dayOfWeekTextColor"
+                android:textSize="@dimen/text_size_small"/>
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/dayOfWeek"
+            android:id="@+id/selectedDateArrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/dateContainer"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="4dp"
-            android:ems="2"
+            android:layout_marginTop="-13dp"
             android:gravity="center"
-            android:text="Сб"
-            android:textAllCaps="true"
-            android:textColor="@color/dayOfWeekTextColor"
-            android:textSize="@dimen/text_size_small"/>
+            android:paddingBottom="4dp"
+            android:text="@string/search_first_date_arrow"
+            android:textColor="@color/accentColor"
+            android:textSize="15sp"
+            android:visibility="visible"/>
+
     </LinearLayout>
 </merge>

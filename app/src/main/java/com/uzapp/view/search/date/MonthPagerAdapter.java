@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +45,6 @@ public class MonthPagerAdapter extends PagerAdapter {
         int daysOffset = 0;
         if (monthDays.size() > 0) {
             calendar.setTime(monthDays.get(0));
-            Log.d("TAG", "day of week: " + calendar.get(Calendar.DAY_OF_WEEK));
             daysOffset = calendar.get(Calendar.DAY_OF_WEEK) - calendar.getFirstDayOfWeek();
             if (daysOffset == -1) {
                 daysOffset = 6; //if week starts from monday and first day of month is sunday, than days offset would be -1

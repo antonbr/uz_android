@@ -30,14 +30,6 @@ public class CalendarItemDecorator extends RecyclerView.ItemDecoration {
         if (parent.getAdapter().getItemCount() == 0) return;
 
         final int childCount = parent.getAdapter().getItemCount();
-//        int lastRowElementsCount = (firstItemPadding + childCount) % Constants.DAYS_IN_WEEK;
-//
-//        int lastRowFirstIndex;
-//        if (lastRowElementsCount == 0) {
-//            lastRowFirstIndex = childCount - Constants.DAYS_IN_WEEK;
-//        } else {
-//            lastRowFirstIndex = childCount - lastRowElementsCount;
-//        }
 
         for (int i = 0; i < childCount; i++) {
             View child = parent.getLayoutManager().findViewByPosition(i);

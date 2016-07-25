@@ -1,10 +1,8 @@
 package com.uzapp.view.search;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -28,9 +26,12 @@ public class DateItemView extends RelativeLayout {
 
     @BindView(R.id.dayOfMonth) TextView dayOfMonth;
     @BindView(R.id.dayOfWeek) TextView dayOfWeek;
-    @BindView(R.id.dateView) LinearLayout dateView;
+    @BindView(R.id.dateContainer) LinearLayout dateContainer;
+    @BindView(R.id.dateArrowContainer) LinearLayout dateArrowContainer;
+    @BindView(R.id.selectedDateArrow) TextView selectedDateArrow;
     @BindColor(R.color.textColorHint) int unavailableTextColor;
     @BindColor(R.color.textColor) int monthColor;
+    @BindColor(R.color.accentColor) int selectedColor;
     @BindColor(R.color.dayOfWeekTextColor) int dayOfWeekColor;
     private int viewWidth;
 
@@ -44,6 +45,7 @@ public class DateItemView extends RelativeLayout {
         init();
     }
 
+
     public DateItemView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
@@ -51,21 +53,34 @@ public class DateItemView extends RelativeLayout {
 
     public void init() {
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        View v = inflater.inflate(R.layout.date_list_item, this, true);
+        inflater.inflate(R.layout.date_list_item, this, true);
         ButterKnife.bind(this);
     }
 
     public void bindDate(Date date) {
         dayOfMonth.setText(dayOfMonthFormatter.format(date));
         dayOfWeek.setText(dayOfWeekFormatter.format(date));
+        selectedDateArrow.setVisibility(INVISIBLE);
     }
 
     public void setBackgroundToday() {
-        dateView.setBackgroundResource(R.drawable.today_background);
+        dateContainer.setBackgroundResource(R.drawable.today_background);
+        dateArrowContainer.setBackgroundResource(0);
+        selectedDateArrow.setVisibility(GONE);
     }
 
-    public void setSelectedDayBackground() {
-        dateView.setBackgroundResource(R.drawable.selected_day_background);
+    public void clearBackground() {
+        dateContainer.setBackgroundResource(0);
+        dateArrowContainer.setBackgroundResource(0);
+        selectedDateArrow.setVisibility(INVISIBLE);
+    }
+
+    public void setSelectedDayBackground(boolean isFirstDay) {
+        dateContainer.setBackgroundResource(0);
+        dateArrowContainer.setBackgroundResource(R.drawable.selected_day_background);
+        selectedDateArrow.setVisibility(VISIBLE);
+        selectedDateArrow.setText(getContext().getString(isFirstDay ? R.string.search_first_date_arrow :
+                R.string.search_second_date_arrow));
     }
 
     public void setUnavailableTextColor() {
@@ -78,10 +93,10 @@ public class DateItemView extends RelativeLayout {
         dayOfWeek.setTextColor(dayOfWeekColor);
     }
 
-    public void clearBackground() {
-        dateView.setBackgroundColor(Color.TRANSPARENT);
+    public void setSelectedTextColor() {
+        dayOfMonth.setTextColor(selectedColor);
+        dayOfWeek.setTextColor(selectedColor);
     }
-
     public void setViewWidth(int viewWidth) {
         this.viewWidth = viewWidth;
         ViewGroup.LayoutParams layoutParams = getLayoutParams();

@@ -16,6 +16,8 @@
     <string name="search_date_title">Отправление</string>
     <string name="search_backward_button">+ Обратно</string>
     <string name="search_see_full_calendar">Весь календарь</string>
+    <string name="search_first_date_arrow">→</string>
+    <string name="search_second_date_arrow">←</string>
     <string name="search_find_tickets">Найти билеты</string>
     <string name="search_title">Новая поездка</string>
     <string name="search_stations_not_valid">Станції відправлення та призначення співпадають</string>
@@ -40,5 +42,6 @@
     <string name="calendar_fifth_day_of_week">Пт</string>
     <string name="calendar_sixth_day_of_week">Сб</string>
     <string name="calendar_seventh_day_of_week">Вс</string>
+
 
 </resources>

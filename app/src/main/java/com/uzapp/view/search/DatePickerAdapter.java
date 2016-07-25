@@ -63,15 +63,17 @@ public class DatePickerAdapter extends RecyclerView.Adapter<DatePickerAdapter.Da
         final Date date = dateList.get(position);
         holder.dateItemView.bindDate(date);
         if (position == selectedFirstPosition) {
-            holder.dateItemView.setSelectedDayBackground();
+            holder.dateItemView.setSelectedDayBackground(true);
         } else if (position == selectedSecondPosition) {
-            holder.dateItemView.setSelectedDayBackground();
+            holder.dateItemView.setSelectedDayBackground(false);
         } else if (position == 0 && position != selectedFirstPosition && position != selectedSecondPosition) {
             holder.dateItemView.setBackgroundToday();
         } else {
             holder.dateItemView.clearBackground();
         }
-        if (position <selectedFirstPosition && isSelectingSecondDate) {
+        if (position == selectedFirstPosition || position == selectedSecondPosition) {
+            holder.dateItemView.setSelectedTextColor();
+        } else if (position < selectedFirstPosition && isSelectingSecondDate) {
             holder.dateItemView.setUnavailableTextColor();
         } else {
             holder.dateItemView.setAvailableTextColor();
