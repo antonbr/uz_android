@@ -39,7 +39,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
@@ -139,11 +138,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
 
     @OnClick(R.id.seeFullCalendarBtn)
     void seeFullCalendarBtn() {
-        Calendar calendar = GregorianCalendar.getInstance();
-        calendar.set(Calendar.HOUR, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
+        Calendar calendar = CommonUtils.getCalendar();
         if (backRouteToggle.isChecked()) {
             calendar.setTime(firstDate);
             calendar.add(Calendar.DAY_OF_MONTH, 1);
@@ -218,11 +213,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
 
         dates = new ArrayList<Date>();
         monthPositionMap = new LinkedHashMap<>();
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
+        Calendar calendar = CommonUtils.getCalendar();
         dates.add(calendar.getTime());
         String currentMonthName = monthFormatter.format(calendar.getTime());
         monthPositionMap.put(0, currentMonthName);
@@ -308,19 +299,27 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
             pathTo.setText(toStation.getName());
         } else if (requestCode == SELECT_FIRST_DATE) {
             firstDate = (Date) data.getSerializableExtra("date");
-            int selectedPosition = dates.indexOf(firstDate);
+            final int selectedPosition = dates.indexOf(firstDate);
             datePickerAdapter.setSelectedFirstPosition(selectedPosition);
-            if (selectedPosition < datePickerLayoutManager.findFirstCompletelyVisibleItemPosition() ||
-                    selectedPosition > datePickerLayoutManager.findLastCompletelyVisibleItemPosition()) {
-                datePickerLayoutManager.scrollToPositionWithOffset(selectedPosition, 0);
-                updateMonthName(selectedPosition);
-            }
+            scrollToSelectedPosition(selectedPosition);
             backRouteToggle.setEnabled(!firstDate.equals(dates.get(dates.size() - 1)));
-
             checkAllFieldsFilled();
         } else if (requestCode == SELECT_SECOND_DATE) {
             secondDate = (Date) data.getSerializableExtra("date");
             setSelectedDateLayoutVisibility(true);
+        }
+    }
+
+    private void scrollToSelectedPosition(final int selectedPosition) {
+        if (selectedPosition < datePickerLayoutManager.findFirstCompletelyVisibleItemPosition() ||
+                selectedPosition > datePickerLayoutManager.findLastCompletelyVisibleItemPosition()) {
+            datePickerList.post(new Runnable() {
+                @Override
+                public void run() {
+                    datePickerLayoutManager.scrollToPositionWithOffset(selectedPosition, 0);
+                    updateMonthName(selectedPosition);
+                }
+            });
         }
     }
 
@@ -385,7 +384,6 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
     };
 
     private void updateMonthName(int firstVisiblePosition) {
-
         ListIterator<Integer> iterator = new ArrayList(monthPositionMap.keySet()).listIterator(monthPositionMap.size());
         while (iterator.hasPrevious()) {
             Integer key = iterator.previous();
@@ -444,6 +442,5 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
         }
         checkAllFieldsFilled();
     }
-
 
 }

@@ -11,19 +11,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.uzapp.R;
+import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
  * Created by vika on 22.07.16.
  */
 public class CalendarDaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
     private List<Date> dateList = new ArrayList<>();
     private Calendar calendar;
     private Date firstAvailableDate;
@@ -42,11 +41,7 @@ public class CalendarDaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.pagePosition = pagePosition;
         this.dateList.clear();
         this.dateList.addAll(dateList);
-        calendar = GregorianCalendar.getInstance();
-        calendar.set(Calendar.HOUR, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
+        calendar = CommonUtils.getCalendar();
         firstAvailableDate = calendar.getTime();
         calendar.add(Calendar.DAY_OF_MONTH, Constants.MAX_DAYS);
         lastAvailableDate = calendar.getTime();

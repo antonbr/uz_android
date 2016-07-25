@@ -43,5 +43,13 @@ public class CommonUtils {
         return diffMonth;
     }
 
+    public static Calendar getCalendar() {
+        Calendar calendar = GregorianCalendar.getInstance();
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar;
+    }
 
 }

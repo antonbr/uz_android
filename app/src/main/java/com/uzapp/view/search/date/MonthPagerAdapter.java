@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.uzapp.R;
+import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 
 import java.text.SimpleDateFormat;
@@ -27,7 +28,7 @@ public class MonthPagerAdapter extends PagerAdapter {
     private Context context;
     private List<List<Date>> dateListsForPages;
     private List<CalendarDaysAdapter> daysAdapters = new ArrayList<>();
-    private Calendar calendar = Calendar.getInstance();
+    private Calendar calendar = CommonUtils.getCalendar();
     private CalendarDaysAdapter.OnDateSelectedListener listener;
     private Date minDate;
 
@@ -42,60 +43,61 @@ public class MonthPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         List<Date> monthDays = dateListsForPages.get(position);
-        int daysOffset = 0;
-        if (monthDays.size() > 0) {
-            calendar.setTime(monthDays.get(0));
-            daysOffset = calendar.get(Calendar.DAY_OF_WEEK) - calendar.getFirstDayOfWeek();
-            if (daysOffset == -1) {
-                daysOffset = 6; //if week starts from monday and first day of month is sunday, than days offset would be -1
-            }
+        if (monthDays.size() == 0) {
+            return null;
         }
+
         LayoutInflater layoutInflater = LayoutInflater.from(container.getContext());
         View monthView = layoutInflater.inflate(R.layout.calendar_month_view, container, false);
-        final RecyclerView recyclerView = (RecyclerView) monthView.findViewById(R.id.month);
+        RecyclerView monthGridView = (RecyclerView) monthView.findViewById(R.id.month);
+        TextView monthNameView = (TextView) monthView.findViewById(R.id.monthName);
 
         GridLayoutManager layoutManager = new GridLayoutManager(context, Constants.DAYS_IN_WEEK);
-        recyclerView.setLayoutManager(layoutManager);
+        monthGridView.setLayoutManager(layoutManager);
+        monthGridView.setHasFixedSize(true);
+        final int daysOffset = getDaysOffset(monthDays.get(0));
+        layoutManager.setSpanSizeLookup(new MonthSpanSizeLookup(daysOffset));
 
-        final int finalDaysOffset = daysOffset;
-        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                if (position == 0) {
-                    return finalDaysOffset + 1;
-                }
-                return 1;
-            }
-        });
-        recyclerView.setHasFixedSize(true);
         CalendarDaysAdapter adapter = new CalendarDaysAdapter(monthDays, listener, position, context);
         adapter.setFirstAvailableDate(minDate);
-        recyclerView.setAdapter(adapter);
+        monthGridView.setAdapter(adapter);
         daysAdapters.add(adapter);
 
-
-        final TextView monthNameView = (TextView) monthView.findViewById(R.id.monthName);
         monthNameView.setText(monthFormatter.format(monthDays.get(0)));
-        recyclerView.post(new Runnable() {
+        alignMonthName(monthNameView, monthGridView, daysOffset);
+
+        container.addView(monthView);
+        return monthView;
+    }
+
+    private void alignMonthName(final TextView monthNameView, final RecyclerView monthGridView, final int daysOffset) {
+        monthGridView.post(new Runnable() {
             @Override
             public void run() {
                 int monthNameViewPadding, dividerPadding;
                 int padding = (int) context.getResources().getDimension(R.dimen.medium_padding);
                 float textWidth = monthNameView.getWidth();
-                monthNameViewPadding = dividerPadding = recyclerView.getWidth() / Constants.DAYS_IN_WEEK * finalDaysOffset;
-                if (monthNameViewPadding + textWidth + padding >= recyclerView.getWidth()) {
-                    monthNameViewPadding = (int) (recyclerView.getWidth() - textWidth - padding);
+                monthNameViewPadding = dividerPadding = monthGridView.getWidth() / Constants.DAYS_IN_WEEK * daysOffset;
+                if (monthNameViewPadding + textWidth + padding >= monthGridView.getWidth()) {
+                    monthNameViewPadding = (int) (monthGridView.getWidth() - textWidth - padding);
                     dividerPadding = monthNameViewPadding;
                 } else if (monthNameViewPadding == 0) {
                     monthNameViewPadding = padding;
                 }
                 monthNameView.setPadding(monthNameViewPadding, 0, 0, 0);
-                recyclerView.addItemDecoration(new CalendarItemDecorator(context, dividerPadding));
+                monthGridView.addItemDecoration(new CalendarItemDecorator(context, dividerPadding));
             }
         });
+    }
 
-        container.addView(monthView);
-        return monthView;
+    private int getDaysOffset(Date firstDate) {
+        int daysOffset;
+        calendar.setTime(firstDate);
+        daysOffset = calendar.get(Calendar.DAY_OF_WEEK) - calendar.getFirstDayOfWeek();
+        if (daysOffset == -1) {
+            daysOffset = 6; //if week starts from monday and first day of month is sunday, than days offset would be -1
+        }
+        return daysOffset;
     }
 
     public void updateSelection(int pagePosition, int monthPosition) {
@@ -119,5 +121,21 @@ public class MonthPagerAdapter extends PagerAdapter {
     @Override
     public boolean isViewFromObject(View view, Object object) {
         return view == object;
+    }
+
+    private class MonthSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
+        int daysOffset;
+
+        public MonthSpanSizeLookup(int daysOffset) {
+            this.daysOffset = daysOffset;
+        }
+
+        @Override
+        public int getSpanSize(int position) {
+            if (position == 0) {
+                return daysOffset + 1;
+            }
+            return 1;
+        }
     }
 }

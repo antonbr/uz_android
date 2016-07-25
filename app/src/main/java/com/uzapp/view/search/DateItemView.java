@@ -33,7 +33,6 @@ public class DateItemView extends RelativeLayout {
     @BindColor(R.color.textColor) int monthColor;
     @BindColor(R.color.accentColor) int selectedColor;
     @BindColor(R.color.dayOfWeekTextColor) int dayOfWeekColor;
-    private int viewWidth;
 
     public DateItemView(Context context) {
         super(context);
@@ -98,7 +97,6 @@ public class DateItemView extends RelativeLayout {
         dayOfWeek.setTextColor(selectedColor);
     }
     public void setViewWidth(int viewWidth) {
-        this.viewWidth = viewWidth;
         ViewGroup.LayoutParams layoutParams = getLayoutParams();
         layoutParams.width = viewWidth;
         setLayoutParams(layoutParams);

@@ -74,11 +74,7 @@ public class PickDateFragment extends Fragment implements CalendarDaysAdapter.On
     }
 
     private void initNearestDates() {
-        Calendar calendar = GregorianCalendar.getInstance();
-        calendar.set(Calendar.HOUR, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
+        Calendar calendar = CommonUtils.getCalendar();
         today = calendar.getTime();
         calendar.add(Calendar.DAY_OF_MONTH, 1);
         tomorrow = calendar.getTime();
@@ -105,12 +101,8 @@ public class PickDateFragment extends Fragment implements CalendarDaysAdapter.On
         int monthsCount = CommonUtils.getMonthDifference(minDate, calendar.getTime());
 
         for (int i = 0; i <= monthsCount; i++) {
-            calendar = GregorianCalendar.getInstance();
+            calendar =CommonUtils.getCalendar();
             calendar.setTime(minDate);
-            calendar.set(Calendar.HOUR, 0);
-            calendar.set(Calendar.MINUTE, 0);
-            calendar.set(Calendar.SECOND, 0);
-            calendar.set(Calendar.MILLISECOND, 0);
 
             calendar.add(Calendar.MONTH, i);
             calendar.set(Calendar.DAY_OF_MONTH, 1);

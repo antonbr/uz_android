@@ -53,6 +53,7 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
     private Realm realm;
     private Station selectedStation;
     private Call<List<Station>> searchStationCall;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -87,7 +88,8 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
     }
 
     private void showPopularStations() {
-        RealmResults<PopularStation> popularStations = realm.where(PopularStation.class).findAll().sort("accessTime", Sort.DESCENDING);
+        RealmResults<PopularStation> popularStations = realm.where(PopularStation.class).findAll().
+                sort("accessTime", Sort.DESCENDING);
         if (popularStations.size() > 0) {
             List<Station> stationList = new ArrayList<Station>(popularStations.size());
             for (PopularStation popularStation : popularStations) {
@@ -139,7 +141,7 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if(searchStationCall!=null){
+        if (searchStationCall != null) {
             searchStationCall.cancel();
         }
         unbinder.unbind();
@@ -156,7 +158,7 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
 
         @Override
         public void onFailure(Call<List<Station>> call, Throwable t) {
-            if(!call.isCanceled()) {
+            if (!call.isCanceled()) {
                 searchProgress.setVisibility(View.GONE);
             }
         }
