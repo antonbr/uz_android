@@ -7,11 +7,11 @@ import org.parceler.Parcel;
  */
 @Parcel
 public class Station {
-    int code;
+    long code;
     String name;
     String railway;
 
-    public Station(int code, String name, String railway) {
+    public Station(long code, String name, String railway) {
         this.code = code;
         this.name = name;
         this.railway = railway;
@@ -20,11 +20,11 @@ public class Station {
     public Station() {
     }
 
-    public int getCode() {
+    public long getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(long code) {
         this.code = code;
     }
 

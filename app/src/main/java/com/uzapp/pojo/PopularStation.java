@@ -9,17 +9,17 @@ import io.realm.annotations.Required;
  * Created by vika on 17.07.16.
  */
 public class PopularStation extends RealmObject {
-    int code;
+    long code;
     @Required
     String name;
     String railway;
     Date accessTime;
 
-    public int getCode() {
+    public long getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(long code) {
         this.code = code;
     }
 
@@ -47,7 +47,7 @@ public class PopularStation extends RealmObject {
         this.accessTime = accessTime;
     }
 
-    public void setValues(int code, String name, String railway, Date accessTime){
+    public void setValues(long code, String name, String railway, Date accessTime){
         this.code =  code;
         this.name = name;
         this.railway = railway;

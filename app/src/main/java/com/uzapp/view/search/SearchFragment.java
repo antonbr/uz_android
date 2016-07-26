@@ -32,6 +32,7 @@ import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.view.search.date.PickDateFragment;
 import com.uzapp.view.search.station.StationSearchFragment;
+import com.uzapp.view.trains.SelectTrainFragment;
 
 import org.parceler.Parcels;
 
@@ -60,12 +61,14 @@ import retrofit2.Response;
  * Created by vika on 13.07.16.
  */
 public class SearchFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, DatePickerAdapter.OnDateClickListener {
+    private static final String TAG = SearchFragment.class.getName();
     protected static final int SELECT_STATION_FROM_REQUEST_CODE = 11;
     protected static final int SELECT_STATION_TO_REQUEST_CODE = 12;
     protected static final int SELECT_FIRST_DATE = 13;
     protected static final int SELECT_SECOND_DATE = 14;
     private static final int PERMISSION_ACCESS_FINE_LOCATION = 1;
     private SimpleDateFormat monthFormatter = new SimpleDateFormat("LLLL", Locale.getDefault());
+    private SimpleDateFormat yearMonthDayFormatter = new SimpleDateFormat("yyyy-MM-dd");
     @BindView(R.id.pathFrom) EditText pathFrom;
     @BindView(R.id.pathTo) EditText pathTo;
     @BindView(R.id.useLocationBtn) CheckableImageView useLocationBtn;
@@ -150,7 +153,14 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
 
     @OnClick(R.id.findTicketsBtn)
     void onFindTicketsBtnClicked() {
-        Snackbar.make(getView(), R.string.search_stations_not_valid, Snackbar.LENGTH_SHORT).show();
+        if (fromStation.getCode() == toStation.getCode()) {
+            Snackbar.make(getView(), R.string.search_stations_not_valid, Snackbar.LENGTH_SHORT).show();
+        } else {
+            long secondDateTime = secondDate == null ? 0 : secondDate.getTime();
+            Fragment fragment = SelectTrainFragment.getInstance(fromStation.getCode(), toStation.getCode(),
+                    firstDate.getTime(), secondDateTime);
+            ((MainActivity) getActivity()).replaceFragment(fragment, true);
+        }
     }
 
     @OnClick(R.id.resetBtn)

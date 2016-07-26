@@ -1,6 +1,7 @@
 package com.uzapp.network;
 
 import com.uzapp.pojo.Station;
+import com.uzapp.pojo.TrainSearchResult;
 
 import java.util.List;
 
@@ -18,4 +19,14 @@ public interface ApiInterface {
 
     @GET("order/stations")
     Call<List<Station>> searchStations(@Query("name") String name);
+
+    @GET("order/trains")
+    Call<TrainSearchResult> searchTrains(@Query("station_from_code") long stationFromCode,
+                                         @Query("station_to_code") long stationToCode,
+                                         @Query("date") long date);
+
+    @GET("order/trains_extended")
+    Call<TrainSearchResult> searchTrainsExtended(@Query("station_from_code") long stationFromCode,
+                                         @Query("station_to_code") long stationToCode,
+                                         @Query("date") long date);
 }
