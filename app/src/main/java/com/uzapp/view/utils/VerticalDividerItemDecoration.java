@@ -11,22 +11,23 @@ import android.view.View;
 /**
  * Created by vika on 13.07.16.
  */
-public class DividerItemDecoration extends RecyclerView.ItemDecoration {
+public class VerticalDividerItemDecoration extends RecyclerView.ItemDecoration {
 
     private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
 
     private Drawable divider;
-    private int paddingLeft;
+    private int paddingLeft, paddingRight;
 
     /**
      * Default divider will be used
      */
-    public DividerItemDecoration(Context context) {
+    public VerticalDividerItemDecoration(Context context) {
         setupDefaultDivider(context);
     }
 
-    public DividerItemDecoration(Context context, int dividerRes, int paddingLeftRes) {
-        this.paddingLeft = (int) context.getResources().getDimension(paddingLeftRes);
+    public VerticalDividerItemDecoration(Context context, int dividerRes, int paddingLeft, int paddingRight) {
+        this.paddingLeft = paddingLeft;
+        this.paddingRight = paddingRight;
         if (divider != null) {
             this.divider = ContextCompat.getDrawable(context, dividerRes);
         } else {
@@ -43,10 +44,10 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         int left = parent.getPaddingLeft() + paddingLeft;
-        int right = parent.getWidth() - parent.getPaddingRight();
+        int right = parent.getWidth() - parent.getPaddingRight() - paddingRight;
 
         int childCount = parent.getChildCount();
-        for (int i = 0; i < childCount-1; i++) {
+        for (int i = 0; i < childCount - 1; i++) {
             View child = parent.getChildAt(i);
 
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();

@@ -10,13 +10,13 @@ import java.util.List;
  */
 public class TrainSearchResult {
     @SerializedName("station_from_code")
-    public int stationFromCode;
+    private int stationFromCode;
     @SerializedName("station_to_code")
-    public int stationToCode;
+    private int stationToCode;
     @SerializedName("not_full_info")
-    public boolean notFullInfo;
+    private boolean notFullInfo;
     @SerializedName("trains")
-    public List<Train> trains = new ArrayList<Train>();
+    private List<Train> trains = new ArrayList<Train>();
 
     public int getStationFromCode() {
         return stationFromCode;

@@ -39,7 +39,7 @@
                 android:gravity="center"
                 android:text="Сб"
                 android:textAllCaps="true"
-                android:textColor="@color/dayOfWeekTextColor"
+                android:textColor="@color/textColorDark"
                 android:textSize="@dimen/text_size_small"/>
         </LinearLayout>
 

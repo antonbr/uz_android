@@ -18,7 +18,7 @@ import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.PopularStation;
 import com.uzapp.pojo.Station;
 import com.uzapp.util.Constants;
-import com.uzapp.view.utils.DividerItemDecoration;
+import com.uzapp.view.utils.VerticalDividerItemDecoration;
 import com.uzapp.view.search.SearchEditText;
 
 import org.parceler.Parcels;
@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -48,6 +49,7 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
     @BindView(R.id.stationsList) RecyclerView stationsList;
     @BindView(R.id.stationsHeader) TextView stationsHeader;
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
+    @BindDimen(R.dimen.big_padding) int padding;
     private Unbinder unbinder;
     private StationsSearchResultAdapter adapter;
     private Realm realm;
@@ -66,7 +68,7 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
         adapter = new StationsSearchResultAdapter(this);
         stationsList.setLayoutManager(new LinearLayoutManager(getContext()));
         stationsList.setAdapter(adapter);
-        stationsList.addItemDecoration(new DividerItemDecoration(getContext(), R.drawable.list_divider, R.dimen.big_padding));
+        stationsList.addItemDecoration(new VerticalDividerItemDecoration(getContext(), R.drawable.list_divider, padding, 0));
         cityEditText.setContentChangedListener(this);
         showPopularStations();
         return view;

@@ -7,19 +7,19 @@ import com.google.gson.annotations.SerializedName;
  */
 public class TrainPlace {
     @SerializedName("type")
-    public String type;
+    private String type;
     @SerializedName("lower")
-    public int lower;
+    private int lower;
     @SerializedName("top")
-    public int top;
+    private int top;
     @SerializedName("side_lower")
-    public int sideLower;
+    private int sideLower;
     @SerializedName("side_top")
-    public int sideTop;
+    private int sideTop;
     @SerializedName("total")
-    public int total;
+    private int total;
     @SerializedName("class_name")
-    public String className;
+    private String className;
 
     public String getType() {
         return type;

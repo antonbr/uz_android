@@ -42,6 +42,22 @@
     <string name="calendar_fifth_day_of_week">Пт</string>
     <string name="calendar_sixth_day_of_week">Сб</string>
     <string name="calendar_seventh_day_of_week">Вс</string>
+    <string name="trains_eticket">электронный\nбилет</string>
 
-
+    <string-array name="carriage_types_long">
+        <item>Люкс</item>
+        <item>М\'який</item>
+        <item>Купе</item>
+        <item>Плацкарт</item>
+        <item>Сидячий</item>
+        <item>Загальний</item>
+    </string-array>
+    <string-array name="carriage_types_short">
+        <item>Л</item>
+        <item>М</item>
+        <item>К</item>
+        <item>П</item>
+        <item>С</item>
+        <item>О</item>
+    </string-array>
 </resources>

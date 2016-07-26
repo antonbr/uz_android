@@ -32,7 +32,7 @@ public class DateItemView extends RelativeLayout {
     @BindColor(R.color.textColorHint) int unavailableTextColor;
     @BindColor(R.color.textColor) int monthColor;
     @BindColor(R.color.accentColor) int selectedColor;
-    @BindColor(R.color.dayOfWeekTextColor) int dayOfWeekColor;
+    @BindColor(R.color.textColorDark) int dayOfWeekColor;
 
     public DateItemView(Context context) {
         super(context);

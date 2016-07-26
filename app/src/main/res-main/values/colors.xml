@@ -5,9 +5,10 @@
     <color name="textColor">#434a54</color>
     <color name="stationsFromToDividerColor">#E6E9ED</color>
     <color name="textColorHint">#aab2bd</color>
+    <color name="colorHintDivider">#4Daab2bd</color>
     <color name="dividerColor">#d8d8d8</color>
     <color name="stationsListDividerColor">#aeb2a4</color>
-    <color name="dayOfWeekTextColor">#656D78</color>
+    <color name="textColorDark">#656D78</color>
     <color name="disabledButtonColor">#4D4183d7</color>
     <color name="colorControlHighlightDarkTheme">#40ffffff</color>
     <color name="calendarDividerColor">#40a6aeb2</color>

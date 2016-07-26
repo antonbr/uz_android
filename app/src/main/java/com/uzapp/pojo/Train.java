@@ -10,35 +10,35 @@ import java.util.List;
  */
 public class Train {
     @SerializedName("number")
-    public String number;
+    private String number;
     @SerializedName("model")
-    public int model;
+    private int model;
     @SerializedName("category")
-    public int category;
+    private int category;
     @SerializedName("station_from_name")
-    public String stationFromName;
+    private String stationFromName;
     @SerializedName("station_from_code")
-    public int stationFromCode;
+    private int stationFromCode;
     @SerializedName("station_to_name")
-    public String stationToName;
+    private String stationToName;
     @SerializedName("station_to_code")
-    public int stationToCode;
+    private int stationToCode;
     @SerializedName("class_name")
-    public String className;
+    private String className;
     @SerializedName("class_code")
-    public int classCode;
+    private int classCode;
     @SerializedName("fasted_name")
-    public String fastedName;
+    private String fastedName;
     @SerializedName("fasted_code")
-    public int fastedCode;
+    private int fastedCode;
     @SerializedName("departure_date")
-    public int departureDate;
+    private int departureDate;
     @SerializedName("arrival_date")
-    public int arrivalDate;
+    private int arrivalDate;
     @SerializedName("travel_time")
-    public String travelTime;
+    private String travelTime;
     @SerializedName("places")
-    public List<TrainPlace> places = new ArrayList<TrainPlace>();
+    private List<TrainPlace> places = new ArrayList<TrainPlace>();
 
     public String getNumber() {
         return number;

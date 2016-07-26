@@ -1,0 +1,98 @@
+package com.uzapp.view.trains;
+
+import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.uzapp.R;
+import com.uzapp.pojo.Train;
+import com.uzapp.view.utils.VerticalDividerItemDecoration;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import butterknife.BindDimen;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+/**
+ * Created by vika on 26.07.16.
+ */
+public class TrainsAdapter extends RecyclerView.Adapter<TrainsAdapter.TrainHolder> {
+    private SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM, EE");
+    private List<Train> trainList = new ArrayList<>();
+    private Context context;
+
+    public TrainsAdapter(Context context) {
+        this.context = context;
+    }
+
+    public void addTrains(List<Train> trainList) {
+        this.trainList.addAll(trainList);
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public TrainHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.train_item_view, parent, false);
+        return new TrainHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(TrainHolder holder, int position) {
+        Train train = trainList.get(position);
+        Date departureDate = new Date(train.getDepartureDate());
+        Date arrivalDate = new Date(train.getArrivalDate());
+        holder.departureTime.setText(timeFormat.format(departureDate));
+        holder.departureDay.setText(dateFormat.format(departureDate));
+        holder.arrivalTime.setText(timeFormat.format(arrivalDate));
+        holder.arrivalDay.setText(dateFormat.format(arrivalDate));
+        holder.travelTime.setText(train.getTravelTime());
+        holder.trainName.setText(train.getNumber());
+        holder.stationFrom.setText(train.getStationFromName());
+        holder.stationTo.setText(train.getStationToName());
+        PlaceTypesAdapter placeTypesAdapter = new PlaceTypesAdapter(context, train.getPlaces());
+        holder.placeTypesList.setAdapter(placeTypesAdapter);
+        holder.placeTypesList.setLayoutManager(new LinearLayoutManager(context));
+        VerticalDividerItemDecoration itemDecoration = new VerticalDividerItemDecoration(context, R.drawable.list_divider, holder.padding, holder.padding);
+        holder.placeTypesList.addItemDecoration(itemDecoration);
+        holder.placeTypesList.setNestedScrollingEnabled(false);
+    }
+
+    @Override
+    public int getItemCount() {
+        return trainList.size();
+    }
+
+    public class TrainHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.departureTime) TextView departureTime;
+        @BindView(R.id.departureDay) TextView departureDay;
+        @BindView(R.id.arrivalTime) TextView arrivalTime;
+        @BindView(R.id.arrivalDay) TextView arrivalDay;
+        @BindView(R.id.travelTime) TextView travelTime;
+        @BindView(R.id.ticketTypeText) TextView ticketTypeText;
+        @BindView(R.id.ticketTypeImage) ImageView ticketTypeImage;
+        @BindView(R.id.trainName) TextView trainName;
+        @BindView(R.id.stationFrom) TextView stationFrom;
+        @BindView(R.id.stationTo) TextView stationTo;
+        @BindView(R.id.infoButton) ImageButton infoButton;
+        @BindView(R.id.shareButton) ImageButton shareButton;
+        @BindView(R.id.placeTypesList) RecyclerView placeTypesList;
+        @BindDimen(R.dimen.trains_padding_inside) int padding;
+
+        public TrainHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
+}
