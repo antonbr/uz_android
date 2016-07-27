@@ -42,7 +42,7 @@ public class VerticalDividerItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     @Override
-    public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+    public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
         int left = parent.getPaddingLeft() + paddingLeft;
         int right = parent.getWidth() - parent.getPaddingRight() - paddingRight;
 

@@ -77,25 +77,25 @@
                 android:textAllCaps="true"
                 android:textSize="@dimen/text_size_small"/>
 
-            <ImageView
-                android:id="@+id/ticketTypeImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignTop="@+id/departureTime"
-                android:src="@drawable/qrcode"/>
+            <!--<ImageView-->
+                <!--android:id="@+id/ticketTypeImage"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_alignTop="@+id/departureTime"-->
+                <!--android:src="@drawable/qrcode"/>-->
 
-            <TextView
-                android:id="@+id/ticketTypeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/travelTime"
-                android:layout_alignParentRight="true"
-                android:gravity="right"
-                android:text="@string/trains_eticket"
-                android:textAllCaps="true"
-                android:textColor="@color/accentColor"
-                android:textSize="@dimen/text_size_small"/>
+            <!--<TextView-->
+                <!--android:id="@+id/ticketTypeText"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignBottom="@+id/travelTime"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:gravity="right"-->
+                <!--android:text="@string/trains_eticket"-->
+                <!--android:textAllCaps="true"-->
+                <!--android:textColor="@color/accentColor"-->
+                <!--android:textSize="@dimen/text_size_small"/>-->
         </RelativeLayout>
 
         <RelativeLayout

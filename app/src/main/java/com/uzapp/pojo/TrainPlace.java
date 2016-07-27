@@ -20,6 +20,14 @@ public class TrainPlace {
     private int total;
     @SerializedName("class_name")
     private String className;
+    @SerializedName("cost_currency")
+    private String costCurrency;
+    @SerializedName("cost")
+    private double cost;
+    @SerializedName("cost_reserve_currency")
+    private String costReserveCurrency;
+    @SerializedName("cost_reserve")
+    private double costReserve;
 
     public String getType() {
         return type;
@@ -75,5 +83,37 @@ public class TrainPlace {
 
     public void setClassName(String className) {
         this.className = className;
+    }
+
+    public String getCostCurrency() {
+        return costCurrency;
+    }
+
+    public void setCostCurrency(String costCurrency) {
+        this.costCurrency = costCurrency;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
+    public String getCostReserveCurrency() {
+        return costReserveCurrency;
+    }
+
+    public void setCostReserveCurrency(String costReserveCurrency) {
+        this.costReserveCurrency = costReserveCurrency;
+    }
+
+    public double getCostReserve() {
+        return costReserve;
+    }
+
+    public void setCostReserve(double costReserve) {
+        this.costReserve = costReserve;
     }
 }

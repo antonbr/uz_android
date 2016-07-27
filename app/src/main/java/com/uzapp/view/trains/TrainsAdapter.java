@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.uzapp.R;
@@ -64,7 +63,8 @@ public class TrainsAdapter extends RecyclerView.Adapter<TrainsAdapter.TrainHolde
         PlaceTypesAdapter placeTypesAdapter = new PlaceTypesAdapter(context, train.getPlaces());
         holder.placeTypesList.setAdapter(placeTypesAdapter);
         holder.placeTypesList.setLayoutManager(new LinearLayoutManager(context));
-        VerticalDividerItemDecoration itemDecoration = new VerticalDividerItemDecoration(context, R.drawable.list_divider, holder.padding, holder.padding);
+        VerticalDividerItemDecoration itemDecoration = new VerticalDividerItemDecoration(context,
+                R.drawable.divider_hint_color, holder.padding, holder.padding);
         holder.placeTypesList.addItemDecoration(itemDecoration);
         holder.placeTypesList.setNestedScrollingEnabled(false);
     }
@@ -80,8 +80,8 @@ public class TrainsAdapter extends RecyclerView.Adapter<TrainsAdapter.TrainHolde
         @BindView(R.id.arrivalTime) TextView arrivalTime;
         @BindView(R.id.arrivalDay) TextView arrivalDay;
         @BindView(R.id.travelTime) TextView travelTime;
-        @BindView(R.id.ticketTypeText) TextView ticketTypeText;
-        @BindView(R.id.ticketTypeImage) ImageView ticketTypeImage;
+//        @BindView(R.id.ticketTypeText) TextView ticketTypeText;
+//        @BindView(R.id.ticketTypeImage) ImageView ticketTypeImage;
         @BindView(R.id.trainName) TextView trainName;
         @BindView(R.id.stationFrom) TextView stationFrom;
         @BindView(R.id.stationTo) TextView stationTo;

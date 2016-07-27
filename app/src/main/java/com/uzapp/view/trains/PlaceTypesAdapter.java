@@ -21,12 +21,16 @@ import butterknife.ButterKnife;
  */
 public class PlaceTypesAdapter extends RecyclerView.Adapter<PlaceTypesAdapter.PlaceTypeHolder> {
     private List<TrainPlace> placeList = new ArrayList<>();
-    private String[] shortCarriageTypeName, longCarriageTypeName;
+    private String[] shortWagonTypeName, longWagonTypeName, shortWagonClassName, longWagonClassName;
+    private Context context;
 
     public PlaceTypesAdapter(Context context, List<TrainPlace> placeList) {
         this.placeList = placeList;
-        shortCarriageTypeName = context.getResources().getStringArray(R.array.carriage_types_short);
-        longCarriageTypeName = context.getResources().getStringArray(R.array.carriage_types_long);
+        this.context = context;
+        shortWagonTypeName = context.getResources().getStringArray(R.array.wagon_types_short);
+        longWagonTypeName = context.getResources().getStringArray(R.array.wagon_types_long);
+        shortWagonClassName = context.getResources().getStringArray(R.array.wagon_class_short);
+        longWagonClassName = context.getResources().getStringArray(R.array.wagon_class_long);
     }
 
     @Override
@@ -40,17 +44,28 @@ public class PlaceTypesAdapter extends RecyclerView.Adapter<PlaceTypesAdapter.Pl
     public void onBindViewHolder(PlaceTypeHolder holder, int position) {
         TrainPlace trainPlace = placeList.get(position);
         holder.availablePlaceCount.setText(String.valueOf(trainPlace.getTotal()));
-        String shortPlaceType = trainPlace.getType();
-        String longPlaceType = null;
-        for (int i = 0; i < shortCarriageTypeName.length; i++) {
-            if (shortCarriageTypeName[i].equals(shortPlaceType)) {
-                longPlaceType = longCarriageTypeName[i];
+        String price = context.getString(R.string.trains_place_min_price, Math.round(trainPlace.getCost()),
+                trainPlace.getCostCurrency());
+        holder.minPlacePrice.setText(price);
+        String wagonType = findLongNameMatchingShortName(trainPlace.getType(), shortWagonTypeName, longWagonTypeName);
+        String wagonClass = findLongNameMatchingShortName(trainPlace.getClassName(), shortWagonClassName, longWagonClassName);
+        if (wagonType != null) {
+            if (wagonClass == null) {
+                wagonClass = trainPlace.getClassName();
+            }
+            holder.placeTypeName.setText(wagonType + "\n" + wagonClass);
+        }
+    }
+
+    private String findLongNameMatchingShortName(String shortName, String[] shortNames, String[] longNames) {
+        String longName = null;
+        for (int i = 0; i < shortNames.length; i++) {
+            if (shortNames[i].equals(shortName)) {
+                longName = longNames[i];
                 break;
             }
         }
-        if (longPlaceType != null) {
-            holder.placeTypeName.setText(longPlaceType);
-        }
+        return longName;
     }
 
     @Override

@@ -42,9 +42,11 @@
     <string name="calendar_fifth_day_of_week">Пт</string>
     <string name="calendar_sixth_day_of_week">Сб</string>
     <string name="calendar_seventh_day_of_week">Вс</string>
-    <string name="trains_eticket">электронный\nбилет</string>
 
-    <string-array name="carriage_types_long">
+    //trains
+    <string name="trains_eticket">электронный\nбилет</string>
+    <string name="trains_place_min_price">от %1$d %2$s</string>
+    <string-array name="wagon_types_long">
         <item>Люкс</item>
         <item>М\'який</item>
         <item>Купе</item>
@@ -52,12 +54,24 @@
         <item>Сидячий</item>
         <item>Загальний</item>
     </string-array>
-    <string-array name="carriage_types_short">
+    <string-array name="wagon_types_short">
         <item>Л</item>
         <item>М</item>
         <item>К</item>
         <item>П</item>
         <item>С</item>
         <item>О</item>
+    </string-array>
+    <string-array name="wagon_class_long">
+        <item>Економ</item>
+        <item>Фірмовий</item>
+        <item>Фірмовий покращений</item>
+        <item>Дешевий фірмовий</item>
+    </string-array>
+    <string-array name="wagon_class_short">
+        <item>Д</item>
+        <item>Б</item>
+        <item>В</item>
+        <item>Г</item>
     </string-array>
 </resources>

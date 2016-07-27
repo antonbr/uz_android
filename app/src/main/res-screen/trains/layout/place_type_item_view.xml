@@ -12,6 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:textAllCaps="true"
         android:text="ПЛАЦКАРТ"
         android:textColor="@color/textColorDark"
         android:textSize="@dimen/text_size_small"/>
@@ -30,13 +31,12 @@
         android:id="@+id/availablePlaceCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/today_background"
+        android:background="@drawable/places_count_background"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
-        android:maxEms="3"
-        android:minEms="3"
+        android:minWidth="40dp"
         android:padding="6dp"
-        android:text="558"
+        android:text="555"
         android:textColor="@color/accentColor"
         android:textSize="14dp"/>
 
