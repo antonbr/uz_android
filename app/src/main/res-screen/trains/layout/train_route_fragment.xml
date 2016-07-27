@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/accentColor"
+              android:orientation="vertical">
+
+    <include layout="@layout/toolbar_info_sharing"/>
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                        android:id="@+id/trainInfoCardView"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="11dp"
+                                        android:layout_marginRight="11dp"
+                                        android:layout_marginTop="11dp"
+                                        card_view:cardBackgroundColor="@android:color/white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="11dp">
+
+            <TextView
+                android:id="@+id/trainName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="143 Л «Галичина»"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/stationFrom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/trainName"
+                android:text="ИВАНО-ФРАНКОВСК"
+                android:textAllCaps="true"
+                android:textSize="14sp"/>
+
+            <ImageView
+                android:id="@+id/arrowStations"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/stationFrom"
+                android:layout_alignTop="@+id/stationFrom"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/stationFrom"
+                android:src="@drawable/arrow"/>
+
+            <TextView
+                android:id="@+id/stationTo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/trainName"
+                android:layout_toLeftOf="@+id/shareButton"
+                android:layout_toRightOf="@+id/arrowStations"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="Киев"
+                android:textAllCaps="true"
+                android:textSize="14sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/stationFrom"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/departureTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="17dp"
+                        android:text="@string/departure"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/text_size_small"/>
+
+                    <TextView
+                        android:id="@+id/departureFullDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/departureTitle"
+                        android:layout_marginTop="4dp"
+                        android:text="10.06.16"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/text_size"/>
+
+                    <TextView
+                        android:id="@+id/departureTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/departureTitle"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_toRightOf="@+id/departureFullDate"
+                        android:text="15:53"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/text_size"
+                        android:textStyle="bold"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/arrivalTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="17dp"
+                        android:text="@string/arrival"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/text_size_small"/>
+
+                    <TextView
+                        android:id="@+id/arrivalFullDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/arrivalTitle"
+                        android:layout_marginTop="4dp"
+                        android:text="10.06.16"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/text_size"/>
+
+                    <TextView
+                        android:id="@+id/arrivalTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/arrivalTitle"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_toRightOf="@+id/arrivalFullDate"
+                        android:text="15:53"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/text_size"
+                        android:textStyle="bold"/>
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="11dp"
+                                        android:layout_marginLeft="11dp"
+                                        android:layout_marginRight="11dp"
+                                        android:layout_marginTop="1dp"
+                                        card_view:cardBackgroundColor="@android:color/white">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/trainRouteListView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

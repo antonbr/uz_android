@@ -14,4 +14,6 @@
     <color name="colorControlHighlightDarkTheme">#40ffffff</color>
     <color name="calendarDividerColor">#40a6aeb2</color>
     <color name="lightBlueColor">#1A4182fb</color>
+    <color name="stationCircleColor">#ccd1d9</color>
+    <color name="trainRouteLineColor">#0D4182d7</color>
 </resources>

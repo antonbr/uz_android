@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="4"
+            android:paddingLeft="8dp"
+            android:paddingRight="10dp"
+            android:paddingTop="11dp">
+
+    <View
+        android:id="@+id/circle"
+        android:layout_width="9dp"
+        android:layout_height="9dp"
+        android:layout_gravity="center"
+        android:background="@drawable/grey_circle_small"/>
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="14dp"
+        android:text="04:20"
+        android:textColor="@color/accentColor"
+        android:textSize="14dp"/>
+
+    <TextView
+        android:id="@+id/stationName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:layout_marginBottom="11dp"
+        android:text="Тарасовка"
+        android:textSize="14dp"/>
+
+    <TextView
+        android:id="@+id/stopTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:text="2 мин"
+        android:textColor="@color/textColorHint"
+        android:textSize="14dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="2"
+        android:layout_columnWeight="1"
+        android:text="@string/arrival"
+        android:textAllCaps="true"
+        android:textColor="@color/textColorHint"
+        android:textSize="@dimen/text_size_small"/>
+
+    <TextView
+        android:id="@+id/arrivalTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="3"
+        android:layout_gravity="right|center"
+        android:text="04:22"
+        android:textColor="@color/accentColor"
+        android:textSize="@dimen/text_size_small"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="2"
+        android:layout_columnWeight="1"
+        android:layout_marginTop="8dp"
+        android:text="@string/departure"
+        android:textAllCaps="true"
+        android:textColor="@color/textColorHint"
+        android:textSize="@dimen/text_size_small"/>
+
+    <TextView
+        android:id="@+id/departureTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="3"
+        android:layout_gravity="right|center"
+        android:layout_marginTop="8dp"
+        android:text="04:22"
+        android:textColor="@color/accentColor"
+        android:textSize="@dimen/text_size_small"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="2"
+        android:layout_columnWeight="1"
+        android:layout_marginBottom="6dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/train_route_distance"
+        android:textAllCaps="true"
+        android:textColor="@color/textColorHint"
+        android:textSize="@dimen/text_size_small"/>
+
+    <TextView
+        android:id="@+id/distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="3"
+        android:layout_gravity="right|center"
+        android:text="65 км"
+        android:textColor="@color/accentColor"
+        android:textSize="@dimen/text_size_small"/>
+
+</GridLayout>

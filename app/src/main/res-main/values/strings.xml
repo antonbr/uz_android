@@ -44,6 +44,9 @@
     <string name="trains_first_tab_name">Туда, %1$s</string>
     <string name="trains_second_tab_name">Обратно, %1$s</string>
     <string name="trains_no_places">К сожалению, на %1$s\nсвободных мест нет</string>
+    <string name="departure">ОТПРАВЛЕНИЕ</string>
+    <string name="arrival">ПРИБЫТИЕ</string>
+    <string name="train_route_distance">РАССТОЯНИЕ</string>
 
 
     <string-array name="wagon_types_long">
