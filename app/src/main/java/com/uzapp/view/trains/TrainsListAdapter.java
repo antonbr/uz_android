@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.uzapp.R;
 import com.uzapp.pojo.Train;
+import com.uzapp.util.Constants;
 import com.uzapp.view.utils.VerticalDividerItemDecoration;
 
 import java.text.SimpleDateFormat;
@@ -25,13 +26,13 @@ import butterknife.ButterKnife;
 /**
  * Created by vika on 26.07.16.
  */
-public class TrainsAdapter extends RecyclerView.Adapter<TrainsAdapter.TrainHolder> {
-    private SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm");
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM, EE");
+public class TrainsListAdapter extends RecyclerView.Adapter<TrainsListAdapter.TrainHolder> {
+    private SimpleDateFormat timeFormat = new SimpleDateFormat(Constants.HOURS_MINUTES_FORTMAT);
+    private SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.DAY_MONTH_WEEK_FORMAT);
     private List<Train> trainList = new ArrayList<>();
     private Context context;
 
-    public TrainsAdapter(Context context) {
+    public TrainsListAdapter(Context context) {
         this.context = context;
     }
 

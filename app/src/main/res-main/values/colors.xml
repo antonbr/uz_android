@@ -3,6 +3,7 @@
     <color name="accentColor">#4183d7</color>
     <color name="backgroundColor">#f5f7fa</color>
     <color name="textColor">#434a54</color>
+    <color name="primaryDarkColor">#2666b7</color>
     <color name="stationsFromToDividerColor">#E6E9ED</color>
     <color name="textColorHint">#aab2bd</color>
     <color name="colorHintDivider">#4Daab2bd</color>

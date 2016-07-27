@@ -34,6 +34,13 @@ public class MainActivity extends AppCompatActivity {
         transaction.setCustomAnimations(enter,exit, enter,exit);
         transaction.add(R.id.fragmentContainer, f);
         transaction.commit();
+    }
 
+    @Override
+    public void onBackPressed() {
+        fragmentManager.popBackStack();
+        if (fragmentManager.getBackStackEntryCount() == 0) {
+            super.onBackPressed();
+        }
     }
 }

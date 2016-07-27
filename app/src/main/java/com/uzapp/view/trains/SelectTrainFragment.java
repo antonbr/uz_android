@@ -2,38 +2,38 @@ package com.uzapp.view.trains;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.uzapp.R;
-import com.uzapp.network.ApiManager;
-import com.uzapp.pojo.TrainSearchResult;
-import com.uzapp.view.utils.SpaceItemDecoration;
+import com.uzapp.util.Constants;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by vika on 26.07.16.
  */
-public class SelectTrainFragment extends Fragment {
+public class SelectTrainFragment extends Fragment implements ViewPager.OnPageChangeListener {
     private static final String TAG = SelectTrainFragment.class.getName();
-    @BindView(R.id.trainsList) RecyclerView trainsList;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.DAY_MONTH_WEEK_FORMAT);
+    @BindView(R.id.toolbarTitle) TextView toolbarTitle;
+    @BindView(R.id.tabLayout) TabLayout tabLayout;
+    @BindView(R.id.viewPager) ViewPager viewPager;
     private Unbinder unbinder;
     private long stationFromCode, stationToCode, firstDate, secondDate;
     private boolean isGoingBack = false;
-    private Call<TrainSearchResult> trainSearchCall;
-    private TrainsAdapter trainsAdapter;
+    private TrainWaysViewPagerAdapter viewPagerAdapter;
 
     @Nullable
     @Override
@@ -41,12 +41,27 @@ public class SelectTrainFragment extends Fragment {
         View view = inflater.inflate(R.layout.select_train_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
         initArguments();
-        trainsAdapter = new TrainsAdapter(getContext());
-        trainsList.setAdapter(trainsAdapter);
-        trainsList.setLayoutManager(new LinearLayoutManager(getContext()));
-        trainsList.addItemDecoration(new SpaceItemDecoration((int) getResources().getDimension(R.dimen.small_padding)));
-        loadTrainsFirstWay();
+        setupViewPager();
+        if (isGoingBack) {
+            tabLayout.setupWithViewPager(viewPager);
+        } else {
+            tabLayout.setVisibility(View.GONE);
+        }
         return view;
+    }
+
+    private void setupViewPager() {
+        viewPagerAdapter = new TrainWaysViewPagerAdapter(getChildFragmentManager());
+        String firstDateName = dateFormat.format(new Date(firstDate));
+        String tabFirstName = getString(R.string.trains_first_tab_name, firstDateName);
+        viewPagerAdapter.addFragment(TrainsResultListFragment.getInstance(stationFromCode, stationToCode, firstDate), tabFirstName);
+        if (isGoingBack) {
+            String secondDateName = dateFormat.format(new Date(secondDate));
+            String tabSecondName = getString(R.string.trains_second_tab_name, secondDateName);
+            viewPagerAdapter.addFragment(TrainsResultListFragment.getInstance(stationToCode, stationFromCode, secondDate), tabSecondName);
+        }
+        viewPager.setAdapter(viewPagerAdapter);
+        viewPager.addOnPageChangeListener(this);
     }
 
     /*
@@ -76,37 +91,41 @@ public class SelectTrainFragment extends Fragment {
         }
     }
 
-    private void loadTrainsFirstWay() {
-        trainSearchCall = ApiManager.getApi(getContext()).searchTrains(stationFromCode, stationToCode, firstDate);
-        trainSearchCall.enqueue(callback);
+    private void setToolbarTitle(int trainsCount) {
+        toolbarTitle.setText(getResources().getQuantityString(R.plurals.trains_n_found, trainsCount, trainsCount));
     }
 
-    private Callback<TrainSearchResult> callback = new Callback<TrainSearchResult>() {
-        @Override
-        public void onResponse(Call<TrainSearchResult> call, Response<TrainSearchResult> response) {
-            if (response.isSuccessful()) {
-                trainsAdapter.addTrains(response.body().getTrains());
-            } else {
-                Log.d(TAG, response.message());
-                Snackbar.make(getView(), response.message(), Snackbar.LENGTH_LONG).show();
-            }
+    public void onTrainsLoaded(long date, int trainsCount) {
+        if (date == firstDate && viewPager.getCurrentItem() == 0) {
+            setToolbarTitle(trainsCount);
+        } else if (date == secondDate && viewPager.getCurrentItem() == viewPagerAdapter.getCount() - 1) {
+            setToolbarTitle(trainsCount);
         }
+    }
 
-        @Override
-        public void onFailure(Call<TrainSearchResult> call, Throwable t) {
-            if (getView() != null && t != null) {
-                Log.d(TAG, t.getMessage());
-                Snackbar.make(getView(), t.getMessage(), Snackbar.LENGTH_LONG).show();
-            }
-        }
-    };
+    @OnClick(R.id.backBtn)
+    void onBackBtnPressed() {
+        getActivity().onBackPressed();
+    }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (trainSearchCall != null) {
-            trainSearchCall.cancel();
-        }
         unbinder.unbind();
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        setToolbarTitle(viewPagerAdapter.getItem(position).getTrainsCount());
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }
