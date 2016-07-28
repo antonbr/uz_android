@@ -32,7 +32,7 @@
             android:textSize="@dimen/text_size"/>
 
         <ImageButton
-            android:id="@+id/okBtn"
+            android:id="@+id/shareBtn"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"

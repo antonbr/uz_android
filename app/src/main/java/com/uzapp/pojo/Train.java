@@ -2,12 +2,15 @@ package com.uzapp.pojo;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by vika on 26.07.16.
  */
+@Parcel
 public class Train {
     @SerializedName("number")
     private String number;

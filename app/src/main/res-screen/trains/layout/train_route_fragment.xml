@@ -15,7 +15,8 @@
                                         android:layout_marginLeft="11dp"
                                         android:layout_marginRight="11dp"
                                         android:layout_marginTop="11dp"
-                                        card_view:cardBackgroundColor="@android:color/white">
+                                        card_view:cardBackgroundColor="@android:color/white"
+                                        card_view:cardCornerRadius="0dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -158,7 +159,8 @@
                                         android:layout_marginLeft="11dp"
                                         android:layout_marginRight="11dp"
                                         android:layout_marginTop="1dp"
-                                        card_view:cardBackgroundColor="@android:color/white">
+                                        card_view:cardBackgroundColor="@android:color/white"
+                                        card_view:cardCornerRadius="0dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/trainRouteListView"

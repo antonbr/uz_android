@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:columnCount="4"
-            android:paddingLeft="8dp"
-            android:paddingRight="10dp"
-            android:paddingTop="11dp">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
+                android:orientation="vertical"
+                android:paddingBottom="11dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="10dp"
+                android:paddingTop="11dp">
 
-    <View
-        android:id="@+id/circle"
-        android:layout_width="9dp"
-        android:layout_height="9dp"
-        android:layout_gravity="center"
-        android:background="@drawable/grey_circle_small"/>
+    <FrameLayout
+        android:id="@+id/circleContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/time"
+        android:layout_alignTop="@+id/time">
+
+        <View
+            android:id="@+id/circle"
+            android:layout_width="9dp"
+            android:layout_height="9dp"
+            android:layout_gravity="center"
+            android:background="@drawable/grey_circle_small"/>
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/time"
@@ -20,16 +31,19 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="14dp"
+        android:layout_toRightOf="@+id/circleContainer"
         android:text="04:20"
         android:textColor="@color/accentColor"
         android:textSize="14dp"/>
 
+    <!--use margin left to align divider to start of train name-->
     <TextView
         android:id="@+id/stationName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_columnWeight="1"
-        android:layout_marginBottom="11dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="@dimen/trains_route_divider_padding_left"
+        android:layout_toRightOf="@+id/time"
         android:text="Тарасовка"
         android:textSize="14dp"/>
 
@@ -37,73 +51,89 @@
         android:id="@+id/stopTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_marginLeft="14dp"
-        android:text="2 мин"
+        android:text="@string/train_route_stop_time"
         android:textColor="@color/textColorHint"
         android:textSize="14dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/expandedRouteLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_column="2"
-        android:layout_columnWeight="1"
-        android:text="@string/arrival"
-        android:textAllCaps="true"
-        android:textColor="@color/textColorHint"
-        android:textSize="@dimen/text_size_small"/>
+        android:layout_alignLeft="@+id/stationName"
+        android:layout_below="@+id/stationName"
+        android:layout_marginTop="11dp"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-    <TextView
-        android:id="@+id/arrivalTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_column="3"
-        android:layout_gravity="right|center"
-        android:text="04:22"
-        android:textColor="@color/accentColor"
-        android:textSize="@dimen/text_size_small"/>
+        <TextView
+            android:id="@+id/arrivalTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/arrival"
+            android:textAllCaps="true"
+            android:textColor="@color/textColorHint"
+            android:textSize="@dimen/text_size_small"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_column="2"
-        android:layout_columnWeight="1"
-        android:layout_marginTop="8dp"
-        android:text="@string/departure"
-        android:textAllCaps="true"
-        android:textColor="@color/textColorHint"
-        android:textSize="@dimen/text_size_small"/>
+        <TextView
+            android:id="@+id/arrivalTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/arrivalTitle"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/arrivalTitle"
+            android:layout_gravity="right|center_vertical"
+            android:text="04:22"
+            android:textColor="@color/accentColor"
+            android:textSize="@dimen/text_size_small"/>
 
-    <TextView
-        android:id="@+id/departureTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_column="3"
-        android:layout_gravity="right|center"
-        android:layout_marginTop="8dp"
-        android:text="04:22"
-        android:textColor="@color/accentColor"
-        android:textSize="@dimen/text_size_small"/>
+        <TextView
+            android:id="@+id/departureTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/arrivalTitle"
+            android:layout_marginTop="8dp"
+            android:text="@string/departure"
+            android:textAllCaps="true"
+            android:textColor="@color/textColorHint"
+            android:textSize="@dimen/text_size_small"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_column="2"
-        android:layout_columnWeight="1"
-        android:layout_marginBottom="6dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/train_route_distance"
-        android:textAllCaps="true"
-        android:textColor="@color/textColorHint"
-        android:textSize="@dimen/text_size_small"/>
+        <TextView
+            android:id="@+id/departureTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/departureTitle"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/departureTitle"
+            android:layout_gravity="right|center_vertical"
+            android:text="04:22"
+            android:textColor="@color/accentColor"
+            android:textSize="@dimen/text_size_small"/>
 
-    <TextView
-        android:id="@+id/distance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_column="3"
-        android:layout_gravity="right|center"
-        android:text="65 км"
-        android:textColor="@color/accentColor"
-        android:textSize="@dimen/text_size_small"/>
+        <TextView
+            android:id="@+id/distanceTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/departureTitle"
+            android:layout_marginTop="8dp"
+            android:text="@string/train_route_distance"
+            android:textAllCaps="true"
+            android:textColor="@color/textColorHint"
+            android:textSize="@dimen/text_size_small"/>
 
-</GridLayout>
+        <TextView
+            android:id="@+id/distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/distanceTitle"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/distanceTitle"
+            android:layout_gravity="right|center"
+            android:text="@string/train_route_distance_km"
+            android:textColor="@color/accentColor"
+            android:textSize="@dimen/text_size_small"/>
+    </RelativeLayout>
+
+
+</RelativeLayout>

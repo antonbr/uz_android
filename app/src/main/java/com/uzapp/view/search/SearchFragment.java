@@ -444,7 +444,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
             secondDateLayout.setSelectedTextColor();
             firstMonthName.setText(monthFormatter.format(firstDate));
             secondMonthName.setText(monthFormatter.format(secondDate));
-            int daysBetween = CommonUtils.getDaysDifference(secondDate, firstDate);
+            int daysBetween = (int) CommonUtils.getDaysDifference(secondDate, firstDate);
             inDays.setText(getResources().getQuantityString(R.plurals.search_in_n_days, daysBetween, daysBetween));
         } else {
             secondDate = null;

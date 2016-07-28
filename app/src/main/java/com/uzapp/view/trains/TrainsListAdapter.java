@@ -31,9 +31,18 @@ public class TrainsListAdapter extends RecyclerView.Adapter<TrainsListAdapter.Tr
     private SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.DAY_MONTH_WEEK_FORMAT);
     private List<Train> trainList = new ArrayList<>();
     private Context context;
+    private OnTrainClickListener onTrainClickListener;
 
-    public TrainsListAdapter(Context context) {
+    public TrainsListAdapter(Context context, OnTrainClickListener onTrainClickListener) {
         this.context = context;
+        this.onTrainClickListener = onTrainClickListener;
+    }
+
+    protected interface OnTrainClickListener {
+        void onShareBtnClicked( Train train);
+
+        void onInfoBtnClicked(Train train);
+
     }
 
     public void addTrains(List<Train> trainList) {
@@ -49,8 +58,8 @@ public class TrainsListAdapter extends RecyclerView.Adapter<TrainsListAdapter.Tr
     }
 
     @Override
-    public void onBindViewHolder(TrainHolder holder, int position) {
-        Train train = trainList.get(position);
+    public void onBindViewHolder(TrainHolder holder, final int position) {
+        final Train train = trainList.get(position);
         Date departureDate = new Date(train.getDepartureDate());
         Date arrivalDate = new Date(train.getArrivalDate());
         holder.departureTime.setText(timeFormat.format(departureDate));
@@ -68,6 +77,12 @@ public class TrainsListAdapter extends RecyclerView.Adapter<TrainsListAdapter.Tr
                 R.drawable.divider_hint_color, holder.padding, holder.padding);
         holder.placeTypesList.addItemDecoration(itemDecoration);
         holder.placeTypesList.setNestedScrollingEnabled(false);
+        holder.infoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+          onTrainClickListener.onInfoBtnClicked(train);
+            }
+        });
     }
 
     @Override
@@ -81,7 +96,7 @@ public class TrainsListAdapter extends RecyclerView.Adapter<TrainsListAdapter.Tr
         @BindView(R.id.arrivalTime) TextView arrivalTime;
         @BindView(R.id.arrivalDay) TextView arrivalDay;
         @BindView(R.id.travelTime) TextView travelTime;
-//        @BindView(R.id.ticketTypeText) TextView ticketTypeText;
+        //        @BindView(R.id.ticketTypeText) TextView ticketTypeText;
 //        @BindView(R.id.ticketTypeImage) ImageView ticketTypeImage;
         @BindView(R.id.trainName) TextView trainName;
         @BindView(R.id.stationFrom) TextView stationFrom;

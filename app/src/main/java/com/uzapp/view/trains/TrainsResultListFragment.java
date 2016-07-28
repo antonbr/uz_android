@@ -13,8 +13,10 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.uzapp.MainActivity;
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
+import com.uzapp.pojo.Train;
 import com.uzapp.pojo.TrainSearchResult;
 import com.uzapp.view.utils.SpaceItemDecoration;
 
@@ -31,7 +33,7 @@ import retrofit2.Response;
 /**
  * Created by vika on 27.07.16.
  */
-public class TrainsResultListFragment extends Fragment {
+public class TrainsResultListFragment extends Fragment implements TrainsListAdapter.OnTrainClickListener {
     private static final String TAG = TrainsResultListFragment.class.getName();
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM");
     @BindView(R.id.trainsList) RecyclerView trainsList;
@@ -48,7 +50,7 @@ public class TrainsResultListFragment extends Fragment {
         View view = inflater.inflate(R.layout.train_result_list_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
         initArguments();
-        trainsAdapter = new TrainsListAdapter(getContext());
+        trainsAdapter = new TrainsListAdapter(getContext(), this);
         trainsList.setAdapter(trainsAdapter);
         trainsList.setLayoutManager(new LinearLayoutManager(getContext()));
         trainsList.addItemDecoration(new SpaceItemDecoration((int) getResources().getDimension(R.dimen.small_padding)));
@@ -140,5 +142,16 @@ public class TrainsResultListFragment extends Fragment {
             trainSearchCall.cancel();
         }
         unbinder.unbind();
+    }
+
+    @Override
+    public void onShareBtnClicked(Train train) {
+
+    }
+
+    @Override
+    public void onInfoBtnClicked(Train train) {
+        RouteFragment fragment = RouteFragment.getInstance(train, stationFromCode, stationToCode, date);
+        ((MainActivity) getActivity()).addFragment(fragment, R.anim.slide_up, R.anim.slide_down);
     }
 }

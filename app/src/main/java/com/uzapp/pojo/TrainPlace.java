@@ -2,9 +2,12 @@ package com.uzapp.pojo;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 /**
  * Created by vika on 26.07.16.
  */
+@Parcel
 public class TrainPlace {
     @SerializedName("type")
     private String type;
