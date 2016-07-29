@@ -68,13 +68,23 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.RouteStation
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int oldExpandedPosition = expandedPosition;
-                expandedPosition = position;
-                notifyItemChanged(oldExpandedPosition);
-                holder.expandedRouteLayout.setVisibility(View.VISIBLE);
+                if (expandedPosition == position) {
+                    expandedPosition = -1;
+                    notifyItemChanged(position);
+                } else {
+                    // Check for an expanded view, collapse if you find one
+                    if (expandedPosition >= 0) {
+                        int prev = expandedPosition;
+                        notifyItemChanged(prev);
+                    }
+                    // Set the current position to "expanded"
+                    expandedPosition = position;
+                    notifyItemChanged(expandedPosition);
+                }
             }
         });
     }
+
 
     private Date parseDate(String date) {
         try {

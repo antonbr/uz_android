@@ -2,12 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
                 android:orientation="vertical"
-                android:paddingBottom="11dp"
+                android:paddingBottom="12dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="10dp"
-                android:paddingTop="11dp">
+                android:animateLayoutChanges="true"
+                android:paddingTop="12dp">
 
     <FrameLayout
         android:id="@+id/circleContainer"
@@ -36,13 +36,11 @@
         android:textColor="@color/accentColor"
         android:textSize="14dp"/>
 
-    <!--use margin left to align divider to start of train name-->
     <TextView
         android:id="@+id/stationName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="@dimen/trains_route_divider_padding_left"
+        android:layout_toLeftOf="@+id/stopTime"
         android:layout_toRightOf="@+id/time"
         android:text="Тарасовка"
         android:textSize="14dp"/>

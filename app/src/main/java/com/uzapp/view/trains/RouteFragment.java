@@ -14,7 +14,6 @@ import com.uzapp.R;
 import com.uzapp.pojo.RouteStation;
 import com.uzapp.pojo.Train;
 import com.uzapp.util.Constants;
-import com.uzapp.view.utils.VerticalDividerItemDecoration;
 
 import org.parceler.Parcels;
 
@@ -94,9 +93,7 @@ public class RouteFragment extends Fragment {
         adapter = new RouteAdapter(getContext());
         trainRouteListView.setLayoutManager(new LinearLayoutManager(getContext()));
         trainRouteListView.setAdapter(adapter);
-        VerticalDividerItemDecoration itemDecoration = new VerticalDividerItemDecoration(getContext(),
-                R.drawable.divider_hint_color, dividerPaddingLeft, 0);
-        trainRouteListView.addItemDecoration(itemDecoration);
+        trainRouteListView.addItemDecoration(new RouteVerticalAndHorizontalDivider(getContext()));
 
         //todo add api request and remove test data
         List<RouteStation> stationList = new ArrayList<>();
