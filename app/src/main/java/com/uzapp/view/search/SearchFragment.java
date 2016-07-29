@@ -102,6 +102,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
         unbinder = ButterKnife.bind(this, view);
         toolbarTitle.setText(R.string.search_title);
         initDatePickerList();
+        checkAllFieldsFilled();
         return view;
     }
 
@@ -220,7 +221,6 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
     private void initDatePickerList() {
         datePickerLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         datePickerList.setLayoutManager(datePickerLayoutManager);
-
         dates = new ArrayList<Date>();
         monthPositionMap = new LinkedHashMap<>();
         Calendar calendar = CommonUtils.getCalendar();
@@ -238,19 +238,34 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
                 monthPositionMap.put(dates.indexOf(date), monthFormatter.format(calendar.getTime()));
             }
         }
-        datePickerList.addOnScrollListener(dateScrollListener);
         datePickerList.post(new Runnable() {
             @Override
             public void run() {
                 if (datePickerList != null) {
                     int itemWidth = datePickerList.getWidth() / Constants.DAYS_TO_SHOW_SMALL_CALENDAR;
-                    datePickerAdapter = new DatePickerAdapter(dates, itemWidth, SearchFragment.this);
+                    if (datePickerAdapter == null) {
+                        datePickerAdapter = new DatePickerAdapter(dates, itemWidth, SearchFragment.this);
+                    } else {
+                        datePickerAdapter.setItemWidth(itemWidth);
+                    }
                     datePickerList.setAdapter(datePickerAdapter);
                     firstDateLayout.setViewWidth(itemWidth);
                     secondDateLayout.setViewWidth(itemWidth);
+
+                    //this check is useful when user press back from trains page
+                    if (secondDate != null) {
+                        setSelectedDateLayoutVisibility(true);
+                    } else if (firstDate != null && !firstDate.equals(dates.get(dates.size() - 1))) {
+                        backRouteToggle.setEnabled(true);
+                        monthName.setText(monthFormatter.format(firstDate));
+                    }
                 }
             }
         });
+
+
+        datePickerList.addOnScrollListener(dateScrollListener);
+
     }
 
     @Override
@@ -304,6 +319,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
         if (requestCode == SELECT_STATION_FROM_REQUEST_CODE) {
             fromStation = Parcels.unwrap(data.getParcelableExtra("station"));
             pathFrom.setText(fromStation.getName());
+            useLocationBtn.setChecked(false);
         } else if (requestCode == SELECT_STATION_TO_REQUEST_CODE) {
             toStation = Parcels.unwrap(data.getParcelableExtra("station"));
             pathTo.setText(toStation.getName());

@@ -27,6 +27,10 @@ public class DatePickerAdapter extends RecyclerView.Adapter<DatePickerAdapter.Da
         this.clickListener = clickListener;
     }
 
+    public void setItemWidth(int itemWidth) {
+        this.itemWidth = itemWidth;
+    }
+
     public void setSelectedFirstPosition(int selectedFirstPosition) {
         int oldSelection = this.selectedFirstPosition;
         this.selectedFirstPosition = selectedFirstPosition;

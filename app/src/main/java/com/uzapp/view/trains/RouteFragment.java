@@ -19,6 +19,7 @@ import org.parceler.Parcels;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindDimen;
@@ -83,10 +84,12 @@ public class RouteFragment extends Fragment {
         trainName.setText(train.getNumber());
         stationFrom.setText(train.getStationFromName());
         stationTo.setText(train.getStationToName());
-        arrivalFullDate.setText(dateFormat.format(train.getArrivalDate()));
-        arrivalTime.setText(timeFormat.format(train.getArrivalDate()));
-        departureFullDate.setText(dateFormat.format(train.getDepartureDate()));
-        departureTime.setText(timeFormat.format(train.getDepartureDate()));
+        Date departureDate = new Date(train.getDepartureDate());
+        Date arrivalDate = new Date(train.getArrivalDate());
+        arrivalFullDate.setText(dateFormat.format(arrivalDate));
+        arrivalTime.setText(timeFormat.format(arrivalDate));
+        departureFullDate.setText(dateFormat.format(departureDate));
+        departureTime.setText(timeFormat.format(departureDate));
     }
 
     private void setupList() {

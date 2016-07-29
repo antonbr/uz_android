@@ -3,6 +3,7 @@ package com.uzapp.view.trains;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,10 @@ import com.uzapp.pojo.Train;
 import com.uzapp.util.Constants;
 import com.uzapp.view.utils.VerticalDividerItemDecoration;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -29,6 +32,7 @@ import butterknife.ButterKnife;
 public class TrainsListAdapter extends RecyclerView.Adapter<TrainsListAdapter.TrainHolder> {
     private SimpleDateFormat timeFormat = new SimpleDateFormat(Constants.HOURS_MINUTES_FORTMAT);
     private SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.DAY_MONTH_WEEK_FORMAT);
+    private SimpleDateFormat inputDateFormat = new SimpleDateFormat(Constants.HOURS_MINUTES_FORTMAT);
     private List<Train> trainList = new ArrayList<>();
     private Context context;
     private OnTrainClickListener onTrainClickListener;
@@ -39,7 +43,7 @@ public class TrainsListAdapter extends RecyclerView.Adapter<TrainsListAdapter.Tr
     }
 
     protected interface OnTrainClickListener {
-        void onShareBtnClicked( Train train);
+        void onShareBtnClicked(Train train);
 
         void onInfoBtnClicked(Train train);
 
@@ -66,7 +70,16 @@ public class TrainsListAdapter extends RecyclerView.Adapter<TrainsListAdapter.Tr
         holder.departureDay.setText(dateFormat.format(departureDate));
         holder.arrivalTime.setText(timeFormat.format(arrivalDate));
         holder.arrivalDay.setText(dateFormat.format(arrivalDate));
-        holder.travelTime.setText(train.getTravelTime());
+        Date travelTimeDate = parseDate(train.getTravelTime());
+        if (travelTimeDate != null) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(travelTimeDate);
+            int hours = calendar.get(Calendar.HOUR);
+            int min = calendar.get(Calendar.MINUTE);
+            holder.travelTime.setText(context.getString(R.string.train_travel_time, hours, min));
+        } else {
+            holder.travelTime.setText("");
+        }
         holder.trainName.setText(train.getNumber());
         holder.stationFrom.setText(train.getStationFromName());
         holder.stationTo.setText(train.getStationToName());
@@ -80,9 +93,18 @@ public class TrainsListAdapter extends RecyclerView.Adapter<TrainsListAdapter.Tr
         holder.infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-          onTrainClickListener.onInfoBtnClicked(train);
+                onTrainClickListener.onInfoBtnClicked(train);
             }
         });
+    }
+
+    private Date parseDate(String date) {
+        try {
+            return inputDateFormat.parse(date);
+        } catch (ParseException e) {
+            Log.d(TrainsListAdapter.class.getName(), e.getMessage());
+            return null;
+        }
     }
 
     @Override

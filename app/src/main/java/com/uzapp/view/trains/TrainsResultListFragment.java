@@ -107,9 +107,7 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
         @Override
         public void onResponse(Call<TrainSearchResult> call, Response<TrainSearchResult> response) {
             if (response.isSuccessful()) {
-                if (stationFromCode != 2208001) {
-                    trainsAdapter.addTrains(response.body().getTrains());
-                }
+                trainsAdapter.addTrains(response.body().getTrains());
 
                 Fragment parentFragment = getParentFragment();
                 if (parentFragment != null && parentFragment instanceof SelectTrainFragment) {

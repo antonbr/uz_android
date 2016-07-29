@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -64,6 +65,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.RouteStation
         long stopTimeInMin = CommonUtils.getMinutesDifference(arrivalTime, departureTime);
         holder.stopTime.setText(context.getString(R.string.train_route_stop_time, stopTimeInMin));
         holder.expandedRouteLayout.setVisibility(position == expandedPosition ? View.VISIBLE : View.GONE);
+        //TODO make first and last element bigger size
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,6 +115,9 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.RouteStation
         @BindView(R.id.departureTime) TextView departureTime;
         @BindView(R.id.distance) TextView distance;
         @BindView(R.id.expandedRouteLayout) ViewGroup expandedRouteLayout;
+        @BindView(R.id.circle) View circle;
+        @BindColor(R.color.textColorHint) int bigCircleColor;
+        @BindColor(R.color.stationCircleColor) int smallCircleColor;
 
         public RouteStationHolder(View view) {
             super(view);
