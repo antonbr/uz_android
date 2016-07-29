@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.uzapp.MainActivity;
 import com.uzapp.R;
@@ -151,5 +152,21 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
     public void onInfoBtnClicked(Train train) {
         RouteFragment fragment = RouteFragment.getInstance(train, stationFromCode, stationToCode, date);
         ((MainActivity) getActivity()).addFragment(fragment, R.anim.slide_up, R.anim.slide_down);
+    }
+
+    @Override
+    public void onWagonItemClicked(Train train, String wagonType, String wagonClass) {
+        Toast.makeText(getContext(), "On item clicked, see logs", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "train number: " + train.getNumber() + " wagon type: " + wagonType + " wagon class: " + wagonClass
+                + " station from code: " + stationFromCode + " station to code: " + stationToCode + " date: " + date);
+
+      /*  train use parcel annotations to be easily passed via intent:
+         intent.putExtra("train", Parcels.wrap(train));
+         Train train = Parcels.unwrap(intent.getParcelableExtra("train"));*/
+
+        //wagon type and wagon class are in short form, full form can be found in string arrays.
+        // maybe we should better refactor to enums
+
+        //backend uses mocks for trains, that's why the result is always the same
     }
 }

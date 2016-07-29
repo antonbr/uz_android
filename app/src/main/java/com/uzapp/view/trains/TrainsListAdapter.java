@@ -47,6 +47,7 @@ public class TrainsListAdapter extends RecyclerView.Adapter<TrainsListAdapter.Tr
 
         void onInfoBtnClicked(Train train);
 
+        void onWagonItemClicked(Train train, String wagonType, String wagonClass);
     }
 
     public void addTrains(List<Train> trainList) {
@@ -83,7 +84,13 @@ public class TrainsListAdapter extends RecyclerView.Adapter<TrainsListAdapter.Tr
         holder.trainName.setText(train.getNumber());
         holder.stationFrom.setText(train.getStationFromName());
         holder.stationTo.setText(train.getStationToName());
-        PlaceTypesAdapter placeTypesAdapter = new PlaceTypesAdapter(context, train.getPlaces());
+        final WagonTypesAdapter.WagonTypeClickListener listener = new WagonTypesAdapter.WagonTypeClickListener() {
+            @Override
+            public void onWagonTypeClicked(String wagonType, String wagonClass) {
+                onTrainClickListener.onWagonItemClicked(train, wagonType, wagonClass);
+            }
+        };
+        WagonTypesAdapter placeTypesAdapter = new WagonTypesAdapter(context, listener, train.getPlaces());
         holder.placeTypesList.setAdapter(placeTypesAdapter);
         holder.placeTypesList.setLayoutManager(new LinearLayoutManager(context));
         VerticalDividerItemDecoration itemDecoration = new VerticalDividerItemDecoration(context,

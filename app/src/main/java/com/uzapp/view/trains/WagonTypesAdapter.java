@@ -19,13 +19,20 @@ import butterknife.ButterKnife;
 /**
  * Created by vika on 27.07.16.
  */
-public class PlaceTypesAdapter extends RecyclerView.Adapter<PlaceTypesAdapter.PlaceTypeHolder> {
+public class WagonTypesAdapter extends RecyclerView.Adapter<WagonTypesAdapter.PlaceTypeHolder> {
     private List<TrainPlace> placeList = new ArrayList<>();
     private String[] shortWagonTypeName, longWagonTypeName, shortWagonClassName, longWagonClassName;
     private Context context;
+    private WagonTypeClickListener listener;
 
-    public PlaceTypesAdapter(Context context, List<TrainPlace> placeList) {
+
+    protected interface WagonTypeClickListener {
+        void onWagonTypeClicked(String wagonType, String wagonClass);
+    }
+
+    public WagonTypesAdapter(Context context, WagonTypeClickListener listener, List<TrainPlace> placeList) {
         this.placeList = placeList;
+        this.listener = listener;
         this.context = context;
         shortWagonTypeName = context.getResources().getStringArray(R.array.wagon_types_short);
         longWagonTypeName = context.getResources().getStringArray(R.array.wagon_types_long);
@@ -42,7 +49,7 @@ public class PlaceTypesAdapter extends RecyclerView.Adapter<PlaceTypesAdapter.Pl
 
     @Override
     public void onBindViewHolder(PlaceTypeHolder holder, int position) {
-        TrainPlace trainPlace = placeList.get(position);
+        final TrainPlace trainPlace = placeList.get(position);
         holder.availablePlaceCount.setText(String.valueOf(trainPlace.getTotal()));
         String price = context.getString(R.string.trains_place_min_price, Math.round(trainPlace.getCost()),
                 trainPlace.getCostCurrency());
@@ -55,6 +62,12 @@ public class PlaceTypesAdapter extends RecyclerView.Adapter<PlaceTypesAdapter.Pl
             }
             holder.placeTypeName.setText(wagonType + "\n" + wagonClass);
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onWagonTypeClicked(trainPlace.getType(), trainPlace.getClassName());
+            }
+        });
     }
 
     private String findLongNameMatchingShortName(String shortName, String[] shortNames, String[] longNames) {
