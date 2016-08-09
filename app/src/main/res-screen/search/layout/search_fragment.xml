@@ -231,7 +231,7 @@
                 android:layout_marginBottom="7dp"
                 android:layout_marginLeft="@dimen/medium_padding"
                 android:layout_marginTop="7dp"
-                android:background="?android:attr/selectableItemBackground"
+                android:background="?attr/selectableItemBackground"
                 android:drawablePadding="5dp"
                 android:drawableRight="@drawable/next"
                 android:stateListAnimator="@null"

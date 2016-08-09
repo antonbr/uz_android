@@ -16,4 +16,12 @@
     <dimen name="calendar_divider_size">1.2dp</dimen>
     <dimen name="trains_padding_inside">9dp</dimen>
     <dimen name="trains_route_divider_padding_left">80dp</dimen>
+    <dimen name="trains_route_text_size">14sp</dimen>
+    <dimen name="trains_route_big_text_size">16sp</dimen>
+    <dimen name="trains_route_time_big_padding">13.5dp</dimen>
+    <dimen name="trains_route_time_padding">10dp</dimen>
+    <dimen name="trains_route_circle_small">9dp</dimen>
+    <dimen name="trains_route_circle_big">13.5dp</dimen>
+    <dimen name="trains_route_circle_big_padding">9dp</dimen>
+    <dimen name="trains_route_circle_small_padding">6dp</dimen>
 </resources>

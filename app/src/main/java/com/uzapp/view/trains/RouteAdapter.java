@@ -1,11 +1,15 @@
 package com.uzapp.view.trains;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.uzapp.R;
@@ -19,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.BindColor;
+import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -65,7 +70,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.RouteStation
         long stopTimeInMin = CommonUtils.getMinutesDifference(arrivalTime, departureTime);
         holder.stopTime.setText(context.getString(R.string.train_route_stop_time, stopTimeInMin));
         holder.expandedRouteLayout.setVisibility(position == expandedPosition ? View.VISIBLE : View.GONE);
-        //TODO make first and last element bigger size
+        markFirstAndLastStations(position, holder);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +92,22 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.RouteStation
         });
     }
 
+    //set bigger circle, text size and different font type for first and last stations
+    private void markFirstAndLastStations(int position, RouteStationHolder holder) {
+        boolean isViewBigger = position == 0 || position == getItemCount() - 1;
+        ViewGroup.LayoutParams layoutParams = holder.circle.getLayoutParams();
+        layoutParams.width = isViewBigger ? holder.bigCircleSize : holder.smallCircleSize;
+        layoutParams.height = isViewBigger ? holder.bigCircleSize : holder.smallCircleSize;
+        holder.circle.setLayoutParams(layoutParams);
+        GradientDrawable circleDrawable = (GradientDrawable) holder.circle.getBackground();
+        circleDrawable.setColor(isViewBigger ? holder.bigCircleColor : holder.smallCircleColor);
+        holder.circle.setBackground(circleDrawable);
+        holder.time.setPadding(isViewBigger ? holder.timePadding : holder.timeBigPadding, 0, 0, 0);
+        holder.time.setTextSize(TypedValue.COMPLEX_UNIT_PX, isViewBigger ? holder.bigTextSize : holder.textSize);
+        holder.time.setTypeface(Typeface.create(isViewBigger ? "sans-serif-medium" : "sans-serif", Typeface.NORMAL));
+        holder.stationName.setTextSize(TypedValue.COMPLEX_UNIT_PX, isViewBigger ? holder.bigTextSize : holder.textSize);
+        holder.stationName.setTypeface(Typeface.create(isViewBigger ? "sans-serif-medium" : "sans-serif", Typeface.NORMAL));
+    }
 
     private Date parseDate(String date) {
         try {
@@ -116,8 +137,17 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.RouteStation
         @BindView(R.id.distance) TextView distance;
         @BindView(R.id.expandedRouteLayout) ViewGroup expandedRouteLayout;
         @BindView(R.id.circle) View circle;
+        @BindView(R.id.circleContainer) FrameLayout circleContainer;
         @BindColor(R.color.textColorHint) int bigCircleColor;
         @BindColor(R.color.stationCircleColor) int smallCircleColor;
+        @BindDimen(R.dimen.trains_route_big_text_size) int bigTextSize;
+        @BindDimen(R.dimen.trains_route_text_size) int textSize;
+        @BindDimen(R.dimen.trains_route_time_big_padding) int timeBigPadding;
+        @BindDimen(R.dimen.trains_route_time_padding) int timePadding;
+        @BindDimen(R.dimen.trains_route_circle_big) int bigCircleSize;
+        @BindDimen(R.dimen.trains_route_circle_small) int smallCircleSize;
+        @BindDimen(R.dimen.trains_route_circle_big_padding) int bigCirclePadding;
+        @BindDimen(R.dimen.trains_route_circle_small_padding) int smallCirclePadding;
 
         public RouteStationHolder(View view) {
             super(view);

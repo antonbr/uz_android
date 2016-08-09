@@ -18,5 +18,5 @@ public class Constants {
     public static final String DAY_MONTH_WEEK_FORMAT = "d.MM, EE";
     public static final String HOURS_MINUTES_FORTMAT = "hh:mm";
     public static final String HOURS_MINUTES_SECONDS_FORMAT = "hh:mm:ss";
-    public static final String DAY_MONTH_YEAR_FORMAT = "d.MM.yyyy";
+    public static final String DAY_MONTH_YEAR_FORMAT = "d.MM.yy";
 }

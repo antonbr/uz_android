@@ -2,48 +2,49 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
                 android:orientation="vertical"
                 android:paddingBottom="12dp"
-                android:paddingLeft="8dp"
+                android:paddingLeft="6dp"
                 android:paddingRight="10dp"
-                android:animateLayoutChanges="true"
                 android:paddingTop="12dp">
 
     <FrameLayout
         android:id="@+id/circleContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/trains_route_circle_big"
+        android:layout_height="match_parent"
         android:layout_alignBottom="@+id/time"
         android:layout_alignTop="@+id/time">
 
         <View
             android:id="@+id/circle"
-            android:layout_width="9dp"
-            android:layout_height="9dp"
+            android:layout_width="@dimen/trains_route_circle_small"
+            android:layout_height="@dimen/trains_route_circle_small"
             android:layout_gravity="center"
             android:background="@drawable/grey_circle_small"/>
 
     </FrameLayout>
-
     <TextView
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="14dp"
+        android:paddingLeft="16dp"
         android:layout_toRightOf="@+id/circleContainer"
+        android:gravity="center"
         android:text="04:20"
         android:textColor="@color/accentColor"
-        android:textSize="14dp"/>
+        android:textSize="14sp"/>
 
     <TextView
         android:id="@+id/stationName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="80dp"
         android:layout_toLeftOf="@+id/stopTime"
-        android:layout_toRightOf="@+id/time"
         android:text="Тарасовка"
-        android:textSize="14dp"/>
+        android:textSize="14sp"/>
+
 
     <TextView
         android:id="@+id/stopTime"
@@ -53,7 +54,7 @@
         android:layout_marginLeft="14dp"
         android:text="@string/train_route_stop_time"
         android:textColor="@color/textColorHint"
-        android:textSize="14dp"/>
+        android:textSize="14sp"/>
 
     <RelativeLayout
         android:id="@+id/expandedRouteLayout"
