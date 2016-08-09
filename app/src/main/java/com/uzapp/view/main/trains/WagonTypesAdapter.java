@@ -1,4 +1,4 @@
-package com.uzapp.view.trains;
+package com.uzapp.view.main.trains;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

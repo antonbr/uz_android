@@ -89,7 +89,7 @@
             android:text="@string/calendar_seventh_day_of_week"/>
     </LinearLayout>
 
-    <com.uzapp.view.search.date.VerticalViewPager
+    <com.uzapp.view.main.search.date.VerticalViewPager
         android:id="@+id/monthPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -1,4 +1,4 @@
-package com.uzapp.view.search.date;
+package com.uzapp.view.main.search.date;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;

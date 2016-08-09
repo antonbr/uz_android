@@ -1,4 +1,4 @@
-package com.uzapp.view.search.station;
+package com.uzapp.view.main.search.station;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,7 +19,7 @@ import com.uzapp.pojo.PopularStation;
 import com.uzapp.pojo.Station;
 import com.uzapp.util.Constants;
 import com.uzapp.view.utils.VerticalDividerItemDecoration;
-import com.uzapp.view.search.SearchEditText;
+import com.uzapp.view.main.search.SearchEditText;
 
 import org.parceler.Parcels;
 

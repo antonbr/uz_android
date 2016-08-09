@@ -1,4 +1,4 @@
-package com.uzapp.view.search.station;
+package com.uzapp.view.main.search.station;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
