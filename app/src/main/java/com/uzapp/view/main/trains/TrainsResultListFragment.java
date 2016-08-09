@@ -1,4 +1,4 @@
-package com.uzapp.view.trains;
+package com.uzapp.view.main.trains;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,7 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.uzapp.MainActivity;
+import com.uzapp.view.main.MainActivity;
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.Train;

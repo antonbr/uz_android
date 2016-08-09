@@ -1,4 +1,4 @@
-package com.uzapp.view.search.date;
+package com.uzapp.view.main.search.date;
 
 import android.app.Activity;
 import android.content.Intent;

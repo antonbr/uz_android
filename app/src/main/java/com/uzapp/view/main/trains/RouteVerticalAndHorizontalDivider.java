@@ -1,11 +1,10 @@
-package com.uzapp.view.trains;
+package com.uzapp.view.main.trains;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.uzapp.R;
@@ -65,7 +64,6 @@ public class RouteVerticalAndHorizontalDivider extends RecyclerView.ItemDecorati
         View circleFirstView = parent.getChildAt(0).findViewById(R.id.circle);
         int circleCenter = circleFirstView.getLeft() + circleFirstView.getWidth() / 2;
         int horizontalDividerLeft = parent.getChildAt(0).getPaddingLeft() + circleCenter - horizontalLine.getIntrinsicWidth() / 2;
-        Log.d("TAG", "circle center "+ circleCenter + " width "+ circleFirstView.getWidth()+" left "+ circleFirstView.getLeft());
         int horizontalDividerRight = horizontalDividerLeft + horizontalLine.getIntrinsicWidth();
 
         RecyclerView.Adapter adapter = parent.getAdapter();

@@ -1,4 +1,4 @@
-package com.uzapp.view.trains;
+package com.uzapp.view.main.trains;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

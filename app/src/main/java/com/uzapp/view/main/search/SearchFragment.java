@@ -1,4 +1,4 @@
-package com.uzapp.view.search;
+package com.uzapp.view.main.search;
 
 import android.Manifest;
 import android.content.Context;
@@ -24,15 +24,15 @@ import android.widget.ToggleButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-import com.uzapp.MainActivity;
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.Station;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
-import com.uzapp.view.search.date.PickDateFragment;
-import com.uzapp.view.search.station.StationSearchFragment;
-import com.uzapp.view.trains.SelectTrainFragment;
+import com.uzapp.view.main.MainActivity;
+import com.uzapp.view.main.search.date.PickDateFragment;
+import com.uzapp.view.main.search.station.StationSearchFragment;
+import com.uzapp.view.main.trains.SelectTrainFragment;
 
 import org.parceler.Parcels;
 

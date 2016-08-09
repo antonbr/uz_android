@@ -1,4 +1,4 @@
-package com.uzapp.view.search;
+package com.uzapp.view.main.search;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

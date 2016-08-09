@@ -1,4 +1,4 @@
-package com.uzapp.view.trains;
+package com.uzapp.view.main.trains;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
