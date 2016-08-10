@@ -24,7 +24,8 @@ android {
             res.srcDirs = [
                     'src/main/res-main',
                     'src/main/res-screen/search',
-                    'src/main/res-screen/trains'
+                    'src/main/res-screen/trains',
+                    'src/main/res-screen/login'
             ]
         }
     }

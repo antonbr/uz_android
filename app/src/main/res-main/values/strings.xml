@@ -52,6 +52,17 @@
     <string name="train_route_title">Маршрут поезда</string>
     <string name="train_travel_time">в пути %1$s ч %2$s мин</string>
 
+    //create account
+    <string name="create_account_email_hint">E-MAIL</string>
+    <string name="create_account_email_hint_2">Ваш e-mail</string>
+    <string name="create_account_password_hint">ПАРОЛЬ</string>
+    <string name="create_account_password_hint_2">Придумайте пароль</string>
+    <string name="create_account_title">Регистрация</string>
+    <string name="create_account_password_info">Не менее чем из 8 символов</string>
+    <string name="create_account_terms_of_service">Я принимаю условия договора оферты и даю согласие на использование персональных данных</string>
+    <string name="create_account_bonus_program">Я желаю стать участником бонусной программы и даю согласие на использование персональных данных</string>
+    <string name="create_account_register">Зарегистрироваться</string>
+
 
     <string-array name="wagon_types_long">
         <item>Люкс</item>

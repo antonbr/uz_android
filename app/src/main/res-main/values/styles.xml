@@ -59,4 +59,15 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="BlueButtonStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/find_tickets_button_selector</item>
+        <item name="android:paddingBottom">22dp</item>
+        <item name="android:paddingTop">22dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
 </resources>
