@@ -1,11 +1,14 @@
 package com.uzapp.view.login;
 
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.uzapp.R;
+import com.uzapp.network.ApiManager;
+import com.uzapp.pojo.CreateAccountInfo;
+import com.uzapp.pojo.UserTokenResponse;
 
 import butterknife.BindDimen;
 import butterknife.BindInt;
@@ -22,11 +28,15 @@ import butterknife.OnClick;
 import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by vika on 10.08.16.
  */
 public class CreateAccountProfileFragment extends Fragment {
+    private static final String TAG = CreateAccountProfileFragment.class.getName();
     private Unbinder unbinder;
     @BindView(R.id.resetBtn) Button resetBtn;
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
@@ -37,6 +47,7 @@ public class CreateAccountProfileFragment extends Fragment {
     @BindView(R.id.saveBtn) Button saveBtn;
     @BindDimen(R.dimen.hint_padding) int hintPadding;
     @BindInt(R.integer.phone_number_length) int phoneNumberLength;
+    private String email, password;
 
     @Nullable
     @Override
@@ -45,8 +56,25 @@ public class CreateAccountProfileFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         resetBtn.setVisibility(View.GONE);
         toolbarTitle.setText(R.string.create_account_profile_info_title);
+        initExtras();
         return view;
     }
+
+    public static CreateAccountProfileFragment getInstance(String email, String password) {
+        CreateAccountProfileFragment fragment = new CreateAccountProfileFragment();
+        Bundle args = new Bundle();
+        args.putString("email", email);
+        args.putString("password", password);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    private void initExtras() {
+        Bundle args = getArguments();
+        email = args.getString("email");
+        password = args.getString("password");
+    }
+
 
     @OnFocusChange({R.id.firstNameField, R.id.lastNameField, R.id.phoneField, R.id.studentIdField})
     void onEmailFieldFocusChanged(boolean focus, TextInputEditText view) {
@@ -74,13 +102,27 @@ public class CreateAccountProfileFragment extends Fragment {
 
     @OnClick(R.id.saveBtn)
     void onSaveBtnClicked() {
-
+        String deviceId = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        CreateAccountInfo createAccountInfo = new CreateAccountInfo(
+                deviceId,
+                firstNameField.getText().toString(),
+                lastNameField.getText().toString(),
+                email,
+                password);
+        if (phoneField.getText().length() == phoneNumberLength) {
+            createAccountInfo.setPhoneNumber(phoneField.getText().toString().replaceAll(" ", "").replaceAll("\\+", ""));
+        }
+        //TODO student id
+        Call call = ApiManager.getApi(getContext()).createAccount(createAccountInfo);
+        call.enqueue(callback);
     }
 
     private void checkFieldsState() {
         boolean allowSaving = !TextUtils.isEmpty(firstNameField.getText())
                 && !TextUtils.isEmpty(lastNameField.getText())
-                && phoneField.getText().length() == phoneNumberLength;
+                && (phoneField.getText().length() == 0 ||
+                phoneField.getText().length() == 1 ||
+                phoneField.getText().length() == phoneNumberLength);
         saveBtn.setEnabled(allowSaving);
     }
 
@@ -88,6 +130,30 @@ public class CreateAccountProfileFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+    //[text={"status":"user already exists"}]
+    private Callback<UserTokenResponse> callback = new Callback<UserTokenResponse>() {
+
+        @Override
+        public void onResponse(Call<UserTokenResponse> call, Response<UserTokenResponse> response) {
+            if (response.isSuccessful()) {
+                Snackbar.make(getView(), "Yohooo!!!", Snackbar.LENGTH_SHORT).show();
+            } else {
+                showError(response.message());
+            }
+        }
+
+        @Override
+        public void onFailure(Call<UserTokenResponse> call, Throwable t) {
+            if (getView() != null && t != null) {
+                showError(t.getMessage());
+            }
+        }
+    };
+
+    private void showError(String message) {
+        Log.d(TAG, message);
+        Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
     }
 
     @OnTextChanged(value = R.id.phoneField,

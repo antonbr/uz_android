@@ -9,7 +9,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.InputType;
-import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +18,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.uzapp.R;
+import com.uzapp.util.Constants;
 import com.uzapp.view.BaseActivity;
 import com.uzapp.view.main.search.CheckableImageView;
 
@@ -117,18 +118,27 @@ public class CreateAccountFragment extends Fragment {
 
     @OnClick(R.id.registerBtn)
     void onRegisterBtnClicked() {
-//TODO add validation
-        ((BaseActivity) getActivity()).replaceFragment(new CreateAccountProfileFragment(), true);
+        CreateAccountProfileFragment fragment = CreateAccountProfileFragment.getInstance(emailField.getText().toString(),
+                passwordField.getText().toString());
+        ((BaseActivity) getActivity()).replaceFragment(fragment, true);
     }
 
     private void checkFieldState() {
-        //TODO add validation
-        boolean allowRegistration = !TextUtils.isEmpty(emailField.getText())
-                && !TextUtils.isEmpty(passwordField.getText())
+        boolean allowRegistration = isEmailValid()
+                && isPasswordValid()
                 && termsOfServiceChb.isChecked()
                 && bonusProgramChb.isChecked();
         registerBtn.setEnabled(allowRegistration);
 
+    }
+
+    private boolean isEmailValid() {
+        return Patterns.EMAIL_ADDRESS.matcher(emailField.getText()).matches();
+    }
+
+    private boolean isPasswordValid() {
+        //TODO add password validation
+        return passwordField.getText().length() >= Constants.MIN_PASSWORD_LENGTH;
     }
 
     @Override

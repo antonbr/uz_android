@@ -116,8 +116,7 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
                 }
                 showNoContentIfNeeded();
             } else {
-                Log.d(TAG, response.message());
-                Snackbar.make(getView(), response.message(), Snackbar.LENGTH_LONG).show();
+                showError(response.message());
                 showNoContentIfNeeded();
             }
             showProgress(false);
@@ -126,13 +125,17 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
         @Override
         public void onFailure(Call<TrainSearchResult> call, Throwable t) {
             if (getView() != null && t != null) {
-                Log.d(TAG, t.getMessage());
-                Snackbar.make(getView(), t.getMessage(), Snackbar.LENGTH_LONG).show();
+                showError(t.getMessage());
                 showNoContentIfNeeded();
                 showProgress(false);
             }
         }
     };
+
+    private void showError(String message) {
+        Log.d(TAG, message);
+        Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
+    }
 
     @Override
     public void onDestroyView() {

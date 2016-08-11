@@ -1,12 +1,16 @@
 package com.uzapp.network;
 
+import com.uzapp.pojo.CreateAccountInfo;
 import com.uzapp.pojo.Station;
 import com.uzapp.pojo.TrainSearchResult;
+import com.uzapp.pojo.UserTokenResponse;
 
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -25,5 +29,6 @@ public interface ApiInterface {
                                          @Query("station_to_code") long stationToCode,
                                          @Query("date") long date);
 
-
+    @POST("user/registration")
+    Call<UserTokenResponse> createAccount(@Body CreateAccountInfo createAccountInfo);
 }
