@@ -7,7 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +18,16 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.uzapp.R;
+import com.uzapp.view.BaseActivity;
 import com.uzapp.view.main.search.CheckableImageView;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnFocusChange;
+import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 
 /**
@@ -41,6 +46,7 @@ public class CreateAccountFragment extends Fragment {
     @BindView(R.id.showPasswordBtn) CheckableImageView showPasswordBtn;
     @BindView(R.id.termsOfServiceChb) CheckBox termsOfServiceChb;
     @BindView(R.id.bonusProgramChb) CheckBox bonusProgramChb;
+    @BindView(R.id.registerBtn) Button registerBtn;
     @BindDimen(R.dimen.hint_padding) int hintPadding;
 
     @Nullable
@@ -79,7 +85,16 @@ public class CreateAccountFragment extends Fragment {
             showPasswordBtn.setVisibility(View.GONE);
             setLetterSpacing(false);
         }
+    }
 
+    @OnTextChanged({R.id.emailField, R.id.passwordField})
+    void onFieldsChanged(Editable editable) {
+        checkFieldState();
+    }
+
+    @OnCheckedChanged({R.id.termsOfServiceChb, R.id.bonusProgramChb})
+    void onCheckboxesStateChanged() {
+        checkFieldState();
     }
 
     private void setLetterSpacing(boolean isBigSpacing) {
@@ -103,6 +118,17 @@ public class CreateAccountFragment extends Fragment {
     @OnClick(R.id.registerBtn)
     void onRegisterBtnClicked() {
 //TODO add validation
+        ((BaseActivity) getActivity()).replaceFragment(new CreateAccountProfileFragment(), true);
+    }
+
+    private void checkFieldState() {
+        //TODO add validation
+        boolean allowRegistration = !TextUtils.isEmpty(emailField.getText())
+                && !TextUtils.isEmpty(passwordField.getText())
+                && termsOfServiceChb.isChecked()
+                && bonusProgramChb.isChecked();
+        registerBtn.setEnabled(allowRegistration);
+
     }
 
     @Override

@@ -13,6 +13,6 @@ public class LoginFlowActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        replaceFragment(new CreateAccountFragment(), false);
+        replaceFragment(new CreateAccountProfileFragment(), false);
     }
 }

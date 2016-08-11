@@ -24,4 +24,6 @@ public interface ApiInterface {
     Call<TrainSearchResult> searchTrains(@Query("station_from_code") long stationFromCode,
                                          @Query("station_to_code") long stationToCode,
                                          @Query("date") long date);
+
+
 }

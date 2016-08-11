@@ -62,6 +62,14 @@
     <string name="create_account_terms_of_service">Я принимаю условия договора оферты и даю согласие на использование персональных данных</string>
     <string name="create_account_bonus_program">Я желаю стать участником бонусной программы и даю согласие на использование персональных данных</string>
     <string name="create_account_register">Зарегистрироваться</string>
+    <string name="save">Сохранить</string>
+    <string name="create_account_first_name">Имя</string>
+    <string name="last_name">Фамилия</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="create_account_phone_number_info">В формате +380 ХХ ХХХ ХХ ХХ</string>
+    <string name="create_account_student">Вы студент?</string>
+    <string name="create_account_student_id">Серия и номер студенческого</string>
+    <string name="create_account_profile_info_title">Личные данные</string>
 
 
     <string-array name="wagon_types_long">
