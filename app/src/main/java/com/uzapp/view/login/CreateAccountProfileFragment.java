@@ -21,7 +21,6 @@ import com.uzapp.pojo.CreateAccountInfo;
 import com.uzapp.pojo.UserTokenResponse;
 
 import butterknife.BindDimen;
-import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -37,17 +36,18 @@ import retrofit2.Response;
  */
 public class CreateAccountProfileFragment extends Fragment {
     private static final String TAG = CreateAccountProfileFragment.class.getName();
+
     private Unbinder unbinder;
     @BindView(R.id.resetBtn) Button resetBtn;
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
     @BindView(R.id.firstNameField) TextInputEditText firstNameField;
     @BindView(R.id.lastNameField) TextInputEditText lastNameField;
-    @BindView(R.id.phoneField) TextInputEditText phoneField;
-    @BindView(R.id.studentIdField) TextInputEditText studentIdField;
+    @BindView(R.id.phoneField) PhoneNumberTextInputEditText phoneField;
+    @BindView(R.id.studentIdField) StudentIdTextInputEditText studentIdField;
     @BindView(R.id.saveBtn) Button saveBtn;
     @BindDimen(R.dimen.hint_padding) int hintPadding;
-    @BindInt(R.integer.phone_number_length) int phoneNumberLength;
     private String email, password;
+
 
     @Nullable
     @Override
@@ -71,8 +71,10 @@ public class CreateAccountProfileFragment extends Fragment {
 
     private void initExtras() {
         Bundle args = getArguments();
-        email = args.getString("email");
-        password = args.getString("password");
+        if (args != null) {
+            email = args.getString("email");
+            password = args.getString("password");
+        }
     }
 
 
@@ -91,13 +93,11 @@ public class CreateAccountProfileFragment extends Fragment {
         }
     }
 
-    @OnTextChanged(value = {R.id.firstNameField, R.id.lastNameField},
+    @OnTextChanged(value = {R.id.firstNameField, R.id.lastNameField, R.id.studentIdField, R.id.phoneField},
             callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void onFieldsChanged(Editable editable) {
         checkFieldsState();
     }
-
-    private boolean phoneChangedFromCode = false;
 
 
     @OnClick(R.id.saveBtn)
@@ -109,10 +109,12 @@ public class CreateAccountProfileFragment extends Fragment {
                 lastNameField.getText().toString(),
                 email,
                 password);
-        if (phoneField.getText().length() == phoneNumberLength) {
-            createAccountInfo.setPhoneNumber(phoneField.getText().toString().replaceAll(" ", "").replaceAll("\\+", ""));
+        if (phoneField.isValid() && phoneField.getText().length() > 0) {
+            createAccountInfo.setPhoneNumber(phoneField.getPhoneNumber());
         }
-        //TODO student id
+        if (studentIdField.isValid() && studentIdField.getText().length() > 0) {
+            createAccountInfo.setStudentId(studentIdField.getStudentId());
+        }
         Call call = ApiManager.getApi(getContext()).createAccount(createAccountInfo);
         call.enqueue(callback);
     }
@@ -120,9 +122,8 @@ public class CreateAccountProfileFragment extends Fragment {
     private void checkFieldsState() {
         boolean allowSaving = !TextUtils.isEmpty(firstNameField.getText())
                 && !TextUtils.isEmpty(lastNameField.getText())
-                && (phoneField.getText().length() == 0 ||
-                phoneField.getText().length() == 1 ||
-                phoneField.getText().length() == phoneNumberLength);
+                && phoneField.isValid()
+                && studentIdField.isValid();
         saveBtn.setEnabled(allowSaving);
     }
 
@@ -131,6 +132,7 @@ public class CreateAccountProfileFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
     //[text={"status":"user already exists"}]
     private Callback<UserTokenResponse> callback = new Callback<UserTokenResponse>() {
 
@@ -156,95 +158,5 @@ public class CreateAccountProfileFragment extends Fragment {
         Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
     }
 
-    @OnTextChanged(value = R.id.phoneField,
-            callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    void onPhoneTextChanged(Editable editable) {
-        if (!phoneChangedFromCode) {
-            String oldText = editable.toString();
-            int cursorPosition = phoneField.getSelectionEnd();
-            boolean isCursorAtTheEnd = cursorPosition == oldText.length();
-
-            if (!isCursorAtTheEnd) {
-                int index = oldText.indexOf(" ");
-                while (index >= 0) {
-                    if (index <= cursorPosition) {
-                        cursorPosition--;
-                    }
-                    index = oldText.indexOf(" ", index + 1);
-                }
-            }
-            StringBuilder allText = new StringBuilder(oldText.replaceAll(" ", ""));
-            if (allText.length() == 0 && !phoneField.isFocused()) return;
-
-            if (allText.toString().contains("+") && allText.charAt(0) != '+') {
-                allText.delete(0, allText.indexOf("+"));
-            }
-            if (!allText.toString().contains("+")) {
-                allText.insert(0, "+");
-                cursorPosition++;
-            }
-
-            if (allText.length() > 4) {
-                allText.insert(4, " ");
-                if (cursorPosition > 4) {
-                    cursorPosition++;
-                }
-            }
-            if (allText.length() > 7) {
-                allText.insert(7, " ");
-                if (cursorPosition > 7) {
-                    cursorPosition++;
-                }
-            }
-            if (allText.length() > 11) {
-                allText.insert(11, " ");
-                if (cursorPosition > 11) {
-                    cursorPosition++;
-                }
-            }
-            if (allText.length() > 14) {
-                allText.insert(14, " ");
-                if (cursorPosition > 14) {
-                    cursorPosition++;
-                }
-            }
-            if (!oldText.equals(allText.toString())) {
-                phoneChangedFromCode = true;
-                phoneField.setText(allText);
-                phoneField.setSelection(isCursorAtTheEnd ? allText.length() : cursorPosition);
-            }
-            checkFieldsState();
-        } else {
-            phoneChangedFromCode = false;
-        }
-    }
 
 }
-
-//    @OnTextChanged(value = R.id.studentIdField,
-//            callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-//    void onStudentIdTextChanged(Editable editable) {
-//        if (!isUpdatingStudentIdFromCode) {
-//            boolean needUpdateText = false;
-//            int cursorPosition = studentIdField.getSelectionEnd();
-//            String stringText = editable.toString().replaceAll(" ", "");
-//            StringBuilder text = new StringBuilder(stringText);
-//            for (int i = 0; i < 2; i++) {
-//                if (text.length() > i && !Character.isLetter(text.charAt(i))) {
-//                    text.deleteCharAt(i);
-//                    needUpdateText = true;
-//                    cursorPosition = i + 1;
-//                }
-//            }
-//            if (text.length() > 2 && text.charAt(2) != Character.SPACE_SEPARATOR) {
-//                text.insert(2, " ");
-//                needUpdateText = true;
-//            }
-//            if (needUpdateText) {
-//                isUpdatingStudentIdFromCode = true;
-//                studentIdField.setText(text);
-//                studentIdField.setSelection(cursorPosition);
-//            }
-//        }
-//        isUpdatingStudentIdFromCode = false;
-//    }
