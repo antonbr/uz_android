@@ -1,5 +1,11 @@
 package com.uzapp.util;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.widget.Button;
+
+import com.uzapp.R;
 import com.uzapp.pojo.Languages;
 
 import java.util.Calendar;
@@ -59,4 +65,25 @@ public class CommonUtils {
         return calendar;
     }
 
+    public static boolean isOdd(int value) {
+        return (value & 0x01) != 0;
+    }
+
+    @SuppressLint("NewApi")
+    public static Drawable changeBackgroundPlace(Context context, Button button) {
+        return (isSelectedPlace(context, button)) ? context.getDrawable(R.drawable.border_button_place) :
+                context.getDrawable(R.drawable.border_button_place_selected);
+    }
+
+    @SuppressLint("NewApi")
+    public static int changeTextColorPlace(Context context, Button button, int color) {
+        return (isSelectedPlace(context, button)) ?
+                context.getColor(android.R.color.white) : context.getColor(color);
+    }
+
+    @SuppressLint("NewApi")
+    public static boolean isSelectedPlace(Context context, Button button) {
+        return (button.getBackground().getConstantState().equals(context.getDrawable(
+                R.drawable.border_button_place_selected).getConstantState()));
+    }
 }

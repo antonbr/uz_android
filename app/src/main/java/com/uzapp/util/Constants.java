@@ -19,4 +19,9 @@ public class Constants {
     public static final String HOURS_MINUTES_FORTMAT = "hh:mm";
     public static final String HOURS_MINUTES_SECONDS_FORMAT = "hh:mm:ss";
     public static final String DAY_MONTH_YEAR_FORMAT = "d.MM.yy";
+
+    public static final int SECTION = 10;
+    public static final String TYPE_ECONOMY = "П";
+    public static final String TYPE_KUPE = "К";
+    public static final String TYPE_LUX = "Л";
 }

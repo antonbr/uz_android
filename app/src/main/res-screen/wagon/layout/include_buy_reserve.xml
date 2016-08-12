@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.uzapp.view.main.wagon.view.ListViewMaxHeight
+        android:id="@+id/listViewSelectTicket"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:maxHeight="120dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/bgViewLine" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="15dp">
+
+            <Button
+                android:id="@+id/btnBuyTicket"
+                android:layout_width="match_parent"
+                android:layout_height="27dp"
+                android:layout_weight="1"
+                android:background="@drawable/border_button_place_selected"
+                android:text="@string/ticket_buy"
+                android:layout_marginRight="10dp"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btnReserveTicket"
+                android:layout_width="match_parent"
+                android:layout_height="27dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/border_button_place"
+                android:text="@string/ticket_reserve"
+                android:textAllCaps="false"
+                android:textColor="@color/accentColor"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnGoToRegistration"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/border_button_place_selected"
+        android:text="@string/ticket_go_to_registration"
+        android:textColor="@android:color/white"
+        android:textSize="12sp" />
+
+</LinearLayout>

@@ -16,4 +16,12 @@
     <color name="lightBlueColor">#1A4182fb</color>
     <color name="stationCircleColor">#ccd1d9</color>
     <color name="trainRouteLineColor">#1A4182d7</color>
+
+    <color name="bgSlidePanelFooterColor">#f5f7fa</color>
+    <color name="bgSelectPlaceColor">#f3f3f3</color>
+    <color name="bgFilterColor">#ffffff</color>
+    <color name="bgBorderColor">#ecf0f1</color>
+    <color name="bgButtonWagonPlaces">#f5f9fd</color>
+    <color name="bgButtonWagonPlacesSelected">#4183d7</color>
+    <color name="bgViewLine">#aab2bd</color>
 </resources>

@@ -14,11 +14,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.uzapp.pojo.prices.Prices;
 import com.uzapp.view.main.MainActivity;
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.Train;
 import com.uzapp.pojo.TrainSearchResult;
+import com.uzapp.view.main.wagon.fragment.WagonPlaceFragment;
 import com.uzapp.view.utils.SpaceItemDecoration;
 
 import java.text.SimpleDateFormat;
@@ -156,7 +158,7 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
 
     @Override
     public void onWagonItemClicked(Train train, String wagonType, String wagonClass) {
-        Toast.makeText(getContext(), "On item clicked, see logs", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "On item clicked, see logs", Toast.LENGTH_SHORT).show();
         Log.d(TAG, "train number: " + train.getNumber() + " wagon type: " + wagonType + " wagon class: " + wagonClass
                 + " station from code: " + stationFromCode + " station to code: " + stationToCode + " date: " + date);
 
@@ -168,5 +170,22 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
         // maybe we should better refactor to enums
 
         //backend uses mocks for trains, that's why the result is always the same
+        Call<Prices> call = ApiManager.getApi(getActivity()).getPrices(stationFromCode, stationToCode, train.getNumber(), date);
+        call.enqueue(pricesCallback);
     }
+
+    private Callback<Prices> pricesCallback = new Callback<Prices>() {
+        @Override
+        public void onResponse(Call<Prices> call, Response<Prices> response) {
+            if (response.isSuccessful()) {
+                Prices prices = response.body();
+                ((MainActivity) getActivity()).replaceFragment(new WagonPlaceFragment().newInstance(prices, 0), true);
+            }
+        }
+
+        @Override
+        public void onFailure(Call<Prices> call, Throwable t) {
+            Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+        }
+    };
 }
