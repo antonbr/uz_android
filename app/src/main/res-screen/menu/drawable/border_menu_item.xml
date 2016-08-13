@@ -3,9 +3,9 @@
     android:shape="rectangle">
 
     <gradient
-        android:startColor="@color/bgButtonWagonPlacesSelected"
-        android:centerColor="@color/bgButtonWagonPlacesSelected"
-        android:endColor="@color/bgButtonWagonPlacesSelected"
+        android:startColor="@color/backgroundColor"
+        android:centerColor="@color/backgroundColor"
+        android:endColor="@color/backgroundColor"
         android:angle="90"/>
 
     <padding
@@ -15,7 +15,7 @@
         android:bottom="5dp" />
 
     <stroke
-        android:width="2px"
+        android:width="1px"
         android:color="@color/bgButtonWagonPlacesSelected" />
 
     <corners android:radius= "0px" />

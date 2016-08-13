@@ -72,6 +72,12 @@
     <string name="ticket_reserve">Резервировать</string>
     <string name="ticket_go_to_registration">Перейти к оформлению</string>
     <string name="ticket_currency">грн</string>
+    // menu item string
+    <string name="menu_login_to_your_account">Войти в личный кабинет</string>
+    <string name="menu_in_way">В пути</string>
+    <string name="menu_schedule">Расписание</string>
+    <string name="menu_stations">Вокзалы</string>
+    <string name="menu_news">Новости</string>
 
     <string-array name="filter_join_visit_array">
         <item>@string/filter_yes</item>
@@ -119,4 +125,5 @@
         <item>В</item>
         <item>Г</item>
     </string-array>
+
 </resources>
