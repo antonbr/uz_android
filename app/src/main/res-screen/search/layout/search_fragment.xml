@@ -242,15 +242,9 @@
 
     <Button
         android:id="@+id/findTicketsBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/small_padding"
         android:layout_marginRight="@dimen/small_padding"
-        android:background="@drawable/find_tickets_button_selector"
         android:enabled="false"
-        android:paddingBottom="22dp"
-        android:paddingTop="22dp"
         android:text="@string/search_find_tickets"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/text_size"/>
+        style="@style/BlueButtonStyle"/>
 </LinearLayout>

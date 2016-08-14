@@ -97,6 +97,44 @@
         <item>@string/filter_any</item>
     </string-array>
 
+ //create account
+    <string name="create_account_email_hint">E-MAIL</string>
+    <string name="create_account_email_hint_2">Ваш e-mail</string>
+    <string name="create_account_password_hint">ПАРОЛЬ</string>
+    <string name="create_account_password_hint_2">Придумайте пароль</string>
+    <string name="create_account_title">Регистрация</string>
+    <string name="create_account_password_info">Не менее чем из 8 символов</string>
+    <string name="create_account_terms_of_service">Я принимаю условия договора оферты и даю согласие на использование персональных данных</string>
+    <string name="create_account_bonus_program">Я желаю стать участником бонусной программы и даю согласие на использование персональных данных</string>
+    <string name="create_account_register">Зарегистрироваться</string>
+    <string name="save">Сохранить</string>
+    <string name="create_account_first_name">Имя</string>
+    <string name="last_name">Фамилия</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="create_account_phone_number_info">В формате +380 ХХ ХХХ ХХ ХХ</string>
+    <string name="create_account_student">Вы студент?</string>
+    <string name="create_account_student_id">Серия и номер студенческого</string>
+    <string name="create_account_profile_info_title">Личные данные</string>
+
+    //login
+    <string name="login_email">E-mail</string>
+    <string name="login_password">Пароль</string>
+    <string name="login_forgot_password">Забыли пароль?</string>
+    <string name="login_enter">Войти</string>
+    <string name="login_skip">Продолжить без регистрации</string>
+    <string name="login_registration_text">Еще не регистрировались? Это легко:</string>
+    <string name="login_title">Вход в приложение</string>
+
+    //reset password
+    <string name="reset_password_text">Для восстановления пароля введите Ваш e-mail, на который вы регистрировались</string>
+    <string name="reset_password_new">Новый пароль</string>
+    <string name="reset_password_btn">Восстановить пароль</string>
+    <string name="reset_passwword_title">Восстановление пароля</string>
+    <string name="reset_password_thank">Спасибо!</string>
+    <string name="reset_password_instruction">Инструкция по восстановлению пароля отправлена на Ваш E-mail</string>
+    <string name="reset_password_btn_search_screen">На страницу поиска</string>
+
+
     <string-array name="wagon_types_long">
         <item>Люкс</item>
         <item>М\'який</item>
@@ -125,5 +163,4 @@
         <item>В</item>
         <item>Г</item>
     </string-array>
-
 </resources>

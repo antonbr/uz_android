@@ -259,7 +259,7 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
     public void ticketPlaceRemoveView(int place, String wagonNumber) {
         Button placesBtn = ((Button) findPlaceInWagonView(place));
         if (placesBtn != null) {
-            if (placesBtn.getTag() == place && wagonNumber.equals(wagonNumbers)) {
+            if (placesBtn.getTag() == Integer.valueOf(place) && wagonNumber.equals(wagonNumbers)) {
                 placesBtn.setBackground(getResources().getDrawable(R.drawable.border_button_place));
                 placesBtn.setTextColor(getResources().getColor(android.R.color.black));
             }
@@ -271,7 +271,7 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
             int placeNumber = Integer.parseInt(places.get(i).getPlaceNumber());
             Button placesBtn = ((Button) findPlaceInWagonView(placeNumber));
             if (placesBtn != null) {
-                if (placesBtn.getTag() == placeNumber && places.get(i).getWagonNumber().equals(wagonNumbers)) {
+                if (placesBtn.getTag() == Integer.valueOf(placeNumber) && places.get(i).getWagonNumber().equals(wagonNumbers)) {
                     placesBtn.setBackground(getResources().getDrawable(R.drawable.border_button_place_selected));
                     placesBtn.setTextColor(getResources().getColor(android.R.color.white));
                 }
@@ -291,7 +291,7 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
                         for(int index4 = 0; index4 < relativeLayoutChildAt2.getChildCount(); ++index4) {
                             View viewChildAt2 = relativeLayoutChildAt2.getChildAt(index4);
                             if (viewChildAt2 instanceof Button) {
-                                if (viewChildAt2.getTag() == place) {
+                                if (viewChildAt2.getTag() == Integer.valueOf(place)) {
                                     return viewChildAt2;
                                 }
                             } else {
@@ -299,7 +299,7 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
                                     LinearLayout linearLayoutChildAt2 = (LinearLayout) relativeLayoutChildAt2.getChildAt(index5);
                                     for(int index6 = 0; index6 < linearLayoutChildAt2.getChildCount(); ++index6) {
                                         View viewChildAt3 = linearLayoutChildAt2.getChildAt(index6);
-                                        if (viewChildAt3.getTag() == place) {
+                                        if (viewChildAt3.getTag() == Integer.valueOf(place)) {
                                             return viewChildAt3;
                                         }
                                     }

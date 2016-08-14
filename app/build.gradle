@@ -23,10 +23,11 @@ android {
         main {
             res.srcDirs = [
                     'src/main/res-main',
-                    'src/main/res-screen/menu',
                     'src/main/res-screen/search',
                     'src/main/res-screen/trains',
-                    'src/main/res-screen/wagon'
+                    'src/main/res-screen/wagon',
+                    'src/main/res-screen/menu',
+                    'src/main/res-screen/login'
             ]
         }
     }

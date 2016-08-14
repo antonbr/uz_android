@@ -1,5 +1,6 @@
 package com.uzapp.view.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -11,20 +12,27 @@ import com.uzapp.view.main.menu.MenuFragment;
 import com.uzapp.view.main.search.SearchFragment;
 
 public class MainActivity extends BaseActivity implements AHBottomNavigation.OnTabSelectedListener {
+    private AHBottomNavigation bottomNavigationBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         createNavItems();
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        bottomNavigationBar.setCurrentItem(0);
+    }
+
     private void createNavItems() {
-        AHBottomNavigation bottomNavigationBar = (AHBottomNavigation) findViewById(R.id.bottomNavigationBar);
+        bottomNavigationBar = (AHBottomNavigation) findViewById(R.id.bottomNavigationBar);
         if (bottomNavigationBar != null) {
             bottomNavigationBar.setOnTabSelectedListener(this);
         }
+
         //CREATE ITEMS
         AHBottomNavigationItem searchTrainItem = new AHBottomNavigationItem(null, R.drawable.ic_search_train);
         AHBottomNavigationItem myTicketsItem = new AHBottomNavigationItem(null, R.drawable.ic_my_tickets);

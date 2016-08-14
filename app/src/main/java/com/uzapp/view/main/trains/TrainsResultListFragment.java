@@ -2,7 +2,6 @@ package com.uzapp.view.main.trains;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,12 +13,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.uzapp.pojo.prices.Prices;
-import com.uzapp.view.main.MainActivity;
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.Train;
 import com.uzapp.pojo.TrainSearchResult;
+import com.uzapp.pojo.prices.Prices;
+import com.uzapp.util.CommonUtils;
+import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.wagon.fragment.WagonPlaceFragment;
 import com.uzapp.view.utils.SpaceItemDecoration;
 
@@ -118,8 +118,7 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
                 }
                 showNoContentIfNeeded();
             } else {
-                Log.d(TAG, response.message());
-                Snackbar.make(getView(), response.message(), Snackbar.LENGTH_LONG).show();
+                showError(response.message());
                 showNoContentIfNeeded();
             }
             showProgress(false);
@@ -128,13 +127,17 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
         @Override
         public void onFailure(Call<TrainSearchResult> call, Throwable t) {
             if (getView() != null && t != null) {
-                Log.d(TAG, t.getMessage());
-                Snackbar.make(getView(), t.getMessage(), Snackbar.LENGTH_LONG).show();
+                showError(t.getMessage());
                 showNoContentIfNeeded();
                 showProgress(false);
             }
         }
     };
+
+    private void showError(String message) {
+        Log.d(TAG, message);
+        CommonUtils.showMessage(getView(), message);
+    }
 
     @Override
     public void onDestroyView() {

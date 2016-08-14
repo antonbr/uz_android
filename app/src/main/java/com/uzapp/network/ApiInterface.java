@@ -1,14 +1,21 @@
 package com.uzapp.network;
 
+import com.uzapp.pojo.CreateAccountInfo;
+import com.uzapp.pojo.LoginInfo;
 import com.uzapp.pojo.Station;
 import com.uzapp.pojo.TrainSearchResult;
+import com.uzapp.pojo.UserTokenResponse;
 import com.uzapp.pojo.placeslist.PricesPlacesList;
 import com.uzapp.pojo.prices.Prices;
 
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -41,4 +48,14 @@ public interface ApiInterface {
                                                @Query("wagon_classes") String wagonClasses,
                                                @Query("wagon_numbers") String wagonNumbers,
                                                @Query("date") int date);
+
+    @POST("user/registration")
+    Call<UserTokenResponse> createAccount(@Body CreateAccountInfo createAccountInfo);
+
+    @POST("user/login")
+    Call<UserTokenResponse> login(@Body LoginInfo loginInfo);
+
+    @FormUrlEncoded
+    @POST("user/restore_password")
+    Call<Object> restorePassword(@Field("email") String email, @Field("new_password") String newPassword);
 }

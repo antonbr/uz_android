@@ -23,10 +23,10 @@ public class BaseActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    public void addFragment(Fragment f, @AnimRes int enter, @AnimRes int exit){
+    public void addFragment(Fragment f, @AnimRes int enter, @AnimRes int exit) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.addToBackStack(null);
-        transaction.setCustomAnimations(enter,exit, enter,exit);
+        transaction.setCustomAnimations(enter, exit, enter, exit);
         transaction.add(R.id.fragmentContainer, f);
         transaction.commit();
     }
