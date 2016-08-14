@@ -1,6 +1,7 @@
 package com.uzapp.view.main.search;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -154,7 +155,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
     @OnClick(R.id.findTicketsBtn)
     void onFindTicketsBtnClicked() {
         if (fromStation.getCode() == toStation.getCode()) {
-             CommonUtils.showMessage(getView(), R.string.search_stations_not_valid);
+            CommonUtils.showMessage(getView(), R.string.search_stations_not_valid);
         } else {
             long secondDateTime = secondDate == null ? 0 : secondDate.getTime();
             Fragment fragment = SelectTrainFragment.getInstance(fromStation.getCode(), toStation.getCode(),
@@ -315,23 +316,25 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == SELECT_STATION_FROM_REQUEST_CODE) {
-            fromStation = Parcels.unwrap(data.getParcelableExtra("station"));
-            pathFrom.setText(fromStation.getName());
-            useLocationBtn.setChecked(false);
-        } else if (requestCode == SELECT_STATION_TO_REQUEST_CODE) {
-            toStation = Parcels.unwrap(data.getParcelableExtra("station"));
-            pathTo.setText(toStation.getName());
-        } else if (requestCode == SELECT_FIRST_DATE) {
-            firstDate = (Date) data.getSerializableExtra("date");
-            final int selectedPosition = dates.indexOf(firstDate);
-            datePickerAdapter.setSelectedFirstPosition(selectedPosition);
-            scrollToSelectedPosition(selectedPosition);
-            backRouteToggle.setEnabled(!firstDate.equals(dates.get(dates.size() - 1)));
-            checkAllFieldsFilled();
-        } else if (requestCode == SELECT_SECOND_DATE) {
-            secondDate = (Date) data.getSerializableExtra("date");
-            setSelectedDateLayoutVisibility(true);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == SELECT_STATION_FROM_REQUEST_CODE) {
+                fromStation = Parcels.unwrap(data.getParcelableExtra("station"));
+                pathFrom.setText(fromStation.getName());
+                useLocationBtn.setChecked(false);
+            } else if (requestCode == SELECT_STATION_TO_REQUEST_CODE) {
+                toStation = Parcels.unwrap(data.getParcelableExtra("station"));
+                pathTo.setText(toStation.getName());
+            } else if (requestCode == SELECT_FIRST_DATE) {
+                firstDate = (Date) data.getSerializableExtra("date");
+                final int selectedPosition = dates.indexOf(firstDate);
+                datePickerAdapter.setSelectedFirstPosition(selectedPosition);
+                scrollToSelectedPosition(selectedPosition);
+                backRouteToggle.setEnabled(!firstDate.equals(dates.get(dates.size() - 1)));
+                checkAllFieldsFilled();
+            } else if (requestCode == SELECT_SECOND_DATE) {
+                secondDate = (Date) data.getSerializableExtra("date");
+                setSelectedDateLayoutVisibility(true);
+            }
         }
     }
 

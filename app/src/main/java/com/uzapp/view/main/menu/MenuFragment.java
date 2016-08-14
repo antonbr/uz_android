@@ -4,15 +4,12 @@ package com.uzapp.view.main.menu;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.uzapp.R;
-import com.uzapp.util.CommonUtils;
-import com.uzapp.util.PrefsUtil;
 import com.uzapp.view.login.LoginFlowActivity;
 
 import butterknife.BindView;
@@ -48,12 +45,10 @@ public class MenuFragment extends Fragment {
 
     @OnClick(R.id.btnLoginYourAccount)
     void onClickBtnLoginYourAccount() {
-        if (TextUtils.isEmpty(PrefsUtil.getStringPreference(getContext(), PrefsUtil.USER_TOKEN))) {
+       // if (TextUtils.isEmpty(PrefsUtil.getStringPreference(getContext(), PrefsUtil.USER_TOKEN))) {
             Intent i = new Intent(getActivity(), LoginFlowActivity.class);
             startActivity(i);
-        } else {
-            CommonUtils.showMessage(getView(), "Profile page is not yet implemented");
-        }
+       // }
     }
 
     @Override
