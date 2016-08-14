@@ -1,5 +1,6 @@
 package com.uzapp.view.login;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -7,54 +8,56 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.uzapp.R;
+import com.uzapp.network.ApiManager;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
-import com.uzapp.view.BaseActivity;
+import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.search.CheckableImageView;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
- * Created by vika on 09.08.16.
+ * Created by vika on 14.08.16.
  */
-public class CreateAccountFragment extends Fragment {
+public class ResetPasswordFragment extends Fragment {
     private Unbinder unbinder;
-    @BindView(R.id.resetBtn) Button resetBtn;
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
     @BindView(R.id.emailField) TextInputEditText emailField;
     @BindView(R.id.emailLayout) TextInputLayout emailLayout;
-    @BindView(R.id.passwordField) TextInputEditText passwordField;
-    @BindView(R.id.passwordLayout) TextInputLayout passwordLayout;
+    @BindView(R.id.newPasswordField) TextInputEditText passwordField;
+    @BindView(R.id.newPasswordLayout) TextInputLayout passwordLayout;
     @BindView(R.id.showPasswordBtn) CheckableImageView showPasswordBtn;
-    @BindView(R.id.termsOfServiceChb) CheckBox termsOfServiceChb;
-    @BindView(R.id.bonusProgramChb) CheckBox bonusProgramChb;
-    @BindView(R.id.registerBtn) Button registerBtn;
+    @BindView(R.id.resetPasswordBtn) Button resetPasswordBtn;
+    @BindView(R.id.resetPasswordLayout) ViewGroup resetPasswordLayout;
+    @BindView(R.id.successResultLayout) ViewGroup successResultLayout;
+    @BindView(R.id.toolbar) Toolbar toolbar;
     @BindDimen(R.dimen.hint_padding) int hintPadding;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.create_account_fragment, container, false);
+        View view = inflater.inflate(R.layout.reset_password_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
-        resetBtn.setVisibility(View.GONE);
-        toolbarTitle.setText(R.string.create_account_title);
+        toolbarTitle.setText(R.string.reset_passwword_title);
         emailLayout.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         passwordLayout.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         return view;
@@ -71,7 +74,7 @@ public class CreateAccountFragment extends Fragment {
         }
     }
 
-    @OnFocusChange(R.id.passwordField)
+    @OnFocusChange(R.id.newPasswordField)
     void onPasswordFieldFocusChanged(boolean focus) {
         if (focus || passwordField.getText().length() > 0) {
             passwordLayout.setHint(getString(R.string.create_account_password_hint));
@@ -86,14 +89,43 @@ public class CreateAccountFragment extends Fragment {
         }
     }
 
-    @OnTextChanged({R.id.emailField, R.id.passwordField})
+    @OnClick(R.id.showPasswordBtn)
+    void onShowPasswordBtnClicked(CheckableImageView view) {
+        view.toggle();
+        passwordField.setInputType(view.isChecked() ? InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD :
+                InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        setLetterSpacing(view.isChecked());
+        passwordField.setSelection(passwordField.length());
+    }
+
+    @OnTextChanged({R.id.emailField, R.id.newPasswordField})
     void onFieldsChanged(Editable editable) {
         checkFieldState();
     }
 
-    @OnCheckedChanged({R.id.termsOfServiceChb, R.id.bonusProgramChb})
-    void onCheckboxesStateChanged() {
-        checkFieldState();
+    @OnClick(R.id.backBtn)
+    void onBackBtnPressed() {
+        getActivity().onBackPressed();
+    }
+
+    @OnClick(R.id.resetPasswordBtn)
+    void onResetPasswordBtnClicked() {
+        Call call = ApiManager.getApi(getActivity()).restorePassword(emailField.getText().toString(), passwordField.getText().toString());
+        call.enqueue(callback);
+    }
+
+    @OnClick(R.id.searchScreenBtn)
+    void onSearchScreenBtnClicked() {
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    private void checkFieldState() {
+        boolean allowRegistration = CommonUtils.isEmailValid(emailField.getText().toString())
+                && CommonUtils.isPasswordValid(passwordField.getText().toString());
+        resetPasswordBtn.setEnabled(allowRegistration);
+
     }
 
     private void setLetterSpacing(boolean isBigSpacing) {
@@ -106,34 +138,32 @@ public class CreateAccountFragment extends Fragment {
         }
     }
 
-    @OnClick(R.id.showPasswordBtn)
-    void onShowPasswordBtnClicked(CheckableImageView view) {
-        view.toggle();
-        passwordField.setInputType(view.isChecked() ? InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD :
-                InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        setLetterSpacing(view.isChecked());
-        passwordField.setSelection(passwordField.length());
-    }
-
-    @OnClick(R.id.registerBtn)
-    void onRegisterBtnClicked() {
-        CreateAccountProfileFragment fragment = CreateAccountProfileFragment.getInstance(emailField.getText().toString(),
-                passwordField.getText().toString());
-        ((BaseActivity) getActivity()).replaceFragment(fragment, true);
-    }
-
-    private void checkFieldState() {
-        boolean allowRegistration = CommonUtils.isEmailValid(emailField.getText().toString())
-                && CommonUtils.isPasswordValid(passwordField.getText().toString())
-                && termsOfServiceChb.isChecked()
-                && bonusProgramChb.isChecked();
-        registerBtn.setEnabled(allowRegistration);
-
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
+
+    private Callback<Object> callback = new Callback<Object>() {
+
+        @Override
+        public void onResponse(Call<Object> call, Response<Object> response) {
+            if (getView() != null) {
+                if (response.isSuccessful()) {
+                    resetPasswordLayout.setVisibility(View.GONE);
+                    successResultLayout.setVisibility(View.VISIBLE);
+                    toolbar.setVisibility(View.INVISIBLE);
+                } else {
+                    CommonUtils.showMessage(getView(), response.message());
+                }
+            }
+        }
+
+        @Override
+        public void onFailure(Call<Object> call, Throwable t) {
+            if (getView() != null && t != null) {
+                CommonUtils.showMessage(getView(), t.getMessage());
+            }
+        }
+    };
 }

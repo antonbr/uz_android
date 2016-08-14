@@ -19,6 +19,7 @@ import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.CreateAccountInfo;
 import com.uzapp.pojo.UserTokenResponse;
 import com.uzapp.util.CommonUtils;
+import com.uzapp.util.PrefsUtil;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
@@ -139,7 +140,8 @@ public class CreateAccountProfileFragment extends Fragment {
         @Override
         public void onResponse(Call<UserTokenResponse> call, Response<UserTokenResponse> response) {
             if (response.isSuccessful()) {
-            CommonUtils.showMessage(getView(), "Account created successfully! Profile page is not yet implemented");
+                CommonUtils.showMessage(getView(), "Account created successfully! Profile page is not yet implemented");
+                PrefsUtil.setStringPreference(getContext(), PrefsUtil.USER_TOKEN, response.body().getAccessToken());
             } else {
                 showError(response.message());
             }

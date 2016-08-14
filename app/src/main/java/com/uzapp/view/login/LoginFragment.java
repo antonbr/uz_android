@@ -1,9 +1,11 @@
 package com.uzapp.view.login;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.LoginInfo;
 import com.uzapp.pojo.UserTokenResponse;
 import com.uzapp.util.CommonUtils;
+import com.uzapp.util.PrefsUtil;
 import com.uzapp.view.BaseActivity;
 
 import butterknife.BindDimen;
@@ -38,7 +41,9 @@ public class LoginFragment extends Fragment {
     @BindView(R.id.resetBtn) Button resetBtn;
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
     @BindView(R.id.emailField) TextInputEditText emailField;
+    @BindView(R.id.emailLayout) TextInputLayout emailLayout;
     @BindView(R.id.passwordField) TextInputEditText passwordField;
+    @BindView(R.id.passwordLayout) TextInputLayout passwordLayout;
     @BindView(R.id.loginBtn) Button loginBtn;
     @BindDimen(R.dimen.hint_padding) int hintPadding;
 
@@ -49,6 +54,8 @@ public class LoginFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         resetBtn.setVisibility(View.GONE);
         toolbarTitle.setText(R.string.login_title);
+        emailLayout.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
+        passwordLayout.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         return view;
     }
 
@@ -59,6 +66,11 @@ public class LoginFragment extends Fragment {
         } else {
             view.setTranslationY(0);
         }
+    }
+
+    @OnClick(R.id.forgotPasswordBtn)
+    void onForgotPasswordClicked() {
+        ((BaseActivity) getActivity()).replaceFragment(new ResetPasswordFragment(), true);
     }
 
     @OnTextChanged({R.id.emailField, R.id.passwordField})
@@ -99,6 +111,7 @@ public class LoginFragment extends Fragment {
             if (getView() != null) {
                 if (response.isSuccessful()) {
                     CommonUtils.showMessage(getView(), "Logged in successfully! Profile page is not yet implemented");
+                    PrefsUtil.setStringPreference(getContext(), PrefsUtil.USER_TOKEN, response.body().getAccessToken());
                 } else {
                     CommonUtils.showMessage(getView(), response.message());
                 }
