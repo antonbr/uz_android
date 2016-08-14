@@ -1,10 +1,10 @@
 package com.uzapp.util;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -74,21 +74,18 @@ public class CommonUtils {
         return (value & 0x01) != 0;
     }
 
-    @SuppressLint("NewApi")
     public static Drawable changeBackgroundPlace(Context context, Button button) {
-        return (isSelectedPlace(context, button)) ? context.getDrawable(R.drawable.border_button_place) :
-                context.getDrawable(R.drawable.border_button_place_selected);
+        return (isSelectedPlace(context, button)) ? ContextCompat.getDrawable(context, R.drawable.border_button_place) :
+                ContextCompat.getDrawable(context, R.drawable.border_button_place_selected);
     }
 
-    @SuppressLint("NewApi")
     public static int changeTextColorPlace(Context context, Button button, int color) {
         return (isSelectedPlace(context, button)) ?
-                context.getColor(android.R.color.white) : context.getColor(color);
+                ContextCompat.getColor(context, android.R.color.white) : ContextCompat.getColor(context, color);
     }
 
-    @SuppressLint("NewApi")
     public static boolean isSelectedPlace(Context context, Button button) {
-        return (button.getBackground().getConstantState().equals(context.getDrawable(
+        return (button.getBackground().getConstantState().equals(ContextCompat.getDrawable(context,
                 R.drawable.border_button_place_selected).getConstantState()));
     }
 
@@ -108,7 +105,8 @@ public class CommonUtils {
         textView.setTextColor(Color.LTGRAY);
         snackbar.show();
     }
-    public static void showMessage(View view, int textRes){
+
+    public static void showMessage(View view, int textRes) {
         showMessage(view, view.getContext().getString(textRes));
     }
 }

@@ -41,7 +41,7 @@ public class PhoneNumberTextInputEditText extends TextInputEditText {
     }
 
     public String getPhoneNumber() {
-        return getText().toString().replaceAll(SEPARATOR, "");
+        return getText().toString().replaceAll(SEPARATOR, "").replaceAll("\\+","");
     }
 
     public boolean isValid() {
