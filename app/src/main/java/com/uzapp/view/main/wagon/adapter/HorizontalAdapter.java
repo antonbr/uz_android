@@ -70,11 +70,6 @@ public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.Vi
         holder.layoutCountWagons.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView toolbarTitle = (TextView) ((MainActivity) context).findViewById(R.id.toolbarTitle);
-                if (toolbarTitle != null) {
-                    toolbarTitle.setText(listWagons.get(position).getTypeName() + " (" + listWagons.get(position).getPlacesPrices().getTotal() + ")");
-                }
-
                 FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
                 manager.popBackStack();
 

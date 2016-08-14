@@ -81,7 +81,7 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
 
     private Unbinder unbinder;
 
-    private int stationFromCode, stationToCode, date, cost;
+    private int stationFromCode, stationToCode, date, cost, position;;
     private String train, wagonTypes, wagonClasses, wagonNumbers;
     private List<PricesPlacesList> listPlaces;
     private Prices prices;
@@ -100,7 +100,7 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             prices = getArguments().getParcelable(EXTRA_PRICES);
-            int position = getArguments().getInt(EXTRA_PRICES_POSITION);
+            position = getArguments().getInt(EXTRA_PRICES_POSITION);
 
             if (prices != null) {
                 stationFromCode = prices.getStation_from_code();
@@ -125,9 +125,9 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
 
         setHorizontalWagonsAdapter(prices);
 
-        String title = prices.getTrain().getWagons().get(0).getTypeName();
+        String title = prices.getTrain().getWagons().get(position).getTypeName();
 
-        toolbarTitle.setText(title + " (" + prices.getTrain().getWagons().get(0).getPlacesPrices().getTotal() + ")");
+        toolbarTitle.setText(title + " (" + prices.getTrain().getWagons().get(position).getPlacesPrices().getTotal() + ")");
         txtWagonNumber.setText(getString(R.string.wagon) + " №" + wagonNumbers);
 
         Call<List<PricesPlacesList>> call = ApiManager.getApi(getActivity()).getPlacesList(stationFromCode,

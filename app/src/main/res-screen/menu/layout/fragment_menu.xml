@@ -20,7 +20,7 @@
             android:layout_marginBottom="9dp"
             android:layout_marginLeft="9dp"
             android:layout_marginRight="9dp"
-            android:background="@drawable/border_button_place_selected"
+            android:background="@drawable/find_tickets_button_selector"
             android:text="@string/menu_login_to_your_account"
             android:textColor="@android:color/white"
             android:textSize="16sp" />
