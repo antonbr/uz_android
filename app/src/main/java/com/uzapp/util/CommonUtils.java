@@ -2,8 +2,13 @@ package com.uzapp.util;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.support.design.widget.Snackbar;
+import android.util.Patterns;
+import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.uzapp.R;
 import com.uzapp.pojo.Languages;
@@ -85,5 +90,25 @@ public class CommonUtils {
     public static boolean isSelectedPlace(Context context, Button button) {
         return (button.getBackground().getConstantState().equals(context.getDrawable(
                 R.drawable.border_button_place_selected).getConstantState()));
+    }
+
+    public static boolean isEmailValid(String email) {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    public static boolean isPasswordValid(String password) {
+        return password.length() >= Constants.MIN_PASSWORD_LENGTH;
+    }
+
+    public static void showMessage(View view, String text) {
+        Snackbar snackbar = Snackbar.make(view, text, Snackbar.LENGTH_LONG);
+        View snackbarView = snackbar.getView();
+        int snackbarTextId = android.support.design.R.id.snackbar_text;
+        TextView textView = (TextView) snackbarView.findViewById(snackbarTextId);
+        textView.setTextColor(Color.LTGRAY);
+        snackbar.show();
+    }
+    public static void showMessage(View view, int textRes){
+        showMessage(view, view.getContext().getString(textRes));
     }
 }

@@ -2,7 +2,6 @@ package com.uzapp.view.main.trains;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +18,7 @@ import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.Train;
 import com.uzapp.pojo.TrainSearchResult;
 import com.uzapp.pojo.prices.Prices;
+import com.uzapp.util.CommonUtils;
 import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.wagon.fragment.WagonPlaceFragment;
 import com.uzapp.view.utils.SpaceItemDecoration;
@@ -136,7 +136,7 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
 
     private void showError(String message) {
         Log.d(TAG, message);
-        Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
+        CommonUtils.showMessage(getView(), message);
     }
 
     @Override

@@ -9,7 +9,6 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.InputType;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.uzapp.R;
-import com.uzapp.util.Constants;
+import com.uzapp.util.CommonUtils;
 import com.uzapp.view.BaseActivity;
 import com.uzapp.view.main.search.CheckableImageView;
 
@@ -124,21 +123,12 @@ public class CreateAccountFragment extends Fragment {
     }
 
     private void checkFieldState() {
-        boolean allowRegistration = isEmailValid()
-                && isPasswordValid()
+        boolean allowRegistration = CommonUtils.isEmailValid(emailField.getText().toString())
+                && CommonUtils.isPasswordValid(passwordField.getText().toString())
                 && termsOfServiceChb.isChecked()
                 && bonusProgramChb.isChecked();
         registerBtn.setEnabled(allowRegistration);
 
-    }
-
-    private boolean isEmailValid() {
-        return Patterns.EMAIL_ADDRESS.matcher(emailField.getText()).matches();
-    }
-
-    private boolean isPasswordValid() {
-        //TODO add password validation
-        return passwordField.getText().length() >= Constants.MIN_PASSWORD_LENGTH;
     }
 
     @Override

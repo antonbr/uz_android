@@ -54,7 +54,7 @@ public class ApiManager {
 
     private static Interceptor getLoggingInterceptor() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         return loggingInterceptor;
     }
 

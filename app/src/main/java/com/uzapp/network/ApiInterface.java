@@ -1,11 +1,13 @@
 package com.uzapp.network;
 
 import com.uzapp.pojo.CreateAccountInfo;
+import com.uzapp.pojo.LoginInfo;
 import com.uzapp.pojo.Station;
 import com.uzapp.pojo.TrainSearchResult;
+import com.uzapp.pojo.UserTokenResponse;
 import com.uzapp.pojo.placeslist.PricesPlacesList;
 import com.uzapp.pojo.prices.Prices;
-import com.uzapp.pojo.UserTokenResponse;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -30,9 +32,7 @@ public interface ApiInterface {
                                          @Query("station_to_code") long stationToCode,
                                          @Query("date") long date);
 
-    @POST("user/registration")
-    Call<UserTokenResponse> createAccount(@Body CreateAccountInfo createAccountInfo);
- @GET("order/prices")
+    @GET("order/prices")
     Call<Prices> getPrices(@Query("station_from_code") long stationFromCode,
                            @Query("station_to_code") long stationToCode,
                            @Query("train") String train,
@@ -46,4 +46,10 @@ public interface ApiInterface {
                                                @Query("wagon_classes") String wagonClasses,
                                                @Query("wagon_numbers") String wagonNumbers,
                                                @Query("date") int date);
+
+    @POST("user/registration")
+    Call<UserTokenResponse> createAccount(@Body CreateAccountInfo createAccountInfo);
+
+    @POST("user/login")
+    Call<UserTokenResponse> login(@Body LoginInfo loginInfo);
 }

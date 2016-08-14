@@ -115,6 +115,14 @@
     <string name="create_account_student">Вы студент?</string>
     <string name="create_account_student_id">Серия и номер студенческого</string>
     <string name="create_account_profile_info_title">Личные данные</string>
+    <string name="login_email">E-mail</string>
+    <string name="login_password">Пароль</string>
+    <string name="login_forgot_password">Забыли пароль?</string>
+    <string name="login_enter">Войти</string>
+    <string name="login_skip">Продолжить без регистрации</string>
+    <string name="login_registration_text">Еще не регистрировались? Это легко:</string>
+    <string name="login_title">Вход в приложение</string>
+    //login
 
     <string-array name="wagon_types_long">
         <item>Люкс</item>

@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -155,7 +154,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
     @OnClick(R.id.findTicketsBtn)
     void onFindTicketsBtnClicked() {
         if (fromStation.getCode() == toStation.getCode()) {
-            Snackbar.make(getView(), R.string.search_stations_not_valid, Snackbar.LENGTH_SHORT).show();
+             CommonUtils.showMessage(getView(), R.string.search_stations_not_valid);
         } else {
             long secondDateTime = secondDate == null ? 0 : secondDate.getTime();
             Fragment fragment = SelectTrainFragment.getInstance(fromStation.getCode(), toStation.getCode(),

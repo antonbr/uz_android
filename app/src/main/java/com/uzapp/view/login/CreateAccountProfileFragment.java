@@ -3,7 +3,6 @@ package com.uzapp.view.login;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -19,6 +18,7 @@ import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.CreateAccountInfo;
 import com.uzapp.pojo.UserTokenResponse;
+import com.uzapp.util.CommonUtils;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
@@ -79,7 +79,7 @@ public class CreateAccountProfileFragment extends Fragment {
 
 
     @OnFocusChange({R.id.firstNameField, R.id.lastNameField, R.id.phoneField, R.id.studentIdField})
-    void onEmailFieldFocusChanged(boolean focus, TextInputEditText view) {
+    void onFieldFocusChanged(boolean focus, TextInputEditText view) {
         if (focus || view.getText().length() > 0) {
             view.setTranslationY(hintPadding);
         } else {
@@ -139,7 +139,7 @@ public class CreateAccountProfileFragment extends Fragment {
         @Override
         public void onResponse(Call<UserTokenResponse> call, Response<UserTokenResponse> response) {
             if (response.isSuccessful()) {
-                Snackbar.make(getView(), "Yohooo!!!", Snackbar.LENGTH_SHORT).show();
+            CommonUtils.showMessage(getView(), "Account created successfully! Profile page is not yet implemented");
             } else {
                 showError(response.message());
             }
@@ -155,7 +155,7 @@ public class CreateAccountProfileFragment extends Fragment {
 
     private void showError(String message) {
         Log.d(TAG, message);
-        Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
+        CommonUtils.showMessage(getView(), message);
     }
 
 
