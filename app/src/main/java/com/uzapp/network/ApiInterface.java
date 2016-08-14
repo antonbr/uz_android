@@ -3,8 +3,9 @@ package com.uzapp.network;
 import com.uzapp.pojo.CreateAccountInfo;
 import com.uzapp.pojo.Station;
 import com.uzapp.pojo.TrainSearchResult;
+import com.uzapp.pojo.placeslist.PricesPlacesList;
+import com.uzapp.pojo.prices.Prices;
 import com.uzapp.pojo.UserTokenResponse;
-
 import java.util.List;
 
 import retrofit2.Call;
@@ -31,4 +32,18 @@ public interface ApiInterface {
 
     @POST("user/registration")
     Call<UserTokenResponse> createAccount(@Body CreateAccountInfo createAccountInfo);
+ @GET("order/prices")
+    Call<Prices> getPrices(@Query("station_from_code") long stationFromCode,
+                           @Query("station_to_code") long stationToCode,
+                           @Query("train") String train,
+                           @Query("date") long date);
+
+    @GET("order/places_list")
+    Call<List<PricesPlacesList>> getPlacesList(@Query("station_from_code") int stationFromCode,
+                                               @Query("station_to_code") int stationToCode,
+                                               @Query("train") String train,
+                                               @Query("wagon_types") String wagonTypes,
+                                               @Query("wagon_classes") String wagonClasses,
+                                               @Query("wagon_numbers") String wagonNumbers,
+                                               @Query("date") int date);
 }

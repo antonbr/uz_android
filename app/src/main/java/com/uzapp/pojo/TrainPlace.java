@@ -10,27 +10,27 @@ import org.parceler.Parcel;
 @Parcel
 public class TrainPlace {
     @SerializedName("type")
-    private String type;
+    String type;
     @SerializedName("lower")
-    private int lower;
+    int lower;
     @SerializedName("top")
-    private int top;
+    int top;
     @SerializedName("side_lower")
-    private int sideLower;
+    int sideLower;
     @SerializedName("side_top")
-    private int sideTop;
+    int sideTop;
     @SerializedName("total")
-    private int total;
+    int total;
     @SerializedName("class_name")
-    private String className;
+    String className;
     @SerializedName("cost_currency")
-    private String costCurrency;
+    String costCurrency;
     @SerializedName("cost")
-    private double cost;
+    double cost;
     @SerializedName("cost_reserve_currency")
-    private String costReserveCurrency;
+    String costReserveCurrency;
     @SerializedName("cost_reserve")
-    private double costReserve;
+    double costReserve;
 
     public String getType() {
         return type;

@@ -1,0 +1,89 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="10dp"
+    android:baselineAligned="false"
+    android:orientation="horizontal"
+    tools:context=".view.wagon.fragment.FilterWagonFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/layoutJoinVisit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wagon_joint_visit"
+                android:textAllCaps="true"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/txtJoinVisit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="@string/filter_not_selected"
+                android:textColor="@color/accentColor"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutLocationPlaces"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wagon_location_place"
+                android:textAllCaps="true"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/txtLocationPlaces"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/filter_not_selected"
+                android:textColor="@color/accentColor"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutUpperLower"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wagon_upper_low"
+            android:textAllCaps="true"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/txtUpperLower"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_any"
+            android:textColor="@color/accentColor"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

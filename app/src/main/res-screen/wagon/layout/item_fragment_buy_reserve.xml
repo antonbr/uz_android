@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textAllCaps="true"
+            android:text="Вагон " />
+
+        <TextView
+            android:id="@+id/txtWagonNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/accentColor"
+            android:textAllCaps="true"
+            android:text="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textAllCaps="true"
+            android:text=", Место " />
+
+        <TextView
+            android:id="@+id/txtPlaceNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/accentColor"
+            android:textAllCaps="true"
+            android:text="11" />
+
+        <TextView
+            android:id="@+id/txtUpperLowerShelf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textAllCaps="true"
+            android:text=", Нижнее" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|right"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtPriceTicket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/accentColor"
+                android:textSize="12sp"
+                android:text="price" />
+
+            <ImageButton
+                android:id="@+id/imgBtnRemoveTicket"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:background="@drawable/ic_remove_ticket"
+                android:maxWidth="15dp"
+                android:maxHeight="15dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

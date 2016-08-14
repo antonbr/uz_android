@@ -52,7 +52,52 @@
     <string name="train_route_title">Маршрут поезда</string>
     <string name="train_travel_time">в пути %1$s ч %2$s мин</string>
 
-    //create account
+    // select wagon
+    <string name="wagon_filter">Фильтр</string>
+    <string name="wagon_joint_visit">Совместная поездка</string>
+    <string name="wagon_upper_low">Верхние/нижние</string>
+    <string name="wagon_location_place">Расположения мест</string>
+    <string name="wagon">Вагон</string>
+    // filter string
+    <string name="filter_yes">Да</string>
+    <string name="filter_no">Нет</string>
+    <string name="filter_not_selected">Не выбрано</string>
+    <string name="filter_lateral">Боковое</string>
+    <string name="filter_standard">Стандартное</string>
+    <string name="filter_top">Верхнее</string>
+    <string name="filter_bottom">Нижнее</string>
+    <string name="filter_any">Любое</string>
+    // register fragment string
+    <string name="ticket_buy">Купить</string>
+    <string name="ticket_reserve">Резервировать</string>
+    <string name="ticket_go_to_registration">Перейти к оформлению</string>
+    <string name="ticket_currency">грн</string>
+    // menu item string
+    <string name="menu_login_to_your_account">Войти в личный кабинет</string>
+    <string name="menu_in_way">В пути</string>
+    <string name="menu_schedule">Расписание</string>
+    <string name="menu_stations">Вокзалы</string>
+    <string name="menu_news">Новости</string>
+
+    <string-array name="filter_join_visit_array">
+        <item>@string/filter_yes</item>
+        <item>@string/filter_no</item>
+        <item>@string/filter_not_selected</item>
+    </string-array>
+
+    <string-array name="filter_location_places_array">
+        <item>@string/filter_lateral</item>
+        <item>@string/filter_standard</item>
+        <item>@string/filter_not_selected</item>
+    </string-array>
+
+    <string-array name="filter_upper_lower_array">
+        <item>@string/filter_top</item>
+        <item>@string/filter_bottom</item>
+        <item>@string/filter_any</item>
+    </string-array>
+
+ //create account
     <string name="create_account_email_hint">E-MAIL</string>
     <string name="create_account_email_hint_2">Ваш e-mail</string>
     <string name="create_account_password_hint">ПАРОЛЬ</string>
@@ -70,7 +115,6 @@
     <string name="create_account_student">Вы студент?</string>
     <string name="create_account_student_id">Серия и номер студенческого</string>
     <string name="create_account_profile_info_title">Личные данные</string>
-
 
     <string-array name="wagon_types_long">
         <item>Люкс</item>

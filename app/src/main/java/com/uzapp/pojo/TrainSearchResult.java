@@ -13,13 +13,13 @@ import java.util.List;
 @Parcel
 public class TrainSearchResult {
     @SerializedName("station_from_code")
-    private int stationFromCode;
+    int stationFromCode;
     @SerializedName("station_to_code")
-    private int stationToCode;
+    int stationToCode;
     @SerializedName("not_full_info")
-    private boolean notFullInfo;
+    boolean notFullInfo;
     @SerializedName("trains")
-    private List<Train> trains = new ArrayList<Train>();
+    List<Train> trains = new ArrayList<Train>();
 
     public int getStationFromCode() {
         return stationFromCode;
