@@ -19,10 +19,8 @@ public class CreateAccountInfo {
     @SerializedName("student_id")
     private String studentId;
 
-    public CreateAccountInfo(String deviceId, String firstName, String lastName, String email, String password) {
+    public CreateAccountInfo(String deviceId, String email, String password) {
         this.deviceId = deviceId;
-        this.firstName = firstName;
-        this.lastName = lastName;
         this.email = email;
         this.password = password;
     }

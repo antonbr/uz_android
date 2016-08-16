@@ -9,6 +9,10 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +61,28 @@ public class CreateAccountFragment extends Fragment {
         toolbarTitle.setText(R.string.create_account_title);
         emailLayout.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         passwordLayout.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
+        setClickableTextInCheckbox(termsOfServiceChb, R.string.create_account_terms_of_service,
+                R.string.create_account_terms_of_service_clickable, R.string.terms_of_service);
+        setClickableTextInCheckbox(bonusProgramChb, R.string.create_account_bonus_program,
+                R.string.create_account_bonus_program_clickable, R.string.bonus_program);
         return view;
+    }
+
+    private void setClickableTextInCheckbox(CheckBox checkBox, int textRes, int clickableTextRes, final int urlRes) {
+        SpannableString checkboxText = new SpannableString(getString(textRes));
+        String clickableText = getString(clickableTextRes);
+        ClickableSpan span = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                Fragment fragment = WebFragment.getInstance(getString(urlRes));
+                ((BaseActivity) getActivity()).replaceFragment(fragment, true);
+            }
+        };
+        int start = checkboxText.toString().indexOf(clickableText);
+        int end = start + clickableText.length();
+        checkboxText.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        checkBox.setText(checkboxText);
+        checkBox.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @OnFocusChange(R.id.emailField)
@@ -91,7 +116,7 @@ public class CreateAccountFragment extends Fragment {
         checkFieldState();
     }
 
-    @OnCheckedChanged({R.id.termsOfServiceChb, R.id.bonusProgramChb})
+    @OnCheckedChanged(R.id.termsOfServiceChb)
     void onCheckboxesStateChanged() {
         checkFieldState();
     }
@@ -118,17 +143,15 @@ public class CreateAccountFragment extends Fragment {
     @OnClick(R.id.registerBtn)
     void onRegisterBtnClicked() {
         CreateAccountProfileFragment fragment = CreateAccountProfileFragment.getInstance(emailField.getText().toString(),
-                passwordField.getText().toString());
+                passwordField.getText().toString(), bonusProgramChb.isChecked());
         ((BaseActivity) getActivity()).replaceFragment(fragment, true);
     }
 
     private void checkFieldState() {
         boolean allowRegistration = CommonUtils.isEmailValid(emailField.getText().toString())
                 && CommonUtils.isPasswordValid(passwordField.getText().toString())
-                && termsOfServiceChb.isChecked()
-                && bonusProgramChb.isChecked();
+                && termsOfServiceChb.isChecked();
         registerBtn.setEnabled(allowRegistration);
-
     }
 
     @Override
