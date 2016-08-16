@@ -56,6 +56,10 @@ public interface ApiInterface {
     Call<UserTokenResponse> login(@Body LoginInfo loginInfo);
 
     @FormUrlEncoded
+    @POST("user/refresh_token")
+    Call<UserTokenResponse> refreshToken(@Field("refresh_token") String refreshToken);
+
+    @FormUrlEncoded
     @POST("user/restore_password")
     Call<Object> restorePassword(@Field("email") String email, @Field("new_password") String newPassword);
 }

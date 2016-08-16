@@ -111,7 +111,8 @@ public class LoginFragment extends Fragment {
             if (getView() != null) {
                 if (response.isSuccessful()) {
                     CommonUtils.showMessage(getView(), "Logged in successfully! Profile page is not yet implemented");
-                    PrefsUtil.setStringPreference(getContext(), PrefsUtil.USER_TOKEN, response.body().getAccessToken());
+                    UserTokenResponse user = response.body();
+                    PrefsUtil.saveUserInfo(getContext(), user.getUserId(), user.getAccessToken(), user.getRefreshToken());
                 } else {
                     CommonUtils.showMessage(getView(), response.message());
                 }

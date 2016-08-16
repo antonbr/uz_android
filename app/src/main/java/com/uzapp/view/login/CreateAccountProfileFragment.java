@@ -141,7 +141,8 @@ public class CreateAccountProfileFragment extends Fragment {
         public void onResponse(Call<UserTokenResponse> call, Response<UserTokenResponse> response) {
             if (response.isSuccessful()) {
                 CommonUtils.showMessage(getView(), "Account created successfully! Profile page is not yet implemented");
-                PrefsUtil.setStringPreference(getContext(), PrefsUtil.USER_TOKEN, response.body().getAccessToken());
+                UserTokenResponse user = response.body();
+                PrefsUtil.saveUserInfo(getContext(), user.getUserId(), user.getAccessToken(), user.getRefreshToken());
             } else {
                 showError(response.message());
             }

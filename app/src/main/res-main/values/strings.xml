@@ -7,6 +7,7 @@
     <string name="reset">Сбросить</string>
     <string name="cancel">Отменить</string>
     <string name="filter">Фильтр</string>
+    <string name="token">Token %1$s</string>
 
     //search
     <string name="search_path_from">Откуда</string>
@@ -107,10 +108,10 @@
     <string name="create_account_terms_of_service">Я принимаю условия договора оферты и даю согласие на использование персональных данных</string>
     <string name="create_account_bonus_program">Я желаю стать участником бонусной программы и даю согласие на использование персональных данных</string>
     <string name="create_account_register">Зарегистрироваться</string>
-    <string name="save">Сохранить</string>
+    <string name="create_account_save">Сохранить</string>
     <string name="create_account_first_name">Имя</string>
-    <string name="last_name">Фамилия</string>
-    <string name="phone_number">Номер телефона</string>
+    <string name="create_account_last_name">Фамилия</string>
+    <string name="create_account_phone_number">Номер телефона</string>
     <string name="create_account_phone_number_info">В формате +380 ХХ ХХХ ХХ ХХ</string>
     <string name="create_account_student">Вы студент?</string>
     <string name="create_account_student_id">Серия и номер студенческого</string>
@@ -133,6 +134,7 @@
     <string name="reset_password_thank">Спасибо!</string>
     <string name="reset_password_instruction">Инструкция по восстановлению пароля отправлена на Ваш E-mail</string>
     <string name="reset_password_btn_search_screen">На страницу поиска</string>
+
 
 
     <string-array name="wagon_types_long">

@@ -45,7 +45,7 @@ public class MenuFragment extends Fragment {
 
     @OnClick(R.id.btnLoginYourAccount)
     void onClickBtnLoginYourAccount() {
-       // if (TextUtils.isEmpty(PrefsUtil.getStringPreference(getContext(), PrefsUtil.USER_TOKEN))) {
+       // if (TextUtils.isEmpty(PrefsUtil.getStringPreference(getContext(), PrefsUtil.USER_ACCESS_TOKEN))) {
             Intent i = new Intent(getActivity(), LoginFlowActivity.class);
             startActivity(i);
        // }
