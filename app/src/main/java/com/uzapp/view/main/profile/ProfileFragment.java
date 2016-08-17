@@ -45,7 +45,6 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
-        toolbarTitle.setText(R.string.profile_title);
         String token = PrefsUtil.getStringPreference(getContext(), PrefsUtil.USER_ACCESS_TOKEN);
         Call call = ApiManager.getApi(getContext()).getUser(token);
         call.enqueue(userCallback);

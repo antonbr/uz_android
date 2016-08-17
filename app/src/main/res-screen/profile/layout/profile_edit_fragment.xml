@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/accentColor"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/backBtn"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:background="?attr/selectableItemBackground"
+                android:src="@drawable/back"/>
+
+            <TextView
+                android:id="@+id/toolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/backBtn"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/profile_title"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size"/>
+
+            <Button
+                android:id="@+id/saveBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="?attr/selectableItemBackground"
+                android:minWidth="0dp"
+                android:padding="11dp"
+                android:stateListAnimator="@null"
+                android:text="@string/save"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/button_text_size"/>
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="11dp">
+
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                card_view:cardBackgroundColor="@android:color/white">
+
+                <android.support.design.widget.TextInputLayout
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/firstNameLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/big_padding"
+                    android:paddingRight="@dimen/big_padding"
+                    android:paddingTop="@dimen/small_padding"
+                    android:textColorHint="@color/accentColor"
+                    app:hintTextAppearance="@style/HintStyle">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/firstNameField"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:hint="@string/create_account_first_name"
+                        android:inputType="text"
+                        android:paddingBottom="@dimen/big_padding"
+                        android:translationY="@dimen/hint_padding"/>
+                </android.support.design.widget.TextInputLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_padding"
+                card_view:cardBackgroundColor="@android:color/white">
+
+                <android.support.design.widget.TextInputLayout
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/middleNameLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/big_padding"
+                    android:paddingRight="@dimen/big_padding"
+                    android:paddingTop="@dimen/small_padding"
+                    android:textColorHint="@color/accentColor"
+                    app:hintTextAppearance="@style/HintStyle">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/middleNameField"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:hint="@string/profile_edit_middle_name"
+                        android:inputType="text"
+                        android:paddingBottom="@dimen/big_padding"
+                        android:translationY="@dimen/hint_padding"/>
+                </android.support.design.widget.TextInputLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_padding"
+                card_view:cardBackgroundColor="@android:color/white">
+
+                <android.support.design.widget.TextInputLayout
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/lastNameLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/big_padding"
+                    android:paddingTop="@dimen/small_padding"
+                    android:textColorHint="@color/accentColor"
+                    app:hintTextAppearance="@style/HintStyle">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/lastNameField"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:hint="@string/create_account_last_name"
+                        android:inputType="text"
+                        android:paddingBottom="@dimen/big_padding"
+                        android:translationY="@dimen/hint_padding"/>
+                </android.support.design.widget.TextInputLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_padding"
+                card_view:cardBackgroundColor="@android:color/white">
+
+                <android.support.design.widget.TextInputLayout
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/phoneLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/big_padding"
+                    android:paddingTop="@dimen/small_padding"
+                    android:textColorHint="@color/accentColor"
+                    app:hintTextAppearance="@style/HintStyle">
+
+                    <com.uzapp.view.login.PhoneNumberTextInputEditText
+                        android:id="@+id/phoneField"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:hint="@string/profile_phone"
+                        android:inputType="number"
+                        android:longClickable="false"
+                        android:maxLength="@integer/phone_number_length"
+                        android:paddingBottom="@dimen/big_padding"
+                        android:translationY="@dimen/hint_padding"/>
+                </android.support.design.widget.TextInputLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/big_padding"
+                android:paddingRight="@dimen/big_padding"
+                android:paddingTop="5dp"
+                android:text="@string/create_account_phone_number_info"
+                android:textSize="13.5sp"/>
+
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                card_view:cardBackgroundColor="@android:color/white">
+
+                <android.support.design.widget.TextInputLayout
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/emailLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/big_padding"
+                    android:paddingRight="@dimen/big_padding"
+                    android:paddingTop="@dimen/small_padding"
+                    android:textColorHint="@color/accentColor"
+                    app:hintTextAppearance="@style/HintStyle">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/emailField"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:hint="@string/login_email"
+                        android:inputType="textEmailAddress"
+                        android:paddingBottom="@dimen/big_padding"
+                        android:translationY="@dimen/hint_padding"/>
+                </android.support.design.widget.TextInputLayout>
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:paddingLeft="@dimen/big_padding"
+                android:paddingRight="@dimen/big_padding"
+                android:text="@string/create_account_student"
+                android:textSize="18sp"/>
+
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_padding"
+                card_view:cardBackgroundColor="@android:color/white">
+
+                <android.support.design.widget.TextInputLayout
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/studentIdLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/big_padding"
+                    android:paddingTop="11dp"
+                    android:textColorHint="@color/accentColor"
+                    app:hintTextAppearance="@style/HintStyle">
+
+                    <com.uzapp.view.login.StudentIdTextInputEditText
+                        android:id="@+id/studentIdField"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:hint="@string/create_account_student_id"
+                        android:maxLength="@integer/student_id_full_length"
+                        android:paddingBottom="@dimen/big_padding"
+                        android:translationY="@dimen/hint_padding"/>
+                </android.support.design.widget.TextInputLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                app:cardBackgroundColor="@android:color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@drawable/divider_hint_color"
+                    android:orientation="vertical"
+                    android:showDividers="middle">
+
+                    <TextView
+                        android:id="@+id/passwordBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:drawableRight="@drawable/profile_next"
+                        android:paddingBottom="22dp"
+                        android:paddingLeft="22dp"
+                        android:paddingRight="16dp"
+                        android:paddingTop="22dp"
+                        android:text="@string/profile_edit_password"
+                        android:textSize="18sp"/>
+
+                    <TextView
+                        android:id="@+id/connectedAccountsBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:drawableRight="@drawable/profile_next"
+                        android:paddingBottom="22dp"
+                        android:paddingLeft="22dp"
+                        android:paddingRight="16dp"
+                        android:paddingTop="22dp"
+                        android:text="@string/profile_edit_connected_accounts"
+                        android:textSize="18sp"/>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

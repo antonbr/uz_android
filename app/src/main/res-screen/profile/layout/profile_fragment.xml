@@ -34,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:fontFamily="sans-serif-medium"
+                android:text="@string/profile_title"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size"/>
 
@@ -143,7 +144,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="17dp"
-                        android:text="@string/create_account_phone_number"
+                        android:text="@string/profile_phone"
                         android:textAllCaps="true"
                         android:textColor="@color/textColorHint"
                         android:textSize="11sp"/>
