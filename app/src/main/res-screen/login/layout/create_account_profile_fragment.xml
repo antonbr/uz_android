@@ -184,6 +184,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:minWidth="0dp"
                 android:padding="11dp"
+                android:textAllCaps="true"
                 android:stateListAnimator="@null"
                 android:text="@string/create_account_skip"
                 android:textColor="@drawable/skip_button_text_selector"

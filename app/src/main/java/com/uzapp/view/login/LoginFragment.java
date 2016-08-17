@@ -1,5 +1,6 @@
 package com.uzapp.view.login;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -21,6 +22,7 @@ import com.uzapp.pojo.UserTokenResponse;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.PrefsUtil;
 import com.uzapp.view.BaseActivity;
+import com.uzapp.view.main.MainActivity;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
@@ -110,9 +112,13 @@ public class LoginFragment extends Fragment {
         public void onResponse(Call<UserTokenResponse> call, Response<UserTokenResponse> response) {
             if (getView() != null) {
                 if (response.isSuccessful()) {
-                    CommonUtils.showMessage(getView(), "Logged in successfully! Profile page is not yet implemented");
                     UserTokenResponse user = response.body();
                     PrefsUtil.saveUserInfo(getContext(), user.getUserId(), user.getAccessToken(), user.getRefreshToken());
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    //bring back main activity from stack and start profile fragment
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtra("profile",true);
+                    startActivity(intent);
                 } else {
                     CommonUtils.showMessage(getView(), response.message());
                 }

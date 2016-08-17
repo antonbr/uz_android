@@ -116,6 +116,7 @@
                     <ToggleButton
                         android:id="@+id/backRouteToggle"
                         style="@style/ButtonStyle"
+                        android:padding="8dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -235,6 +236,7 @@
                     <Button
                         android:id="@+id/seeFullCalendarBtn"
                         style="@style/ButtonStyle"
+                        android:padding="8dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/datePickerList"

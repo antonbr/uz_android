@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/cardLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="13.5dp"
+                android:paddingLeft="22dp"
+                android:paddingRight="16dp"
+                android:paddingTop="13.5dp">
+
+    <TextView
+        android:id="@+id/cardLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/profile_bank_card"
+        android:textAllCaps="true"
+        android:textColor="@color/accentColor"
+        android:textSize="11sp"/>
+
+    <TextView
+        android:id="@+id/card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/cardLbl"
+        android:layout_toLeftOf="@+id/next"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:letterSpacing="0.2"
+        android:singleLine="true"
+        android:text="•••• •••• •••• 4556"
+        android:textSize="18sp"/>
+
+    <ImageView
+        android:id="@+id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/profile_next"/>
+</RelativeLayout>

@@ -33,6 +33,7 @@
         <ToggleButton
             android:id="@+id/todayBtn"
             style="@style/ButtonStyle"
+            android:padding="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/calendar_today_button_selector"

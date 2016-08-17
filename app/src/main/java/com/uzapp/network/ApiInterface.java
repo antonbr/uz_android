@@ -4,6 +4,7 @@ import com.uzapp.pojo.CreateAccountInfo;
 import com.uzapp.pojo.LoginInfo;
 import com.uzapp.pojo.Station;
 import com.uzapp.pojo.TrainSearchResult;
+import com.uzapp.pojo.User;
 import com.uzapp.pojo.UserTokenResponse;
 import com.uzapp.pojo.placeslist.PricesPlacesList;
 import com.uzapp.pojo.prices.Prices;
@@ -62,4 +63,7 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("user/restore_password")
     Call<Object> restorePassword(@Field("email") String email, @Field("new_password") String newPassword);
+
+    @GET("user")
+    Call<User> getUser(@Query("access_token") String accessToken);
 }

@@ -1,5 +1,6 @@
 package com.uzapp.view.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
@@ -20,6 +21,7 @@ import com.uzapp.pojo.UserTokenResponse;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.util.PrefsUtil;
+import com.uzapp.view.main.MainActivity;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
@@ -166,9 +168,13 @@ public class CreateAccountProfileFragment extends Fragment {
         @Override
         public void onResponse(Call<UserTokenResponse> call, Response<UserTokenResponse> response) {
             if (response.isSuccessful()) {
-                CommonUtils.showMessage(getView(), "Account created successfully! Profile page is not yet implemented");
                 UserTokenResponse user = response.body();
                 PrefsUtil.saveUserInfo(getContext(), user.getUserId(), user.getAccessToken(), user.getRefreshToken());
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                //bring back main activity from stack and start profile fragment
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("profile",true);
+                startActivity(intent);
             } else {
                 showError(response.message());
             }

@@ -18,7 +18,8 @@
             android:launchMode="singleTop"/>
         <activity
             android:name=".view.login.LoginFlowActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:noHistory="true"/>
         <activity
             android:name=".view.splash.SplashActivity"
             android:screenOrientation="portrait"

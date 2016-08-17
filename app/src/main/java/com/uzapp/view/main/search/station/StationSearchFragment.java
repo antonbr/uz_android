@@ -199,14 +199,16 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
 
     @Override
     public void onSearchLetterEntered(String msg) {
-        if (selectedStation != null && !selectedStation.getName().equals(msg)) {
-            selectedStation = null;
-        }
-        if (msg.length() >= Constants.SEARCH_MIN_LENGTH) {
-            searchStations(msg);
-        } else {
-            adapter.clearStations();
-            showPopularStations();
+        if (getView() != null) {
+            if (selectedStation != null && !selectedStation.getName().equals(msg)) {
+                selectedStation = null;
+            }
+            if (msg.length() >= Constants.SEARCH_MIN_LENGTH) {
+                searchStations(msg);
+            } else {
+                adapter.clearStations();
+                showPopularStations();
+            }
         }
     }
 }

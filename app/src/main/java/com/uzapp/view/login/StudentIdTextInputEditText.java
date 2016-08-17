@@ -21,7 +21,7 @@ import butterknife.OnTextChanged;
  * Created by vika on 12.08.16.
  */
 public class StudentIdTextInputEditText extends TextInputEditText {
-    private static final String SEPARATOR = " №";
+    public static final String SEPARATOR = " №";
     private static final int SERIES_LENGTH = 2;
     private static final int TEXT_INPUT = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS;
     private static final int NUMBER_INPUT = InputType.TYPE_CLASS_NUMBER;

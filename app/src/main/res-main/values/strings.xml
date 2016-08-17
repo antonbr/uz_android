@@ -139,6 +139,15 @@
     <string name="reset_password_instruction">Инструкция по восстановлению пароля отправлена на Ваш E-mail</string>
     <string name="reset_password_btn_search_screen">На страницу поиска</string>
     <string name="create_account_skip">Пропустить этот шаг</string>
+    <string name="profile_bonus_card_number">Номер бонусной карты</string>
+    <string name="profile_edit">Изменить данные</string>
+    <string name="profile_bank_card">Банковская карта</string>
+    <string name="profile_card_add">Добавить карту</string>
+    <string name="profile_ticket_return">Возврат билетов</string>
+    <string name="profile_booking_history">История заказов</string>
+    <string name="profile_bonus_program">Бонусная программа</string>
+    <string name="profile_my_tickets">Мои билеты</string>
+    <string name="profile_title">Личный кабинет</string>
 
 
     <string-array name="wagon_types_long">
