@@ -70,6 +70,12 @@ public class CommonUtils {
         return calendar;
     }
 
+    /**
+     * @param value
+     * @return
+     *
+     * Is odd place
+     */
     public static boolean isOdd(int value) {
         return (value & 0x01) != 0;
     }
@@ -79,11 +85,26 @@ public class CommonUtils {
                 ContextCompat.getDrawable(context, R.drawable.border_button_place_selected);
     }
 
+    /**
+     * @param context
+     * @param button
+     * @param color
+     * @return color
+     *
+     * Change text color
+     */
     public static int changeTextColorPlace(Context context, Button button, int color) {
         return (isSelectedPlace(context, button)) ?
                 ContextCompat.getColor(context, android.R.color.white) : ContextCompat.getColor(context, color);
     }
 
+    /**
+     * @param context
+     * @param button
+     * @return selected place
+     *
+     * Is selected place
+     */
     public static boolean isSelectedPlace(Context context, Button button) {
         return (button.getBackground().getConstantState().equals(ContextCompat.getDrawable(context,
                 R.drawable.border_button_place_selected).getConstantState()));

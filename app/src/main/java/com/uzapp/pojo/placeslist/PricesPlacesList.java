@@ -10,7 +10,7 @@ import org.parceler.Parcel;
 @Parcel
 public class PricesPlacesList {
     @SerializedName("station_from_code")
-    int station_from_code;
+    int stationFromCode;
     @SerializedName("station_from_name")
     String stationFromName;
     @SerializedName("station_to_code")
@@ -24,20 +24,20 @@ public class PricesPlacesList {
 
     }
 
-    public PricesPlacesList(int station_from_code, String stationFromName, int stationToCode, String stationToName, TrainPlacesList trainPlacesList) {
-        this.station_from_code = station_from_code;
+    public PricesPlacesList(int stationFromCode, String stationFromName, int stationToCode, String stationToName, TrainPlacesList trainPlacesList) {
+        this.stationFromCode = stationFromCode;
         this.stationFromName = stationFromName;
         this.stationToCode = stationToCode;
         this.stationToName = stationToName;
         this.trainPlacesList = trainPlacesList;
     }
 
-    public int getStation_from_code() {
-        return station_from_code;
+    public int getStationFromCode() {
+        return stationFromCode;
     }
 
-    public void setStation_from_code(int station_from_code) {
-        this.station_from_code = station_from_code;
+    public void setStationFromCode(int stationFromCode) {
+        this.stationFromCode = stationFromCode;
     }
 
     public String getStationFromName() {

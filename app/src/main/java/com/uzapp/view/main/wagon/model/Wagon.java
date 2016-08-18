@@ -1,56 +1,36 @@
-package com.uzapp.pojo.prices;
+package com.uzapp.view.main.wagon.model;
 
-import com.google.gson.annotations.SerializedName;
-
-import org.parceler.Parcel;
+import com.uzapp.pojo.prices.PlacesPrices;
+import com.uzapp.pojo.prices.ServicesPrices;
 
 import java.util.List;
 
 /**
- * Created by Vladimir on 01.08.2016.
+ * Created by Vladimir on 16.08.2016.
  */
-@Parcel
-public class WagonsPrices {
-    @SerializedName("charline")
-    String charline;
-    @SerializedName("number")
-    String number;
-    @SerializedName("type_name")
-    String typeName;
-    @SerializedName("type_code")
-    String typeCode;
-    @SerializedName("country_name")
-    String countryName;
-    @SerializedName("country_code")
-    String countryCode;
-    @SerializedName("railway_name")
-    String railwayName;
-    @SerializedName("railway_code")
-    String railwayCode;
-    @SerializedName("sitting")
-    boolean sitting;
-    @SerializedName("class_name")
-    String className;
-    @SerializedName("class_code")
-    int classCode;
-    @SerializedName("cost_currency")
-    String costCurrency;
-    @SerializedName("cost")
-    int cost;
-    @SerializedName("cost_reserve_currency")
-    String costReserveCurrency;
-    @SerializedName("cost_reserve")
-    int costReserve;
-    @SerializedName("allow_bonus")
-    boolean allowBonus;
-    @SerializedName("services")
-    List<ServicesPrices> services;
-    @SerializedName("places")
-    PlacesPrices placesPrices;
+public class Wagon {
 
-    public WagonsPrices() {
+    private String charline;
+    private String number;
+    private String typeName;
+    private String typeCode;
+    private String countryName;
+    private String countryCode;
+    private String railwayName;
+    private String railwayCode;
+    private boolean sitting;
+    private String className;
+    private int classCode;
+    private String costCurrency;
+    private int cost;
+    private String costReserveCurrency;
+    private int costReserve;
+    private boolean allowBonus;
+    private List<ServicesPrices> services;
+    private PlacesPrices placesPrices;
+    private List<Integer> places;
 
-    }
+    public Wagon() {}
 
     public String getCharline() {
         return charline;
@@ -194,5 +174,13 @@ public class WagonsPrices {
 
     public void setPlacesPrices(PlacesPrices placesPrices) {
         this.placesPrices = placesPrices;
+    }
+
+    public List<Integer> getPlaces() {
+        return places;
+    }
+
+    public void setPlaces(List<Integer> places) {
+        this.places = places;
     }
 }

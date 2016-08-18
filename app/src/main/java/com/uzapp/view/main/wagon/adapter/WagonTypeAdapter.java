@@ -1,6 +1,5 @@
 package com.uzapp.view.main.wagon.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -32,12 +31,8 @@ public class WagonTypeAdapter extends BaseAdapter implements View.OnClickListene
     private int priceTicket;
     private String typeWagon;
 
-    private int placeLowStandardLeft;
-    private int placeUpperStandardLeft;
-    private int placeLowStandardRight;
-    private int placeUpperStandardRight;
-    private int placeLowSide;
-    private int placeUpperSide;
+    private int placeLowStandardLeft, placeUpperStandardLeft, placeLowStandardRight,
+            placeUpperStandardRight, placeLowSide, placeUpperSide;
 
     public WagonTypeAdapter(Context context, List<Integer> listPlaces, String wagonNumber,
                             int priceTicket, String typeWagon) {
@@ -106,6 +101,11 @@ public class WagonTypeAdapter extends BaseAdapter implements View.OnClickListene
         return view;
     }
 
+    /**
+     * @param view
+     *
+     * Initializing components (button)
+     */
     private void initViewItem(View view) {
         holder.btnPlaceUpperSide = (Button) view.findViewById(R.id.btnPlaceUpperSide);
         if (holder.btnPlaceUpperSide != null) {
@@ -152,7 +152,13 @@ public class WagonTypeAdapter extends BaseAdapter implements View.OnClickListene
         setBackgroundBtnPlace(button, filterString);
     }
 
-    @SuppressLint("SetTextI18n")
+    /**
+     * @param button
+     * @param place
+     * @param sizeFreely
+     *
+     * Set available place in wagon
+     */
     private void setPlaceButton(Button button, int place, int sizeFreely) {
         button.setText(Integer.toString(place));
         button.setTag(place);
@@ -162,11 +168,23 @@ public class WagonTypeAdapter extends BaseAdapter implements View.OnClickListene
         }
     }
 
+    /**
+     * @param button
+     * @param sizeFreely
+     * @return enabled place
+     *
+     * Is enabled place
+     */
     private boolean isEnabledPlace(Button button, int sizeFreely) {
         return (sizeFreely >= (int) button.getTag());
     }
 
-    @SuppressLint("NewApi")
+    /**
+     * @param button
+     * @param placeType
+     *
+     * Set background button (place)
+     */
     private void setBackgroundBtnPlace(Button button, String placeType) {
         button.setBackground(CommonUtils.changeBackgroundPlace(context, button));
         button.setTextColor(CommonUtils.changeTextColorPlace(context, button, android.R.color.black));

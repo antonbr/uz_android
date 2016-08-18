@@ -19,11 +19,11 @@ public class WagonsPlacesList {
     @SerializedName("type_name")
     String typeName;
     @SerializedName("type_code")
-    String type_code;
+    String typeCode;
     @SerializedName("country_name")
     String countryName;
     @SerializedName("country_code")
-    String country_code;
+    String countryCode;
     @SerializedName("railway_name")
     String railwayName;
     @SerializedName("railway_code")
@@ -53,16 +53,16 @@ public class WagonsPlacesList {
 
     }
 
-    public WagonsPlacesList(String charline, String number, String typeName, String type_code, String countryName,
-                            String country_code, String railwayName, String railwayCode, boolean sitting, String className,
+    public WagonsPlacesList(String charline, String number, String typeName, String typeCode, String countryName,
+                            String countryCode, String railwayName, String railwayCode, boolean sitting, String className,
                             int classCode, String costCurrency, int cost, String costReserveCurrency, int costReserve,
                             boolean allowBonus, List<ServicesPrices> services, List<Integer> places) {
         this.charline = charline;
         this.number = number;
         this.typeName = typeName;
-        this.type_code = type_code;
+        this.typeCode = typeCode;
         this.countryName = countryName;
-        this.country_code = country_code;
+        this.countryCode = countryCode;
         this.railwayName = railwayName;
         this.railwayCode = railwayCode;
         this.sitting = sitting;
@@ -101,12 +101,12 @@ public class WagonsPlacesList {
         this.typeName = typeName;
     }
 
-    public String getType_code() {
-        return type_code;
+    public String getTypeCode() {
+        return typeCode;
     }
 
-    public void setType_code(String type_code) {
-        this.type_code = type_code;
+    public void setTypeCode(String type_code) {
+        this.typeCode = type_code;
     }
 
     public String getCountryName() {
@@ -117,12 +117,12 @@ public class WagonsPlacesList {
         this.countryName = countryName;
     }
 
-    public String getCountry_code() {
-        return country_code;
+    public String getCountryCode() {
+        return countryCode;
     }
 
-    public void setCountry_code(String country_code) {
-        this.country_code = country_code;
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
     }
 
     public String getRailwayName() {

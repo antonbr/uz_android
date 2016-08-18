@@ -12,10 +12,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.uzapp.R;
-import com.uzapp.pojo.prices.Prices;
-import com.uzapp.pojo.prices.WagonsPrices;
+import com.uzapp.util.Constants;
 import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.wagon.fragment.WagonPlaceFragment;
+import com.uzapp.view.main.wagon.model.Wagon;
 
 import java.util.List;
 
@@ -27,9 +27,8 @@ import butterknife.ButterKnife;
  */
 public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.ViewHolder> {
 
-    private Prices pricesObject;
     private Context context;
-    private List<WagonsPrices> listWagons;
+    private List<Wagon> listWagon;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.txtNumberWagon) TextView txtNumberWagon;
@@ -43,10 +42,9 @@ public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.Vi
         }
     }
 
-    public HorizontalAdapter(Context context, Prices pricesObject) {
+    public HorizontalAdapter(Context context, List<Wagon> listWagon) {
         this.context = context;
-        this.pricesObject = pricesObject;
-        listWagons = pricesObject.getTrain().getWagons();
+        this.listWagon = listWagon;
     }
 
     @Override
@@ -60,27 +58,42 @@ public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.Vi
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+        int total = listWagon.get(position).getPlacesPrices().getTotal();
 
-        int progress = (listWagons.get(position).getPlacesPrices().getTotal() * 100 / 60);
+        String typeWagon = listWagon.get(position).getTypeCode();
+        int totalPlaces = getProgressPlaces(typeWagon);
+        int progress = (total * 100 / totalPlaces);
 
-        holder.txtNumberWagon.setText(listWagons.get(position).getNumber());
-        holder.txtTotalPlaces.setText(Integer.toString(listWagons.get(position).getPlacesPrices().getTotal()));
+        holder.txtNumberWagon.setText(listWagon.get(position).getNumber());
+        holder.txtTotalPlaces.setText(Integer.toString(total));
         holder.progressBarPlaces.setProgress(progress);
 
         holder.layoutCountWagons.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
-                manager.popBackStack();
-
-                WagonPlaceFragment fragment = (WagonPlaceFragment) manager.findFragmentById(R.id.fragmentContainer);
-                ((MainActivity) context).replaceFragment(fragment.newInstance(pricesObject, position), true);
+                WagonPlaceFragment wagonPlaceFragment = (WagonPlaceFragment) manager.findFragmentById(R.id.fragmentContainer);
+                wagonPlaceFragment.addWagonView(listWagon, position);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return listWagons.size();
+        return listWagon.size();
+    }
+
+    /**
+     * @param typeWagon
+     * @return places for type wagon
+     */
+    private int getProgressPlaces(String typeWagon) {
+        if (typeWagon.equalsIgnoreCase(Constants.TYPE_LUX)) {
+            return 20;
+        } else if (typeWagon.equalsIgnoreCase(Constants.TYPE_KUPE)) {
+            return 40;
+        } else {
+            return 60;
+        }
     }
 }

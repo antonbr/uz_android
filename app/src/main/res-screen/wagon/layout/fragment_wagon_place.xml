@@ -9,26 +9,45 @@
         android:id="@+id/layoutToolbar"
         layout="@layout/toolbar_back" />
 
-    <LinearLayout
-        android:id="@+id/layoutBuyReserveTicket"
+    <RelativeLayout
+        android:id="@+id/containerTopLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:layout_below="@+id/layoutToolbar">
 
-        <include
-            layout="@layout/include_buy_reserve" />
+        <LinearLayout
+            android:id="@+id/layoutBuyReserveTicket"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
-    </LinearLayout>
+            <include layout="@layout/include_buy_reserve" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutFilterPlace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:visibility="gone">
+
+            <include layout="@layout/include_filter_wagon" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/layoutBuyReserveTicket"
+        android:background="@color/bgSelectPlaceColor"
+        android:layout_below="@+id/containerTopLayout"
         android:fillViewport="true">
 
         <LinearLayout
+            android:id="@+id/layoutWagon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">

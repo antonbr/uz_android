@@ -53,7 +53,7 @@ public class WheelView extends ScrollView {
 
     List<String> items;
 
-    private List<String> getItems() {
+    public List<String> getItems() {
         return items;
     }
 

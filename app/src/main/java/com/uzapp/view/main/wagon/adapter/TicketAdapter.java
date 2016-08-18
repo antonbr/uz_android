@@ -67,6 +67,11 @@ public class TicketAdapter extends ArrayAdapter<Ticket> {
         return getItem(position);
     }
 
+    /**
+     * @param position
+     *
+     * Remove item from ticket list
+     */
     private void removeItem(int position) {
 
         removeItemBtn(position);
@@ -78,6 +83,11 @@ public class TicketAdapter extends ArrayAdapter<Ticket> {
         }
     }
 
+    /**
+     * @param position
+     *
+     * Remove selected place in wagon
+     */
     private void removeItemBtn(int position) {
         Ticket ticketItem = getTicketItem(position);
         FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
@@ -85,6 +95,9 @@ public class TicketAdapter extends ArrayAdapter<Ticket> {
         fragment.ticketPlaceRemoveView(Integer.parseInt(ticketItem.getPlaceNumber()), ticketItem.getWagonNumber());
     }
 
+    /**
+     * Hide view with buy and reserve select tickets
+     */
     public void hideBuyReserveView() {
         LinearLayout layoutBuyReserveTicket = (LinearLayout) ((MainActivity) context).findViewById(R.id.layoutBuyReserveTicket);
         if (layoutBuyReserveTicket != null) {

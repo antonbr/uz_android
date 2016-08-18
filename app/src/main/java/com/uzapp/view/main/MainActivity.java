@@ -34,9 +34,9 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
         }
 
         //CREATE ITEMS
-        AHBottomNavigationItem searchTrainItem = new AHBottomNavigationItem(null, R.drawable.ic_search_train);
-        AHBottomNavigationItem myTicketsItem = new AHBottomNavigationItem(null, R.drawable.ic_my_tickets);
-        AHBottomNavigationItem bottomMenuItem = new AHBottomNavigationItem(null, R.drawable.ic_bottom_menu);
+        AHBottomNavigationItem searchTrainItem = new AHBottomNavigationItem(getString(R.string.menu_search_ticket), R.drawable.ic_search_train);
+        AHBottomNavigationItem myTicketsItem = new AHBottomNavigationItem(getString(R.string.menu_my_ticket), R.drawable.ic_my_tickets);
+        AHBottomNavigationItem bottomMenuItem = new AHBottomNavigationItem(getString(R.string.menu), R.drawable.ic_bottom_menu);
         //ADD THEM to bar
         bottomNavigationBar.addItem(searchTrainItem);
         bottomNavigationBar.addItem(myTicketsItem);
@@ -66,5 +66,13 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
             default:
                 break;
         }
+    }
+
+    public void hideNavigationBar() {
+        bottomNavigationBar.hideBottomNavigation(true);
+    }
+
+    public void showNavigationBar() {
+        bottomNavigationBar.restoreBottomNavigation(true);
     }
 }

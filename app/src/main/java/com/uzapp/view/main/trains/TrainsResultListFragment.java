@@ -182,7 +182,7 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
         public void onResponse(Call<Prices> call, Response<Prices> response) {
             if (response.isSuccessful()) {
                 Prices prices = response.body();
-                ((MainActivity) getActivity()).replaceFragment(new WagonPlaceFragment().newInstance(prices, 0), true);
+                ((MainActivity) getActivity()).replaceFragment(WagonPlaceFragment.newInstance(prices, 0), true);
             }
         }
 
