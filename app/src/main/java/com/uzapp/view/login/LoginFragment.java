@@ -3,7 +3,6 @@ package com.uzapp.view.login;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
@@ -82,7 +81,7 @@ public class LoginFragment extends Fragment {
 
     @OnClick(R.id.loginBtn)
     void onLoginBtnClicked() {
-        String deviceId = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        String deviceId = CommonUtils.getDeviceId(getContext());
         LoginInfo loginInfo = new LoginInfo(deviceId, emailField.getText().toString(),
                 passwordField.getText().toString());
         Call call = ApiManager.getApi(getContext()).login(loginInfo);

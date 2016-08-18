@@ -66,4 +66,11 @@ public interface ApiInterface {
 
     @GET("user")
     Call<User> getUser(@Query("access_token") String accessToken);
+
+    @FormUrlEncoded
+    @POST("user")
+    Call<User> updateUser(@Query("access_token") String accessToken,@Field("password") String password,
+                          @Field("first_name")String firstName, @Field("middle_name") String middleName,
+                          @Field("last_name") String lastName, @Field("phone_number") String phoneNumber,
+                          @Field("email")String email, @Field("student_id") String studentId);
 }

@@ -1,5 +1,7 @@
 package com.uzapp.view.main.profile;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -14,8 +16,11 @@ import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.User;
 import com.uzapp.util.PrefsUtil;
+import com.uzapp.view.BaseActivity;
 import com.uzapp.view.login.PhoneNumberTextInputEditText;
 import com.uzapp.view.login.StudentIdTextInputEditText;
+
+import org.parceler.Parcels;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +34,7 @@ import retrofit2.Response;
  * Created by vika on 17.08.16.
  */
 public class ProfileFragment extends Fragment {
+    private static final int REQUEST_EDIT_PROFILE = 1;
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
     @BindView(R.id.bonusCardNumber) TextView bonusCardNumber;
     @BindView(R.id.firstName) TextView firstName;
@@ -63,7 +69,12 @@ public class ProfileFragment extends Fragment {
 
     @OnClick(R.id.editInfoBtn)
     void onEditInfoBtnClicked() {
-
+        if (user != null) {
+            Fragment fragment = EditProfileFragment.getInstance(user);
+            fragment.setTargetFragment(this, REQUEST_EDIT_PROFILE);
+            ((BaseActivity) getActivity()).addFragment(fragment, R.anim.slide_up, R.anim.slide_down);
+            //TODO check navigation and animation
+        }
     }
 
     @OnClick(R.id.addCardBtn)
@@ -123,21 +134,36 @@ public class ProfileFragment extends Fragment {
         unbinder.unbind();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == REQUEST_EDIT_PROFILE) {
+                user = Parcels.unwrap(data.getParcelableExtra("user"));
+                showUserInfo();
+            }
+        }
+    }
+
     private Callback<User> userCallback = new Callback<User>() {
 
         @Override
         public void onResponse(Call<User> call, Response<User> response) {
-            if (response.isSuccessful()) {
-                user = response.body();
-                showUserInfo();
-            } else {
-                Snackbar.make(getView(), response.message(), Snackbar.LENGTH_SHORT).show();
+            if (getView() != null) {
+                if (response.isSuccessful()) {
+                    user = response.body();
+                    showUserInfo();
+                } else {
+                    Snackbar.make(getView(), response.message(), Snackbar.LENGTH_SHORT).show();
+                }
             }
         }
 
         @Override
         public void onFailure(Call<User> call, Throwable t) {
-            Snackbar.make(getView(), t.getMessage(), Snackbar.LENGTH_SHORT).show();
+            if (getView() != null) {
+                Snackbar.make(getView(), t.getMessage(), Snackbar.LENGTH_SHORT).show();
+            }
         }
     };
 }

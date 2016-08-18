@@ -2,7 +2,6 @@ package com.uzapp.view.login;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
@@ -109,7 +108,7 @@ public class CreateAccountProfileFragment extends Fragment {
 
     @OnClick({R.id.saveBtn, R.id.skipBtn})
     void onSaveBtnClicked(View view) {
-        String deviceId = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        String deviceId = CommonUtils.getDeviceId(getContext());
         CreateAccountInfo createAccountInfo = new CreateAccountInfo(
                 deviceId,
                 email,
@@ -173,7 +172,7 @@ public class CreateAccountProfileFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 //bring back main activity from stack and start profile fragment
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra("profile",true);
+                intent.putExtra("profile", true);
                 startActivity(intent);
             } else {
                 showError(response.message());

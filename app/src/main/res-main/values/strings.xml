@@ -101,9 +101,9 @@
     </string-array>
 
     //create account
-    <string name="create_account_email_hint">E-MAIL</string>
+    <string name="create_account_email_hint">E-mail</string>
     <string name="create_account_email_hint_2">Ваш e-mail</string>
-    <string name="create_account_password_hint">ПАРОЛЬ</string>
+    <string name="create_account_password_hint">Пароль</string>
     <string name="create_account_password_hint_2">Придумайте пароль</string>
     <string name="create_account_title">Регистрация</string>
     <string name="create_account_password_info">Не менее чем из 8 символов</string>
@@ -153,6 +153,7 @@
     <string name="save">Сохранить</string>
     <string name="profile_edit_middle_name">Отчество</string>
     <string name="profile_phone">Телефон</string>
+    <string name="profile_password_not_valid">Пароль невалидный</string>
 
 
     <string-array name="wagon_types_long">

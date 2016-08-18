@@ -3,6 +3,7 @@ package com.uzapp.util;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.util.Patterns;
@@ -108,5 +109,9 @@ public class CommonUtils {
 
     public static void showMessage(View view, int textRes) {
         showMessage(view, view.getContext().getString(textRes));
+    }
+
+    public static String getDeviceId(Context context) {
+        return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 }

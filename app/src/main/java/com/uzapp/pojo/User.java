@@ -2,9 +2,12 @@ package com.uzapp.pojo;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 /**
  * Created by vika on 17.08.16.
  */
+@Parcel
 public class User {
     private long id;
     @SerializedName("first_name")

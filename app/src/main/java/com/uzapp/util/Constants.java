@@ -29,4 +29,5 @@ public class Constants {
     public static final float PASSWORD_VISIBLE_LETTER_SPACING = 1f;
     public static final int FIRST_NAME_MIN_LENGTH = 3;
     public static final int LAST_NAME_MIN_LENGTH = 3;
+    public static final int MIDDLE_NAME_MIN_LENGTH = 3;
 }
