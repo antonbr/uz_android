@@ -20,6 +20,7 @@ import com.uzapp.pojo.User;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.util.PrefsUtil;
+import com.uzapp.view.BaseActivity;
 import com.uzapp.view.login.PhoneNumberTextInputEditText;
 import com.uzapp.view.login.StudentIdTextInputEditText;
 
@@ -39,6 +40,7 @@ import retrofit2.Response;
  */
 public class EditProfileFragment extends Fragment {
     private static final int REQUEST_PASSWORD = 1;
+    private static final int REQUEST_CHANGE_PASSWORD = 2;
     @BindView(R.id.firstNameField) TextInputEditText firstNameField;
     @BindView(R.id.lastNameField) TextInputEditText lastNameField;
     @BindView(R.id.middleNameField) TextInputEditText middleNameField;
@@ -97,6 +99,13 @@ public class EditProfileFragment extends Fragment {
         checkFieldsState();
     }
 
+    @OnClick(R.id.passwordBtn)
+    void onPasswordBtnClicked() {
+        Fragment fragment = new ChangePasswordFragment();
+        fragment.setTargetFragment(this, REQUEST_CHANGE_PASSWORD);
+        ((BaseActivity) getActivity()).addFragment(fragment, R.anim.slide_up, R.anim.slide_down);
+    }
+
     private void checkFieldsState() {
         boolean allowSaving = isFirstNameValid()
                 && isMiddleNameValid()
@@ -123,11 +132,16 @@ public class EditProfileFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            switch (requestCode) {
-                case REQUEST_PASSWORD:
-                    String password = data.getStringExtra("password");
-                    updateUserData(password);
-                    break;
+            if (getView() != null) {
+                switch (requestCode) {
+                    case REQUEST_PASSWORD:
+                        String password = data.getStringExtra("password");
+                        updateUserData(password);
+                        break;
+                    case REQUEST_CHANGE_PASSWORD:
+                        Snackbar.make(getView(), R.string.profile_edit_change_password_success, Snackbar.LENGTH_LONG).show();
+                        break;
+                }
             }
         }
     }

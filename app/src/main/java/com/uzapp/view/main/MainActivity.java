@@ -25,9 +25,10 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        if(intent.hasExtra("profile")){
+        if (intent.hasExtra("profile")) {
             replaceFragment(new ProfileFragment(), true);
-        } else{
+        } else {
+            clearBackstack();
             bottomNavigationBar.setCurrentItem(0);
         }
     }
