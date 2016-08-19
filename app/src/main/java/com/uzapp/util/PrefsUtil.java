@@ -9,7 +9,10 @@ import android.text.TextUtils;
  * Created by vika on 14.08.16.
  */
 public class PrefsUtil {
-    public static final String USER_TOKEN = "user_token";
+    public static final String USER_ACCESS_TOKEN = "user_access_token";
+    public static final String USER_REFRESH_TOKEN = "user_refresh_token";
+    public static final String USER_ID = "user_id";
+
 
     public static boolean setStringPreference(Context context, String key, String value) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -30,4 +33,9 @@ public class PrefsUtil {
         return value;
     }
 
+    public static void saveUserInfo(Context context, String userId, String accessToken, String refreshToken) {
+        PrefsUtil.setStringPreference(context, PrefsUtil.USER_ACCESS_TOKEN, accessToken);
+        PrefsUtil.setStringPreference(context, PrefsUtil.USER_ID, userId);
+        PrefsUtil.setStringPreference(context, PrefsUtil.USER_REFRESH_TOKEN, refreshToken);
+    }
 }

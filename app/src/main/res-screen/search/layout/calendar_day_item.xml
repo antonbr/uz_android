@@ -9,8 +9,8 @@
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:layout_margin="@dimen/calendar_day_margin"
         android:gravity="center"
         android:textColor="@color/textColor"
-        android:textSize="@dimen/text_size"
-        android:layout_margin="7dp"/>
+        android:textSize="@dimen/calendar_day_text_size"/>
 </RelativeLayout>

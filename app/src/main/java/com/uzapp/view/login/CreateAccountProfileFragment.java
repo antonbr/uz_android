@@ -1,12 +1,11 @@
 package com.uzapp.view.login;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,9 @@ import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.CreateAccountInfo;
 import com.uzapp.pojo.UserTokenResponse;
 import com.uzapp.util.CommonUtils;
+import com.uzapp.util.Constants;
 import com.uzapp.util.PrefsUtil;
+import com.uzapp.view.main.MainActivity;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
@@ -46,8 +47,10 @@ public class CreateAccountProfileFragment extends Fragment {
     @BindView(R.id.phoneField) PhoneNumberTextInputEditText phoneField;
     @BindView(R.id.studentIdField) StudentIdTextInputEditText studentIdField;
     @BindView(R.id.saveBtn) Button saveBtn;
+    @BindView(R.id.skipBtn) Button skipBtn;
     @BindDimen(R.dimen.hint_padding) int hintPadding;
     private String email, password;
+    private boolean isBonusProgramChecked;
 
 
     @Nullable
@@ -58,14 +61,16 @@ public class CreateAccountProfileFragment extends Fragment {
         resetBtn.setVisibility(View.GONE);
         toolbarTitle.setText(R.string.create_account_profile_info_title);
         initExtras();
+        skipBtn.setEnabled(!isBonusProgramChecked);
         return view;
     }
 
-    public static CreateAccountProfileFragment getInstance(String email, String password) {
+    public static CreateAccountProfileFragment getInstance(String email, String password, boolean isBonusProgramChecked) {
         CreateAccountProfileFragment fragment = new CreateAccountProfileFragment();
         Bundle args = new Bundle();
         args.putString("email", email);
         args.putString("password", password);
+        args.putBoolean("bonus_program", isBonusProgramChecked);
         fragment.setArguments(args);
         return fragment;
     }
@@ -75,9 +80,9 @@ public class CreateAccountProfileFragment extends Fragment {
         if (args != null) {
             email = args.getString("email");
             password = args.getString("password");
+            isBonusProgramChecked = args.getBoolean("bonus_program");
         }
     }
-
 
     @OnFocusChange({R.id.firstNameField, R.id.lastNameField, R.id.phoneField, R.id.studentIdField})
     void onFieldFocusChanged(boolean focus, TextInputEditText view) {
@@ -101,31 +106,53 @@ public class CreateAccountProfileFragment extends Fragment {
     }
 
 
-    @OnClick(R.id.saveBtn)
-    void onSaveBtnClicked() {
-        String deviceId = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+    @OnClick({R.id.saveBtn, R.id.skipBtn})
+    void onSaveBtnClicked(View view) {
+        String deviceId = CommonUtils.getDeviceId(getContext());
         CreateAccountInfo createAccountInfo = new CreateAccountInfo(
                 deviceId,
-                firstNameField.getText().toString(),
-                lastNameField.getText().toString(),
                 email,
                 password);
-        if (phoneField.isValid() && phoneField.getText().length() > 0) {
-            createAccountInfo.setPhoneNumber(phoneField.getPhoneNumber());
-        }
-        if (studentIdField.isValid() && studentIdField.getText().length() > 0) {
-            createAccountInfo.setStudentId(studentIdField.getStudentId());
+        if (view.getId() == R.id.saveBtn) {
+            if (isFirstNameValid() && firstNameField.getText().length() > 0) {
+                createAccountInfo.setFirstName(firstNameField.getText().toString());
+            }
+            if (isLastNameValid() && lastNameField.getText().length() > 0) {
+                createAccountInfo.setLastName(lastNameField.getText().toString());
+            }
+            if (phoneField.isValid() && phoneField.getText().length() > 0) {
+                createAccountInfo.setPhoneNumber(phoneField.getPhoneNumber());
+            }
+            if (studentIdField.isValid() && studentIdField.getText().length() > 0) {
+                createAccountInfo.setStudentId(studentIdField.getStudentId());
+            }
         }
         Call call = ApiManager.getApi(getContext()).createAccount(createAccountInfo);
         call.enqueue(callback);
     }
 
     private void checkFieldsState() {
-        boolean allowSaving = !TextUtils.isEmpty(firstNameField.getText())
-                && !TextUtils.isEmpty(lastNameField.getText())
+        boolean allowSaving = isFirstNameValid()
+                && isLastNameValid()
                 && phoneField.isValid()
                 && studentIdField.isValid();
         saveBtn.setEnabled(allowSaving);
+    }
+
+    private boolean isFirstNameValid() {
+        if (isBonusProgramChecked) {
+            return firstNameField.getText().length() > Constants.FIRST_NAME_MIN_LENGTH;
+        } else {
+            return firstNameField.getText().length() == 0 || firstNameField.getText().length() > Constants.FIRST_NAME_MIN_LENGTH;
+        }
+    }
+
+    private boolean isLastNameValid() {
+        if (isBonusProgramChecked) {
+            return lastNameField.getText().length() > Constants.LAST_NAME_MIN_LENGTH;
+        } else {
+            return lastNameField.getText().length() == 0 || lastNameField.getText().length() > Constants.LAST_NAME_MIN_LENGTH;
+        }
     }
 
     @Override
@@ -140,8 +167,13 @@ public class CreateAccountProfileFragment extends Fragment {
         @Override
         public void onResponse(Call<UserTokenResponse> call, Response<UserTokenResponse> response) {
             if (response.isSuccessful()) {
-                CommonUtils.showMessage(getView(), "Account created successfully! Profile page is not yet implemented");
-                PrefsUtil.setStringPreference(getContext(), PrefsUtil.USER_TOKEN, response.body().getAccessToken());
+                UserTokenResponse user = response.body();
+                PrefsUtil.saveUserInfo(getContext(), user.getUserId(), user.getAccessToken(), user.getRefreshToken());
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                //bring back main activity from stack and start profile fragment
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("profile", true);
+                startActivity(intent);
             } else {
                 showError(response.message());
             }

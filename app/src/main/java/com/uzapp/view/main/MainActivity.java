@@ -9,6 +9,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.uzapp.R;
 import com.uzapp.view.BaseActivity;
 import com.uzapp.view.main.menu.MenuFragment;
+import com.uzapp.view.main.profile.ProfileFragment;
 import com.uzapp.view.main.search.SearchFragment;
 
 public class MainActivity extends BaseActivity implements AHBottomNavigation.OnTabSelectedListener {
@@ -24,7 +25,12 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        bottomNavigationBar.setCurrentItem(0);
+        if (intent.hasExtra("profile")) {
+            replaceFragment(new ProfileFragment(), true);
+        } else {
+            clearBackstack();
+            bottomNavigationBar.setCurrentItem(0);
+        }
     }
 
     private void createNavItems() {

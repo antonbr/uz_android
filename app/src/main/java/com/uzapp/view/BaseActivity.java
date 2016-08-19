@@ -17,9 +17,9 @@ public class BaseActivity extends AppCompatActivity {
     public void replaceFragment(Fragment f, boolean addToBackStack) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         if (addToBackStack) {
-            transaction.addToBackStack(null);
+            transaction.addToBackStack(f.getClass().getName());
         }
-        transaction.replace(R.id.fragmentContainer, f, null);
+        transaction.replace(R.id.fragmentContainer, f, f.getClass().getName());
         transaction.commit();
     }
 
@@ -29,6 +29,9 @@ public class BaseActivity extends AppCompatActivity {
         transaction.setCustomAnimations(enter, exit, enter, exit);
         transaction.add(R.id.fragmentContainer, f);
         transaction.commit();
+    }
+    public void clearBackstack() {
+        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     @Override

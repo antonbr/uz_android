@@ -22,7 +22,7 @@ import butterknife.OnTextChanged;
 public class PhoneNumberTextInputEditText extends TextInputEditText {
     //flag to prevent infinite loop of text changed event
     private boolean textChangedFromCode = false;
-    private static final String FIRST_SIGN = "+";
+    public static final String FIRST_SIGN = "+";
     private static final String SEPARATOR = " ";
     private static final int FIRST_GROUP_LENGTH = 4;
     private static final int SECOND_GROUP_LENGTH = 7;

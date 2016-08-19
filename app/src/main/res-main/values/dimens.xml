@@ -24,4 +24,7 @@
     <dimen name="trains_route_circle_big">13.5dp</dimen>
     <dimen name="trains_route_circle_big_padding">9dp</dimen>
     <dimen name="trains_route_circle_small_padding">6dp</dimen>
+
+    <dimen name="calendar_day_text_size">14sp</dimen>
+    <dimen name="calendar_day_margin">5dp</dimen>
 </resources>

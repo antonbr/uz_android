@@ -73,7 +73,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
-                        android:hint="@string/last_name"
+                        android:hint="@string/create_account_last_name"
                         android:inputType="text"
                         android:paddingBottom="@dimen/big_padding"
                         android:translationY="@dimen/hint_padding"/>
@@ -105,7 +105,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
-                        android:hint="@string/phone_number"
+                        android:hint="@string/create_account_phone_number"
                         android:inputType="number"
                         android:longClickable="false"
                         android:maxLength="@integer/phone_number_length"
@@ -172,7 +172,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:enabled="false"
-                android:text="@string/save"/>
+                android:text="@string/create_account_save"/>
+
+            <Button
+                android:id="@+id/skipBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="17dp"
+                android:background="?attr/selectableItemBackground"
+                android:fontFamily="sans-serif-medium"
+                android:minWidth="0dp"
+                android:padding="11dp"
+                android:textAllCaps="true"
+                android:stateListAnimator="@null"
+                android:text="@string/create_account_skip"
+                android:textColor="@drawable/skip_button_text_selector"
+                android:textSize="13.5sp"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

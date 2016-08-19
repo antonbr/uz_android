@@ -42,6 +42,7 @@
             android:minWidth="0dp"
             android:padding="11dp"
             android:textColor="@android:color/white"
+            android:textAllCaps="true"
             android:stateListAnimator="@null"
             android:text="@string/ready"
             android:textSize="@dimen/button_text_size"/>

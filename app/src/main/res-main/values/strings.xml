@@ -1,5 +1,7 @@
 <resources>
     <string name="api_endpoint" translatable="false">http://52.59.64.77/v1/</string>
+    <string name="terms_of_service" translatable="false">http://52.59.64.77/</string>
+    <string name="bonus_program" translatable="false">http://52.59.64.77/</string>
 
     //all screens
     <string name="app_name">UzApp</string>
@@ -7,6 +9,7 @@
     <string name="reset">Сбросить</string>
     <string name="cancel">Отменить</string>
     <string name="filter">Фильтр</string>
+    <string name="token">Token %1$s</string>
 
     //search
     <string name="search_path_from">Откуда</string>
@@ -100,20 +103,22 @@
         <item>@string/filter_any</item>
     </string-array>
 
- //create account
-    <string name="create_account_email_hint">E-MAIL</string>
+    //create account
+    <string name="create_account_email_hint">E-mail</string>
     <string name="create_account_email_hint_2">Ваш e-mail</string>
-    <string name="create_account_password_hint">ПАРОЛЬ</string>
+    <string name="create_account_password_hint">Пароль</string>
     <string name="create_account_password_hint_2">Придумайте пароль</string>
     <string name="create_account_title">Регистрация</string>
     <string name="create_account_password_info">Не менее чем из 8 символов</string>
     <string name="create_account_terms_of_service">Я принимаю условия договора оферты и даю согласие на использование персональных данных</string>
+    <string name="create_account_terms_of_service_clickable">договора оферты</string>
     <string name="create_account_bonus_program">Я желаю стать участником бонусной программы и даю согласие на использование персональных данных</string>
+    <string name="create_account_bonus_program_clickable">бонусной программы</string>
     <string name="create_account_register">Зарегистрироваться</string>
-    <string name="save">Сохранить</string>
+    <string name="create_account_save">Сохранить</string>
     <string name="create_account_first_name">Имя</string>
-    <string name="last_name">Фамилия</string>
-    <string name="phone_number">Номер телефона</string>
+    <string name="create_account_last_name">Фамилия</string>
+    <string name="create_account_phone_number">Номер телефона</string>
     <string name="create_account_phone_number_info">В формате +380 ХХ ХХХ ХХ ХХ</string>
     <string name="create_account_student">Вы студент?</string>
     <string name="create_account_student_id">Серия и номер студенческого</string>
@@ -136,6 +141,29 @@
     <string name="reset_password_thank">Спасибо!</string>
     <string name="reset_password_instruction">Инструкция по восстановлению пароля отправлена на Ваш E-mail</string>
     <string name="reset_password_btn_search_screen">На страницу поиска</string>
+    <string name="create_account_skip">Пропустить этот шаг</string>
+    <string name="profile_bonus_card_number">Номер бонусной карты</string>
+    <string name="profile_edit">Изменить данные</string>
+    <string name="profile_bank_card">Банковская карта</string>
+    <string name="profile_card_add">Добавить карту</string>
+    <string name="profile_ticket_return">Возврат билетов</string>
+    <string name="profile_booking_history">История заказов</string>
+    <string name="profile_bonus_program">Бонусная программа</string>
+    <string name="profile_my_tickets">Мои билеты</string>
+    <string name="profile_title">Личный кабинет</string>
+    <string name="profile_edit_password">Пароль</string>
+    <string name="profile_edit_connected_accounts">Связанные аккаунты</string>
+    <string name="save">Сохранить</string>
+    <string name="profile_edit_middle_name">Отчество</string>
+    <string name="profile_phone">Телефон</string>
+    <string name="profile_password_not_valid">Пароль невалидный</string>
+    <string name="profile_change_password_cancelation">Отмена</string>
+    <string name="profile_edit_change_password">Введите текущий пароль для подтверждения изменений</string>
+    <string name="profile_current_password">Текущий пароль</string>
+    <string name="profile_change_password_confirm">Новый пароль повторно</string>
+    <string name="profile_edit_change_password_success">Пароль изменен</string>
+    <string name="profile_edit_change_password_success_result">Ваш пароль был успешно изменён</string>
+    <string name="profile_edit_room">В личный кабинет</string>
 
 
     <string-array name="wagon_types_long">

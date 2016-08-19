@@ -7,6 +7,7 @@
         <item name="colorAccent">@color/accentColor</item>
         <item name="android:windowBackground">@color/backgroundColor</item>
         <item name="android:textColor">@color/textColor</item>
+        <item name="android:alertDialogTheme">@style/AlertDialogCustom</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
@@ -40,8 +41,8 @@
     <style name="ButtonStyle">
         <item name="android:minHeight">0dp</item>
         <item name="android:minWidth">0dp</item>
-        <item name="android:padding">8dp</item>
         <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
     <style name="MonthNameStyle">
@@ -73,6 +74,11 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/text_size</item>
         <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textAllCaps">true</item>
     </style>
-
+    <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/accentColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorAccent">@color/accentColor</item>
+    </style>
 </resources>

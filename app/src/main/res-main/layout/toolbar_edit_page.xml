@@ -33,6 +33,7 @@
             android:minWidth="0dp"
             android:padding="11dp"
             android:textColor="@color/accentColor"
+            android:textAllCaps="true"
             android:stateListAnimator="@null"
             android:text="@string/reset"
             android:textSize="@dimen/button_text_size"/>

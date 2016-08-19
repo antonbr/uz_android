@@ -63,7 +63,8 @@ android {
                     'src/main/res-screen/trains',
                     'src/main/res-screen/wagon',
                     'src/main/res-screen/menu',
-                    'src/main/res-screen/login'
+                    'src/main/res-screen/login',
+                    'src/main/res-screen/profile'
             ]
         }
     }
