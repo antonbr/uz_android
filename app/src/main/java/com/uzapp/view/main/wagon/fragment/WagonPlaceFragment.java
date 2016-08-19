@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SlidingDrawer;
 import android.widget.TextView;
@@ -88,6 +89,8 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
     Button btnReserveTicket;
     @BindView(R.id.btnGoToRegistration)
     Button btnGoToRegistration;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
 
     // filter components
     @BindView(R.id.layoutJoinVisit)
@@ -166,6 +169,9 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
     }
 
     private void initUI() {
+        showProgress(true);
+        showWagonLayout(false);
+
         Call<List<PricesPlacesList>> call = ApiManager.getApi(getActivity()).getPlacesList(stationFromCode,
                 stationToCode, train, wagonTypes, wagonClasses, wagonNumbers, date);
         call.enqueue(listPlacesCallback);
@@ -240,6 +246,18 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
         unbinder.unbind();
     }
 
+    private void showProgress(boolean show) {
+        progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
+    private void showBuyReserveLayout(boolean show) {
+        layoutBuyReserveTicket.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
+    private void showWagonLayout(boolean show) {
+        layoutWagon.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
     private Callback<List<PricesPlacesList>> listPlacesCallback = new Callback<List<PricesPlacesList>>()  {
 
         @Override
@@ -252,6 +270,9 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
 
                 setHorizontalWagonsAdapter(wagonsLists);
                 addWagonView(wagonsLists, 0);
+
+                showProgress(false);
+                showWagonLayout(true);
             }
         }
 
@@ -315,14 +336,14 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
         } else {
             if (ticket != null) {
                 listTickets.add(ticket);
-                layoutBuyReserveTicket.setVisibility(View.VISIBLE);
+                showBuyReserveLayout(true);
             }
         }
         adapter.notifyDataSetChanged();
         listViewSelectTicket.setAdapter(adapter);
 
         if (listTickets.isEmpty()) {
-            layoutBuyReserveTicket.setVisibility(View.GONE);
+            showBuyReserveLayout(false);
         }
     }
 
@@ -557,9 +578,9 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
             setHorizontalWagonsAdapter(wagonsFilterList);
             if (!wagonsFilterList.isEmpty()) {
                 addWagonView(wagonsFilterList, 0);
-                layoutWagon.setVisibility(View.VISIBLE);
+                showWagonLayout(true);
             } else {
-                layoutWagon.setVisibility(View.GONE);
+                showWagonLayout(false);
             }
         }
     }

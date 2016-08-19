@@ -101,6 +101,15 @@
 
     </ScrollView>
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="43dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="visible"/>
+
     <SlidingDrawer
         android:id="@+id/slidingDrawer"
         android:layout_width="match_parent"
