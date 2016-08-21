@@ -19,7 +19,6 @@ import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.User;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
-import com.uzapp.util.PrefsUtil;
 import com.uzapp.view.BaseActivity;
 import com.uzapp.view.login.PhoneNumberTextInputEditText;
 import com.uzapp.view.login.StudentIdTextInputEditText;
@@ -147,7 +146,6 @@ public class EditProfileFragment extends Fragment {
     }
 
     private void updateUserData(String password) {
-        String accessToken = PrefsUtil.getStringPreference(getContext(), PrefsUtil.USER_ACCESS_TOKEN);
         String firstName = firstNameField.getText().toString();
         String lastName = lastNameField.getText().toString();
         String middleName = middleNameField.getText().toString();
@@ -155,7 +153,7 @@ public class EditProfileFragment extends Fragment {
         String email = emailField.getText().toString();
         String studentId = studentIdField.getStudentId();
         //TODO fix email
-        Call call = ApiManager.getApi(getContext()).updateUser(accessToken, password, firstName,
+        Call call = ApiManager.getApi(getContext()).updateUser(password, firstName,
                 middleName, lastName, phone, null, studentId);
         call.enqueue(updateUserCallback);
     }

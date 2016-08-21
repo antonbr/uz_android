@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.User;
-import com.uzapp.util.PrefsUtil;
 import com.uzapp.view.BaseActivity;
 import com.uzapp.view.login.PhoneNumberTextInputEditText;
 import com.uzapp.view.login.StudentIdTextInputEditText;
@@ -51,8 +50,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
-        String token = PrefsUtil.getStringPreference(getContext(), PrefsUtil.USER_ACCESS_TOKEN);
-        Call call = ApiManager.getApi(getContext()).getUser(token);
+        Call call = ApiManager.getApi(getContext()).getUser();
         call.enqueue(userCallback);
         return view;
     }

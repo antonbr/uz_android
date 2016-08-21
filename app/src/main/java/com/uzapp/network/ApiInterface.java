@@ -65,17 +65,17 @@ public interface ApiInterface {
     Call<Object> restorePassword(@Field("email") String email, @Field("new_password") String newPassword);
 
     @GET("user")
-    Call<User> getUser(@Query("access_token") String accessToken);
+    Call<User> getUser();
 
     @FormUrlEncoded
     @POST("user")
-    Call<User> updateUser(@Query("access_token") String accessToken, @Field("password") String password,
+    Call<User> updateUser(@Field("password") String password,
                           @Field("first_name") String firstName, @Field("middle_name") String middleName,
                           @Field("last_name") String lastName, @Field("phone_number") String phoneNumber,
                           @Field("email") String email, @Field("student_id") String studentId);
 
     @FormUrlEncoded
     @POST("user")
-    Call<User> changePassword(@Query("access_token") String accessToken, @Field("password") String password,
+    Call<User> changePassword(@Field("password") String password,
                               @Field("new_password") String newPassword);
 }

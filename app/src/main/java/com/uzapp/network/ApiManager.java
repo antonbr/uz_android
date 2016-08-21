@@ -1,6 +1,7 @@
 package com.uzapp.network;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -8,10 +9,12 @@ import com.uzapp.R;
 import com.uzapp.pojo.UserTokenResponse;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.PrefsUtil;
+import com.uzapp.view.login.LoginFlowActivity;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -51,19 +54,9 @@ public class ApiManager {
         return new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
-                return chain.proceed(getRequestWithHeaders(context, chain.request()));
+                return chain.proceed(getRequestWithHeadersAndToken(context, chain.request()));
             }
         };
-    }
-
-    private static Request getRequestWithHeaders(Context context, Request request) {
-        Request.Builder requestBuilder = request.newBuilder();
-        String accessToken = PrefsUtil.getStringPreference(context, PrefsUtil.USER_ACCESS_TOKEN);
-        requestBuilder.header("Accept-Language", CommonUtils.getLanguage());
-        if (!TextUtils.isEmpty(accessToken)) {
-            requestBuilder.header("Authorization", context.getString(R.string.token, accessToken));
-        }
-        return requestBuilder.build();
     }
 
     private static Interceptor getLoggingInterceptor() {
@@ -80,8 +73,12 @@ public class ApiManager {
                 Response response = chain.proceed(request);
                 switch (response.code()) {
                     case HttpURLConnection.HTTP_UNAUTHORIZED:
-                        if (refreshTokenIfNeeded(context)) {
-                            request = getRequestWithHeaders(context, request);
+                        /*
+                        If 403, try to refresh token if user is logged in, if not - go to login page.
+                        If refresh token succeed, than sent the same request with new token
+                         */
+                        if (refreshToken(context)) {
+                            request = getRequestWithHeadersAndToken(context, request);
                             response = chain.proceed(request);
                         }
                         break;
@@ -90,9 +87,25 @@ public class ApiManager {
             }
         };
     }
+    //add language header to request, add access token as query param
+    private static Request getRequestWithHeadersAndToken(Context context, Request request) {
+        Request.Builder requestBuilder = request.newBuilder();
+        String accessToken = PrefsUtil.getStringPreference(context, PrefsUtil.USER_ACCESS_TOKEN);
+        requestBuilder.header("Accept-Language", CommonUtils.getLanguage());
+        if (!TextUtils.isEmpty(accessToken)) {
+            HttpUrl originalHttpUrl = request.url();
+            HttpUrl url = originalHttpUrl.newBuilder()
+                    .addQueryParameter("access_token", accessToken)
+                    .build();
+            requestBuilder.url(url);
+
+        }
+        return requestBuilder.build();
+    }
+
 
     //return true if token was refreshed
-    private static boolean refreshTokenIfNeeded(Context context) {
+    private static boolean refreshToken(Context context) {
         String refreshToken = PrefsUtil.getStringPreference(context, PrefsUtil.USER_REFRESH_TOKEN);
         if (!TextUtils.isEmpty(refreshToken)) {
             try {
@@ -107,7 +120,9 @@ public class ApiManager {
                 Log.e(ApiManager.class.getName(), e.getMessage());
             }
         }
-        //todo go to login if no access token or if refresh token failed
+        //go to login if no access token or if refresh token failed
+        Intent i = new Intent(context, LoginFlowActivity.class);
+        context.startActivity(i);
         return false;
     }
 }
