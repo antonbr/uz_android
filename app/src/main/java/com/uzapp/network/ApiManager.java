@@ -29,25 +29,32 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class ApiManager {
     private static ApiInterface api;
+    private static Retrofit retrofit;
 
     private ApiManager() {
     }
 
     public static ApiInterface getApi(Context context) {
         if (api == null) {
+            api = getRetrofit(context).create(ApiInterface.class);
+        }
+        return api;
+    }
+
+    public static Retrofit getRetrofit(Context context) {
+        if (retrofit == null) {
             OkHttpClient client = new OkHttpClient.Builder().
                     addInterceptor(getLoggingInterceptor()).
                     addInterceptor(getHeaderInterceptor(context)).
                     addInterceptor(getErrorInterceptor(context)).
                     build();
-            Retrofit retrofit = new Retrofit.Builder()
+            retrofit = new Retrofit.Builder()
                     .baseUrl(context.getString(R.string.api_endpoint))
                     .client(client)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
-            api = retrofit.create(ApiInterface.class);
         }
-        return api;
+        return retrofit;
     }
 
     private static Interceptor getHeaderInterceptor(final Context context) {
@@ -77,7 +84,7 @@ public class ApiManager {
                         If 403, try to refresh token if user is logged in, if not - go to login page.
                         If refresh token succeed, than sent the same request with new token
                          */
-                        if (refreshToken(context)) {
+                        if (refreshToken(context, request)) {
                             request = getRequestWithHeadersAndToken(context, request);
                             response = chain.proceed(request);
                         }
@@ -87,6 +94,7 @@ public class ApiManager {
             }
         };
     }
+
     //add language header to request, add access token as query param
     private static Request getRequestWithHeadersAndToken(Context context, Request request) {
         Request.Builder requestBuilder = request.newBuilder();
@@ -105,7 +113,7 @@ public class ApiManager {
 
 
     //return true if token was refreshed
-    private static boolean refreshToken(Context context) {
+    private static boolean refreshToken(Context context, Request request) {
         String refreshToken = PrefsUtil.getStringPreference(context, PrefsUtil.USER_REFRESH_TOKEN);
         if (!TextUtils.isEmpty(refreshToken)) {
             try {
@@ -119,6 +127,9 @@ public class ApiManager {
             } catch (IOException e) {
                 Log.e(ApiManager.class.getName(), e.getMessage());
             }
+        } else if (request.url().toString().contains("login")) {
+            //if try to login and user doesn't exist
+            return false;
         }
         //go to login if no access token or if refresh token failed
         Intent i = new Intent(context, LoginFlowActivity.class);

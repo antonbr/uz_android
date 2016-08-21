@@ -18,6 +18,7 @@ import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.LoginInfo;
 import com.uzapp.pojo.UserTokenResponse;
+import com.uzapp.util.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.PrefsUtil;
 import com.uzapp.view.BaseActivity;
@@ -119,7 +120,8 @@ public class LoginFragment extends Fragment {
                     intent.putExtra("profile",true);
                     startActivity(intent);
                 } else {
-                    CommonUtils.showMessage(getView(), response.message());
+                    String error = ApiErrorUtil.parseError(response);
+                    CommonUtils.showMessage(emailField, error);
                 }
             }
         }

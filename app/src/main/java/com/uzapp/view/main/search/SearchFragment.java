@@ -27,6 +27,7 @@ import com.google.android.gms.location.LocationServices;
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.Station;
+import com.uzapp.util.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.view.main.MainActivity;
@@ -388,7 +389,8 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
                 //TODO show message no stations found
                 useLocationBtn.setChecked(false);
             } else {
-                //TODO
+                String error = ApiErrorUtil.parseError(response);
+                CommonUtils.showMessage(getView(), error);
             }
         }
 

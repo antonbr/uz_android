@@ -17,6 +17,7 @@ import android.widget.Button;
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.User;
+import com.uzapp.util.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.view.BaseActivity;
@@ -178,7 +179,8 @@ public class EditProfileFragment extends Fragment {
                     }
                     getActivity().onBackPressed();
                 } else {
-                    Snackbar.make(getView(), response.message(), Snackbar.LENGTH_SHORT).show();
+                    String error = ApiErrorUtil.parseError(response);
+                    CommonUtils.showMessage(getView(), error);
                 }
             }
         }

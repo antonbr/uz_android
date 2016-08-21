@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
+import com.uzapp.util.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.view.main.MainActivity;
@@ -154,7 +155,8 @@ public class ResetPasswordFragment extends Fragment {
                     successResultLayout.setVisibility(View.VISIBLE);
                     toolbar.setVisibility(View.INVISIBLE);
                 } else {
-                    CommonUtils.showMessage(getView(), response.message());
+                    String error = ApiErrorUtil.parseError(response);
+                    CommonUtils.showMessage(getView(), error);
                 }
             }
         }

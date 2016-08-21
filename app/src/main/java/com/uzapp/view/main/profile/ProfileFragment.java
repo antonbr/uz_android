@@ -17,6 +17,8 @@ import android.widget.TextView;
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.User;
+import com.uzapp.util.ApiErrorUtil;
+import com.uzapp.util.CommonUtils;
 import com.uzapp.util.PrefsUtil;
 import com.uzapp.view.BaseActivity;
 import com.uzapp.view.login.PhoneNumberTextInputEditText;
@@ -166,7 +168,8 @@ public class ProfileFragment extends Fragment {
                     user = response.body();
                     showUserInfo();
                 } else {
-                    Snackbar.make(getView(), response.message(), Snackbar.LENGTH_SHORT).show();
+                    String error = ApiErrorUtil.parseError(response);
+                    CommonUtils.showMessage(getView(), error);
                 }
             }
         }

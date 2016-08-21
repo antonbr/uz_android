@@ -20,6 +20,7 @@ import android.widget.EditText;
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.User;
+import com.uzapp.util.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.view.BaseActivity;
@@ -193,7 +194,8 @@ public class ChangePasswordFragment extends Fragment {
                     saveBtn.setVisibility(View.INVISIBLE);
                     cancelBtn.setVisibility(View.INVISIBLE);
                 } else {
-                    Snackbar.make(getView(), response.message(), Snackbar.LENGTH_SHORT).show();
+                    String error = ApiErrorUtil.parseError(response);
+                    CommonUtils.showMessage(getView(), error);
                 }
             }
         }

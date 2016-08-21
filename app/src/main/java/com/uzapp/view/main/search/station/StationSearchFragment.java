@@ -17,9 +17,10 @@ import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.PopularStation;
 import com.uzapp.pojo.Station;
+import com.uzapp.util.ApiErrorUtil;
+import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.view.utils.VerticalDividerItemDecoration;
-import com.uzapp.view.main.search.SearchEditText;
 
 import org.parceler.Parcels;
 
@@ -149,23 +150,6 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
         unbinder.unbind();
     }
 
-    private Callback<List<Station>> searchCallback = new Callback<List<Station>>() {
-        @Override
-        public void onResponse(Call<List<Station>> call, Response<List<Station>> response) {
-            searchProgress.setVisibility(View.GONE);
-            if (response.isSuccessful()) {
-                adapter.setStations(response.body());
-            }
-        }
-
-        @Override
-        public void onFailure(Call<List<Station>> call, Throwable t) {
-            if (!call.isCanceled()) {
-                searchProgress.setVisibility(View.GONE);
-            }
-        }
-    };
-
     private void saveToPopularStations(Station station) {
         //if first lookup of the station by user, save it, if not first - update access time,
         // if try to save more than limit - change the oldest station
@@ -211,4 +195,26 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
             }
         }
     }
+
+    private Callback<List<Station>> searchCallback = new Callback<List<Station>>() {
+        @Override
+        public void onResponse(Call<List<Station>> call, Response<List<Station>> response) {
+            if (getView() != null) {
+                searchProgress.setVisibility(View.GONE);
+                if (response.isSuccessful()) {
+                    adapter.setStations(response.body());
+                } else {
+                    String error = ApiErrorUtil.parseError(response);
+                    CommonUtils.showMessage(getView(), error);
+                }
+            }
+        }
+
+        @Override
+        public void onFailure(Call<List<Station>> call, Throwable t) {
+            if (!call.isCanceled()) {
+                searchProgress.setVisibility(View.GONE);
+            }
+        }
+    };
 }
