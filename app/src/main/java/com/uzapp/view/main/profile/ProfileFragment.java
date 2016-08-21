@@ -15,9 +15,11 @@ import android.widget.TextView;
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.User;
+import com.uzapp.util.PrefsUtil;
 import com.uzapp.view.BaseActivity;
 import com.uzapp.view.login.PhoneNumberTextInputEditText;
 import com.uzapp.view.login.StudentIdTextInputEditText;
+import com.uzapp.view.main.MainActivity;
 
 import org.parceler.Parcels;
 
@@ -62,7 +64,10 @@ public class ProfileFragment extends Fragment {
 
     @OnClick(R.id.filterBtn)
     void onFilterBtnClicked() {
-
+        PrefsUtil.clearAllPrefs(getContext());
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     @OnClick(R.id.editInfoBtn)

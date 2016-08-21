@@ -161,7 +161,6 @@
     <string name="profile_edit_change_password">Введите текущий пароль для подтверждения изменений</string>
     <string name="profile_current_password">Текущий пароль</string>
     <string name="profile_change_password_confirm">Новый пароль повторно</string>
-    <string name="profile_edit_change_password_success">Пароль изменен</string>
     <string name="profile_edit_change_password_success_result">Ваш пароль был успешно изменён</string>
     <string name="profile_edit_room">В личный кабинет</string>
 

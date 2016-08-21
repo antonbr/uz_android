@@ -30,6 +30,7 @@ public class BaseActivity extends AppCompatActivity {
         transaction.add(R.id.fragmentContainer, f);
         transaction.commit();
     }
+
     public void clearBackstack() {
         fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }

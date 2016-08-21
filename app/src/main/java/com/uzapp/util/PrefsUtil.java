@@ -33,6 +33,10 @@ public class PrefsUtil {
         return value;
     }
 
+    public static void clearAllPrefs(Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().clear().commit();
+    }
+
     public static void saveUserInfo(Context context, String userId, String accessToken, String refreshToken) {
         PrefsUtil.setStringPreference(context, PrefsUtil.USER_ACCESS_TOKEN, accessToken);
         PrefsUtil.setStringPreference(context, PrefsUtil.USER_ID, userId);

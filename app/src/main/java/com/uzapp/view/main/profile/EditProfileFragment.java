@@ -124,7 +124,7 @@ public class EditProfileFragment extends Fragment {
     }
 
     private boolean isMiddleNameValid() {
-        return middleNameField.getText().length() == 0 || middleNameField.getText().length() > Constants.LAST_NAME_MIN_LENGTH;
+        return middleNameField.getText().length() == 0 || middleNameField.getText().length() > Constants.MIDDLE_NAME_MIN_LENGTH;
     }
 
     @Override
@@ -138,7 +138,7 @@ public class EditProfileFragment extends Fragment {
                         updateUserData(password);
                         break;
                     case REQUEST_CHANGE_PASSWORD:
-                        Snackbar.make(getView(), R.string.profile_edit_change_password_success, Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(getView(), R.string.profile_edit_change_password_success_result, Snackbar.LENGTH_LONG).show();
                         break;
                 }
             }
