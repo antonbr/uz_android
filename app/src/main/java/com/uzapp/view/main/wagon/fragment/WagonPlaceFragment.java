@@ -26,6 +26,7 @@ import com.uzapp.pojo.placeslist.PricesPlacesList;
 import com.uzapp.pojo.placeslist.WagonsPlacesList;
 import com.uzapp.pojo.prices.Prices;
 import com.uzapp.pojo.prices.WagonsPrices;
+import com.uzapp.util.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.view.main.wagon.adapter.HorizontalAdapter;
@@ -258,7 +259,7 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
         layoutWagon.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
-    private Callback<List<PricesPlacesList>> listPlacesCallback = new Callback<List<PricesPlacesList>>()  {
+    private Callback<List<PricesPlacesList>> listPlacesCallback = new Callback<List<PricesPlacesList>>() {
 
         @Override
         public void onResponse(Call<List<PricesPlacesList>> call, Response<List<PricesPlacesList>> response) {
@@ -273,6 +274,9 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
 
                 showProgress(false);
                 showWagonLayout(true);
+            } else {
+                String error = ApiErrorUtil.parseError(response);
+                CommonUtils.showMessage(getView(), error);
             }
         }
 
@@ -286,7 +290,7 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
      * @param listWagonsPrices
      * @param listWagonsPaces
      * @return wagonArray
-     *
+     * <p/>
      * Set data to Wagon object and return ArrayList
      */
     private List<Wagon> getWagonsList(List<WagonsPrices> listWagonsPrices, List<WagonsPlacesList> listWagonsPaces) {
@@ -318,9 +322,7 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
 
     /**
      * @param ticket
-     * @param isRemoveItem
-     *
-     * Set adapter for list items wagon
+     * @param isRemoveItem Set adapter for list items wagon
      */
     public void setAdapter(Ticket ticket, boolean isRemoveItem) {
         TicketAdapter adapter = new TicketAdapter(getActivity(), listTickets);
@@ -367,28 +369,26 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
 
     /**
      * @param wagonsList
-     * @param position
-     *
-     * Generated wagon with places
+     * @param position   Generated wagon with places
      */
     public void addWagonView(List<Wagon> wagonsList, int position) {
         this.position = position;
 
-        String title = wagonsList.get(position).getTypeName()  + " ("
+        String title = wagonsList.get(position).getTypeName() + " ("
                 + prices.getTrain().getWagons().get(position).getPlacesPrices().getTotal() + ")";
         toolbarTitle.setText(title);
         txtWagonNumber.setText(getString(R.string.wagon) + " №" + wagonsList.get(position).getNumber());
 
         List<Integer> listPlaces = wagonsList.get(position).getPlaces();
 
-        if((linearLayout).getChildCount() > 0)
+        if ((linearLayout).getChildCount() > 0)
             (linearLayout).removeAllViews();
 
         for (int i = 0; i < Constants.SECTION; i++) {
             WagonTypeAdapter adapter = new WagonTypeAdapter(getActivity(), listPlaces, wagonsList.get(position).getNumber(),
                     wagonsList.get(position).getCost(), wagonsList.get(position).getTypeCode());
             adapter.notifyDataSetChanged();
-            View viewWagon  = adapter.getView(i, null, linearLayout);
+            View viewWagon = adapter.getView(i, null, linearLayout);
             // content in view
             linearLayout.addView(viewWagon);
         }
@@ -400,9 +400,7 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
 
     /**
      * @param place
-     * @param wagonNumber
-     *
-     * Remove place in wagon
+     * @param wagonNumber Remove place in wagon
      */
     public void ticketPlaceRemoveView(int place, String wagonNumber) {
         Button placesBtn = ((Button) findPlaceInWagonView(place));
@@ -419,9 +417,7 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
 
     /**
      * @param places
-     * @param wagonNumber
-     *
-     * Select place in wagon
+     * @param wagonNumber Select place in wagon
      */
     public void ticketPlaceCheckedView(List<Ticket> places, String wagonNumber) {
         for (int i = 0; i < places.size(); ++i) {
@@ -438,29 +434,27 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
 
     /**
      * @param place
-     * @return
-     *
-     * Get view button - fragment_wagon_places.layout
+     * @return Get view button - fragment_wagon_places.layout
      */
     public View findPlaceInWagonView(int place) {
         for (int i = 0; i < Constants.SECTION; i++) {
             // content in view
-            for(int index = 0; index < (linearLayout).getChildCount(); ++index) {
+            for (int index = 0; index < (linearLayout).getChildCount(); ++index) {
                 LinearLayout linearLayoutChildAt = (LinearLayout) linearLayout.getChildAt(index);
-                for(int index2 = 0; index2 < linearLayoutChildAt.getChildCount(); ++index2) {
+                for (int index2 = 0; index2 < linearLayoutChildAt.getChildCount(); ++index2) {
                     RelativeLayout relativeLayoutChildAt = (RelativeLayout) linearLayoutChildAt.getChildAt(index2);
-                    for(int index3 = 0; index3 < relativeLayoutChildAt.getChildCount(); ++index3) {
+                    for (int index3 = 0; index3 < relativeLayoutChildAt.getChildCount(); ++index3) {
                         RelativeLayout relativeLayoutChildAt2 = (RelativeLayout) relativeLayoutChildAt.getChildAt(index3);
-                        for(int index4 = 0; index4 < relativeLayoutChildAt2.getChildCount(); ++index4) {
+                        for (int index4 = 0; index4 < relativeLayoutChildAt2.getChildCount(); ++index4) {
                             View viewChildAt2 = relativeLayoutChildAt2.getChildAt(index4);
                             if (viewChildAt2 instanceof Button) {
                                 if (viewChildAt2.getTag() == Integer.valueOf(place)) {
                                     return viewChildAt2;
                                 }
                             } else {
-                                for(int index5 = 0; index5 < relativeLayoutChildAt2.getChildCount(); ++index5) {
+                                for (int index5 = 0; index5 < relativeLayoutChildAt2.getChildCount(); ++index5) {
                                     LinearLayout linearLayoutChildAt2 = (LinearLayout) relativeLayoutChildAt2.getChildAt(index5);
-                                    for(int index6 = 0; index6 < linearLayoutChildAt2.getChildCount(); ++index6) {
+                                    for (int index6 = 0; index6 < linearLayoutChildAt2.getChildCount(); ++index6) {
                                         View viewChildAt3 = linearLayoutChildAt2.getChildAt(index6);
                                         if (viewChildAt3.getTag() == Integer.valueOf(place)) {
                                             return viewChildAt3;
@@ -477,9 +471,7 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
     }
 
     /**
-     * @param wagonsList
-     *
-     * Set adapter for list wagon in bottom slide menu
+     * @param wagonsList Set adapter for list wagon in bottom slide menu
      */
     private void setHorizontalWagonsAdapter(List<Wagon> wagonsList) {
         HorizontalAdapter horizontalAdapter = new HorizontalAdapter(getActivity(), wagonsList);
@@ -491,9 +483,7 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
 
     /**
      * @param title
-     * @param filter
-     *
-     * Show wheel dialog
+     * @param filter Show wheel dialog
      */
     public void showWheelDialog(final String title, String[] filter) {
         final String[] value = {null};
@@ -522,9 +512,7 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
 
     /**
      * @param filterType
-     * @param value
-     *
-     * Set data to filter
+     * @param value      Set data to filter
      */
     private void setFilterData(String filterType, String value) {
         if (value != null) {
@@ -555,7 +543,7 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
         if (!filterValueJoinVisit.equalsIgnoreCase(getString(R.string.filter_not_selected))) {
             wagonsFilterList = (wagonsFilterList != null) ? wagonsFilterList : wagonsLists;
             wagonsFilterList = wagonFactory.getWagons(getActivity(), wagonsFilterList,
-                        filterValueJoinVisit, titleJoinVisit);
+                    filterValueJoinVisit, titleJoinVisit);
             count++;
         }
         if (!filterValueLocationPlace.equalsIgnoreCase(getString(R.string.filter_not_selected))) {

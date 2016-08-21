@@ -180,6 +180,9 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
             if (response.isSuccessful()) {
                 Prices prices = response.body();
                 ((MainActivity) getActivity()).replaceFragment(WagonPlaceFragment.newInstance(prices, 0), true);
+            } else {
+                String error = ApiErrorUtil.parseError(response);
+                CommonUtils.showMessage(getView(), error);
             }
         }
 
