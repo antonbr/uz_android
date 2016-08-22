@@ -44,6 +44,7 @@ public class ProfileFragment extends Fragment {
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
     @BindView(R.id.bonusCardNumber) TextView bonusCardNumber;
     @BindView(R.id.firstName) TextView firstName;
+    @BindView(R.id.middleName) TextView middleName;
     @BindView(R.id.lastName) TextView lastName;
     @BindView(R.id.email) TextView email;
     @BindView(R.id.phoneNumber) TextView phoneNumber;
@@ -64,7 +65,14 @@ public class ProfileFragment extends Fragment {
         mainScrollView.setVisibility(View.GONE);
         Call call = ApiManager.getApi(getContext()).getUser();
         call.enqueue(userCallback);
+        ((MainActivity) getActivity()).showNavigationBar();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MainActivity) getActivity()).selectNoneItemsInNavBar();
     }
 
     @OnClick(R.id.backBtn)
@@ -113,6 +121,7 @@ public class ProfileFragment extends Fragment {
             mainScrollView.setVisibility(View.VISIBLE);
             bonusCardNumber.setText("");
             firstName.setText(user.getFirstName());
+            middleName.setText(user.getMiddleName());
             lastName.setText(user.getLastName());
             email.setText(user.getEmail());
             phoneNumber.setText(formatPhoneNumber(user.getPhoneNumber()));
@@ -135,7 +144,7 @@ public class ProfileFragment extends Fragment {
 
     private String formatStudentId(String studentId) {
         StringBuilder formattedStudentId = new StringBuilder("");
-        if (!TextUtils.isEmpty(studentId)&& studentId.length()== studentIdLength) {
+        if (!TextUtils.isEmpty(studentId) && studentId.length() == studentIdLength) {
             formattedStudentId.append(studentId.substring(0, 2)).append(StudentIdTextInputEditText.SEPARATOR)
                     .append(studentId.substring(2));
         }
@@ -146,6 +155,7 @@ public class ProfileFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        ((MainActivity) getActivity()).hideNavigationBar();
     }
 
     @Override

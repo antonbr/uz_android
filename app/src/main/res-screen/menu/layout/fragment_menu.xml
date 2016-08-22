@@ -1,9 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#c8434a54"
-    tools:context="com.uzapp.view.main.menu.MenuFragment">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/fragmentDimBackground"
+                android:clickable="true"
+                tools:context="com.uzapp.view.main.menu.MenuFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,14 +17,14 @@
             android:id="@+id/btnLoginYourAccount"
             android:layout_width="match_parent"
             android:layout_height="44dp"
-            android:layout_marginTop="9dp"
             android:layout_marginBottom="9dp"
             android:layout_marginLeft="9dp"
             android:layout_marginRight="9dp"
+            android:layout_marginTop="9dp"
             android:background="@drawable/find_tickets_button_selector"
             android:text="@string/menu_login_to_your_account"
             android:textColor="@android:color/white"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
         <include layout="@layout/include_fragment_menu"/>
 

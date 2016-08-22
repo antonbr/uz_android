@@ -54,6 +54,7 @@
         android:layout_height="wrap_content"
         android:fillViewport="true"
         android:clipToPadding="false"
+        android:layout_marginBottom="@dimen/bottomBarHeight"
         android:layout_below="@+id/toolbar"
         android:overScrollMode="never">
 
@@ -105,6 +106,23 @@
 
                     <TextView
                         android:id="@+id/firstName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:textSize="18sp"/>
+
+                    <TextView
+                        android:id="@+id/middleNameLbl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="17dp"
+                        android:text="@string/profile_edit_middle_name"
+                        android:textAllCaps="true"
+                        android:textColor="@color/textColorHint"
+                        android:textSize="11sp"/>
+
+                    <TextView
+                        android:id="@+id/middleName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"

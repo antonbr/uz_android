@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
@@ -188,7 +187,9 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
 
         @Override
         public void onFailure(Call<Prices> call, Throwable t) {
-            Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+            if (getView() != null && t != null) {
+                CommonUtils.showMessage(getView(), t.getMessage());
+            }
         }
     };
 }

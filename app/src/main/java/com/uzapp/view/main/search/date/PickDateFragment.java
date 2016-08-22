@@ -1,6 +1,7 @@
 package com.uzapp.view.main.search.date;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.widget.ToggleButton;
 import com.uzapp.R;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
+import com.uzapp.view.main.MainActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -65,6 +67,18 @@ public class PickDateFragment extends Fragment implements CalendarDaysAdapter.On
         return view;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        ((MainActivity) getActivity()).hideNavigationBar();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        ((MainActivity) getActivity()).showNavigationBar();
+    }
+
     public static PickDateFragment getInstance(Date date) {
         PickDateFragment fragment = new PickDateFragment();
         Bundle args = new Bundle();
@@ -101,7 +115,7 @@ public class PickDateFragment extends Fragment implements CalendarDaysAdapter.On
         int monthsCount = CommonUtils.getMonthDifference(minDate, calendar.getTime());
 
         for (int i = 0; i <= monthsCount; i++) {
-            calendar =CommonUtils.getCalendar();
+            calendar = CommonUtils.getCalendar();
             calendar.setTime(minDate);
 
             calendar.add(Calendar.MONTH, i);

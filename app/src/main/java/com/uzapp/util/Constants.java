@@ -30,4 +30,8 @@ public class Constants {
     public static final int FIRST_NAME_MIN_LENGTH = 3;
     public static final int LAST_NAME_MIN_LENGTH = 3;
     public static final int MIDDLE_NAME_MIN_LENGTH = 3;
+    public static final int BOTTOM_NAVIGATION_SEARCH = 0;
+    public static final int BOTTOM_NAVIGATION_TICKETS = 1;
+    public static final int BOTTOM_NAVIGATION_MENU = 2;
+
 }
