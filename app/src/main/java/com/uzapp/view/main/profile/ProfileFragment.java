@@ -27,6 +27,7 @@ import com.uzapp.view.main.MainActivity;
 
 import org.parceler.Parcels;
 
+import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -50,6 +51,7 @@ public class ProfileFragment extends Fragment {
     @BindView(R.id.myTicketsCount) TextView myTicketsCount;
     @BindView(R.id.progressBar) ProgressBar progressBar;
     @BindView(R.id.mainScrollView) ScrollView mainScrollView;
+    @BindInt(R.integer.student_id_full_length) int studentIdLength;
     private Unbinder unbinder;
     private User user;
 
@@ -133,7 +135,7 @@ public class ProfileFragment extends Fragment {
 
     private String formatStudentId(String studentId) {
         StringBuilder formattedStudentId = new StringBuilder("");
-        if (!TextUtils.isEmpty(studentId)) {
+        if (!TextUtils.isEmpty(studentId)&& studentId.length()== studentIdLength) {
             formattedStudentId.append(studentId.substring(0, 2)).append(StudentIdTextInputEditText.SEPARATOR)
                     .append(studentId.substring(2));
         }

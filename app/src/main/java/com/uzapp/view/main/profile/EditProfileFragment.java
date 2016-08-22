@@ -9,6 +9,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.uzapp.view.login.StudentIdTextInputEditText;
 
 import org.parceler.Parcels;
 
+import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -48,6 +50,7 @@ public class EditProfileFragment extends Fragment {
     @BindView(R.id.emailField) TextInputEditText emailField;
     @BindView(R.id.studentIdField) StudentIdTextInputEditText studentIdField;
     @BindView(R.id.saveBtn) Button saveBtn;
+    @BindInt(R.integer.student_id_full_length) int studentIdLength;
     private Unbinder unbinder;
     private User user;
 
@@ -76,7 +79,10 @@ public class EditProfileFragment extends Fragment {
             lastNameField.setText(user.getLastName());
             emailField.setText(user.getEmail());
             phoneField.setText(user.getPhoneNumber());
-            studentIdField.setText(user.getStudentId());
+            String studentId = user.getStudentId();
+            if (!TextUtils.isEmpty(studentId) && studentId.length() == studentIdLength) {
+                studentIdField.setText(user.getStudentId());
+            }
         }
     }
 
