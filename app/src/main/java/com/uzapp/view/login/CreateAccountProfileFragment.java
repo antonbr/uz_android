@@ -17,6 +17,7 @@ import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.CreateAccountInfo;
 import com.uzapp.pojo.UserTokenResponse;
+import com.uzapp.util.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.util.PrefsUtil;
@@ -161,7 +162,6 @@ public class CreateAccountProfileFragment extends Fragment {
         unbinder.unbind();
     }
 
-    //[text={"status":"user already exists"}]
     private Callback<UserTokenResponse> callback = new Callback<UserTokenResponse>() {
 
         @Override
@@ -175,7 +175,8 @@ public class CreateAccountProfileFragment extends Fragment {
                 intent.putExtra("profile", true);
                 startActivity(intent);
             } else {
-                showError(response.message());
+                String error = ApiErrorUtil.parseError(response);
+                CommonUtils.showMessage(getView(), error);
             }
         }
 

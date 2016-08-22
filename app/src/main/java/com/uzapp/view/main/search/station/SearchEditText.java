@@ -1,4 +1,4 @@
-package com.uzapp.view.main.search;
+package com.uzapp.view.main.search.station;
 
 import android.content.Context;
 import android.os.Handler;

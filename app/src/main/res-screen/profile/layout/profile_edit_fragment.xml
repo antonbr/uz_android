@@ -159,7 +159,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
                         android:hint="@string/create_account_last_name"
-                        android:inputType="text"
+                        android:inputType="textNoSuggestions"
                         android:paddingBottom="@dimen/big_padding"
                         android:translationY="@dimen/hint_padding"/>
                 </android.support.design.widget.TextInputLayout>

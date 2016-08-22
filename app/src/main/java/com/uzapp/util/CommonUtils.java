@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -120,12 +121,14 @@ public class CommonUtils {
     }
 
     public static void showMessage(View view, String text) {
-        Snackbar snackbar = Snackbar.make(view, text, Snackbar.LENGTH_LONG);
-        View snackbarView = snackbar.getView();
-        int snackbarTextId = android.support.design.R.id.snackbar_text;
-        TextView textView = (TextView) snackbarView.findViewById(snackbarTextId);
-        textView.setTextColor(Color.LTGRAY);
-        snackbar.show();
+        if(!TextUtils.isEmpty(text)) {
+            Snackbar snackbar = Snackbar.make(view, text, Snackbar.LENGTH_LONG);
+            View snackbarView = snackbar.getView();
+            int snackbarTextId = android.support.design.R.id.snackbar_text;
+            TextView textView = (TextView) snackbarView.findViewById(snackbarTextId);
+            textView.setTextColor(Color.LTGRAY);
+            snackbar.show();
+        }
     }
 
     public static void showMessage(View view, int textRes) {

@@ -18,6 +18,7 @@ import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.Train;
 import com.uzapp.pojo.TrainSearchResult;
 import com.uzapp.pojo.prices.Prices;
+import com.uzapp.util.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.wagon.fragment.WagonPlaceFragment;
@@ -118,7 +119,8 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
                 }
                 showNoContentIfNeeded();
             } else {
-                showError(response.message());
+                String error = ApiErrorUtil.parseError(response);
+                CommonUtils.showMessage(getView(), error);
                 showNoContentIfNeeded();
             }
             showProgress(false);
@@ -127,17 +129,12 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
         @Override
         public void onFailure(Call<TrainSearchResult> call, Throwable t) {
             if (getView() != null && t != null) {
-                showError(t.getMessage());
+                CommonUtils.showMessage(getView(), t.getMessage());
                 showNoContentIfNeeded();
                 showProgress(false);
             }
         }
     };
-
-    private void showError(String message) {
-        Log.d(TAG, message);
-        CommonUtils.showMessage(getView(), message);
-    }
 
     @Override
     public void onDestroyView() {
@@ -183,6 +180,9 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
             if (response.isSuccessful()) {
                 Prices prices = response.body();
                 ((MainActivity) getActivity()).replaceFragment(WagonPlaceFragment.newInstance(prices, 0), true);
+            } else {
+                String error = ApiErrorUtil.parseError(response);
+                CommonUtils.showMessage(getView(), error);
             }
         }
 

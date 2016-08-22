@@ -10,18 +10,24 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.User;
+import com.uzapp.util.ApiErrorUtil;
+import com.uzapp.util.CommonUtils;
 import com.uzapp.util.PrefsUtil;
 import com.uzapp.view.BaseActivity;
 import com.uzapp.view.login.PhoneNumberTextInputEditText;
 import com.uzapp.view.login.StudentIdTextInputEditText;
+import com.uzapp.view.main.MainActivity;
 
 import org.parceler.Parcels;
 
+import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -43,6 +49,9 @@ public class ProfileFragment extends Fragment {
     @BindView(R.id.phoneNumber) TextView phoneNumber;
     @BindView(R.id.studentId) TextView studentId;
     @BindView(R.id.myTicketsCount) TextView myTicketsCount;
+    @BindView(R.id.progressBar) ProgressBar progressBar;
+    @BindView(R.id.mainScrollView) ScrollView mainScrollView;
+    @BindInt(R.integer.student_id_full_length) int studentIdLength;
     private Unbinder unbinder;
     private User user;
 
@@ -51,8 +60,9 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
-        String token = PrefsUtil.getStringPreference(getContext(), PrefsUtil.USER_ACCESS_TOKEN);
-        Call call = ApiManager.getApi(getContext()).getUser(token);
+        progressBar.setVisibility(View.VISIBLE);
+        mainScrollView.setVisibility(View.GONE);
+        Call call = ApiManager.getApi(getContext()).getUser();
         call.enqueue(userCallback);
         return view;
     }
@@ -64,7 +74,10 @@ public class ProfileFragment extends Fragment {
 
     @OnClick(R.id.filterBtn)
     void onFilterBtnClicked() {
-
+        PrefsUtil.clearAllPrefs(getContext());
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     @OnClick(R.id.editInfoBtn)
@@ -97,6 +110,7 @@ public class ProfileFragment extends Fragment {
 
     private void showUserInfo() {
         if (user != null) {
+            mainScrollView.setVisibility(View.VISIBLE);
             bonusCardNumber.setText("");
             firstName.setText(user.getFirstName());
             lastName.setText(user.getLastName());
@@ -121,7 +135,7 @@ public class ProfileFragment extends Fragment {
 
     private String formatStudentId(String studentId) {
         StringBuilder formattedStudentId = new StringBuilder("");
-        if (!TextUtils.isEmpty(studentId)) {
+        if (!TextUtils.isEmpty(studentId)&& studentId.length()== studentIdLength) {
             formattedStudentId.append(studentId.substring(0, 2)).append(StudentIdTextInputEditText.SEPARATOR)
                     .append(studentId.substring(2));
         }
@@ -141,6 +155,7 @@ public class ProfileFragment extends Fragment {
             if (requestCode == REQUEST_EDIT_PROFILE) {
                 user = Parcels.unwrap(data.getParcelableExtra("user"));
                 showUserInfo();
+                Snackbar.make(getView(), R.string.profile_edit_successful_result, Snackbar.LENGTH_SHORT).show();
             }
         }
     }
@@ -150,11 +165,13 @@ public class ProfileFragment extends Fragment {
         @Override
         public void onResponse(Call<User> call, Response<User> response) {
             if (getView() != null) {
+                progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful()) {
                     user = response.body();
                     showUserInfo();
                 } else {
-                    Snackbar.make(getView(), response.message(), Snackbar.LENGTH_SHORT).show();
+                    String error = ApiErrorUtil.parseError(response);
+                    CommonUtils.showMessage(getView(), error);
                 }
             }
         }
@@ -162,6 +179,7 @@ public class ProfileFragment extends Fragment {
         @Override
         public void onFailure(Call<User> call, Throwable t) {
             if (getView() != null) {
+                progressBar.setVisibility(View.GONE);
                 Snackbar.make(getView(), t.getMessage(), Snackbar.LENGTH_SHORT).show();
             }
         }

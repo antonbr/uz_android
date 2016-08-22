@@ -20,9 +20,9 @@ import android.widget.EditText;
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.User;
+import com.uzapp.util.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
-import com.uzapp.util.PrefsUtil;
 import com.uzapp.view.BaseActivity;
 import com.uzapp.view.login.ResetPasswordFragment;
 import com.uzapp.view.main.search.CheckableImageView;
@@ -76,8 +76,7 @@ public class ChangePasswordFragment extends Fragment {
 
     @OnClick(R.id.saveBtn)
     void onSaveBtnClicked() {
-        String accessToken = PrefsUtil.getStringPreference(getContext(), PrefsUtil.USER_ACCESS_TOKEN);
-        Call call = ApiManager.getApi(getContext()).changePassword(accessToken, passwordField.getText().toString(),
+        Call call = ApiManager.getApi(getContext()).changePassword(passwordField.getText().toString(),
                 newPasswordField.getText().toString());
         call.enqueue(changePasswordCallback);
     }
@@ -195,7 +194,8 @@ public class ChangePasswordFragment extends Fragment {
                     saveBtn.setVisibility(View.INVISIBLE);
                     cancelBtn.setVisibility(View.INVISIBLE);
                 } else {
-                    Snackbar.make(getView(), response.message(), Snackbar.LENGTH_SHORT).show();
+                    String error = ApiErrorUtil.parseError(response);
+                    CommonUtils.showMessage(getView(), error);
                 }
             }
         }

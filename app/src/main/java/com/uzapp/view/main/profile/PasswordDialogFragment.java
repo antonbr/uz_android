@@ -23,7 +23,7 @@ public class PasswordDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.AlertDialogCustom);
         builder.setTitle(R.string.profile_edit_password);
         View viewInflated = LayoutInflater.from(getContext()).inflate(R.layout.profile_password_dialog, null);
         final EditText input = (EditText) viewInflated.findViewById(R.id.passwordField);
