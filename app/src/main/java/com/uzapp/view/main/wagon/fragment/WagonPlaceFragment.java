@@ -28,6 +28,8 @@ import com.uzapp.pojo.prices.Prices;
 import com.uzapp.pojo.prices.WagonsPrices;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
+import com.uzapp.view.main.MainActivity;
+import com.uzapp.view.main.purchase.PreparePurchaseFragment;
 import com.uzapp.view.main.wagon.adapter.HorizontalAdapter;
 import com.uzapp.view.main.wagon.adapter.TicketAdapter;
 import com.uzapp.view.main.wagon.adapter.WagonTypeAdapter;
@@ -204,6 +206,7 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
     @OnClick(R.id.btnGoToRegistration)
     void onClickBtnGoToRegistration() {
         Toast.makeText(getActivity(), "registration", Toast.LENGTH_SHORT).show();
+        ((MainActivity) getActivity()).replaceFragment(PreparePurchaseFragment.getInstance(listTickets), true);
     }
 
     @OnClick(R.id.okBtn)
