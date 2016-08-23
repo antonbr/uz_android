@@ -9,7 +9,6 @@
     <string name="reset">Сбросить</string>
     <string name="cancel">Отменить</string>
     <string name="filter">Фильтр</string>
-    <string name="token">Token %1$s</string>
     <string name="save">Сохранить</string>
     //search
     <string name="search_path_from">Откуда</string>
@@ -143,7 +142,7 @@
     <string name="reset_password_btn_search_screen">На страницу поиска</string>
     <string name="create_account_skip">Пропустить этот шаг</string>
 
-   //profile
+    //profile
     <string name="profile_bonus_card_number">Номер бонусной карты</string>
     <string name="profile_edit">Изменить данные</string>
     <string name="profile_bank_card">Банковская карта</string>
@@ -165,6 +164,18 @@
     <string name="profile_edit_change_password_success_result">Ваш пароль был успешно изменён</string>
     <string name="profile_edit_room">В личный кабинет</string>
     <string name="profile_edit_successful_result">Информация пользователя была успешно изменена</string>
+
+    //tickets
+    <string name="tickets_wagon">Вагон</string>
+    <string name="tickets_place">Место</string>
+    <string name="tickets_detail">Детали билета</string>
+    <string name="ticket_refund">Возврат</string>
+    <string name="ticket_cost">%1$s грн</string>
+    <string name="ticket_kind_full">Полный</string>
+    <string name="ticket_kind_child">Детский</string>
+    <string name="ticket_kind_privilege">Льготный</string>
+    <string name="ticket_kind_military">Военный</string>
+
 
     <string-array name="wagon_types_long">
         <item>Люкс</item>

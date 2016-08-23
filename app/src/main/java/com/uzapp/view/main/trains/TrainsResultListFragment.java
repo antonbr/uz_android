@@ -161,14 +161,6 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
         Log.d(TAG, "train number: " + train.getNumber() + " wagon type: " + wagonType + " wagon class: " + wagonClass
                 + " station from code: " + stationFromCode + " station to code: " + stationToCode + " date: " + date);
 
-      /*  train use parcel annotations to be easily passed via intent:
-         intent.putExtra("train", Parcels.wrap(train));
-         Train train = Parcels.unwrap(intent.getParcelableExtra("train"));*/
-
-        //wagon type and wagon class are in short form, full form can be found in string arrays.
-        // maybe we should better refactor to enums
-
-        //backend uses mocks for trains, that's why the result is always the same
         Call<Prices> call = ApiManager.getApi(getActivity()).getPrices(stationFromCode, stationToCode, train.getNumber(), date);
         call.enqueue(pricesCallback);
     }

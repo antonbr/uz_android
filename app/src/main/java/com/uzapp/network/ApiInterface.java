@@ -8,6 +8,7 @@ import com.uzapp.pojo.User;
 import com.uzapp.pojo.UserTokenResponse;
 import com.uzapp.pojo.placeslist.PricesPlacesList;
 import com.uzapp.pojo.prices.Prices;
+import com.uzapp.pojo.tickets.TicketsResponse;
 
 import java.util.List;
 
@@ -49,6 +50,10 @@ public interface ApiInterface {
                                                @Query("wagon_classes") String wagonClasses,
                                                @Query("wagon_numbers") String wagonNumbers,
                                                @Query("date") int date);
+
+
+    @GET("order/tickets")
+    Call<List<TicketsResponse>> getUserTickets();
 
     @POST("user/registration")
     Call<UserTokenResponse> createAccount(@Body CreateAccountInfo createAccountInfo);

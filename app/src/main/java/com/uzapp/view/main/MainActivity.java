@@ -3,7 +3,6 @@ package com.uzapp.view.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.widget.Toast;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -13,6 +12,7 @@ import com.uzapp.view.BaseActivity;
 import com.uzapp.view.main.menu.MenuFragment;
 import com.uzapp.view.main.profile.ProfileFragment;
 import com.uzapp.view.main.search.SearchFragment;
+import com.uzapp.view.main.tickets.MyTicketsFragment;
 
 public class MainActivity extends BaseActivity implements AHBottomNavigation.OnTabSelectedListener {
     private AHBottomNavigation bottomNavigationBar;
@@ -107,7 +107,8 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
                 break;
             case Constants.BOTTOM_NAVIGATION_TICKETS:
                 previousSelectedBottomItem = Constants.BOTTOM_NAVIGATION_TICKETS;
-                Toast.makeText(MainActivity.this, "My Tickets", Toast.LENGTH_SHORT).show();
+                clearBackstack();
+                replaceFragment(new MyTicketsFragment(), false);
                 break;
             case Constants.BOTTOM_NAVIGATION_MENU:
                 if (wasSelected) {

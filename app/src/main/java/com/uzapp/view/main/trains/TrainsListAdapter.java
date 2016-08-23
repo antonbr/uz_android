@@ -94,7 +94,7 @@ public class TrainsListAdapter extends RecyclerView.Adapter<TrainsListAdapter.Tr
         holder.placeTypesList.setAdapter(placeTypesAdapter);
         holder.placeTypesList.setLayoutManager(new LinearLayoutManager(context));
         VerticalDividerItemDecoration itemDecoration = new VerticalDividerItemDecoration(context,
-                R.drawable.divider_hint_color, holder.padding, holder.padding);
+                R.drawable.divider_hint_color_horizontal, holder.padding, holder.padding);
         holder.placeTypesList.addItemDecoration(itemDecoration);
         holder.placeTypesList.setNestedScrollingEnabled(false);
         holder.infoButton.setOnClickListener(new View.OnClickListener() {
