@@ -161,9 +161,9 @@ public class EditProfileFragment extends Fragment {
         String phone = phoneField.getPhoneNumber();
         String email = emailField.getText().toString();
         String studentId = studentIdField.getStudentId();
-        //TODO fix email
+        email = user.getEmail().equals(email)?null:email;
         Call call = ApiManager.getApi(getContext()).updateUser(password, firstName,
-                middleName, lastName, phone, null, studentId);
+                middleName, lastName, phone, email, studentId);
         call.enqueue(updateUserCallback);
     }
 

@@ -68,7 +68,6 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
         bottomNavigationBar.setAccentColor(getResources().getColor(R.color.bgButtonWagonPlacesSelected));
         //set current item
         bottomNavigationBar.setCurrentItem(Constants.BOTTOM_NAVIGATION_SEARCH);
-        replaceFragment(new SearchFragment(), false);
     }
 
 
@@ -103,6 +102,7 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
         switch (position) {
             case Constants.BOTTOM_NAVIGATION_SEARCH:
                 previousSelectedBottomItem = Constants.BOTTOM_NAVIGATION_SEARCH;
+                clearBackstack();
                 replaceFragment(new SearchFragment(), false);
                 break;
             case Constants.BOTTOM_NAVIGATION_TICKETS:

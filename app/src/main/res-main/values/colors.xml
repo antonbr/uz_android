@@ -27,4 +27,5 @@
     <color name="bgViewLine">#aab2bd</color>
     <color name="resetPasswordColor">#979797</color>
     <color name="fragmentDimBackground">#c8434a54</color>
+    <color name="menuButtonDivider">#4c3aaeda</color>
 </resources>

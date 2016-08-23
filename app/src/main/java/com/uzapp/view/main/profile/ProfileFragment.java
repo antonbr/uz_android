@@ -165,7 +165,7 @@ public class ProfileFragment extends Fragment {
             if (requestCode == REQUEST_EDIT_PROFILE) {
                 user = Parcels.unwrap(data.getParcelableExtra("user"));
                 showUserInfo();
-                Snackbar.make(getView(), R.string.profile_edit_successful_result, Snackbar.LENGTH_SHORT).show();
+                CommonUtils.showMessage(getView(), R.string.profile_edit_successful_result);
             }
         }
     }

@@ -2,6 +2,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/bottomBarHeight"
                 android:background="@color/fragmentDimBackground"
                 android:clickable="true"
                 tools:context="com.uzapp.view.main.menu.MenuFragment">
@@ -11,7 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/backgroundColor"
-        android:orientation="vertical">
+        android:divider="@drawable/menu_horizontal_divider"
+        android:orientation="vertical"
+        android:showDividers="middle">
 
         <Button
             android:id="@+id/btnLoginYourAccount"
@@ -23,6 +26,7 @@
             android:layout_marginTop="9dp"
             android:background="@drawable/find_tickets_button_selector"
             android:text="@string/menu_login_to_your_account"
+            android:textAllCaps="true"
             android:textColor="@android:color/white"
             android:textSize="16sp"/>
 
