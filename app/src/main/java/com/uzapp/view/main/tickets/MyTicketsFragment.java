@@ -21,6 +21,7 @@ import com.uzapp.util.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.view.main.MainActivity;
+import com.viewpagerindicator.IconPageIndicator;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ public class MyTicketsFragment extends Fragment {
     @BindView(R.id.progressBar) ProgressBar progressBar;
     @BindView(R.id.ticketDateLayout) ViewGroup ticketDateLayout;
     @BindView(R.id.ticketDate) TextView ticketDate;
+    @BindView(R.id.pageIndicator) IconPageIndicator pageIndicator;
     private Unbinder unbinder;
     private MyTicketsAdapter ticketAdapter;
 
@@ -63,6 +65,7 @@ public class MyTicketsFragment extends Fragment {
         okBtn.setVisibility(View.INVISIBLE);
         ticketAdapter = new MyTicketsAdapter(getContext());
         viewPager.setAdapter(ticketAdapter);
+        pageIndicator.setViewPager(viewPager);
         progressBar.setVisibility(View.VISIBLE);
         ticketDateLayout.setVisibility(View.GONE);
         loadTickets();
@@ -84,6 +87,9 @@ public class MyTicketsFragment extends Fragment {
     @OnPageChange(R.id.viewPager)
     void onPageSelected(int position) {
         showDepartureDate(position);
+        ticketAdapter.setCurrentPosition(position);
+        pageIndicator.setCurrentItem(position);
+        pageIndicator.notifyDataSetChanged();
     }
 
     private void showDepartureDate(int position) {
@@ -127,6 +133,8 @@ public class MyTicketsFragment extends Fragment {
         progressBar.setVisibility(View.GONE);
         ticketDateLayout.setVisibility(View.VISIBLE);
         showDepartureDate(0);
+        pageIndicator.setCurrentItem(0);
+        pageIndicator.notifyDataSetChanged();
     }
 
     private Callback<List<TicketsResponse>> ticketsCallback = new Callback<List<TicketsResponse>>() {

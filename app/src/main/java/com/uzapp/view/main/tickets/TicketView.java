@@ -7,9 +7,9 @@ import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.uzapp.R;
@@ -44,7 +44,8 @@ public class TicketView extends CardView {
     @BindView(R.id.firstName) TextView firstName;
     @BindView(R.id.lastName) TextView lastName;
     @BindView(R.id.ticketType) TextView ticketType;
-    @BindView(R.id.qrCode) ImageView qrCode;
+    @BindView(R.id.qrCodeImage) ImageView qrCodeImage;
+    @BindView(R.id.orderType) ImageView orderType;
 
     public TicketView(Context context) {
         this(context, null);
@@ -76,13 +77,19 @@ public class TicketView extends CardView {
         firstName.setText(ticket.firstname);
         lastName.setText(ticket.lastname);
         ticketType.setText(getContext().getString(ticket.kind.getStringRes()));
-        try { //TODO invalid base64 in backend
-            byte[] decodedString = Base64.decode(ticket.qrImage, Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            qrCode.setImageBitmap(decodedByte);
-        } catch (Exception e) {
-            Log.e(TicketView.class.getName(), e.getMessage());
-        }
+        byte[] decodedString = Base64.decode(ticket.qrImage, Base64.DEFAULT);
+        final Bitmap qrCodeBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        qrCodeImage.setImageBitmap(qrCodeBitmap);
+        qrCodeImage.post(new Runnable() {
+            @Override
+            public void run() {
+                if (qrCodeImage.getWidth() != qrCodeImage.getHeight()) {
+                    RelativeLayout.LayoutParams imageLayoutParams = (RelativeLayout.LayoutParams) qrCodeImage.getLayoutParams();
+                    imageLayoutParams.width = qrCodeImage.getHeight();
+                    qrCodeImage.setLayoutParams(imageLayoutParams);
 
+                }
+            }
+        });
     }
 }

@@ -2,99 +2,108 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
-        android:divider="@drawable/divider_hint_color_horizontal"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/divider_hint_color_horizontal"
         android:orientation="vertical"
         android:showDividers="middle">
 
 
         <RelativeLayout
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:padding="11dp">
 
             <TextView
-                android:fontFamily="sans-serif-medium"
                 android:id="@+id/trainName"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
-                android:layout_width="wrap_content"
+                android:layout_toLeftOf="@+id/orderType"
+                android:fontFamily="sans-serif-medium"
                 android:text="143 Л «Галичина»"
                 android:textSize="14sp"/>
 
+            <ImageView
+                android:id="@+id/orderType"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/trainName"
+                android:src="@drawable/qrcode"/>
+
             <TextView
                 android:id="@+id/stationFrom"
-                android:layout_below="@+id/trainName"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/trainName"
                 android:text="ИВАНО-ФРАНКОВСК"
                 android:textAllCaps="true"
                 android:textSize="14sp"/>
 
             <ImageView
                 android:id="@+id/arrowStations"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/stationFrom"
                 android:layout_alignTop="@+id/stationFrom"
-                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_toRightOf="@+id/stationFrom"
-                android:layout_width="wrap_content"
                 android:src="@drawable/arrow"/>
 
             <TextView
-                android:ellipsize="end"
                 android:id="@+id/stationTo"
-                android:layout_below="@+id/trainName"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/shareButton"
+                android:layout_below="@+id/trainName"
+                android:layout_toLeftOf="@+id/orderType"
                 android:layout_toRightOf="@+id/arrowStations"
-                android:layout_width="wrap_content"
+                android:ellipsize="end"
                 android:singleLine="true"
                 android:text="Киев"
                 android:textAllCaps="true"
                 android:textSize="14sp"/>
 
             <LinearLayout
-                android:layout_below="@+id/stationFrom"
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/stationFrom"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
                 <RelativeLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_width="0dp">
+                    android:layout_weight="1">
 
                     <TextView
                         android:id="@+id/departureTitle"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="17dp"
-                        android:layout_width="wrap_content"
                         android:text="@string/departure"
                         android:textAllCaps="true"
                         android:textSize="@dimen/text_size_small"/>
 
                     <TextView
                         android:id="@+id/departureFullDate"
-                        android:layout_below="@+id/departureTitle"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/departureTitle"
+                        android:layout_marginTop="4dp"
                         android:text="10.06.16"
                         android:textAllCaps="true"
                         android:textSize="@dimen/text_size"/>
 
                     <TextView
                         android:id="@+id/departureTime"
-                        android:layout_below="@+id/departureTitle"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/departureTitle"
                         android:layout_marginLeft="6dp"
                         android:layout_marginTop="4dp"
                         android:layout_toRightOf="@+id/departureFullDate"
-                        android:layout_width="wrap_content"
                         android:text="15:53"
                         android:textAllCaps="true"
                         android:textSize="@dimen/text_size"
@@ -102,37 +111,37 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_width="0dp">
+                    android:layout_weight="1">
 
                     <TextView
                         android:id="@+id/arrivalTitle"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="17dp"
-                        android:layout_width="wrap_content"
                         android:text="@string/arrival"
                         android:textAllCaps="true"
                         android:textSize="@dimen/text_size_small"/>
 
                     <TextView
                         android:id="@+id/arrivalFullDate"
-                        android:layout_below="@+id/arrivalTitle"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/arrivalTitle"
+                        android:layout_marginTop="4dp"
                         android:text="10.06.16"
                         android:textAllCaps="true"
                         android:textSize="@dimen/text_size"/>
 
                     <TextView
                         android:id="@+id/arrivalTime"
-                        android:layout_below="@+id/arrivalTitle"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/arrivalTitle"
                         android:layout_marginLeft="6dp"
                         android:layout_marginTop="4dp"
                         android:layout_toRightOf="@+id/arrivalFullDate"
-                        android:layout_width="wrap_content"
                         android:text="15:53"
                         android:textAllCaps="true"
                         android:textSize="@dimen/text_size"
@@ -142,8 +151,8 @@
         </RelativeLayout>
 
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingBottom="17dp"
             android:paddingLeft="11dp"
@@ -151,20 +160,20 @@
             android:paddingTop="17dp">
 
             <TextView
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/tickets_wagon"
                 android:textAllCaps="true"
                 android:textColor="@color/textColorHint"
                 android:textSize="14sp"/>
 
             <TextView
-                android:fontFamily="sans-serif_medium"
                 android:id="@+id/wagonNumber"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="10dp"
-                android:layout_width="wrap_content"
+                android:fontFamily="sans-serif_medium"
                 android:maxEms="1"
                 android:minEms="1"
                 android:text="12"
@@ -172,21 +181,21 @@
                 android:textSize="14sp"/>
 
             <TextView
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/tickets_place"
                 android:textAllCaps="true"
                 android:textColor="@color/textColorHint"
                 android:textSize="14sp"/>
 
             <TextView
-                android:fontFamily="sans-serif_medium"
                 android:id="@+id/placeNumber"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:layout_width="0dp"
+                android:fontFamily="sans-serif_medium"
                 android:maxEms="1"
                 android:minEms="1"
                 android:singleLine="true"
@@ -196,19 +205,19 @@
 
             <TextView
                 android:id="@+id/ticketType"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/ticket_kind_full"
                 android:textAllCaps="true"
                 android:textColor="@color/textColorHint"
                 android:textSize="14sp"/>
 
             <TextView
-                android:fontFamily="sans-serif_medium"
                 android:id="@+id/price"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="6dp"
-                android:layout_width="wrap_content"
+                android:fontFamily="sans-serif_medium"
                 android:singleLine="true"
                 android:text="108,80 грн"
                 android:textColor="@color/accentColor"
@@ -216,52 +225,55 @@
         </LinearLayout>
 
         <RelativeLayout
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:paddingBottom="13dp"
             android:paddingLeft="11dp"
             android:paddingRight="11dp"
             android:paddingTop="13dp">
 
             <TextView
-                android:ellipsize="end"
                 android:id="@+id/firstName"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:singleLine="true"
                 android:text="КОНСТАНТИН"
                 android:textAllCaps="true"
                 android:textSize="14sp"/>
 
             <TextView
-                android:ellipsize="end"
                 android:id="@+id/lastName"
-                android:layout_below="@+id/firstName"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/firstName"
+                android:layout_marginTop="7dp"
+                android:ellipsize="end"
                 android:singleLine="true"
                 android:text="КОНСТАНТИН"
                 android:textAllCaps="true"
                 android:textSize="14sp"/>
 
             <ImageView
-                android:id="@+id/qrCode"
+                android:id="@+id/qrCodeImage"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_below="@+id/lastName"
-                android:layout_height="135dp"
                 android:layout_marginTop="10dp"
-                android:layout_width="135dp"
-                android:scaleType="centerInside"/>
+                android:adjustViewBounds="true"
+                android:background="@color/accentColor"
+                android:scaleType="fitCenter"/>
 
             <TextView
-                android:gravity="center_vertical"
                 android:id="@+id/ticketNumber"
-                android:layout_alignBottom="@+id/qrCode"
-                android:layout_alignTop="@+id/qrCode"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/qrCode"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/qrCodeImage"
+                android:layout_alignTop="@+id/qrCodeImage"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/qrCodeImage"
+                android:gravity="center_vertical"
                 android:letterSpacing="0.1"
                 android:text="000B36C2 - 9012 - 97CB - 0003"
                 android:textAllCaps="true"
@@ -269,19 +281,19 @@
         </RelativeLayout>
 
         <LinearLayout
-            android:divider="@drawable/divider_hint_color_vertical"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/divider_hint_color_vertical"
             android:orientation="horizontal"
             android:showDividers="middle">
 
             <Button
-                android:background="?attr/selectableItemBackground"
-                android:fontFamily="sans-serif-medium"
                 android:id="@+id/ticketDetailBtn"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_width="0dp"
+                android:background="?attr/selectableItemBackground"
+                android:fontFamily="sans-serif-medium"
                 android:minWidth="0dp"
                 android:padding="19dp"
                 android:stateListAnimator="@null"
@@ -291,12 +303,12 @@
                 android:textSize="14sp"/>
 
             <Button
-                android:background="?attr/selectableItemBackground"
-                android:fontFamily="sans-serif-medium"
                 android:id="@+id/refundBtn"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_width="0dp"
+                android:background="?attr/selectableItemBackground"
+                android:fontFamily="sans-serif-medium"
                 android:minWidth="0dp"
                 android:padding="19dp"
                 android:stateListAnimator="@null"
