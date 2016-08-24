@@ -1,9 +1,11 @@
 package com.uzapp.view.main.tickets;
 
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,11 +67,21 @@ public class MyTicketsFragment extends Fragment {
         okBtn.setVisibility(View.INVISIBLE);
         ticketAdapter = new MyTicketsAdapter(getContext());
         viewPager.setAdapter(ticketAdapter);
+        viewPager.setPageMargin(getPageMargin());
         pageIndicator.setViewPager(viewPager);
+        viewPager.setPageTransformer(true, new TicketPageTransformer());
         progressBar.setVisibility(View.VISIBLE);
         ticketDateLayout.setVisibility(View.GONE);
         loadTickets();
         return view;
+    }
+
+    private int getPageMargin() {
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        return (int) (width * Constants.TICKETS_PAGE_MARGIN_PERCENT);
     }
 
     private void loadTickets() {

@@ -14,7 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
-        android:layout_margin="11dp"
+        android:layout_marginLeft="@dimen/tickets_padding"
+        android:layout_marginRight="@dimen/tickets_padding"
+        android:layout_marginTop="@dimen/tickets_padding"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -32,7 +34,7 @@
             android:gravity="center_horizontal"
             android:textAllCaps="true"
             android:textColor="@color/accentColor"
-            android:textSize="14sp"/>
+            android:textSize="@dimen/button_text_size"/>
 
         <View
             android:layout_width="45dp"
@@ -45,19 +47,20 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/pageIndicator"
+        android:layout_alignParentBottom="true"
         android:layout_below="@+id/ticketDateLayout"
+        android:paddingBottom="@dimen/tickets_pagger_padding_bottom"
+        android:clipChildren="false"
         android:clipToPadding="false"
-        android:paddingLeft="11dp"
-        android:paddingBottom="11dp"
-        android:paddingRight="11dp"/>
+        android:overScrollMode="never"/>
 
     <com.viewpagerindicator.IconPageIndicator
         android:id="@+id/pageIndicator"
         android:layout_width="match_parent"
-        android:layout_height="7dp"
+        android:layout_height="@dimen/tickets_bullet_size"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="11dp"/>
+        android:layout_marginBottom="@dimen/tickets_padding"/>
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"

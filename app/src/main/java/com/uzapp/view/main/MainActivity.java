@@ -98,7 +98,7 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
     }
 
     @Override
-    public boolean onTabSelected(int position, boolean wasSelected) {
+    public void onTabSelected(int position, boolean wasSelected) {
         switch (position) {
             case Constants.BOTTOM_NAVIGATION_SEARCH:
                 previousSelectedBottomItem = Constants.BOTTOM_NAVIGATION_SEARCH;
@@ -124,6 +124,36 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
             default:
                 break;
         }
-        return true;
     }
+    //
+//
+//    @Override
+//    public boolean onTabSelected(int position, boolean wasSelected) {
+//        switch (position) {
+//            case Constants.BOTTOM_NAVIGATION_SEARCH:
+//                previousSelectedBottomItem = Constants.BOTTOM_NAVIGATION_SEARCH;
+//                clearBackstack();
+//                replaceFragment(new SearchFragment(), false);
+//                break;
+//            case Constants.BOTTOM_NAVIGATION_TICKETS:
+//                previousSelectedBottomItem = Constants.BOTTOM_NAVIGATION_TICKETS;
+//                clearBackstack();
+//                replaceFragment(new MyTicketsFragment(), false);
+//                break;
+//            case Constants.BOTTOM_NAVIGATION_MENU:
+//                if (wasSelected) {
+//                    bottomNavigationBar.setCurrentItem(previousSelectedBottomItem);
+//                } else {
+//                    addFragment(new MenuFragment(), R.anim.slide_up, R.anim.slide_down);
+//                }
+//                break;
+//            case AHBottomNavigation.CURRENT_ITEM_NONE:
+//                previousSelectedBottomItem = AHBottomNavigation.CURRENT_ITEM_NONE;
+//                removeMenuFromStack();
+//                break;
+//            default:
+//                break;
+//        }
+//        return true;
+//    }
 }

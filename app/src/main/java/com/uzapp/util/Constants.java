@@ -33,5 +33,5 @@ public class Constants {
     public static final int BOTTOM_NAVIGATION_SEARCH = 0;
     public static final int BOTTOM_NAVIGATION_TICKETS = 1;
     public static final int BOTTOM_NAVIGATION_MENU = 2;
-
+    public static final double TICKETS_PAGE_MARGIN_PERCENT = 0.3;
 }

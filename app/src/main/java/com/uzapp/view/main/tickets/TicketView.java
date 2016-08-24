@@ -3,12 +3,11 @@ package com.uzapp.view.main.tickets;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,7 +25,7 @@ import butterknife.ButterKnife;
 /**
  * Created by vika on 23.08.16.
  */
-public class TicketView extends CardView {
+public class TicketView extends LinearLayout {
     private SimpleDateFormat timeFormat = new SimpleDateFormat(Constants.HOURS_MINUTES_FORTMAT);
     private SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.DAY_MONTH_YEAR_FORMAT);
     private DecimalFormat df = new DecimalFormat("#.00");
@@ -53,11 +52,16 @@ public class TicketView extends CardView {
 
     public TicketView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.ticket_item, this, true);
         ButterKnife.bind(this);
-        setCardBackgroundColor(Color.WHITE);
+        setOrientation(VERTICAL);
+//        setBackground(ContextCompat.getDrawable(context, R.drawable.shadow));
+//
+//        setShowDividers(SHOW_DIVIDER_MIDDLE);
+//        setDividerDrawable(ContextCompat.getDrawable(context, R.drawable.divider_hint_color_horizontal));
     }
 
     public void initView(TicketForAdapter ticket) {
