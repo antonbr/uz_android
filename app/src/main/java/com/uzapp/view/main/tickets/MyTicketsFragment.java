@@ -144,8 +144,10 @@ public class MyTicketsFragment extends Fragment {
         ticketAdapter.addTickets(ticketForAdapterList);
         progressBar.setVisibility(View.GONE);
         ticketDateLayout.setVisibility(View.VISIBLE);
-        showDepartureDate(0);
-        pageIndicator.setCurrentItem(0);
+        if(ticketForAdapterList.size()>0) {
+            showDepartureDate(0);
+            pageIndicator.setCurrentItem(0);
+        }
         pageIndicator.notifyDataSetChanged();
     }
 
