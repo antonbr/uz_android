@@ -38,6 +38,7 @@ android {
         debug {
             project.archivesBaseName = APK_NAME + "-" + VERSION_NAME;
             debuggable true
+            minifyEnabled false
         }
 
         release {

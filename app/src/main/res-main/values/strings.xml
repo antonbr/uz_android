@@ -175,6 +175,8 @@
     <string name="ticket_kind_child">Детский</string>
     <string name="ticket_kind_privilege">Льготный</string>
     <string name="ticket_kind_military">Военный</string>
+    <string name="profile_change_password">Сменить пароль</string>
+    <string name="profile_logout">Выйти из аккаунта</string>
 
 
     <string-array name="wagon_types_long">

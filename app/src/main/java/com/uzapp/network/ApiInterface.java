@@ -50,8 +50,7 @@ public interface ApiInterface {
                                                @Query("wagon_classes") String wagonClasses,
                                                @Query("wagon_numbers") String wagonNumbers,
                                                @Query("date") int date);
-
-
+    
     @GET("order/tickets")
     Call<List<TicketsResponse>> getUserTickets();
 
