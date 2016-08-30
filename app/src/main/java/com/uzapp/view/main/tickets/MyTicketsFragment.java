@@ -50,6 +50,7 @@ public class MyTicketsFragment extends Fragment {
         ticketAdapter = new MyTicketsAdapter(getContext());
         myTicketsList.setLayoutManager(new LinearLayoutManager(getContext()));
         myTicketsList.setAdapter(ticketAdapter);
+        myTicketsList.setItemAnimator(new MyTicketsItemAnimator());
         myTicketsList.addItemDecoration(new SpaceItemDecoration((int) getContext().getResources().getDimension(R.dimen.small_padding)));
         progressBar.setVisibility(View.VISIBLE);
         loadTickets();

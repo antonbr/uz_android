@@ -178,6 +178,8 @@
     <string name="ticket_arrival">Прибытие</string>
     <string name="tickets_return">Вернуть билет</string>
     <string name="tickets_date_departure">Дата отправления</string>
+    <string name="ticket_info">Информация о билете</string>
+    <string name="ticket_analog_message">Перед поездкой необходимо предоставить этот бланк заказа в любую автоматизированную билетную кассу на материковой части Украины и распечатать проездные и перевозочные документы до отправления поезда.При отсутствии возможности распечатать содержимое данного бланка, пожалуйста, запишите номер заказа, приведенный ниже.</string>
 
     //ticket kind
     <string name="ticket_kind_full">Полный</string>
@@ -201,5 +203,5 @@
     <string name="wagon_class_1">1-й клас</string>
     <string name="wagon_class_2">2-й клас</string>
     <string name="wagon_class_3">3-й клас</string>
-
+    <string name="ticket_print">Распечатать бланк заказа</string>
 </resources>
