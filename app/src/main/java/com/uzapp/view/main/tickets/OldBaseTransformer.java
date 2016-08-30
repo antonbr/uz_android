@@ -6,7 +6,7 @@ import android.view.View;
 /**
  * Created by vika on 24.08.16.
  */
-public abstract class BaseTransformer implements ViewPager.PageTransformer {
+public abstract class OldBaseTransformer implements ViewPager.PageTransformer {
 
     /**
      * Called each {@link #transformPage(android.view.View, float)}.

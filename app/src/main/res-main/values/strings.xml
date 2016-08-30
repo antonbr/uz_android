@@ -164,6 +164,8 @@
     <string name="profile_edit_change_password_success_result">Ваш пароль был успешно изменён</string>
     <string name="profile_edit_room">В личный кабинет</string>
     <string name="profile_edit_successful_result">Информация пользователя была успешно изменена</string>
+    <string name="profile_change_password">Сменить пароль</string>
+    <string name="profile_logout">Выйти из аккаунта</string>
 
     //tickets
     <string name="tickets_wagon">Вагон</string>
@@ -171,40 +173,33 @@
     <string name="tickets_detail">Детали билета</string>
     <string name="ticket_refund">Возврат</string>
     <string name="ticket_cost">%1$s грн</string>
+    <string name="ticket_electronic">Электронный билет</string>
+    <string name="ticket_departure">Отправление</string>
+    <string name="ticket_arrival">Прибытие</string>
+    <string name="tickets_return">Вернуть билет</string>
+    <string name="tickets_date_departure">Дата отправления</string>
+
+    //ticket kind
     <string name="ticket_kind_full">Полный</string>
     <string name="ticket_kind_child">Детский</string>
     <string name="ticket_kind_privilege">Льготный</string>
     <string name="ticket_kind_military">Военный</string>
-    <string name="profile_change_password">Сменить пароль</string>
-    <string name="profile_logout">Выйти из аккаунта</string>
 
+    //wagon types
+    <string name="wagon_type_suite">Люкс</string>
+    <string name="wagon_type_soft">М\'який</string>
+    <string name="wagon_type_coupe">Купе</string>
+    <string name="wagon_type_berth">Плацкарт</string>
+    <string name="wagon_type_seating">Сидячий</string>
+    <string name="wagon_type_common">Загальний</string>
 
-    <string-array name="wagon_types_long">
-        <item>Люкс</item>
-        <item>М\'який</item>
-        <item>Купе</item>
-        <item>Плацкарт</item>
-        <item>Сидячий</item>
-        <item>Загальний</item>
-    </string-array>
-    <string-array name="wagon_types_short">
-        <item>Л</item>
-        <item>М</item>
-        <item>К</item>
-        <item>П</item>
-        <item>С</item>
-        <item>О</item>
-    </string-array>
-    <string-array name="wagon_class_long">
-        <item>Економ</item>
-        <item>Фірмовий</item>
-        <item>Фірмовий покращений</item>
-        <item>Дешевий фірмовий</item>
-    </string-array>
-    <string-array name="wagon_class_short">
-        <item>Д</item>
-        <item>Б</item>
-        <item>В</item>
-        <item>Г</item>
-    </string-array>
+    //wagon classes
+    <string name="wagon_class_economy">Економ</string>
+    <string name="wagon_class_firm">Фірмовий</string>
+    <string name="wagon_class_firm_superior">Фірмовий покращений</string>
+    <string name="wagon_class_firm_cheap">Дешевий фірмовий</string>
+    <string name="wagon_class_1">1-й клас</string>
+    <string name="wagon_class_2">2-й клас</string>
+    <string name="wagon_class_3">3-й клас</string>
+
 </resources>

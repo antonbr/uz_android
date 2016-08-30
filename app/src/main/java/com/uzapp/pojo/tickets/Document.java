@@ -3,6 +3,8 @@ package com.uzapp.pojo.tickets;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.uzapp.pojo.TicketKind;
+import com.uzapp.pojo.WagonClass;
+import com.uzapp.pojo.WagonType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,10 +99,10 @@ public class Document {
     private int wagon;
     @SerializedName("wagon_type")
     @Expose
-    private String wagonType;
+    private WagonType wagonType;
     @SerializedName("wagon_class")
     @Expose
-    private String wagonClass;
+    private WagonClass wagonClass;
     @SerializedName("wagon_layout")
     @Expose
     private String wagonLayout;
@@ -443,19 +445,19 @@ public class Document {
         this.wagon = wagon;
     }
 
-    public String getWagonType() {
+    public WagonType getWagonType() {
         return wagonType;
     }
 
-    public void setWagonType(String wagonType) {
+    public void setWagonType(WagonType wagonType) {
         this.wagonType = wagonType;
     }
 
-    public String getWagonClass() {
+    public WagonClass getWagonClass() {
         return wagonClass;
     }
 
-    public void setWagonClass(String wagonClass) {
+    public void setWagonClass(WagonClass wagonClass) {
         this.wagonClass = wagonClass;
     }
 

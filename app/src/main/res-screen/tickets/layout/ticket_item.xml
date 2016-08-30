@@ -1,49 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@android:color/white">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="11dp"
-        android:background="@drawable/shadow"
-        android:divider="@drawable/divider_hint_color_horizontal"
-        android:orientation="vertical"
-        android:showDividers="middle">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:divider="@drawable/divider_hint_color_horizontal"
+                  android:orientation="vertical"
+                  android:showDividers="middle">
 
+        <TextView
+            android:id="@+id/electronicTicketBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:drawableLeft="@drawable/ticket_qrcode"
+            android:drawablePadding="11dp"
+            android:drawableRight="@drawable/next_grey"
+            android:paddingBottom="11dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="14dp"
+            android:paddingTop="11dp"
+            android:text="@string/ticket_electronic"
+            android:clickable="true"
+            android:textColor="@color/accentColor"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/exchangeTicketBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/exchange_ticket_button"
+            android:drawableLeft="@drawable/ticket_alarm"
+            android:drawablePadding="11dp"
+            android:drawableRight="@drawable/next_black"
+            android:paddingBottom="11dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="14dp"
+            android:paddingTop="11dp"
+            android:text="@string/ticket_electronic"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:clickable="true"
+            android:visibility="gone"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="11dp">
+            android:paddingBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="8dp"
+            android:paddingTop="3dp">
 
             <TextView
                 android:id="@+id/trainName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
+                android:layout_marginTop="8dp"
                 android:layout_toLeftOf="@+id/orderType"
                 android:fontFamily="sans-serif-medium"
                 android:text="143 Л «Галичина»"
-                android:textSize="@dimen/button_text_size"/>
+                android:textColor="@color/ticketTextColor"
+                android:textSize="18sp"/>
 
-            <ImageView
-                android:id="@+id/orderType"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+            <ImageButton
+                android:id="@+id/shareButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_alignTop="@+id/trainName"
-                android:src="@drawable/qrcode"/>
+                android:background="?attr/selectableItemBackground"
+                android:padding="8dp"
+                android:src="@drawable/share"/>
+
 
             <TextView
                 android:id="@+id/stationFrom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/trainName"
+                android:layout_marginTop="8dp"
                 android:text="ИВАНО-ФРАНКОВСК"
                 android:textAllCaps="true"
-                android:textSize="@dimen/button_text_size"/>
+                android:textSize="18sp"/>
 
-            <ImageView
+            <TextView
                 android:id="@+id/arrowStations"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,12 +97,13 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_toRightOf="@+id/stationFrom"
-                android:src="@drawable/arrow"/>
+                android:text="—"/>
 
             <TextView
                 android:id="@+id/stationTo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/stationFrom"
                 android:layout_below="@+id/trainName"
                 android:layout_toLeftOf="@+id/orderType"
                 android:layout_toRightOf="@+id/arrowStations"
@@ -65,89 +111,93 @@
                 android:singleLine="true"
                 android:text="Киев"
                 android:textAllCaps="true"
-                android:textSize="@dimen/button_text_size"/>
+                android:textSize="18sp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/stationFrom"
                 android:orientation="horizontal"
-                android:weightSum="2">
+                android:weightSum="1">
 
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_marginTop="11dp"
+                    android:layout_weight="0.4">
 
                     <TextView
                         android:id="@+id/departureTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ticket_stations_padding"
-                        android:text="@string/departure"
-                        android:textAllCaps="true"
-                        android:textSize="@dimen/text_size_small"/>
-
-                    <TextView
-                        android:id="@+id/departureFullDate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/departureTitle"
-                        android:layout_marginTop="4dp"
-                        android:text="10.06.16"
-                        android:textAllCaps="true"
-                        android:textSize="@dimen/text_size"/>
+                        android:text="@string/ticket_departure"
+                        android:textColor="@color/ticketTextColor"
+                        android:textSize="@dimen/button_text_size"/>
 
                     <TextView
                         android:id="@+id/departureTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/departureTitle"
-                        android:layout_marginLeft="6dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_toRightOf="@+id/departureFullDate"
+                        android:layout_marginTop="3dp"
+                        android:fontFamily="sans-serif-medium"
                         android:text="15:53"
                         android:textAllCaps="true"
-                        android:textSize="@dimen/text_size"
-                        android:textStyle="bold"/>
+                        android:textSize="22sp"/>
+
+                    <TextView
+                        android:id="@+id/departureDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/departureTime"
+                        android:text="Пт, 17 авг"
+                        android:textSize="@dimen/button_text_size"/>
+
+                    <ImageView
+                        android:id="@+id/arrowDates"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/departureTime"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignTop="@+id/departureTime"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_toRightOf="@+id/departureTime"
+                        android:src="@drawable/arrow"/>
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_marginTop="11dp"
+                    android:layout_weight="0.5">
 
                     <TextView
                         android:id="@+id/arrivalTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ticket_stations_padding"
-                        android:text="@string/arrival"
-                        android:textAllCaps="true"
-                        android:textSize="@dimen/text_size_small"/>
-
-                    <TextView
-                        android:id="@+id/arrivalFullDate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/arrivalTitle"
-                        android:layout_marginTop="4dp"
-                        android:text="10.06.16"
-                        android:textAllCaps="true"
-                        android:textSize="@dimen/text_size"/>
+                        android:text="@string/ticket_arrival"
+                        android:textColor="@color/ticketTextColor"
+                        android:textSize="@dimen/button_text_size"/>
 
                     <TextView
                         android:id="@+id/arrivalTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/arrivalTitle"
-                        android:layout_marginLeft="6dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_toRightOf="@+id/arrivalFullDate"
+                        android:layout_marginTop="3dp"
+                        android:fontFamily="sans-serif-medium"
                         android:text="15:53"
                         android:textAllCaps="true"
-                        android:textSize="@dimen/text_size"
-                        android:textStyle="bold"/>
+                        android:textSize="22sp"/>
+
+                    <TextView
+                        android:id="@+id/arrivalDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/arrivalTime"
+                        android:text="Пт, 17 авг"
+                        android:textSize="@dimen/button_text_size"/>
                 </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>
@@ -155,169 +205,139 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/ticket_stations_padding"
-            android:paddingLeft="11dp"
-            android:paddingRight="11dp"
-            android:paddingTop="@dimen/ticket_stations_padding">
+            android:paddingBottom="11dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="11dp"
+            android:weightSum="1">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tickets_wagon"
-                android:textAllCaps="true"
-                android:textColor="@color/textColorHint"
-                android:textSize="@dimen/button_text_size"/>
-
-            <TextView
-                android:id="@+id/wagonNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="10dp"
-                android:fontFamily="sans-serif_medium"
-                android:maxEms="1"
-                android:minEms="1"
-                android:text="12"
-                android:textColor="@color/accentColor"
-                android:textSize="@dimen/button_text_size"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tickets_place"
-                android:textAllCaps="true"
-                android:textColor="@color/textColorHint"
-                android:textSize="@dimen/button_text_size"/>
-
-            <TextView
-                android:id="@+id/placeNumber"
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:fontFamily="sans-serif_medium"
-                android:maxEms="1"
-                android:minEms="1"
-                android:singleLine="true"
-                android:text="322"
-                android:textColor="@color/accentColor"
-                android:textSize="@dimen/button_text_size"/>
+                android:layout_weight="0.4">
 
-            <TextView
-                android:id="@+id/ticketType"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/wagonTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wagon"
+                    android:textColor="@color/ticketTextColor"
+                    android:textSize="@dimen/button_text_size"/>
+
+
+                <TextView
+                    android:id="@+id/wagonNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/wagonTitle"
+                    android:layout_marginTop="3dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="15"
+                    android:textSize="22sp"/>
+
+                <TextView
+                    android:id="@+id/wagonType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/wagonNumber"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/wagonNumber"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Плацкарт"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/button_text_size"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/ticket_kind_full"
-                android:textAllCaps="true"
-                android:textColor="@color/textColorHint"
-                android:textSize="@dimen/button_text_size"/>
+                android:layout_weight="0.6">
+
+                <TextView
+                    android:id="@+id/placeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="fill"
+                    android:text="@string/tickets_place"
+                    android:textColor="@color/ticketTextColor"
+                    android:textSize="@dimen/button_text_size"/>
+
+                <TextView
+                    android:id="@+id/placeNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/placeTitle"
+                    android:layout_marginTop="3dp"
+                    android:text="15"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/placeType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/placeNumber"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/placeNumber"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Плацкарт"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/button_text_size"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/fullName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:paddingBottom="15dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="15dp"
+            android:singleLine="true"
+            android:text="Константин Костантинопольский"
+            android:textSize="18sp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="11dp"
+            android:paddingTop="16dp">
 
             <TextView
                 android:id="@+id/price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="6dp"
-                android:fontFamily="sans-serif_medium"
-                android:singleLine="true"
-                android:text="108,80 грн"
-                android:textColor="@color/accentColor"
-                android:textSize="@dimen/button_text_size"/>
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:paddingBottom="13dp"
-            android:paddingLeft="11dp"
-            android:paddingRight="11dp"
-            android:paddingTop="13dp">
+                android:text="358,70 грн"
+                android:textSize="22sp"/>
 
             <TextView
-                android:id="@+id/firstName"
+                android:id="@+id/ticketType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="КОНСТАНТИН"
+                android:layout_below="@+id/price"
+                android:layout_marginTop="3dp"
+                android:text="Полный"
                 android:textAllCaps="true"
                 android:textSize="@dimen/button_text_size"/>
 
-            <TextView
-                android:id="@+id/lastName"
+            <Button
+                android:id="@+id/ticketReturnBtn"
+                style="@style/ButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/firstName"
-                android:layout_marginTop="@dimen/ticket_name_padding"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="КОНСТАНТИН"
-                android:textAllCaps="true"
-                android:textSize="@dimen/button_text_size"/>
-
-            <ImageView
-                android:id="@+id/qrCodeImage"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/lastName"
-                android:layout_marginTop="@dimen/tickets_padding"
-                android:adjustViewBounds="true"
-                android:background="@color/accentColor"
-                android:scaleType="fitCenter"/>
-
-            <TextView
-                android:id="@+id/ticketNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/qrCodeImage"
-                android:layout_alignTop="@+id/qrCodeImage"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/qrCodeImage"
-                android:gravity="center_vertical"
-                android:letterSpacing="0.1"
-                android:text="000B36C2 - 9012 - 97CB - 0003"
-                android:textAllCaps="true"
-                android:textSize="@dimen/ticket_number_text_size"/>
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/return_ticket_btn"
+                android:stateListAnimator="@null"
+                android:padding="14dp"
+                android:text="@string/tickets_return"
+                android:textColor="@drawable/back_toggle_text_color_selector"/>
         </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@drawable/divider_hint_color_vertical"
-            android:orientation="horizontal"
-            android:showDividers="middle">
-
-            <Button
-                android:id="@+id/ticketDetailBtn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackground"
-                android:fontFamily="sans-serif-medium"
-                android:minWidth="0dp"
-                android:padding="@dimen/ticket_button_padding"
-                android:stateListAnimator="@null"
-                android:text="@string/tickets_detail"
-                android:textAllCaps="true"
-                android:textColor="@color/accentColor"
-                android:textSize="@dimen/button_text_size"/>
-
-            <Button
-                android:id="@+id/refundBtn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackground"
-                android:fontFamily="sans-serif-medium"
-                android:minWidth="0dp"
-                android:padding="@dimen/ticket_button_padding"
-                android:stateListAnimator="@null"
-                android:text="@string/ticket_refund"
-                android:textAllCaps="true"
-                android:textColor="@color/redColorButton"
-                android:textSize="@dimen/button_text_size"/>
-        </LinearLayout>
     </LinearLayout>
-</merge>
+</android.support.v7.widget.CardView>

@@ -7,7 +7,7 @@ import android.view.View;
 /**
  * Created by vika on 24.08.16.
  */
-public class TicketPageTransformer extends BaseTransformer {
+public class OldTicketPageTransformer extends OldBaseTransformer {
 
     private static final Matrix OFFSET_MATRIX = new Matrix();
     private static final Camera OFFSET_CAMERA = new Camera();

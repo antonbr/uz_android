@@ -138,7 +138,7 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
 //            case Constants.BOTTOM_NAVIGATION_TICKETS:
 //                previousSelectedBottomItem = Constants.BOTTOM_NAVIGATION_TICKETS;
 //                clearBackstack();
-//                replaceFragment(new MyTicketsFragment(), false);
+//                replaceFragment(new OldMyTicketsFragment(), false);
 //                break;
 //            case Constants.BOTTOM_NAVIGATION_MENU:
 //                if (wasSelected) {

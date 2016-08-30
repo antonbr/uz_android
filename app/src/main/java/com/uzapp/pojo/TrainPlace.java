@@ -10,7 +10,7 @@ import org.parceler.Parcel;
 @Parcel
 public class TrainPlace {
     @SerializedName("type")
-    String type;
+    WagonType type;
     @SerializedName("lower")
     int lower;
     @SerializedName("top")
@@ -22,7 +22,7 @@ public class TrainPlace {
     @SerializedName("total")
     int total;
     @SerializedName("class_name")
-    String className;
+    WagonClass className;
     @SerializedName("cost_currency")
     String costCurrency;
     @SerializedName("cost")
@@ -32,11 +32,11 @@ public class TrainPlace {
     @SerializedName("cost_reserve")
     double costReserve;
 
-    public String getType() {
+    public WagonType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(WagonType type) {
         this.type = type;
     }
 
@@ -80,11 +80,11 @@ public class TrainPlace {
         this.total = total;
     }
 
-    public String getClassName() {
+    public WagonClass getClassName() {
         return className;
     }
 
-    public void setClassName(String className) {
+    public void setClassName(WagonClass className) {
         this.className = className;
     }
 

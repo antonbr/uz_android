@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 /**
  * Created by vika on 23.08.16.
  */
-public class TicketView extends LinearLayout {
+public class OldTicketView extends LinearLayout {
     private SimpleDateFormat timeFormat = new SimpleDateFormat(Constants.HOURS_MINUTES_FORTMAT);
     private SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.DAY_MONTH_YEAR_FORMAT);
     private DecimalFormat df = new DecimalFormat("#.00");
@@ -46,16 +46,16 @@ public class TicketView extends LinearLayout {
     @BindView(R.id.qrCodeImage) ImageView qrCodeImage;
     @BindView(R.id.orderType) ImageView orderType;
 
-    public TicketView(Context context) {
+    public OldTicketView(Context context) {
         this(context, null);
     }
 
-    public TicketView(Context context, AttributeSet attrs) {
+    public OldTicketView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.ticket_item, this, true);
+        inflater.inflate(R.layout.old_ticket_item, this, true);
         ButterKnife.bind(this);
         setOrientation(VERTICAL);
 //        setBackground(ContextCompat.getDrawable(context, R.drawable.shadow));
@@ -64,7 +64,7 @@ public class TicketView extends LinearLayout {
 //        setDividerDrawable(ContextCompat.getDrawable(context, R.drawable.divider_hint_color_horizontal));
     }
 
-    public void initView(TicketForAdapter ticket) {
+    public void initView(ShortTicket ticket) {
         trainName.setText(ticket.train);
         stationFrom.setText(ticket.stationFromName);
         stationTo.setText(ticket.stationToName);
