@@ -6,6 +6,7 @@ import com.uzapp.pojo.Station;
 import com.uzapp.pojo.TrainSearchResult;
 import com.uzapp.pojo.User;
 import com.uzapp.pojo.UserTokenResponse;
+import com.uzapp.pojo.booking.Booking;
 import com.uzapp.pojo.placeslist.PricesPlacesList;
 import com.uzapp.pojo.prices.Prices;
 
@@ -78,4 +79,19 @@ public interface ApiInterface {
     @POST("user")
     Call<User> changePassword(@Field("password") String password,
                               @Field("new_password") String newPassword);
+
+    @GET("order/booking")
+    Call<Booking> getBooking(@Field("train") String train, @Field("station_from_codee") int stationFromCodee,
+                             @Field("station_to_code") int stationToCode, @Field("wagon_type") String wagonType,
+                             @Field("wagon_class") int wagonClass, @Field("wagon_number") int wagonNumber,
+                             @Field("date") long date, @Field("places") String places,
+                             @Field("documents") String documents);
+
+    @GET("order/reserve")
+    Call<Booking> getReserve(@Field("train") String train, @Field("station_from_codee") int stationFromCodee,
+                             @Field("station_to_code") int stationToCode, @Field("wagon_type") String wagonType,
+                             @Field("wagon_class") int wagonClass, @Field("wagon_number") int wagonNumber,
+                             @Field("date") long date, @Field("places") String places,
+                             @Field("no_bedding") int noBedding, @Field("services") String services,
+                             @Field("documents") String documents);
 }

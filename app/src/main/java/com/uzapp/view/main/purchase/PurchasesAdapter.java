@@ -1,33 +1,46 @@
 package com.uzapp.view.main.purchase;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.uzapp.R;
+import com.uzapp.util.Constants;
 import com.uzapp.view.main.wagon.model.Ticket;
-import com.uzapp.view.main.wagon.model.Wagon;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Vladimir on 19.08.2016.
  */
-public class PurchasesAdapter extends RecyclerView.Adapter<PurchasesAdapter.PurchaseHolder>{
+public class PurchasesAdapter extends RecyclerView.Adapter<PurchasesAdapter.PurchaseHolder> {
 
-    private List<Wagon> wagonList;
+    private SimpleDateFormat timeFormat = new SimpleDateFormat(Constants.HOURS_MINUTES_FORTMAT);
+    private SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.DAY_MONTH_YEAR_FORMAT);
+
     private List<Ticket> ticketList;
     private Context context;
+    private String stationFrom, stationTo, trainName;
 
-    public PurchasesAdapter(Context context, List<Ticket> ticketList) {
+    public PurchasesAdapter(Context context, List<Ticket> ticketList, String stationFrom,
+                            String stationTo, String trainName) {
         this.context = context;
         this.ticketList = ticketList;
+        this.stationFrom = stationFrom;
+        this.stationTo = stationTo;
+        this.trainName = trainName;
     }
 
     @Override
@@ -38,11 +51,24 @@ public class PurchasesAdapter extends RecyclerView.Adapter<PurchasesAdapter.Purc
     }
 
     @Override
-    public void onBindViewHolder(PurchaseHolder holder, int position) {
+    public void onBindViewHolder(final PurchaseHolder holder, int position) {
         final Ticket ticket = ticketList.get(position);
+        String price = String.valueOf(ticket.getTicketPrice())
+                + " " + context.getString(R.string.ticket_currency);
+        Date departureDate = new Date(TimeUnit.SECONDS.toMillis(ticket.getDepartureDate()));
+        Date arrivalDate = new Date(TimeUnit.SECONDS.toMillis(ticket.getArrivalDate()));
+
         holder.txtWagonNumber.setText(ticket.getWagonNumber());
         holder.txtPlaceNumber.setText(ticket.getPlaceNumber());
-//        holder.txtPriceTicket.setText(ticket.getTicketPrice());
+        holder.txtPriceTicket.setText(price);
+        holder.txtDispatchDate.setText(dateFormat.format(departureDate));
+        holder.txtDispatchTime.setText(timeFormat.format(departureDate));
+        holder.txtArrivalDate.setText(dateFormat.format(arrivalDate));
+        holder.txtArrivalTime.setText(timeFormat.format(arrivalDate));
+
+        holder.trainName.setText(trainName);
+        holder.stationFrom.setText(stationFrom);
+        holder.stationTo.setText(stationTo);
     }
 
     @Override
@@ -54,11 +80,52 @@ public class PurchasesAdapter extends RecyclerView.Adapter<PurchasesAdapter.Purc
         @BindView(R.id.txtWagonNumber) TextView txtWagonNumber;
         @BindView(R.id.txtPlaceNumber) TextView txtPlaceNumber;
         @BindView(R.id.txtPriceTicket) TextView txtPriceTicket;
+        @BindView(R.id.txtDispatchDate) TextView txtDispatchDate;
+        @BindView(R.id.txtDispatchTime) TextView txtDispatchTime;
+        @BindView(R.id.txtArrivalDate) TextView txtArrivalDate;
+        @BindView(R.id.txtArrivalTime) TextView txtArrivalTime;
+        @BindView(R.id.btnFull) Button btnFull;
+        @BindView(R.id.btnChild) Button btnChild;
+        @BindView(R.id.btnStudent) Button btnStudent;
+        @BindView(R.id.trainName) TextView trainName;
+        @BindView(R.id.stationFrom) TextView stationFrom;
+        @BindView(R.id.stationTo) TextView stationTo;
 
         public PurchaseHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
+
+        @OnClick(R.id.btnFull)
+        void onClickFull() {
+            setBackgroundButtons(this, true, false, false);
+        }
+
+        @OnClick(R.id.btnChild)
+        void onClickChild() {
+            setBackgroundButtons(this, false, true, false);
+        }
+
+        @OnClick(R.id.btnStudent)
+        void onClickStudent() {
+            setBackgroundButtons(this, false, false, true);
+        }
     }
 
+    private void setBackgroundButtons(PurchaseHolder holder, boolean isFull, boolean isChild, boolean isStudent) {
+        holder.btnFull.setBackground(isFull ? ContextCompat.getDrawable(context, R.drawable.button_pressed_left) :
+                ContextCompat.getDrawable(context, R.drawable.button_enabled_left));
+        holder.btnFull.setTextColor(isFull ? ContextCompat.getColor(context, android.R.color.white) :
+                ContextCompat.getColor(context, R.color.accentColor));
+
+        holder.btnChild.setBackground(isChild ? ContextCompat.getDrawable(context, R.drawable.button_pressed_center) :
+                ContextCompat.getDrawable(context, R.drawable.button_enabled_center));
+        holder.btnChild.setTextColor(isChild ? ContextCompat.getColor(context, android.R.color.white) :
+                ContextCompat.getColor(context, R.color.accentColor));
+
+        holder.btnStudent.setBackground(isStudent ? ContextCompat.getDrawable(context, R.drawable.button_pressed_right) :
+                ContextCompat.getDrawable(context, R.drawable.button_enabled_right));
+        holder.btnStudent.setTextColor(isStudent ? ContextCompat.getColor(context, android.R.color.white) :
+                ContextCompat.getColor(context, R.color.accentColor));
+    }
 }

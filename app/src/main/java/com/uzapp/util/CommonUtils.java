@@ -83,7 +83,8 @@ public class CommonUtils {
     }
 
     public static Drawable changeBackgroundPlace(Context context, Button button) {
-        return (isSelectedPlace(context, button)) ? ContextCompat.getDrawable(context, R.drawable.border_button_place) :
+        return (isSelectedPlace(button, ContextCompat.getDrawable(context, R.drawable.border_button_place_selected))) ?
+                ContextCompat.getDrawable(context, R.drawable.border_button_place) :
                 ContextCompat.getDrawable(context, R.drawable.border_button_place_selected);
     }
 
@@ -96,20 +97,18 @@ public class CommonUtils {
      * Change text color
      */
     public static int changeTextColorPlace(Context context, Button button, int color) {
-        return (isSelectedPlace(context, button)) ?
+        return (isSelectedPlace(button, ContextCompat.getDrawable(context, R.drawable.border_button_place_selected))) ?
                 ContextCompat.getColor(context, android.R.color.white) : ContextCompat.getColor(context, color);
     }
 
     /**
-     * @param context
      * @param button
      * @return selected place
      *
      * Is selected place
      */
-    public static boolean isSelectedPlace(Context context, Button button) {
-        return (button.getBackground().getConstantState().equals(ContextCompat.getDrawable(context,
-                R.drawable.border_button_place_selected).getConstantState()));
+    public static boolean isSelectedPlace(Button button, Drawable drawable) {
+        return (button.getBackground().getConstantState().equals(drawable.getConstantState()));
     }
 
     public static boolean isEmailValid(String email) {

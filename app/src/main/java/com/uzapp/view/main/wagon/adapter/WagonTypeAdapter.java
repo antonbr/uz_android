@@ -2,6 +2,7 @@ package com.uzapp.view.main.wagon.adapter;
 
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,19 +29,23 @@ public class WagonTypeAdapter extends BaseAdapter implements View.OnClickListene
     private ViewHolder holder = null;
     private FragmentManager manager;
     private String wagonNumber;
-    private int priceTicket;
+    private int priceTicket, departureDate, arrivalDate, wagonClasses;
     private String typeWagon;
 
     private int placeLowStandardLeft, placeUpperStandardLeft, placeLowStandardRight,
             placeUpperStandardRight, placeLowSide, placeUpperSide;
 
     public WagonTypeAdapter(Context context, List<Integer> listPlaces, String wagonNumber,
-                            int priceTicket, String typeWagon) {
+                            int priceTicket, String typeWagon, int departureDate,
+                            int arrivalDate, int wagonClasses) {
         this.context = context;
         this.listPlaces = listPlaces;
         this.wagonNumber = wagonNumber;
         this.priceTicket = priceTicket;
         this.typeWagon = typeWagon;
+        this.departureDate = departureDate;
+        this.arrivalDate = arrivalDate;
+        this.wagonClasses = wagonClasses;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -190,12 +195,14 @@ public class WagonTypeAdapter extends BaseAdapter implements View.OnClickListene
         button.setTextColor(CommonUtils.changeTextColorPlace(context, button, android.R.color.black));
 
         Ticket ticket = newInstanceTicket(button.getTag().hashCode(), button.getText().toString(), placeType);
-        boolean isRemove = (CommonUtils.isSelectedPlace(context, button));
+        boolean isRemove = (CommonUtils.isSelectedPlace(button, ContextCompat
+                .getDrawable(context, R.drawable.border_button_place_selected)));
         WagonPlaceFragment fragment = (WagonPlaceFragment) manager.findFragmentById(R.id.fragmentContainer);
         fragment.setAdapter(ticket, !isRemove);
     }
 
     private Ticket newInstanceTicket(int id, String placeNumber, String placeType) {
-        return new Ticket(id, wagonNumber, placeNumber, placeType, priceTicket);
+        return new Ticket(id, wagonNumber, placeNumber, placeType, priceTicket, departureDate,
+                arrivalDate, wagonClasses,typeWagon);
     }
 }
