@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,95 +50,30 @@ public class MyTicketsAdapter extends RecyclerView.Adapter<MyTicketsAdapter.Tick
     @Override
     public TicketHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.ticket_item, parent, false);
+        itemView.setCameraDistance(itemView.getCameraDistance() * 5);
         return new TicketHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final TicketHolder holder, final int position) {
+    public void onBindViewHolder(TicketHolder holder, int position) {
         ShortTicket ticket = ticketList.get(position);
-        holder.ticketInformationLayout.setVisibility(holder.isShowingTicketInfo ? View.VISIBLE : View.GONE);
-        holder.ticketNumberLayout.setVisibility(holder.isShowingTicketInfo ? View.GONE : View.VISIBLE);
-        holder.itemView.setScaleX(holder.isShowingTicketInfo ? 1 : -1);
         if (holder.isShowingTicketInfo) {
-            holder.electronicTicketBtn.setVisibility(ticket.electronic ? View.VISIBLE : View.GONE);
-            holder.exchangeTicketBtn.setVisibility(ticket.electronic ? View.GONE : View.VISIBLE);
-            holder.trainName.setText(ticket.train);
-            holder.stationFrom.setText(ticket.stationFromName);
-            holder.stationTo.setText(ticket.stationToName);
-            Date departureDate = new Date(TimeUnit.SECONDS.toMillis(ticket.departureDate));
-            Date arrivalDate = new Date(TimeUnit.SECONDS.toMillis(ticket.arrivalDate));
-            holder.arrivalDate.setText(dateFormat.format(arrivalDate));
-            holder.arrivalTime.setText(timeFormat.format(arrivalDate));
-            holder.departureDate.setText(dateFormat.format(departureDate));
-            holder.departureTime.setText(timeFormat.format(departureDate));
-            holder.wagonNumber.setText(String.valueOf(ticket.wagon));
-            holder.placeNumber.setText(String.valueOf(ticket.place));
-            StringBuilder wagonType = new StringBuilder(context.getString(ticket.wagonType.getLongNameStringRes()));
-            if (ticket.wagonType.ordinal() == 4) {
-                wagonType.append(" ").append(context.getString(ticket.wagonClass.getLongNameStringRes()));
-            }
-            holder.wagonType.setText(wagonType);
-            String placeType = "";
-            if (ticket.wagonType.ordinal() == 0) {
-                placeType = context.getString(R.string.filter_bottom);
-            } else if (ticket.wagonType.ordinal() == 2 || ticket.wagonType.ordinal() == 3) {
-                placeType = (CommonUtils.isOdd((int) ticket.place))
-                        ? context.getString(R.string.filter_bottom) : context.getString(R.string.filter_top);
-            }
-            holder.placeType.setText(placeType);
-            StringBuilder fullName = new StringBuilder(ticket.firstname);
-            if (fullName.length() > 0) {
-                fullName.append(" ");
-            }
-            fullName.append(ticket.lastname);
-            holder.fullName.setText(fullName);
-            holder.price.setText(context.getString(R.string.ticket_cost, df.format(ticket.cost)));
-            holder.ticketType.setText(context.getString(ticket.kind.getStringRes()));
-            holder.electronicTicketBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    rotateTicket(holder, position);
-                }
-            });
-            holder.exchangeTicketBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    rotateTicket(holder, position);
-                }
-            });
+            holder.bindFrontSide(ticket, position);
         } else {
-            holder.electronicTicketNumberLayout.setVisibility(ticket.electronic ? View.VISIBLE : View.GONE);
-            holder.analogTicketNumberLayout.setVisibility(ticket.electronic ? View.GONE : View.VISIBLE);
-            if (ticket.electronic) {
-                byte[] decodedString = Base64.decode(ticket.qrImage, Base64.DEFAULT);
-                final Bitmap qrCodeBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                holder.qrCodeImage.setImageBitmap(qrCodeBitmap);
-                //TODO recycle?
-                holder.electronicTicketNumber.setText(ticket.uid);
-            } else {
-                byte[] decodedString = Base64.decode(ticket.barcodeImage, Base64.DEFAULT);
-                final Bitmap barcodeBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                holder.barCodeImage.setImageBitmap(barcodeBitmap);
-                //TODO recycle?
-                holder.analogTicketNumber.setText(ticket.uid);//TODO is correct data?
-
-            }
-            holder.ticketInfoBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    rotateTicket(holder, position);
-                }
-            });
+            holder.bindBackSide(ticket, position);
         }
     }
 
-    private void rotateTicket(TicketHolder holder, int position) {
-        ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
-        layoutParams.width = holder.itemView.getWidth();
-        layoutParams.height = holder.itemView.getHeight();
-        holder.itemView.setLayoutParams(layoutParams);
-        holder.isShowingTicketInfo = !holder.isShowingTicketInfo;
-        notifyItemChanged(position);
+    @Override
+    public void onBindViewHolder(TicketHolder holder, int position, List<Object> payloads) {
+        if (payloads == null || payloads.size() == 0) {
+            ShortTicket ticket = ticketList.get(position);
+            if (holder.isShowingTicketInfo) {
+                holder.bindFrontSide(ticket, position);
+            } else {
+                holder.bindBackSide(ticket, position);
+            }
+        }
     }
 
     @Override
@@ -180,6 +116,116 @@ public class MyTicketsAdapter extends RecyclerView.Adapter<MyTicketsAdapter.Tick
         public TicketHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+        }
+
+        public void bindFrontSide(final ShortTicket ticket, final int position) {
+            Log.d("TAG", "bind front side " + position);
+
+            ticketInformationLayout.setVisibility(isShowingTicketInfo ? View.VISIBLE : View.GONE);
+            ticketNumberLayout.setVisibility(isShowingTicketInfo ? View.GONE : View.VISIBLE);
+            itemView.setScaleX(isShowingTicketInfo ? 1 : -1);
+            //TODO refactor
+            electronicTicketBtn.setVisibility(ticket.electronic ? View.VISIBLE : View.GONE);
+            exchangeTicketBtn.setVisibility(ticket.electronic ? View.GONE : View.VISIBLE);
+            trainName.setText(ticket.train);
+            stationFrom.setText(ticket.stationFromName);
+            stationTo.setText(ticket.stationToName);
+            Date departureDateObj = new Date(TimeUnit.SECONDS.toMillis(ticket.departureDate));
+            Date arrivalDateObj = new Date(TimeUnit.SECONDS.toMillis(ticket.arrivalDate));
+            String formattedArrivalDate = dateFormat.format(arrivalDateObj);
+            String formattedDepartureDate = dateFormat.format(departureDateObj);
+            if (!arrivalDate.getText().equals(formattedArrivalDate)) {
+                arrivalDate.setText(formattedArrivalDate);
+            }
+            if (!departureDate.getText().equals(formattedDepartureDate)) {
+                departureDate.setText(formattedDepartureDate);
+            }
+            arrivalTime.setText(timeFormat.format(arrivalDateObj));
+            departureTime.setText(timeFormat.format(departureDateObj));
+            String wagon = String.valueOf(ticket.wagon);
+            String place = String.valueOf(ticket.place);
+            if (!wagonNumber.getText().equals(wagon)) {
+                wagonNumber.setText(wagon);
+            }
+            if (!placeNumber.getText().equals(place)) {
+                placeNumber.setText(place);
+            }
+            StringBuilder wagonTypeBuilder = new StringBuilder(context.getString(ticket.wagonType.getLongNameStringRes()));
+            if (ticket.wagonType.ordinal() == 4) {
+                wagonTypeBuilder.append(" ").append(context.getString(ticket.wagonClass.getLongNameStringRes()));
+            }
+            if (!wagonType.getText().equals(wagonTypeBuilder)) {
+                wagonType.setText(wagonTypeBuilder);
+            }
+            String placeTypeString = "";
+            if (ticket.wagonType.ordinal() == 0) {
+                placeTypeString = context.getString(R.string.filter_bottom);
+            } else if (ticket.wagonType.ordinal() == 2 || ticket.wagonType.ordinal() == 3) {
+                placeTypeString = (CommonUtils.isOdd((int) ticket.place))
+                        ? context.getString(R.string.filter_bottom) : context.getString(R.string.filter_top);
+            }
+            if (!placeType.getText().equals(placeTypeString)) {
+                placeType.setText(placeTypeString);
+            }
+            StringBuilder fullNameString = new StringBuilder(ticket.firstname);
+            if (fullNameString.length() > 0) {
+                fullNameString.append(" ");
+            }
+            fullName.append(ticket.lastname);
+            fullName.setText(fullNameString);
+            price.setText(context.getString(R.string.ticket_cost, df.format(ticket.cost)));
+            ticketType.setText(context.getString(ticket.kind.getStringRes()));
+            electronicTicketBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    rotateTicket(ticket, position);
+                }
+            });
+            exchangeTicketBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    rotateTicket(ticket, position);
+                }
+            });
+
+        }
+
+        public void bindBackSide(final ShortTicket ticket, final int position) {
+            Log.d("TAG", "bind back side " + position);
+            ticketInformationLayout.setVisibility(isShowingTicketInfo ? View.VISIBLE : View.GONE);
+            ticketNumberLayout.setVisibility(isShowingTicketInfo ? View.GONE : View.VISIBLE);
+            itemView.setScaleX(isShowingTicketInfo ? 1 : -1);
+            //TODO refactor
+            electronicTicketNumberLayout.setVisibility(ticket.electronic ? View.VISIBLE : View.GONE);
+            analogTicketNumberLayout.setVisibility(ticket.electronic ? View.GONE : View.VISIBLE);
+            if (ticket.electronic) {
+                byte[] decodedString = Base64.decode(ticket.qrImage, Base64.DEFAULT);
+                final Bitmap qrCodeBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                qrCodeImage.setImageBitmap(qrCodeBitmap);
+                //TODO recycle?
+                electronicTicketNumber.setText(ticket.uid);
+            } else {
+                byte[] decodedString = Base64.decode(ticket.barcodeImage, Base64.DEFAULT);
+                final Bitmap barcodeBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                barCodeImage.setImageBitmap(barcodeBitmap);
+                //TODO recycle?
+                analogTicketNumber.setText(ticket.uid);//TODO is correct data?
+
+            }
+            ticketInfoBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    rotateTicket(ticket, position);
+                }
+            });
+        }
+
+        private void rotateTicket(ShortTicket ticket, int position) {
+            ViewGroup.LayoutParams layoutParams = itemView.getLayoutParams();
+            layoutParams.width = itemView.getWidth();
+            layoutParams.height = itemView.getHeight();
+            itemView.setLayoutParams(layoutParams);
+                    notifyItemChanged(position, new MyTicketsItemAnimator.TicketItemHolderInfo(ticket, position));
         }
     }
 
