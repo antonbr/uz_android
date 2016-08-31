@@ -92,7 +92,7 @@
                 android:id="@+id/arrowStations"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/stationFrom"
+                android:layout_alignBaseline="@+id/stationFrom"
                 android:layout_alignTop="@+id/stationFrom"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"

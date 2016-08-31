@@ -24,7 +24,7 @@ public class Order {
     public String barcodeImage;
     @SerializedName("uio")
     @Expose
-    public String uio;
+    private String uio;
     @SerializedName("tickets")
     @Expose
     public List<Ticket> tickets = new ArrayList<Ticket>();
@@ -65,15 +65,28 @@ public class Order {
         return uio;
     }
 
-    public void setUio(String uio) {
-        this.uio = uio;
-    }
-
     public List<Ticket> getTickets() {
         return tickets;
     }
 
     public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof Order)) {
+            return false;
+        }
+        Order order = (Order) o;
+        return order.getUio().equals(uio);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + uio.hashCode();
+        return result;
     }
 }

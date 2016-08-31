@@ -57,6 +57,10 @@ public class MyTicketsAdapter extends RecyclerView.Adapter<MyTicketsAdapter.Tick
         notifyDataSetChanged();
     }
 
+    public List<ShortTicket> getTicketList() {
+        return ticketList;
+    }
+
     @Override
     public TicketHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.ticket_item, parent, false);

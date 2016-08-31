@@ -58,6 +58,8 @@ public class PickDateFragment extends Fragment implements CalendarDaysAdapter.On
         toolbarTitle.setText(R.string.calendar_when);
         if (getArguments() != null && getArguments().containsKey("minDate")) {
             minDate = (Date) getArguments().getSerializable("minDate");
+        } else if (getArguments() != null && getArguments().containsKey("availableDates")) {
+
         }
         initNearestDates();
         allDaysByMonths = getDaysByMonths();
@@ -79,13 +81,23 @@ public class PickDateFragment extends Fragment implements CalendarDaysAdapter.On
         ((MainActivity) getActivity()).showNavigationBar();
     }
 
-    public static PickDateFragment getInstance(Date date) {
+    public static PickDateFragment getInstance(Date minDate) {
         PickDateFragment fragment = new PickDateFragment();
         Bundle args = new Bundle();
-        args.putSerializable("minDate", date);
+        args.putSerializable("minDate", minDate);
         fragment.setArguments(args);
         return fragment;
     }
+
+
+    public static PickDateFragment getInstance(ArrayList<String> availableDates) {
+        PickDateFragment fragment = new PickDateFragment();
+        Bundle args = new Bundle();
+        args.putStringArrayList("availableDates", availableDates);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
 
     private void initNearestDates() {
         Calendar calendar = CommonUtils.getCalendar();

@@ -25,14 +25,14 @@ import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.search.date.PickDateFragment;
+import com.uzapp.view.utils.EndlessRecyclerScrollListener;
 import com.uzapp.view.utils.SpaceItemDecoration;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -58,9 +58,11 @@ public class MyTicketsFragment extends Fragment {
     @BindView(R.id.ticketCloseBtn) ImageButton ticketCloseBtn;
     @BindView(R.id.ticketCalendarBtn) ImageButton ticketCalendarBtn;
     @BindString(R.string.ticket_pick_date) String ticketPickDateHint;
+    LinkedHashSet<Order> orderList = new LinkedHashSet<Order>();
     MyTicketsAdapter ticketAdapter;
     Date filterDate;
     Date todayDate;
+    EndlessRecyclerScrollListener scrollListener;
 
     @Nullable
     @Override
@@ -74,17 +76,36 @@ public class MyTicketsFragment extends Fragment {
         myTicketsList.setAdapter(ticketAdapter);
         myTicketsList.setItemAnimator(new MyTicketsItemAnimator());
         myTicketsList.addItemDecoration(new SpaceItemDecoration((int) getContext().getResources().getDimension(R.dimen.small_padding)));
+        setScrollListener();
         Calendar calendar = Calendar.getInstance();
         todayDate = calendar.getTime();
-        loadTickets();
+        loadTickets(TimeUnit.MILLISECONDS.toSeconds(todayDate.getTime()));
         return view;
     }
 
-    private void loadTickets() {
+    private void setScrollListener() {
+        scrollListener = new EndlessRecyclerScrollListener((LinearLayoutManager) myTicketsList.getLayoutManager()) {
+            @Override
+            public void onLoadMore() {
+                List<ShortTicket> ticketList = ticketAdapter.getTicketList();
+                ShortTicket lastTicket = ticketList.get(ticketList.size() - 1);
+                long lastDate = lastTicket.departureDate;
+                loadTickets(lastDate);
+            }
+        };
+        myTicketsList.addOnScrollListener(scrollListener);
+    }
+
+    private void removeScrollListener() {
+        if (scrollListener != null) {
+            myTicketsList.removeOnScrollListener(scrollListener);
+        }
+    }
+
+    private void loadTickets(Long fromDateSeconds) {
         progressBar.setVisibility(View.VISIBLE);
         Long filterDateSeconds = (filterDate == null) ? null : TimeUnit.MILLISECONDS.toSeconds(filterDate.getTime());
-        Long fromDateSeconds = filterDate == null ? TimeUnit.MILLISECONDS.toSeconds(todayDate.getTime()) : null;
-        Call call = ApiManager.getApi(getContext()).getUserTickets(filterDateSeconds, fromDateSeconds, null);
+        Call<List<TicketsResponse>> call = ApiManager.getApi(getContext()).getUserTickets(filterDateSeconds, filterDate == null ? fromDateSeconds : null, null);
         call.enqueue(ticketsCallback);
     }
 
@@ -101,7 +122,7 @@ public class MyTicketsFragment extends Fragment {
         hideFilterDate();
         filterDate = null;
         ticketAdapter.clearTickets();
-        loadTickets();
+        loadTickets(TimeUnit.MILLISECONDS.toSeconds(todayDate.getTime()));
     }
 
     @Override
@@ -115,41 +136,38 @@ public class MyTicketsFragment extends Fragment {
         List<ShortTicket> ticketForAdapterList = new ArrayList<>();
         for (TicketsResponse ticketsResponse : ticketsResponses) {
             for (Order order : ticketsResponse.getOrders()) {
-                for (Ticket ticket : order.getTickets()) {
-                    for (int i = 0; i < ticket.getDocument().getPlacesCount(); i++) {
-                        ShortTicket shortTicket = new ShortTicket();
-                        shortTicket.electronic = order.electronic;
-                        shortTicket.qrImage = ticket.qrImage;
-                        shortTicket.barcodeImage = ticket.barcodeImage;
-                        shortTicket.uid = ticket.getDocument().getUid();
-                        shortTicket.kind = ticket.getDocument().getKind();
-                        shortTicket.departureDate = ticket.getDocument().getDepartureDate();
-                        shortTicket.arrivalDate = ticket.getDocument().getArrivalDate();
-                        shortTicket.stationFromName = ticket.getDocument().getStationFromName();
-                        shortTicket.stationToName = ticket.getDocument().getStationToName();
-                        shortTicket.train = ticket.getDocument().getTrain();
-                        shortTicket.wagon = ticket.getDocument().getWagon();
-                        shortTicket.place = ticket.getDocument().getPlaces().get(i);
-                        shortTicket.wagonClass = ticket.getDocument().getWagonClass();
-                        shortTicket.wagonType = ticket.getDocument().getWagonType();
-                        try {
-                            shortTicket.cost = ticket.getDocument().getCosts().get(i).getCost();
-                        } catch (Exception e) {
-                            shortTicket.cost = 111; //TODO test data on backend
+                if (orderList.add(order)) {
+                    for (Ticket ticket : order.getTickets()) {
+                        for (int i = 0; i < ticket.getDocument().getPlacesCount(); i++) {//TODO decide if we need separate places in different tickets
+                            ShortTicket shortTicket = new ShortTicket();
+                            shortTicket.electronic = order.electronic;
+                            shortTicket.qrImage = ticket.qrImage;
+                            shortTicket.barcodeImage = ticket.barcodeImage;
+                            shortTicket.uid = ticket.getDocument().getUid();
+                            shortTicket.kind = ticket.getDocument().getKind();
+                            shortTicket.departureDate = ticket.getDocument().getDepartureDate();
+                            shortTicket.arrivalDate = ticket.getDocument().getArrivalDate();
+                            shortTicket.stationFromName = ticket.getDocument().getStationFromName();
+                            shortTicket.stationToName = ticket.getDocument().getStationToName();
+                            shortTicket.train = ticket.getDocument().getTrain();
+                            shortTicket.wagon = ticket.getDocument().getWagon();
+                            shortTicket.place = ticket.getDocument().getPlaces().get(i);
+                            shortTicket.wagonClass = ticket.getDocument().getWagonClass();
+                            shortTicket.wagonType = ticket.getDocument().getWagonType();
+                            try {
+                                shortTicket.cost = ticket.getDocument().getCosts().get(i).getCost();
+                            } catch (Exception e) {
+                                shortTicket.cost = 111; //TODO test data on backend
+                            }
+                            shortTicket.firstname = ticket.getDocument().getFirstname();
+                            shortTicket.lastname = ticket.getDocument().getLastname();
+                            ticketForAdapterList.add(shortTicket);
                         }
-                        shortTicket.firstname = ticket.getDocument().getFirstname();
-                        shortTicket.lastname = ticket.getDocument().getLastname();
-                        ticketForAdapterList.add(shortTicket);
                     }
                 }
             }
         }
-        Collections.sort(ticketForAdapterList, new Comparator<ShortTicket>() {
-            public int compare(ShortTicket t1, ShortTicket t2) {
-                return (int) (t1.departureDate - t2.departureDate);
-            }
-        });
-        ticketAdapter.setTickets(ticketForAdapterList);
+        ticketAdapter.addTickets(ticketForAdapterList);
         progressBar.setVisibility(View.GONE);
     }
 
@@ -159,9 +177,10 @@ public class MyTicketsFragment extends Fragment {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == SELECT_FILTER_DATE) {
                 filterDate = (Date) data.getSerializableExtra("date");
-                loadTickets();
                 ticketAdapter.clearTickets();
+                orderList.clear();
                 showFilterDate();
+                loadTickets(TimeUnit.MILLISECONDS.toSeconds(todayDate.getTime()));
             }
         }
     }
@@ -172,6 +191,7 @@ public class MyTicketsFragment extends Fragment {
         RelativeLayout.LayoutParams ticketCalendarBtnLayoutParams = (RelativeLayout.LayoutParams) ticketCalendarBtn.getLayoutParams();
         ticketCalendarBtnLayoutParams.addRule(RelativeLayout.LEFT_OF, ticketCloseBtn.getId());
         ticketCalendarBtnLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 0);
+        removeScrollListener();
     }
 
     private void hideFilterDate() {
@@ -180,6 +200,7 @@ public class MyTicketsFragment extends Fragment {
         RelativeLayout.LayoutParams ticketCalendarBtnLayoutParams = (RelativeLayout.LayoutParams) ticketCalendarBtn.getLayoutParams();
         ticketCalendarBtnLayoutParams.addRule(RelativeLayout.LEFT_OF, 0);
         ticketCalendarBtnLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        setScrollListener();
     }
 
     private Callback<List<TicketsResponse>> ticketsCallback = new Callback<List<TicketsResponse>>() {

@@ -2,6 +2,7 @@ package com.uzapp.network;
 
 import com.uzapp.pojo.CreateAccountInfo;
 import com.uzapp.pojo.LoginInfo;
+import com.uzapp.pojo.NewTicketDates;
 import com.uzapp.pojo.Station;
 import com.uzapp.pojo.TrainSearchResult;
 import com.uzapp.pojo.User;
@@ -54,6 +55,12 @@ public interface ApiInterface {
     @GET("order/tickets")
     Call<List<TicketsResponse>> getUserTickets(@Query("date") Long date, @Query("date_newer_than") Long dateNewerThan, @Query("date_older_than") Long dateOlderThan);
 
+    /*
+    request that returns array of dates on which user have tickets in future. Used for showing this dates in calendar
+     */
+    @GET("new_tickets_dates")
+    Call<NewTicketDates> getNewTicketDates();
+
     @POST("user/registration")
     Call<UserTokenResponse> createAccount(@Body CreateAccountInfo createAccountInfo);
 
@@ -82,4 +89,5 @@ public interface ApiInterface {
     @POST("user")
     Call<User> changePassword(@Field("password") String password,
                               @Field("new_password") String newPassword);
+
 }
