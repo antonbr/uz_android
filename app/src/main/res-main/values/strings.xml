@@ -196,7 +196,19 @@
     </string-array>
 
     // prepare purchase fragment
-    <string name="prepare_purchase">Оформить покупку</string>
+    <string name="prepare_purchase">Оформления</string>
+    <string name="tickets">билетов</string>
+    <string name="purchase_tickets">Оплата билетов</string>
+    <string name="confirm_payment">Подтвердить оплату</string>
+    <string name="payment">Оплатить</string>
+    <string name="number_of_bank_card">Номер банковской карточки</string>
+    <string name="validity">Срок действия</string>
+    <string name="cvv_code">CVV код</string>
+    <string name="hint_number_card">0000 0000 0000 0000</string>
+    <string name="hint_validity">MM / YY</string>
+    <string name="hint_cvv_code">•••</string>
+    <string name="error_invalid_email">Error invalid email address</string>
+    <string name="error_field_required">This field is empty</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

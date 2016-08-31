@@ -7,7 +7,7 @@
                     android:startColor="@color/primaryDarkColor"
                     android:centerColor="@color/accentColor"
                     android:endColor="@color/primaryDarkColor"
-                    android:angle="90"
+                    android:angle="270"
                     />
             </shape>
         </clip>
@@ -20,7 +20,7 @@
                 android:antialias="true"
                 android:dither="false"
                 android:gravity="left"
-                android:src="@drawable/ic_progress_background" />
+                android:src="@drawable/ic_line_progress" />
         </clip>
     </item>
 </layer-list>

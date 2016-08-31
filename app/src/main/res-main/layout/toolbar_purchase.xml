@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/stationCircleColor"
+    android:background="@android:color/white"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:fitsSystemWindows="false"
     app:contentInsetLeft="0dp"
@@ -15,20 +15,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ProgressBar
-            android:id="@+id/progressTime"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:max="90"
-            android:progressDrawable="@drawable/progress_bar_style"
-            android:progress="0"/>
-
         <ImageButton
             android:id="@+id/backBtn"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
+            android:tint="@color/accentColor"
             android:background="?attr/selectableItemBackground"
             android:src="@drawable/back"/>
 
@@ -38,20 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="sans-serif-medium"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:textSize="@dimen/text_size"/>
-
-        <TextView
-            android:id="@+id/txtTimerPurchase"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:gravity="center"
-            android:textAllCaps="true"
-            android:padding="11dp"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/trains_route_big_text_size"/>
 
     </RelativeLayout>
 

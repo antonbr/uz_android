@@ -23,7 +23,7 @@
                 android:dither="false"
                 android:filter="false"
                 android:gravity="left"
-                android:src="@drawable/ic_progress_background" />
+                android:src="@drawable/ic_line_progress" />
         </clip>
     </item>
 </layer-list>

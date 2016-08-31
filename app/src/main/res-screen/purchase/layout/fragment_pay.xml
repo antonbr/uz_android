@@ -10,16 +10,203 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/toolbar_purchase" />
-
         <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/toPayCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_marginTop="0dp"
             card_view:cardBackgroundColor="@android:color/white">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
+                <include layout="@layout/toolbar_purchase" />
+
+                <TextView
+                    android:id="@+id/txtTimerPurchase"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:textColor="@color/accentColor"
+                    android:textSize="16sp" />
+
+                <ProgressBar
+                    android:id="@+id/progressTime"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:max="900"
+                    android:progress="900"
+                    android:progressDrawable="@drawable/progress_bar_style_blue" />
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            card_view:cardBackgroundColor="@android:color/white">
+
+            <LinearLayout
+                android:id="@+id/layoutPayment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+                    android:text="@string/number_of_bank_card" />
+
+                <EditText
+                    android:id="@+id/cardNumberEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:hint="@string/hint_number_card"
+                    android:inputType="phone"
+                    android:padding="16dp"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@color/accentColor"
+                    android:textScaleX="1.2"
+                    android:textSize="20sp"
+                    app:ignore="UnusedAttribute" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:gravity="bottom"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="16dp"
+                                android:text="@string/validity" />
+
+                        </LinearLayout>
+
+                        <EditText
+                            android:id="@+id/cardDateEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/white"
+                            android:hint="@string/hint_validity"
+                            android:inputType="date"
+                            android:padding="16dp"
+                            android:textColor="@android:color/black"
+                            android:textColorHint="@color/accentColor"
+                            android:textScaleX="1.2"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp"
+                            android:gravity="bottom"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="16dp"
+                                android:text="@string/cvv_code" />
+
+                            <ImageView
+                                android:id="@+id/imageViewInfo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:src="@drawable/ic_info" />
+
+                        </LinearLayout>
+
+                        <EditText
+                            android:id="@+id/cardCVCEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/white"
+                            android:ellipsize="start"
+                            android:hint="@string/hint_cvv_code"
+                            android:inputType="numberPassword"
+                            android:padding="16dp"
+                            android:textColor="@android:color/black"
+                            android:textColorHint="@color/accentColor"
+                            android:textScaleX="1.2"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutConfirmPayment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+                    android:text="Ваш email" />
+
+                <EditText
+                    android:id="@+id/emailEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:hint="Введите email адрес"
+                    android:inputType="textEmailAddress"
+                    android:padding="16dp"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@color/accentColor"
+                    android:textSize="20sp"
+                    app:ignore="UnusedAttribute" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:text="Ваши имя и фамилия" />
+
+                <EditText
+                    android:id="@+id/firstSureNameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:hint="Введите имя и фамилию"
+                    android:inputType="textCapWords"
+                    android:padding="16dp"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@color/accentColor"
+                    android:textSize="20sp"
+                    app:ignore="UnusedAttribute" />
+
+            </LinearLayout>
 
         </android.support.v7.widget.CardView>
 
@@ -27,7 +214,8 @@
             android:id="@+id/payBtn"
             style="@style/BlueButtonStyle"
             android:layout_margin="@dimen/small_padding"
-            android:enabled="true" />
+            android:enabled="true"
+            android:text="@string/payment" />
 
     </LinearLayout>
 

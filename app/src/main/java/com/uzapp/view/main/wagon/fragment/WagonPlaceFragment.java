@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -90,10 +89,10 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
     RecyclerView horizontalRecyclerView;
     @BindView(R.id.listViewSelectTicket)
     ListViewMaxHeight listViewSelectTicket;
-    @BindView(R.id.btnBuyTicket)
-    Button btnBuyTicket;
-    @BindView(R.id.btnReserveTicket)
-    Button btnReserveTicket;
+//    @BindView(R.id.btnBuyTicket)
+//    Button btnBuyTicket;
+//    @BindView(R.id.btnReserveTicket)
+//    Button btnReserveTicket;
     @BindView(R.id.btnGoToRegistration)
     Button btnGoToRegistration;
     @BindView(R.id.progressBar)
@@ -208,19 +207,19 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
         getActivity().onBackPressed();
     }
 
-    @OnClick(R.id.btnBuyTicket)
-    void onClickBtnBuyTicket() {
-        setBackgroundBtn();
-        isBooking = true;
-        isReserve = false;
-    }
-
-    @OnClick(R.id.btnReserveTicket)
-    void onClickBtnReserveTicket() {
-        setBackgroundBtn();
-        isBooking = false;
-        isReserve = true;
-    }
+//    @OnClick(R.id.btnBuyTicket)
+//    void onClickBtnBuyTicket() {
+//        setBackgroundBtn();
+//        isBooking = true;
+//        isReserve = false;
+//    }
+//
+//    @OnClick(R.id.btnReserveTicket)
+//    void onClickBtnReserveTicket() {
+//        setBackgroundBtn();
+//        isBooking = false;
+//        isReserve = true;
+//    }
 
     @OnClick(R.id.btnGoToRegistration)
     void onClickBtnGoToRegistration() {
@@ -369,29 +368,6 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
         if (listTickets.isEmpty()) {
             showBuyReserveLayout(false);
         }
-    }
-
-    /**
-     * Change background Buy and Reserve button on click
-     */
-    private void setBackgroundBtn() {
-        btnReserveTicket.setBackground(CommonUtils.isSelectedPlace(btnReserveTicket,
-                ContextCompat.getDrawable(getActivity(), R.drawable.button_pressed_right)) ?
-                ContextCompat.getDrawable(getActivity(), R.drawable.button_enabled_right) :
-                ContextCompat.getDrawable(getActivity(), R.drawable.button_pressed_right));
-        btnReserveTicket.setTextColor(CommonUtils.isSelectedPlace(btnReserveTicket,
-                ContextCompat.getDrawable(getActivity(), R.drawable.button_pressed_right)) ?
-                ContextCompat.getColor(getActivity(), android.R.color.white) :
-                ContextCompat.getColor(getActivity(), R.color.accentColor));
-
-        btnBuyTicket.setBackground(CommonUtils.isSelectedPlace(btnBuyTicket,
-                ContextCompat.getDrawable(getActivity(), R.drawable.button_pressed_left)) ?
-                ContextCompat.getDrawable(getActivity(), R.drawable.button_enabled_left) :
-                ContextCompat.getDrawable(getActivity(), R.drawable.button_pressed_left));
-        btnBuyTicket.setTextColor(CommonUtils.isSelectedPlace(btnBuyTicket,
-                ContextCompat.getDrawable(getActivity(), R.drawable.button_pressed_left)) ?
-                ContextCompat.getColor(getActivity(), android.R.color.white) :
-                ContextCompat.getColor(getActivity(), R.color.accentColor));
     }
 
     /**

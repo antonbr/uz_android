@@ -69,6 +69,9 @@ public class PurchasesAdapter extends RecyclerView.Adapter<PurchasesAdapter.Purc
         holder.trainName.setText(trainName);
         holder.stationFrom.setText(stationFrom);
         holder.stationTo.setText(stationTo);
+
+        holder.btnBuyTicket.setText("Купить, " + price);
+        holder.btnReserveTicket.setText("Резерв, 17 грн");
     }
 
     @Override
@@ -90,6 +93,9 @@ public class PurchasesAdapter extends RecyclerView.Adapter<PurchasesAdapter.Purc
         @BindView(R.id.trainName) TextView trainName;
         @BindView(R.id.stationFrom) TextView stationFrom;
         @BindView(R.id.stationTo) TextView stationTo;
+        @BindView(R.id.btnBuyTicket) Button btnBuyTicket;
+        @BindView(R.id.btnReserveTicket) Button btnReserveTicket;
+        @BindView(R.id.txtDeleteTicket) TextView txtDeleteTicket;
 
         public PurchaseHolder(View view) {
             super(view);
@@ -98,21 +104,40 @@ public class PurchasesAdapter extends RecyclerView.Adapter<PurchasesAdapter.Purc
 
         @OnClick(R.id.btnFull)
         void onClickFull() {
-            setBackgroundButtons(this, true, false, false);
+            setBackgroundFullChildAndStudentBtn(this, true, false, false);
         }
 
         @OnClick(R.id.btnChild)
         void onClickChild() {
-            setBackgroundButtons(this, false, true, false);
+            setBackgroundFullChildAndStudentBtn(this, false, true, false);
         }
 
         @OnClick(R.id.btnStudent)
         void onClickStudent() {
-            setBackgroundButtons(this, false, false, true);
+            setBackgroundFullChildAndStudentBtn(this, false, false, true);
+        }
+
+        @OnClick(R.id.btnBuyTicket)
+        void onClickBuyTicket() {
+            setBackgroundBuyAndReserveBtn(this, true, false);
+        }
+
+        @OnClick(R.id.btnReserveTicket)
+        void onClickReserveTicket() {
+            setBackgroundBuyAndReserveBtn(this, false, true);
+        }
+
+        @OnClick(R.id.txtDeleteTicket)
+        void onClickDeleteTicket() {
+            ticketList.remove(getAdapterPosition());
+            notifyDataSetChanged();
         }
     }
 
-    private void setBackgroundButtons(PurchaseHolder holder, boolean isFull, boolean isChild, boolean isStudent) {
+    /**
+     * Change background Full, Child and Student button on click
+     */
+    private void setBackgroundFullChildAndStudentBtn(PurchaseHolder holder, boolean isFull, boolean isChild, boolean isStudent) {
         holder.btnFull.setBackground(isFull ? ContextCompat.getDrawable(context, R.drawable.button_pressed_left) :
                 ContextCompat.getDrawable(context, R.drawable.button_enabled_left));
         holder.btnFull.setTextColor(isFull ? ContextCompat.getColor(context, android.R.color.white) :
@@ -126,6 +151,21 @@ public class PurchasesAdapter extends RecyclerView.Adapter<PurchasesAdapter.Purc
         holder.btnStudent.setBackground(isStudent ? ContextCompat.getDrawable(context, R.drawable.button_pressed_right) :
                 ContextCompat.getDrawable(context, R.drawable.button_enabled_right));
         holder.btnStudent.setTextColor(isStudent ? ContextCompat.getColor(context, android.R.color.white) :
+                ContextCompat.getColor(context, R.color.accentColor));
+    }
+
+    /**
+     * Change background Buy and Reserve button on click
+     */
+    private void setBackgroundBuyAndReserveBtn(PurchaseHolder holder, boolean isBuy, boolean isReserve) {
+        holder.btnBuyTicket.setBackground(isBuy ? ContextCompat.getDrawable(context, R.drawable.button_pressed_left) :
+                ContextCompat.getDrawable(context, R.drawable.button_enabled_left));
+        holder.btnBuyTicket.setTextColor(isBuy ? ContextCompat.getColor(context, android.R.color.white) :
+                ContextCompat.getColor(context, R.color.accentColor));
+
+        holder.btnReserveTicket.setBackground(isReserve ? ContextCompat.getDrawable(context, R.drawable.button_pressed_right) :
+                ContextCompat.getDrawable(context, R.drawable.button_enabled_right));
+        holder.btnReserveTicket.setTextColor(isReserve ? ContextCompat.getColor(context, android.R.color.white) :
                 ContextCompat.getColor(context, R.color.accentColor));
     }
 }

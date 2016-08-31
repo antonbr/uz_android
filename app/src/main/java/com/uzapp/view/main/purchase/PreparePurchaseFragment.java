@@ -2,9 +2,7 @@ package com.uzapp.view.main.purchase;
 
 
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,23 +10,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.uzapp.R;
+import com.uzapp.pojo.booking.Booking;
+import com.uzapp.util.ApiErrorUtil;
+import com.uzapp.util.CommonUtils;
+import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.wagon.fragment.WagonPlaceFragment;
 import com.uzapp.view.main.wagon.model.Ticket;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,20 +47,14 @@ public class PreparePurchaseFragment extends Fragment {
     public static final String KEY_STATION_FROM_CODE = "KEY_STATION_FROM_CODE";
     public static final String KEY_STATION_TO_CODE = "KEY_STATION_TO_CODE";
 
-    private SimpleDateFormat timeFormat = new SimpleDateFormat("mm:ss");
-//    private SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD");
-
     @BindView(R.id.purchasesList) RecyclerView purchasesList;
-    @BindView(R.id.txtTotalTickets) TextView txtTotalTickets;
-    @BindView(R.id.txtTotalSum) TextView txtTotalSum;
+//    @BindView(R.id.txtTotalTickets) TextView txtTotalTickets;
+//    @BindView(R.id.txtTotalSum) TextView txtTotalSum;
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
     @BindView(R.id.toPayBtn) Button toPayBtn;
     @BindView(R.id.backBtn) ImageButton backBtn;
-    @BindView(R.id.txtTimerPurchase) TextView txtTimerPurchase;
-    @BindView(R.id.progressTime) ProgressBar progressTime;
 
     private Unbinder unbinder;
-    private ProgressCountDownTimer timer;
 
     private ArrayList listTickets = new ArrayList<>();
     private boolean isBooking, isReserve;
@@ -121,7 +117,6 @@ public class PreparePurchaseFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        timer.cancel();
     }
 
     @OnClick(R.id.backBtn)
@@ -133,49 +128,47 @@ public class PreparePurchaseFragment extends Fragment {
     void onClickToPay() {
         Toast.makeText(getActivity(), "Reserve: " + isReserve + " Booking: " + isBooking, Toast.LENGTH_SHORT).show();
 
-    }
-
-    private void initComponents() {
-        toolbarTitle.setText(getString(R.string.prepare_purchase));
-        txtTotalTickets.setText(String.valueOf(listTickets.size()));
-        int totalPrice = 0;
-        for (Object object : listTickets)
-            totalPrice = ((Ticket) object).getTicketPrice() + totalPrice;
-        txtTotalSum.setText(String.valueOf(totalPrice));
-
-        setAdapter();
-        timer = new ProgressCountDownTimer(90000, 1000);
-        timer.start();
-
-//        String wagonType = ((Ticket) listTickets.get(0)).getWagonType();
-//        int wagonClass = ((Ticket) listTickets.get(0)).getWagonClasses();
-//        int wagonNumber = Integer.parseInt(((Ticket) listTickets.get(0)).getWagonNumber());
-//        String wagonPlace = String.valueOf(((Ticket) listTickets.get(0)).getPlaceNumber());
-
-//        String date = dateFormat.format(selectDate);
+        String wagonType = ((Ticket) listTickets.get(0)).getWagonType();
+        int wagonClass = ((Ticket) listTickets.get(0)).getWagonClasses();
+        int wagonNumber = Integer.parseInt(((Ticket) listTickets.get(0)).getWagonNumber());
+        String wagonPlace = String.valueOf(((Ticket) listTickets.get(0)).getPlaceNumber());
 
 //        Call<Booking> call = (isBooking) ? ApiManager.getApi(getActivity()).getBooking(train, stationFromCode, stationToCode, wagonType, wagonClass, wagonNumber, selectDate, wagonPlace, null) :
 //                ApiManager.getApi(getActivity()).getReserve(train, stationFromCode, stationToCode, wagonType, wagonClass, wagonNumber, selectDate, wagonPlace, 0, null, null);
 //        call.enqueue(bookingCallback);
+
+        ((MainActivity) getActivity()).replaceFragment(new PayFragment(), true);
     }
 
-//    private Callback<Booking> bookingCallback = new Callback<Booking>() {
-//
-//        @Override
-//        public void onResponse(Call<Booking> call, Response<Booking> response) {
-//            if (response.isSuccessful()) {
-//                Booking booking = response.body();
-//            } else {
-//                String error = ApiErrorUtil.parseError(response);
-//                CommonUtils.showMessage(getView(), error);
-//            }
-//        }
-//
-//        @Override
-//        public void onFailure(Call<Booking> call, Throwable t) {
-//            Toast.makeText(getActivity(), call.toString(), Toast.LENGTH_SHORT).show();
-//        }
-//    };
+    private void initComponents() {
+        String title = getString(R.string.prepare_purchase) + " " + listTickets.size() + " " + getString(R.string.tickets);
+        toolbarTitle.setText(title);
+//        int totalPrice = 0;
+//        for (Object object : listTickets)
+//            totalPrice = ((Ticket) object).getTicketPrice() + totalPrice;
+        setAdapter();
+    }
+
+    private Callback<Booking> bookingCallback = new Callback<Booking>() {
+
+        @Override
+        public void onResponse(Call<Booking> call, Response<Booking> response) {
+            if (response.isSuccessful()) {
+                Booking booking = response.body();
+
+//                ((MainActivity) getActivity()).replaceFragment(new PayFragment(), true);
+
+            } else {
+                String error = ApiErrorUtil.parseError(response);
+                CommonUtils.showMessage(getView(), error);
+            }
+        }
+
+        @Override
+        public void onFailure(Call<Booking> call, Throwable t) {
+            Toast.makeText(getActivity(), call.toString(), Toast.LENGTH_SHORT).show();
+        }
+    };
 
     private void setAdapter() {
         PurchasesAdapter purchasesAdapter = new PurchasesAdapter(getContext(), listTickets, stationFromName, stationToName, trainName);
@@ -183,36 +176,5 @@ public class PreparePurchaseFragment extends Fragment {
                 = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         purchasesList.setLayoutManager(linearLayoutManager);
         purchasesList.setAdapter(purchasesAdapter);
-    }
-
-    public void updateProgress(long progress) {
-        Date time = new Date(progress);
-        if (progress < 30000) {
-            progressTime.setProgressDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.progress_bar_style_red));
-        }
-        if (progressTime != null && txtTimerPurchase != null) {
-            progressTime.setProgress((int) (progress / 1000));
-            txtTimerPurchase.setText(timeFormat.format(time));
-        }
-    }
-
-    public class ProgressCountDownTimer extends CountDownTimer {
-
-        public ProgressCountDownTimer(long millisInFuture, long countDownInterval) {
-            super(millisInFuture, countDownInterval);
-        }
-
-        @Override
-        public void onTick(long millisUntilFinished) {
-            updateProgress(millisUntilFinished);
-        }
-
-        @Override
-        public void onFinish() {
-            txtTimerPurchase.setText(timeFormat.format(0));
-            progressTime.setProgress(0);
-//            getActivity().onBackPressed();
-            Toast.makeText(getActivity(), "Finish", Toast.LENGTH_SHORT).show();
-        }
     }
 }

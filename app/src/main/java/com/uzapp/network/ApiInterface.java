@@ -81,17 +81,17 @@ public interface ApiInterface {
                               @Field("new_password") String newPassword);
 
     @GET("order/booking")
-    Call<Booking> getBooking(@Field("train") String train, @Field("station_from_codee") int stationFromCodee,
-                             @Field("station_to_code") int stationToCode, @Field("wagon_type") String wagonType,
-                             @Field("wagon_class") int wagonClass, @Field("wagon_number") int wagonNumber,
-                             @Field("date") long date, @Field("places") String places,
-                             @Field("documents") String documents);
+    Call<Booking> getBooking(@Query("train") String train, @Query("station_from_codee") int stationFromCodee,
+                             @Query("station_to_code") int stationToCode, @Query("wagon_type") String wagonType,
+                             @Query("wagon_class") int wagonClass, @Query("wagon_number") int wagonNumber,
+                             @Query("date") long date, @Query("places") String places,
+                             @Query("documents") String documents);
 
     @GET("order/reserve")
-    Call<Booking> getReserve(@Field("train") String train, @Field("station_from_codee") int stationFromCodee,
-                             @Field("station_to_code") int stationToCode, @Field("wagon_type") String wagonType,
-                             @Field("wagon_class") int wagonClass, @Field("wagon_number") int wagonNumber,
-                             @Field("date") long date, @Field("places") String places,
-                             @Field("no_bedding") int noBedding, @Field("services") String services,
-                             @Field("documents") String documents);
+    Call<Booking> getReserve(@Query("train") String train, @Query("station_from_codee") int stationFromCodee,
+                             @Query("station_to_code") int stationToCode, @Query("wagon_type") String wagonType,
+                             @Query("wagon_class") int wagonClass, @Query("wagon_number") int wagonNumber,
+                             @Query("date") long date, @Query("places") String places,
+                             @Query("no_bedding") int noBedding, @Query("services") String services,
+                             @Query("documents") String documents);
 }
