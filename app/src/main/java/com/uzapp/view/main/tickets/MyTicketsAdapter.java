@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
  */
 public class MyTicketsAdapter extends RecyclerView.Adapter<MyTicketsAdapter.TicketHolder> {
     private SimpleDateFormat timeFormat = new SimpleDateFormat(Constants.HOURS_MINUTES_FORTMAT);
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("EE, d MMMM");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("EE, d MMM");
     private DecimalFormat df = new DecimalFormat("#.00");
     private List<ShortTicket> ticketList = new ArrayList<>();
     private Context context;
@@ -44,6 +44,16 @@ public class MyTicketsAdapter extends RecyclerView.Adapter<MyTicketsAdapter.Tick
     public void setTickets(List<ShortTicket> ticketList) {
         this.ticketList.clear();
         this.ticketList.addAll(ticketList);
+        notifyDataSetChanged();
+    }
+
+    public void addTickets(List<ShortTicket> ticketList) {
+        this.ticketList.addAll(ticketList);
+        notifyDataSetChanged();
+    }
+
+    public void clearTickets() {
+        this.ticketList.clear();
         notifyDataSetChanged();
     }
 
@@ -89,7 +99,7 @@ public class MyTicketsAdapter extends RecyclerView.Adapter<MyTicketsAdapter.Tick
         @BindView(R.id.stationTo) TextView stationTo;
         @BindView(R.id.departureTime) TextView departureTime;
         @BindView(R.id.arrivalTime) TextView arrivalTime;
-        @BindView(R.id.departureDate) TextView departureDate;
+        @BindView(R.id.filterDate) TextView departureDate;
         @BindView(R.id.arrivalDate) TextView arrivalDate;
         @BindView(R.id.wagonNumber) TextView wagonNumber;
         @BindView(R.id.placeNumber) TextView placeNumber;
@@ -225,7 +235,7 @@ public class MyTicketsAdapter extends RecyclerView.Adapter<MyTicketsAdapter.Tick
             layoutParams.width = itemView.getWidth();
             layoutParams.height = itemView.getHeight();
             itemView.setLayoutParams(layoutParams);
-                    notifyItemChanged(position, new MyTicketsItemAnimator.TicketItemHolderInfo(ticket, position));
+            notifyItemChanged(position, new MyTicketsItemAnimator.TicketItemHolderInfo(ticket, position));
         }
     }
 

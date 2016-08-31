@@ -50,9 +50,9 @@ public interface ApiInterface {
                                                @Query("wagon_classes") String wagonClasses,
                                                @Query("wagon_numbers") String wagonNumbers,
                                                @Query("date") int date);
-    
+
     @GET("order/tickets")
-    Call<List<TicketsResponse>> getUserTickets();
+    Call<List<TicketsResponse>> getUserTickets(@Query("date") Long date, @Query("date_newer_than") Long dateNewerThan, @Query("date_older_than") Long dateOlderThan);
 
     @POST("user/registration")
     Call<UserTokenResponse> createAccount(@Body CreateAccountInfo createAccountInfo);

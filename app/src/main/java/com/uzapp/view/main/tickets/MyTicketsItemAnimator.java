@@ -76,7 +76,11 @@ public class MyTicketsItemAnimator extends DefaultItemAnimator {
                 }
             });
             AnimatorSet animatorSet = new AnimatorSet();
+
             animatorSet.play(newViewRotateAnimator).after(oldViewRotateAnimator);
+            oldViewRotateAnimator.setDuration(2000);
+            newViewRotateAnimator.setDuration(2000);
+
             animatorSet.start();
             animatorMap.put(ticketHolder, animatorSet);
         }

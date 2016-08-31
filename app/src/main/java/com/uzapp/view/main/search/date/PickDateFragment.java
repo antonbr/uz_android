@@ -132,7 +132,7 @@ public class PickDateFragment extends Fragment implements CalendarDaysAdapter.On
         return daysByMonths;
     }
 
-    @OnClick(R.id.closeBtn)
+    @OnClick(R.id.ticketCloseBtn)
     void onCloseBtnClick() {
         getActivity().onBackPressed();
     }

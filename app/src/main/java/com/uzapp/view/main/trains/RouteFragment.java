@@ -114,7 +114,7 @@ public class RouteFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
-    @OnClick(R.id.closeBtn)
+    @OnClick(R.id.ticketCloseBtn)
     void onCloseBtnClicked() {
         getActivity().onBackPressed();
     }

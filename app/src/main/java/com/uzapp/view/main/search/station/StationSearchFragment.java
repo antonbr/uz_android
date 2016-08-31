@@ -119,7 +119,7 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
         }
     }
 
-    @OnClick(R.id.closeBtn)
+    @OnClick(R.id.ticketCloseBtn)
     void onCloseBtnClick() {
         cityEditText.hideKeyboard();
         getActivity().onBackPressed();
