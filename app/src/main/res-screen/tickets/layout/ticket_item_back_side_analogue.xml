@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:visibility="gone"
-    tools:showIn="@layout/ticket_item_back_side">
+    tools:showIn="@layout/ticket_item_analogue">
 
     <TextView
         android:layout_width="match_parent"

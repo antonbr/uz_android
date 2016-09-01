@@ -5,9 +5,8 @@
     android:id="@+id/electronicTicketNumberLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:visibility="gone"
     android:orientation="vertical"
-    tools:showIn="@layout/ticket_item_back_side">
+    tools:showIn="@layout/ticket_item_electronic">
 
     <ImageView
         android:id="@+id/qrCodeImage"

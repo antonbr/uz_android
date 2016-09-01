@@ -17,15 +17,12 @@ import java.util.List;
  * Created by vika on 30.08.16.
  */
 public class MyTicketsItemAnimator extends DefaultItemAnimator {
-    // Maps to hold running animators.  animatorMap is used to construct
-    // the new change animation based on where the previous one was at when it
-    // was interrupted.
+    private static final int ROTATION_DEGREE = 90;
+    private static final int ANIMATION_DURATION = 300;
     private ArrayMap<RecyclerView.ViewHolder, AnimatorSet> animatorMap = new ArrayMap<>();
 
     @Override
     public boolean canReuseUpdatedViewHolder(RecyclerView.ViewHolder viewHolder) {
-        // This allows our custom change animation on the contents of the holder instead
-        // of the default behavior of replacing the viewHolder entirely
         return true;
     }
 
@@ -49,8 +46,9 @@ public class MyTicketsItemAnimator extends DefaultItemAnimator {
         final MyTicketsAdapter.TicketHolder ticketHolder = (MyTicketsAdapter.TicketHolder) newHolder;
         if (!animatorMap.containsKey(ticketHolder)) {
             float fromRotationY = ticketHolder.itemView.getRotationY();
-            float middleRotationY = fromRotationY - 90;
-            float toRotationY = middleRotationY - 90;
+            float middleRotationY = fromRotationY - ROTATION_DEGREE;
+            float toRotationY = middleRotationY - ROTATION_DEGREE;
+            ticketHolder.itemView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
             ObjectAnimator oldViewRotateAnimator = ObjectAnimator.ofFloat(ticketHolder.itemView, View.ROTATION_Y, fromRotationY, middleRotationY);
             final ObjectAnimator newViewRotateAnimator = ObjectAnimator.ofFloat(ticketHolder.itemView, View.ROTATION_Y, middleRotationY, toRotationY);
             oldViewRotateAnimator.addListener(new AnimatorListenerAdapter() {
@@ -73,13 +71,14 @@ public class MyTicketsItemAnimator extends DefaultItemAnimator {
                     super.onAnimationEnd(animation);
                     animatorMap.remove(ticketHolder);
                     dispatchAnimationFinished(ticketHolder);
+                    ticketHolder.itemView.setLayerType(View.LAYER_TYPE_NONE, null);
                 }
             });
             AnimatorSet animatorSet = new AnimatorSet();
 
             animatorSet.play(newViewRotateAnimator).after(oldViewRotateAnimator);
-            oldViewRotateAnimator.setDuration(2000);
-            newViewRotateAnimator.setDuration(2000);
+            oldViewRotateAnimator.setDuration(ANIMATION_DURATION);
+            newViewRotateAnimator.setDuration(ANIMATION_DURATION);
 
             animatorSet.start();
             animatorMap.put(ticketHolder, animatorSet);
