@@ -58,7 +58,7 @@ public interface ApiInterface {
     /*
     request that returns array of dates on which user have tickets in future. Used for showing this dates in calendar
      */
-    @GET("new_tickets_dates")
+    @GET("order/new_tickets_dates")
     Call<NewTicketDates> getNewTicketDates();
 
     @POST("user/registration")

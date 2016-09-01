@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/analogTicketNumberLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:visibility="gone"
+    tools:showIn="@layout/ticket_item_back_side">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="@string/ticket_analog_message"
+        android:textSize="@dimen/button_text_size"/>
+
+    <ImageView
+        android:id="@+id/barCodeImage"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"/>
+
+    <TextView
+        android:id="@+id/analogTicketNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:letterSpacing="0.2"
+        android:padding="16dp"
+        android:text="УЦ6-Е1-3995062-0907"
+        android:textSize="27sp"/>
+
+    <Button
+        android:id="@+id/printBtn"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/return_ticket_btn"
+        android:padding="16dp"
+        android:stateListAnimator="@null"
+        android:text="@string/ticket_print"
+        android:textAllCaps="true"
+        android:textColor="@drawable/back_toggle_text_color_selector"/>
+</LinearLayout>

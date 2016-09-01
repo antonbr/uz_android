@@ -146,7 +146,7 @@
                         android:textSize="22sp"/>
 
                     <TextView
-                        android:id="@+id/filterDate"
+                        android:id="@+id/departureDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/departureTime"
@@ -269,7 +269,7 @@
                     android:layout_below="@+id/placeTitle"
                     android:layout_marginTop="3dp"
                     android:text="15"
-                    android:textSize="18sp"
+                    android:textSize="22sp"
                     android:textStyle="bold"/>
 
                 <TextView
@@ -341,112 +341,6 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ticketNumberLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@drawable/divider_hint_color_horizontal"
-        android:orientation="vertical"
-        android:showDividers="middle"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/ticketInfoBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:clickable="true"
-            android:drawablePadding="11dp"
-            android:drawableRight="@drawable/next_grey"
-            android:paddingBottom="11dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="14dp"
-            android:paddingTop="11dp"
-            android:text="@string/ticket_info"
-            android:textColor="@color/accentColor"
-            android:textSize="18sp"/>
-
-        <RelativeLayout
-            android:id="@+id/electronicTicketNumberLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/qrCodeImage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/electronicTicketNumber"
-                android:adjustViewBounds="true"
-                android:padding="16dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/qrcode"/>
-
-            <TextView
-                android:id="@+id/electronicTicketNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center"
-                android:letterSpacing="0.2"
-                android:paddingBottom="16dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:text="000B36C2 - 9012 - 97CB - 0003"
-                android:textSize="18sp"/>
-        </RelativeLayout>
-
-        <LinearLayout
-            android:id="@+id/analogTicketNumberLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="@string/ticket_analog_message"
-                android:textSize="@dimen/button_text_size"/>
-
-            <ImageView
-                android:id="@+id/barCodeImage"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY"/>
-
-            <TextView
-                android:id="@+id/analogTicketNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center"
-                android:letterSpacing="0.2"
-                android:padding="16dp"
-                android:text="УЦ6-Е1-3995062-0907"
-                android:textSize="27sp"/>
-
-            <Button
-                android:id="@+id/printBtn"
-                style="@style/ButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginBottom="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/return_ticket_btn"
-                android:padding="16dp"
-                android:stateListAnimator="@null"
-                android:text="@string/ticket_print"
-                android:textAllCaps="true"
-                android:textColor="@drawable/back_toggle_text_color_selector"/>
-        </LinearLayout>
-    </LinearLayout>
+    <include layout="@layout/ticket_item_back_side"/>
 
 </LinearLayout>

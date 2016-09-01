@@ -71,23 +71,23 @@ public class MyTicketsAdapter extends RecyclerView.Adapter<MyTicketsAdapter.Tick
     @Override
     public void onBindViewHolder(TicketHolder holder, int position) {
         ShortTicket ticket = ticketList.get(position);
-        if (holder.isShowingTicketInfo) {
-            holder.bindFrontSide(ticket, position);
-        } else {
-            holder.bindBackSide(ticket, position);
-        }
+        holder.bindView(ticket, position);
     }
 
     @Override
     public void onBindViewHolder(TicketHolder holder, int position, List<Object> payloads) {
         if (payloads == null || payloads.size() == 0) {
             ShortTicket ticket = ticketList.get(position);
-            if (holder.isShowingTicketInfo) {
-                holder.bindFrontSide(ticket, position);
-            } else {
-                holder.bindBackSide(ticket, position);
-            }
+            holder.bindView(ticket, position);
         }
+    }
+
+    @Override
+    public void onViewRecycled(TicketHolder holder) {
+        super.onViewRecycled(holder);
+        holder.isShowingTicketInfo = true;
+        holder.itemView.setScaleX(1);
+        holder.itemView.setRotationY(0);
     }
 
     @Override
@@ -103,7 +103,7 @@ public class MyTicketsAdapter extends RecyclerView.Adapter<MyTicketsAdapter.Tick
         @BindView(R.id.stationTo) TextView stationTo;
         @BindView(R.id.departureTime) TextView departureTime;
         @BindView(R.id.arrivalTime) TextView arrivalTime;
-        @BindView(R.id.filterDate) TextView departureDate;
+        @BindView(R.id.departureDate) TextView departureDate;
         @BindView(R.id.arrivalDate) TextView arrivalDate;
         @BindView(R.id.wagonNumber) TextView wagonNumber;
         @BindView(R.id.placeNumber) TextView placeNumber;
@@ -124,12 +124,19 @@ public class MyTicketsAdapter extends RecyclerView.Adapter<MyTicketsAdapter.Tick
         @BindView(R.id.barCodeImage) ImageView barCodeImage;
         @BindView(R.id.analogTicketNumber) TextView analogTicketNumber;
         @BindView(R.id.printBtn) Button printBtn;
-
         boolean isShowingTicketInfo = true;
 
         public TicketHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+        }
+
+        public void bindView(ShortTicket ticket, int position) {
+            if (isShowingTicketInfo) {
+                bindFrontSide(ticket, position);
+            } else {
+                bindBackSide(ticket, position);
+            }
         }
 
         public void bindFrontSide(final ShortTicket ticket, final int position) {
@@ -185,7 +192,7 @@ public class MyTicketsAdapter extends RecyclerView.Adapter<MyTicketsAdapter.Tick
             if (fullNameString.length() > 0) {
                 fullNameString.append(" ");
             }
-            fullName.append(ticket.lastname);
+            fullNameString.append(ticket.lastname);
             fullName.setText(fullNameString);
             price.setText(context.getString(R.string.ticket_cost, df.format(ticket.cost)));
             ticketType.setText(context.getString(ticket.kind.getStringRes()));

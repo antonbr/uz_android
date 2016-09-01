@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
+import com.uzapp.pojo.NewTicketDates;
 import com.uzapp.pojo.tickets.Order;
 import com.uzapp.pojo.tickets.Ticket;
 import com.uzapp.pojo.tickets.TicketsResponse;
@@ -51,18 +52,20 @@ import retrofit2.Response;
 public class MyTicketsFragment extends Fragment {
     protected static final int SELECT_FILTER_DATE = 1;
     private SimpleDateFormat filterDateFormat = new SimpleDateFormat("EEEE, d MMM");
-    private Unbinder unbinder;
     @BindView(R.id.progressBar) ProgressBar progressBar;
     @BindView(R.id.myTicketsList) RecyclerView myTicketsList;
     @BindView(R.id.filterDate) TextView filterDateView;
     @BindView(R.id.ticketCloseBtn) ImageButton ticketCloseBtn;
     @BindView(R.id.ticketCalendarBtn) ImageButton ticketCalendarBtn;
     @BindString(R.string.ticket_pick_date) String ticketPickDateHint;
-    LinkedHashSet<Order> orderList = new LinkedHashSet<Order>();
-    MyTicketsAdapter ticketAdapter;
-    Date filterDate;
-    Date todayDate;
-    EndlessRecyclerScrollListener scrollListener;
+    private Unbinder unbinder;
+    private LinkedHashSet<Order> orderList = new LinkedHashSet<Order>();
+    private MyTicketsAdapter ticketAdapter;
+    private Date filterDate;
+    private Date todayDate;
+    private EndlessRecyclerScrollListener scrollListener;
+    private ArrayList<String> ticketDatesList;
+    private boolean waitToOpenCalendar = false;
 
     @Nullable
     @Override
@@ -80,6 +83,7 @@ public class MyTicketsFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
         todayDate = calendar.getTime();
         loadTickets(TimeUnit.MILLISECONDS.toSeconds(todayDate.getTime()));
+        loadTicketDates();
         return view;
     }
 
@@ -109,12 +113,22 @@ public class MyTicketsFragment extends Fragment {
         call.enqueue(ticketsCallback);
     }
 
+    private void loadTicketDates() {
+        Call<NewTicketDates> call = ApiManager.getApi(getContext()).getNewTicketDates();
+        call.enqueue(ticketDatesCallback);
+    }
+
     @OnClick(R.id.ticketCalendarBtn)
     void onTicketCalendarBtnClicked() {
-        Calendar calendar = CommonUtils.getCalendar();
-        PickDateFragment fragment = PickDateFragment.getInstance(calendar.getTime());
-        fragment.setTargetFragment(this, SELECT_FILTER_DATE);
-        ((MainActivity) getActivity()).addFragment(fragment, R.anim.slide_up, R.anim.slide_down);
+        if (ticketDatesList != null) {
+            Calendar calendar = CommonUtils.getCalendar();
+            PickDateFragment fragment = PickDateFragment.getInstance(ticketDatesList);
+            fragment.setTargetFragment(this, SELECT_FILTER_DATE);
+            ((MainActivity) getActivity()).addFragment(fragment, R.anim.slide_up, R.anim.slide_down);
+        } else {
+            waitToOpenCalendar = true;
+            loadTicketDates();
+        }
     }
 
     @OnClick(R.id.ticketCloseBtn)
@@ -222,6 +236,35 @@ public class MyTicketsFragment extends Fragment {
             if (getView() != null && t != null) {
                 CommonUtils.showMessage(getView(), t.getMessage());
                 progressBar.setVisibility(View.GONE);
+            }
+        }
+    };
+
+    private Callback<NewTicketDates> ticketDatesCallback = new Callback<NewTicketDates>() {
+        @Override
+        public void onResponse(Call<NewTicketDates> call, Response<NewTicketDates> response) {
+            if (getView() != null) {
+                if (response.isSuccessful()) {
+                    ticketDatesList = response.body().getDates();
+                } else {
+                    String error = ApiErrorUtil.parseError(response);
+                    CommonUtils.showMessage(getView(), error);
+                }
+            }
+            if (waitToOpenCalendar) {
+                waitToOpenCalendar = false;
+                ticketCalendarBtn.performClick();
+            }
+        }
+
+        @Override
+        public void onFailure(Call<NewTicketDates> call, Throwable t) {
+            if (getView() != null && t != null) {
+                CommonUtils.showMessage(getView(), t.getMessage());
+            }
+            if (waitToOpenCalendar) {
+                waitToOpenCalendar = false;
+                ticketCalendarBtn.performClick();
             }
         }
     };

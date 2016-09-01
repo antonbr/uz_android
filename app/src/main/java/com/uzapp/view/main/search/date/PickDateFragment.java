@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -18,6 +20,7 @@ import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.view.main.MainActivity;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,6 +40,7 @@ import butterknife.Unbinder;
 public class PickDateFragment extends Fragment implements CalendarDaysAdapter.OnDateSelectedListener {
     private SimpleDateFormat selectedDateFormat = new SimpleDateFormat("d MMMM yyyy, EE");
     private SimpleDateFormat nearestDateFormat = new SimpleDateFormat("d MMMM, EE");
+    private SimpleDateFormat availableDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
     @BindView(R.id.dateTextField) EditText dateTextField;
     @BindView(R.id.tomorrowDate) TextView tomorrowDateView;
@@ -45,10 +49,12 @@ public class PickDateFragment extends Fragment implements CalendarDaysAdapter.On
     @BindView(R.id.dayAfterTomorrowDate) TextView dayAfterTomorrowDateView;
     @BindView(R.id.todayBtn) ToggleButton todayBtn;
     @BindView(R.id.monthPager) VerticalViewPager monthPager;
+    @BindView(R.id.bottomBar) LinearLayout bottomBar;
     private Date today, tomorrow, dayAfterTomorrow, minDate, selectedDate;
     private Unbinder unbinder;
     private MonthPagerAdapter monthPagerAdapter;
     private List<List<Date>> allDaysByMonths;
+    private List<Date> availableDates = new ArrayList<>();
 
     @Nullable
     @Override
@@ -59,14 +65,32 @@ public class PickDateFragment extends Fragment implements CalendarDaysAdapter.On
         if (getArguments() != null && getArguments().containsKey("minDate")) {
             minDate = (Date) getArguments().getSerializable("minDate");
         } else if (getArguments() != null && getArguments().containsKey("availableDates")) {
-
+            bottomBar.setVisibility(View.GONE);
+            availableDates = getAvailableDatesFromBundle(getArguments());
+            if (availableDates != null && availableDates.size() > 0) {
+                minDate = availableDates.get(0);
+            }
         }
         initNearestDates();
         allDaysByMonths = getDaysByMonths();
-        monthPagerAdapter = new MonthPagerAdapter(getContext(), allDaysByMonths, minDate, this);
+        monthPagerAdapter = new MonthPagerAdapter(getContext(), allDaysByMonths, availableDates, this);
         monthPager.setOffscreenPageLimit(2);
         monthPager.setAdapter(monthPagerAdapter);
         return view;
+    }
+
+    private List<Date> getAvailableDatesFromBundle(Bundle bundle) {
+        List<String> stringDatesList = bundle.getStringArrayList("availableDates");
+        List<Date> dateList = new ArrayList<>();
+        for (String s : stringDatesList) {
+            try {
+                Date date = availableDateFormat.parse(s);
+                dateList.add(date);
+            } catch (ParseException e) {
+                Log.e(PickDateFragment.class.getName(), e.getMessage());
+            }
+        }
+        return dateList;
     }
 
     @Override
@@ -88,7 +112,6 @@ public class PickDateFragment extends Fragment implements CalendarDaysAdapter.On
         fragment.setArguments(args);
         return fragment;
     }
-
 
     public static PickDateFragment getInstance(ArrayList<String> availableDates) {
         PickDateFragment fragment = new PickDateFragment();
@@ -124,12 +147,12 @@ public class PickDateFragment extends Fragment implements CalendarDaysAdapter.On
             maxDays -= CommonUtils.getDaysDifference(minDate, today);
         }
         calendar.add(Calendar.DAY_OF_MONTH, maxDays);
+        Date lastAvailableDate = calendar.getTime();
         int monthsCount = CommonUtils.getMonthDifference(minDate, calendar.getTime());
-
+        boolean needPopulateAvailableDays = availableDates.isEmpty();
         for (int i = 0; i <= monthsCount; i++) {
             calendar = CommonUtils.getCalendar();
             calendar.setTime(minDate);
-
             calendar.add(Calendar.MONTH, i);
             calendar.set(Calendar.DAY_OF_MONTH, 1);
 
@@ -137,6 +160,9 @@ public class PickDateFragment extends Fragment implements CalendarDaysAdapter.On
             int daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
             while (days.size() < daysInMonth) {
                 days.add(calendar.getTime());
+                if (needPopulateAvailableDays && !calendar.getTime().before(minDate) && !calendar.getTime().after(lastAvailableDate)) {
+                    availableDates.add(calendar.getTime());
+                }
                 calendar.add(Calendar.DAY_OF_MONTH, 1);
             }
             daysByMonths.add(days);
