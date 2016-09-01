@@ -82,8 +82,8 @@
                     android:id="@+id/ticketCalendarBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:background="?attr/selectableItemBackground"
                     android:padding="12dp"
                     android:src="@drawable/ticket_calendar"/>
@@ -96,8 +96,8 @@
                     android:layout_centerVertical="true"
                     android:background="?attr/selectableItemBackground"
                     android:padding="12dp"
-                    android:visibility="gone"
-                    android:src="@drawable/ticket_close"/>
+                    android:src="@drawable/ticket_close"
+                    android:visibility="gone"/>
 
             </RelativeLayout>
         </LinearLayout>
@@ -116,4 +116,43 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/noContentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/dateLayout"
+        android:layout_marginLeft="22dp"
+        android:layout_marginRight="22dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:src="@drawable/no_tickets"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="34dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/tickets_no_content"
+            android:textSize="22dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="@string/tickets_no_content_search"
+            android:textSize="18sp"/>
+
+        <Button
+            android:id="@+id/searchBtn"
+            style="@style/BlueButtonStyle"
+            android:layout_marginTop="50dp"
+            android:text="@string/search_find_tickets"/>
+    </LinearLayout>
 </RelativeLayout>

@@ -57,6 +57,8 @@ public class MyTicketsFragment extends Fragment {
     @BindView(R.id.filterDate) TextView filterDateView;
     @BindView(R.id.ticketCloseBtn) ImageButton ticketCloseBtn;
     @BindView(R.id.ticketCalendarBtn) ImageButton ticketCalendarBtn;
+    @BindView(R.id.noContentLayout) ViewGroup noContentLayout;
+    @BindView(R.id.ticketDateLayout) ViewGroup ticketDateLayout;
     @BindString(R.string.ticket_pick_date) String ticketPickDateHint;
     private Unbinder unbinder;
     private LinkedHashSet<Order> orderList = new LinkedHashSet<Order>();
@@ -65,7 +67,6 @@ public class MyTicketsFragment extends Fragment {
     private Date todayDate;
     private EndlessRecyclerScrollListener scrollListener;
     private ArrayList<String> ticketDatesList;
-    private boolean waitToOpenCalendar = false;
 
     @Nullable
     @Override
@@ -82,10 +83,13 @@ public class MyTicketsFragment extends Fragment {
         setScrollListener();
         Calendar calendar = Calendar.getInstance();
         todayDate = calendar.getTime();
-        loadTickets(TimeUnit.MILLISECONDS.toSeconds(todayDate.getTime()));
+        ticketDateLayout.setVisibility(View.GONE);
+        myTicketsList.setVisibility(View.GONE);
+        noContentLayout.setVisibility(View.GONE);
         loadTicketDates();
         return view;
     }
+
 
     private void setScrollListener() {
         scrollListener = new EndlessRecyclerScrollListener((LinearLayoutManager) myTicketsList.getLayoutManager()) {
@@ -114,6 +118,7 @@ public class MyTicketsFragment extends Fragment {
     }
 
     private void loadTicketDates() {
+        progressBar.setVisibility(View.VISIBLE);
         Call<NewTicketDates> call = ApiManager.getApi(getContext()).getNewTicketDates();
         call.enqueue(ticketDatesCallback);
     }
@@ -121,13 +126,9 @@ public class MyTicketsFragment extends Fragment {
     @OnClick(R.id.ticketCalendarBtn)
     void onTicketCalendarBtnClicked() {
         if (ticketDatesList != null) {
-            Calendar calendar = CommonUtils.getCalendar();
             PickDateFragment fragment = PickDateFragment.getInstance(ticketDatesList);
             fragment.setTargetFragment(this, SELECT_FILTER_DATE);
             ((MainActivity) getActivity()).addFragment(fragment, R.anim.slide_up, R.anim.slide_down);
-        } else {
-            waitToOpenCalendar = true;
-            loadTicketDates();
         }
     }
 
@@ -137,6 +138,11 @@ public class MyTicketsFragment extends Fragment {
         filterDate = null;
         ticketAdapter.clearTickets();
         loadTickets(TimeUnit.MILLISECONDS.toSeconds(todayDate.getTime()));
+    }
+
+    @OnClick(R.id.searchBtn)
+    void onSearchBtnClicked() {
+        ((MainActivity)getActivity()).getBottomNavigationBar().setCurrentItem(Constants.BOTTOM_NAVIGATION_SEARCH, true);
     }
 
     @Override
@@ -183,6 +189,9 @@ public class MyTicketsFragment extends Fragment {
         }
         ticketAdapter.addTickets(ticketForAdapterList);
         progressBar.setVisibility(View.GONE);
+        ticketDateLayout.setVisibility(View.VISIBLE);
+        myTicketsList.setVisibility(View.VISIBLE);
+        noContentLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -246,14 +255,19 @@ public class MyTicketsFragment extends Fragment {
             if (getView() != null) {
                 if (response.isSuccessful()) {
                     ticketDatesList = response.body().getDates();
+                    if (ticketDatesList != null && ticketDatesList.size() > 0) {
+                        loadTickets(TimeUnit.MILLISECONDS.toSeconds(todayDate.getTime()));
+                    } else {
+                        ticketDateLayout.setVisibility(View.GONE);
+                        myTicketsList.setVisibility(View.GONE);
+                        noContentLayout.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+                    }
                 } else {
+                    progressBar.setVisibility(View.GONE);
                     String error = ApiErrorUtil.parseError(response);
                     CommonUtils.showMessage(getView(), error);
                 }
-            }
-            if (waitToOpenCalendar) {
-                waitToOpenCalendar = false;
-                ticketCalendarBtn.performClick();
             }
         }
 
@@ -261,10 +275,7 @@ public class MyTicketsFragment extends Fragment {
         public void onFailure(Call<NewTicketDates> call, Throwable t) {
             if (getView() != null && t != null) {
                 CommonUtils.showMessage(getView(), t.getMessage());
-            }
-            if (waitToOpenCalendar) {
-                waitToOpenCalendar = false;
-                ticketCalendarBtn.performClick();
+                progressBar.setVisibility(View.GONE);
             }
         }
     };
