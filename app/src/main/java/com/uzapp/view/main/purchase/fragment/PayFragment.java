@@ -1,10 +1,12 @@
-package com.uzapp.view.main.purchase;
+package com.uzapp.view.main.purchase.fragment;
 
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +20,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.uzapp.R;
+import com.uzapp.network.ApiManager;
+import com.uzapp.pojo.booking.Booking;
+import com.uzapp.pojo.booking.Uio;
+import com.uzapp.util.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
+import com.uzapp.view.main.purchase.ProgressCountDownTimer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,6 +58,9 @@ public class PayFragment extends Fragment {
 
     private static final int CARD_CVC_TOTAL_SYMBOLS = 3;
 
+    public static final String KEY_PRICE_TICKETS = "KEY_PRICE_TICKETS";
+    public static final String KEY_LIST_BOOKINGS = "KEY_LIST_BOOKINGS";
+
     @BindView(R.id.txtTimerPurchase) TextView txtTimerPurchase;
     @BindView(R.id.progressTime) ProgressBar progressTime;
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
@@ -58,17 +74,39 @@ public class PayFragment extends Fragment {
     @BindView(R.id.cardNumberEditText) EditText cardNumberEditText;
     @BindView(R.id.cardDateEditText) EditText cardDateEditText;
     @BindView(R.id.cardCVCEditText) EditText cardCVCEditText;
+    @BindView(R.id.progressBar) ProgressBar progressBar;
 
     private Unbinder unbinder;
     private ProgressCountDownTimer timer;
+    private int priceTickets;
+    private String btnText;
+    private List<Booking> listBookings;
+    private int waitTime;
 
     public PayFragment() {
         // Required empty public constructor
     }
 
+    public static PayFragment newInstance(int priceTickets, List<Booking> listBookings) {
+        PayFragment fragment = new PayFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(KEY_PRICE_TICKETS, priceTickets);
+        bundle.putParcelableArrayList(KEY_LIST_BOOKINGS, (ArrayList<? extends Parcelable>) listBookings);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            priceTickets = getArguments().getInt(KEY_PRICE_TICKETS);
+            listBookings = getArguments().getParcelableArrayList(KEY_LIST_BOOKINGS);
+
+            if (listBookings != null && !listBookings.isEmpty()) {
+                waitTime = listBookings.get(0).getWaitSeconds() * 1000;
+            }
+        }
     }
 
     @Override
@@ -82,17 +120,24 @@ public class PayFragment extends Fragment {
     }
 
     private void initComponents() {
-        String title = getString(R.string.purchase_tickets) + ", " + getString(R.string.ticket_currency);
+        String title = getString(R.string.purchase_tickets) + " - " + priceTickets + " " + getString(R.string.ticket_currency);
+        btnText = getString(R.string.payment) + " " + priceTickets + " " + getString(R.string.ticket_currency);
         toolbarTitle.setText(title);
+        payBtn.setText(btnText);
 
-        timer = new ProgressCountDownTimer(getActivity(), 900000, 1000, progressTime, txtTimerPurchase);
+        startTimer();
+    }
+
+    private void startTimer() {
+        timer = new ProgressCountDownTimer(getActivity(), waitTime,
+                1000, progressTime, txtTimerPurchase);
         timer.start();
     }
 
     private void showLayout(boolean isPayment, boolean isConfirmPayment) {
         layoutPayment.setVisibility(isPayment ? View.VISIBLE : View.GONE);
         layoutConfirmPayment.setVisibility(isConfirmPayment ? View.VISIBLE : View.GONE);
-        payBtn.setText(isPayment ? getString(R.string.payment) : getString(R.string.confirm_payment));
+        payBtn.setText(isPayment ? btnText : getString(R.string.confirm_payment));
     }
 
     @OnClick(R.id.backBtn)
@@ -101,8 +146,39 @@ public class PayFragment extends Fragment {
             showLayout(true, false);
         } else {
             getActivity().onBackPressed();
+            cancelReserveTicket();
         }
     }
+
+    private void showProgress(boolean show) {
+        progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
+    private void cancelReserveTicket() {
+        for (Booking booking : listBookings) {
+            Call<Uio> call = ApiManager.getApi(getContext()).cancelReserveTickets(booking.getUio());
+            call.enqueue(cancelCallback);
+        }
+        listBookings.clear();
+    }
+
+    private Callback<Uio> cancelCallback = new Callback<Uio>() {
+
+        @Override
+        public void onResponse(Call<Uio> call, Response<Uio> response) {
+            if (response.isSuccessful()) {
+                Uio uio = response.body();
+            } else {
+                String error = ApiErrorUtil.parseError(response);
+                CommonUtils.showMessage(getView(), error);
+            }
+        }
+
+        @Override
+        public void onFailure(Call<Uio> call, Throwable t) {
+            Log.d("PayFragment", call.toString());
+        }
+    };
 
     @OnClick(R.id.payBtn)
     void onClickPay() {

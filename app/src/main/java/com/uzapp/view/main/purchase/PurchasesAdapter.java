@@ -1,16 +1,20 @@
 package com.uzapp.view.main.purchase;
 
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.uzapp.R;
 import com.uzapp.util.Constants;
+import com.uzapp.view.main.MainActivity;
+import com.uzapp.view.main.purchase.fragment.PreparePurchaseFragment;
 import com.uzapp.view.main.wagon.model.Ticket;
 
 import java.text.SimpleDateFormat;
@@ -96,6 +100,8 @@ public class PurchasesAdapter extends RecyclerView.Adapter<PurchasesAdapter.Purc
         @BindView(R.id.btnBuyTicket) Button btnBuyTicket;
         @BindView(R.id.btnReserveTicket) Button btnReserveTicket;
         @BindView(R.id.txtDeleteTicket) TextView txtDeleteTicket;
+        @BindView(R.id.firstNameField) EditText firstNameField;
+        @BindView(R.id.lastNameField) EditText lastNameField;
 
         public PurchaseHolder(View view) {
             super(view);
@@ -130,6 +136,9 @@ public class PurchasesAdapter extends RecyclerView.Adapter<PurchasesAdapter.Purc
         @OnClick(R.id.txtDeleteTicket)
         void onClickDeleteTicket() {
             ticketList.remove(getAdapterPosition());
+            FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
+            PreparePurchaseFragment fragment = (PreparePurchaseFragment) manager.findFragmentById(R.id.fragmentContainer);
+            fragment.initComponents();
             notifyDataSetChanged();
         }
     }

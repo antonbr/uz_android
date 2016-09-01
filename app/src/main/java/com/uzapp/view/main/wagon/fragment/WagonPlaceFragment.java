@@ -30,7 +30,7 @@ import com.uzapp.util.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.view.main.MainActivity;
-import com.uzapp.view.main.purchase.PreparePurchaseFragment;
+import com.uzapp.view.main.purchase.fragment.PreparePurchaseFragment;
 import com.uzapp.view.main.wagon.adapter.HorizontalAdapter;
 import com.uzapp.view.main.wagon.adapter.TicketAdapter;
 import com.uzapp.view.main.wagon.adapter.WagonTypeAdapter;
@@ -154,7 +154,7 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
             position = getArguments().getInt(EXTRA_PRICES_POSITION);
             departureDate = getArguments().getInt(EXTRA_TRAIN_DEPARTURE_DATE);
             arrivalDate = getArguments().getInt(EXTRA_TRAIN_ARRIVAL_DATE);
-            selectDate = getArguments().getInt(EXTRA_TRAIN_DATE);
+            selectDate = getArguments().getLong(EXTRA_TRAIN_DATE);
 
             if (prices != null) {
                 stationFromCode = prices.getStation_from_code();

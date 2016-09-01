@@ -11,7 +11,7 @@ import org.parceler.Parcel;
 public class Costs {
 
     @SerializedName("kind")
-    int kind;
+    String kind;
     @SerializedName("carrier")
     int carrier;
     @SerializedName("ticket")
@@ -31,7 +31,7 @@ public class Costs {
     @SerializedName("commission")
     int commission;
     @SerializedName("fee")
-    int fee;
+    double fee;
     @SerializedName("cost")
     int cost;
     @SerializedName("com_service")
@@ -39,11 +39,11 @@ public class Costs {
 
     public Costs() {}
 
-    public int getKind() {
+    public String getKind() {
         return kind;
     }
 
-    public void setKind(int kind) {
+    public void setKind(String kind) {
         this.kind = kind;
     }
 
@@ -119,11 +119,11 @@ public class Costs {
         this.commission = commission;
     }
 
-    public int getFee() {
+    public double getFee() {
         return fee;
     }
 
-    public void setFee(int fee) {
+    public void setFee(double fee) {
         this.fee = fee;
     }
 

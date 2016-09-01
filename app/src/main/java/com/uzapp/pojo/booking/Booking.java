@@ -1,5 +1,7 @@
 package com.uzapp.pojo.booking;
 
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
@@ -10,7 +12,7 @@ import java.util.List;
  * Created by Vladimir on 22.08.2016.
  */
 @Parcel
-public class Booking {
+public class Booking implements Parcelable {
 
     @SerializedName("uio")
     String uio;
@@ -50,6 +52,38 @@ public class Booking {
     List<Documents> documentsList;
 
     public Booking() {}
+
+    protected Booking(android.os.Parcel in) {
+        uio = in.readString();
+        waitSeconds = in.readInt();
+        stationFromCode = in.readInt();
+        stationFromName = in.readString();
+        stationToCode = in.readInt();
+        stationToName = in.readString();
+        dateFrom = in.readInt();
+        dateTo = in.readInt();
+        electronic = in.readString();
+        trainNumber = in.readString();
+        trainModel = in.readInt();
+        trainClassCode = in.readInt();
+        trainFastedCode = in.readInt();
+        wagonType = in.readString();
+        wagonClass = in.readInt();
+        wagonNumber = in.readInt();
+        sysDate = in.readInt();
+    }
+
+    public static final Creator<Booking> CREATOR = new Creator<Booking>() {
+        @Override
+        public Booking createFromParcel(android.os.Parcel in) {
+            return new Booking(in);
+        }
+
+        @Override
+        public Booking[] newArray(int size) {
+            return new Booking[size];
+        }
+    };
 
     public String getUio() {
         return uio;
@@ -193,5 +227,31 @@ public class Booking {
 
     public void setDocumentsList(List<Documents> documentsList) {
         this.documentsList = documentsList;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(android.os.Parcel dest, int flags) {
+        dest.writeString(uio);
+        dest.writeInt(waitSeconds);
+        dest.writeInt(stationFromCode);
+        dest.writeString(stationFromName);
+        dest.writeInt(stationToCode);
+        dest.writeString(stationToName);
+        dest.writeInt(dateFrom);
+        dest.writeInt(dateTo);
+        dest.writeString(electronic);
+        dest.writeString(trainNumber);
+        dest.writeInt(trainModel);
+        dest.writeInt(trainClassCode);
+        dest.writeInt(trainFastedCode);
+        dest.writeString(wagonType);
+        dest.writeInt(wagonClass);
+        dest.writeInt(wagonNumber);
+        dest.writeInt(sysDate);
     }
 }
