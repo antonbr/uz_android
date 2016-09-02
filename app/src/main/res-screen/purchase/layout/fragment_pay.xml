@@ -46,8 +46,6 @@
                     style="@android:style/Widget.ProgressBar.Horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
-                    android:max="900"
-                    android:progress="900"
                     android:progressDrawable="@drawable/progress_bar_style_blue" />
             </LinearLayout>
 

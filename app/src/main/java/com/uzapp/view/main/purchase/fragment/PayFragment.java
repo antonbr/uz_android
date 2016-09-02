@@ -129,7 +129,11 @@ public class PayFragment extends Fragment {
     }
 
     private void startTimer() {
-        timer = new ProgressCountDownTimer(getActivity(), waitTime,
+//        int time = (waitTime * 1000);
+        int time = 900000;
+        progressTime.setMax(900);
+//        progressTime.setProgress(time);
+        timer = new ProgressCountDownTimer(getActivity(), time,
                 1000, progressTime, txtTimerPurchase);
         timer.start();
     }

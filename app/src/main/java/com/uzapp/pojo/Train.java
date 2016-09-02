@@ -25,23 +25,23 @@ public class Train {
     @SerializedName("station_to_name")
     String stationToName;
     @SerializedName("station_to_code")
-     int stationToCode;
+    int stationToCode;
     @SerializedName("class_name")
-     String className;
+    String className;
     @SerializedName("class_code")
-     int classCode;
+    int classCode;
     @SerializedName("fasted_name")
-     String fastedName;
+    String fastedName;
     @SerializedName("fasted_code")
-     int fastedCode;
+    int fastedCode;
     @SerializedName("departure_date")
-     int departureDate;
+    long departureDate;
     @SerializedName("arrival_date")
-     int arrivalDate;
+    long arrivalDate;
     @SerializedName("travel_time")
-     String travelTime;
+    String travelTime;
     @SerializedName("places")
-     List<TrainPlace> places = new ArrayList<TrainPlace>();
+    List<TrainPlace> places = new ArrayList<TrainPlace>();
 
     public String getNumber() {
         return number;
@@ -131,19 +131,19 @@ public class Train {
         this.fastedCode = fastedCode;
     }
 
-    public int getDepartureDate() {
+    public long getDepartureDate() {
         return departureDate;
     }
 
-    public void setDepartureDate(int departureDate) {
+    public void setDepartureDate(long departureDate) {
         this.departureDate = departureDate;
     }
 
-    public int getArrivalDate() {
+    public long getArrivalDate() {
         return arrivalDate;
     }
 
-    public void setArrivalDate(int arrivalDate) {
+    public void setArrivalDate(long arrivalDate) {
         this.arrivalDate = arrivalDate;
     }
 

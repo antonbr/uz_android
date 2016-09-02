@@ -1,6 +1,7 @@
 package com.uzapp.view.main.search.station;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,6 +21,7 @@ import com.uzapp.pojo.Station;
 import com.uzapp.util.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
+import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.utils.VerticalDividerItemDecoration;
 
 import org.parceler.Parcels;
@@ -75,6 +77,18 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
         return view;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        ((MainActivity) getActivity()).hideNavigationBar();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        ((MainActivity) getActivity()).showNavigationBar();
+    }
+
     public static StationSearchFragment getInstance(String title) {
         StationSearchFragment fragment = new StationSearchFragment();
         Bundle args = new Bundle();
@@ -105,7 +119,7 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
         }
     }
 
-    @OnClick(R.id.closeBtn)
+    @OnClick(R.id.ticketCloseBtn)
     void onCloseBtnClick() {
         cityEditText.hideKeyboard();
         getActivity().onBackPressed();

@@ -102,6 +102,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
         View view = inflater.inflate(R.layout.search_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
         ((MainActivity) getActivity()).showNavigationBar();
+        ((MainActivity) getActivity()).getBottomNavigationBar().setCurrentItem(Constants.BOTTOM_NAVIGATION_SEARCH, false);
         toolbarTitle.setText(R.string.search_title);
         initDatePickerList();
         checkAllFieldsFilled();
@@ -124,8 +125,10 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
 
     @OnClick({R.id.pathTo, R.id.pathFrom})
     void onSelectPathFromClick(View view) {
-        StationSearchFragment fragment = StationSearchFragment.getInstance(getString(view.getId() == R.id.pathFrom ? R.string.search_path_from : R.string.search_path_to));
-        fragment.setTargetFragment(this, view.getId() == R.id.pathFrom ? SELECT_STATION_FROM_REQUEST_CODE : SELECT_STATION_TO_REQUEST_CODE);
+        StationSearchFragment fragment = StationSearchFragment.getInstance
+                (getString(view.getId() == R.id.pathFrom ? R.string.search_path_from : R.string.search_path_to));
+        fragment.setTargetFragment(this, view.getId() == R.id.pathFrom ? SELECT_STATION_FROM_REQUEST_CODE :
+                SELECT_STATION_TO_REQUEST_CODE);
         ((MainActivity) getActivity()).addFragment(fragment, R.anim.slide_up, R.anim.slide_down);
     }
 
@@ -396,7 +399,9 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
 
         @Override
         public void onFailure(Call<List<Station>> call, Throwable t) {
-            //TODO
+            if (getView() != null && t != null) {
+                CommonUtils.showMessage(getView(), t.getMessage());
+            }
         }
     };
 

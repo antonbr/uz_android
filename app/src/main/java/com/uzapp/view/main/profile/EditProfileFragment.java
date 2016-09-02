@@ -24,6 +24,7 @@ import com.uzapp.util.Constants;
 import com.uzapp.view.BaseActivity;
 import com.uzapp.view.login.PhoneNumberTextInputEditText;
 import com.uzapp.view.login.StudentIdTextInputEditText;
+import com.uzapp.view.main.MainActivity;
 
 import org.parceler.Parcels;
 
@@ -61,6 +62,7 @@ public class EditProfileFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         user = Parcels.unwrap(getArguments().getParcelable("user"));
         initViews();
+        ((MainActivity) getActivity()).hideNavigationBar();
         return view;
     }
 
@@ -159,9 +161,9 @@ public class EditProfileFragment extends Fragment {
         String phone = phoneField.getPhoneNumber();
         String email = emailField.getText().toString();
         String studentId = studentIdField.getStudentId();
-        //TODO fix email
+        email = user.getEmail().equals(email)?null:email;
         Call call = ApiManager.getApi(getContext()).updateUser(password, firstName,
-                middleName, lastName, phone, null, studentId);
+                middleName, lastName, phone, email, studentId);
         call.enqueue(updateUserCallback);
     }
 
@@ -169,6 +171,7 @@ public class EditProfileFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        ((MainActivity) getActivity()).showNavigationBar();
     }
 
     private Callback<User> updateUserCallback = new Callback<User>() {

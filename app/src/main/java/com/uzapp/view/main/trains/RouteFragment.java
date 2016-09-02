@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
@@ -84,8 +85,8 @@ public class RouteFragment extends Fragment {
         trainName.setText(train.getNumber());
         stationFrom.setText(train.getStationFromName());
         stationTo.setText(train.getStationToName());
-        Date departureDate = new Date(train.getDepartureDate());
-        Date arrivalDate = new Date(train.getArrivalDate());
+        Date departureDate = new Date(TimeUnit.SECONDS.toMillis(train.getDepartureDate()));
+        Date arrivalDate = new Date(TimeUnit.SECONDS.toMillis(train.getArrivalDate()));
         arrivalFullDate.setText(dateFormat.format(arrivalDate));
         arrivalTime.setText(timeFormat.format(arrivalDate));
         departureFullDate.setText(dateFormat.format(departureDate));
@@ -113,7 +114,7 @@ public class RouteFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
-    @OnClick(R.id.closeBtn)
+    @OnClick(R.id.ticketCloseBtn)
     void onCloseBtnClicked() {
         getActivity().onBackPressed();
     }

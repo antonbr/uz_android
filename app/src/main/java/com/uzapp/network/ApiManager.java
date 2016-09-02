@@ -81,7 +81,7 @@ public class ApiManager {
                 switch (response.code()) {
                     case HttpURLConnection.HTTP_UNAUTHORIZED:
                         /*
-                        If 403, try to refresh token if user is logged in, if not - go to login page.
+                        If 401, try to refresh token if user is logged in, if not - go to login page.
                         If refresh token succeed, than sent the same request with new token
                          */
                         if (refreshToken(context, request)) {
@@ -103,6 +103,7 @@ public class ApiManager {
         if (!TextUtils.isEmpty(accessToken)) {
             HttpUrl originalHttpUrl = request.url();
             HttpUrl url = originalHttpUrl.newBuilder()
+                    .removeAllQueryParameters("access_token")
                     .addQueryParameter("access_token", accessToken)
                     .build();
             requestBuilder.url(url);
@@ -115,6 +116,7 @@ public class ApiManager {
     //return true if token was refreshed
     private static boolean refreshToken(Context context, Request request) {
         String refreshToken = PrefsUtil.getStringPreference(context, PrefsUtil.USER_REFRESH_TOKEN);
+        boolean isRefreshed = false;
         if (!TextUtils.isEmpty(refreshToken)) {
             try {
                 Call<UserTokenResponse> call = api.refreshToken(refreshToken);
@@ -122,7 +124,7 @@ public class ApiManager {
                 if (userTokenResponse.isSuccessful()) {
                     UserTokenResponse user = userTokenResponse.body();
                     PrefsUtil.saveUserInfo(context, user.getUserId(), user.getAccessToken(), user.getRefreshToken());
-                    return true;
+                    isRefreshed = true;
                 }
             } catch (IOException e) {
                 Log.e(ApiManager.class.getName(), e.getMessage());
@@ -131,9 +133,11 @@ public class ApiManager {
             //if try to login and user doesn't exist
             return false;
         }
-        //go to login if no access token or if refresh token failed
-        Intent i = new Intent(context, LoginFlowActivity.class);
-        context.startActivity(i);
-        return false;
+        if(!isRefreshed) {
+            //go to login if no access token or if refresh token failed
+            Intent i = new Intent(context, LoginFlowActivity.class);
+            context.startActivity(i);
+        }
+        return isRefreshed;
     }
 }

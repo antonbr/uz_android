@@ -1,5 +1,6 @@
 package com.uzapp.util;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.JsonArray;
@@ -22,7 +23,8 @@ public class ApiErrorUtil {
     public static String parseError(Response<?> response) {
         String errorMessage = "";
         try {
-            String errorJson = response.errorBody().string();
+            String errorJson = response.errorBody().string().trim();
+            if (TextUtils.isEmpty(errorJson)) return errorMessage;
             JsonObject jsonObject = (new JsonParser()).parse(errorJson).getAsJsonObject();
             if (jsonObject != null && jsonObject.has("status")) {
                 //non-field error

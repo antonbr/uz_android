@@ -19,7 +19,6 @@ public class Constants {
     public static final String HOURS_MINUTES_FORTMAT = "hh:mm";
     public static final String HOURS_MINUTES_SECONDS_FORMAT = "hh:mm:ss";
     public static final String DAY_MONTH_YEAR_FORMAT = "d.MM.yy";
-
     public static final int SECTION = 10;
     public static final String TYPE_ECONOMY = "П";
     public static final String TYPE_KUPE = "К";
@@ -30,4 +29,8 @@ public class Constants {
     public static final int FIRST_NAME_MIN_LENGTH = 3;
     public static final int LAST_NAME_MIN_LENGTH = 3;
     public static final int MIDDLE_NAME_MIN_LENGTH = 3;
+    public static final int BOTTOM_NAVIGATION_SEARCH = 0;
+    public static final int BOTTOM_NAVIGATION_TICKETS = 1;
+    public static final int BOTTOM_NAVIGATION_MENU = 2;
+    public static final double TICKETS_PAGE_MARGIN_PERCENT = 0.3;
 }

@@ -30,13 +30,15 @@ public class MonthPagerAdapter extends PagerAdapter {
     private List<CalendarDaysAdapter> daysAdapters = new ArrayList<>();
     private Calendar calendar = CommonUtils.getCalendar();
     private CalendarDaysAdapter.OnDateSelectedListener listener;
-    private Date minDate;
+ //   private Date minDate;
+    private List<Date> availableDates;
 
-    public MonthPagerAdapter(Context context, List<List<Date>> dateListsForPages, Date minDate,
+    public MonthPagerAdapter(Context context, List<List<Date>> dateListsForPages, List<Date> availableDates,
                              CalendarDaysAdapter.OnDateSelectedListener listener) {
         this.context = context;
         this.dateListsForPages = dateListsForPages;
-        this.minDate = minDate;
+        this.availableDates = availableDates;
+     //   this.minDate = minDate;
         this.listener = listener;
     }
 
@@ -59,7 +61,8 @@ public class MonthPagerAdapter extends PagerAdapter {
         layoutManager.setSpanSizeLookup(new MonthSpanSizeLookup(daysOffset));
 
         CalendarDaysAdapter adapter = new CalendarDaysAdapter(monthDays, listener, position, context);
-        adapter.setFirstAvailableDate(minDate);
+       // adapter.setFirstAvailableDate(minDate);
+        adapter.setAvailableDates(availableDates);
         monthGridView.setAdapter(adapter);
         daysAdapters.add(adapter);
 

@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
@@ -162,8 +161,8 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
         Log.d(TAG, "train number: " + train.getNumber() + " wagon type: " + wagonType + " wagon class: " + wagonClass
                 + " station from code: " + stationFromCode + " station to code: " + stationToCode + " date: " + date);
 
-        departureDate = train.getDepartureDate();
-        arrivalDate = train.getArrivalDate();
+        departureDate = (int) train.getDepartureDate();
+        arrivalDate = (int) train.getArrivalDate();
 
         //backend uses mocks for trains, that's why the result is always the same
         Call<Prices> call = ApiManager.getApi(getActivity()).getPrices(stationFromCode, stationToCode, train.getNumber(), date);
@@ -185,7 +184,9 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
 
         @Override
         public void onFailure(Call<Prices> call, Throwable t) {
-            Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+            if (getView() != null && t != null) {
+                CommonUtils.showMessage(getView(), t.getMessage());
+            }
         }
     };
 }

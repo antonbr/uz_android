@@ -21,7 +21,7 @@ public class RouteVerticalAndHorizontalDivider extends RecyclerView.ItemDecorati
     }
 
     private void setupDefaultDivider(Context context) {
-        verticalDivider = ContextCompat.getDrawable(context, R.drawable.divider_hint_color);
+        verticalDivider = ContextCompat.getDrawable(context, R.drawable.divider_hint_color_horizontal);
         horizontalLine = ContextCompat.getDrawable(context, R.drawable.train_route_vertical_line);
     }
 

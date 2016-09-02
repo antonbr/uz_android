@@ -11,8 +11,8 @@ public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
 
     private final int space;
 
-    public SpaceItemDecoration(int mVerticalSpaceHeight) {
-        this.space = mVerticalSpaceHeight;
+    public SpaceItemDecoration(int space) {
+        this.space = space;
     }
 
     @Override

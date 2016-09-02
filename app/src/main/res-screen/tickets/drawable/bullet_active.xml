@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:left="@dimen/tickets_bullet_margin"
+        android:right="@dimen/tickets_bullet_margin">
+
+        <shape
+            android:shape="oval">
+            <solid android:color="@color/accentColor"/>
+            <size
+                android:width="@dimen/tickets_bullet_size"
+                android:height="@dimen/tickets_bullet_size"/>
+        </shape>
+
+    </item>
+</layer-list>

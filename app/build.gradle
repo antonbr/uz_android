@@ -18,12 +18,12 @@ apply plugin: 'android-apt'
 apply plugin: 'realm-android'
 
 String APK_NAME = "UZ"
-String VERSION_NAME = "1.0.1"
-int VERSION_CODE = 2
+String VERSION_NAME = "0.0.2"
+int VERSION_CODE = 3
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.0"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "com.uzapp"
@@ -38,6 +38,7 @@ android {
         debug {
             project.archivesBaseName = APK_NAME + "-" + VERSION_NAME;
             debuggable true
+            minifyEnabled false
         }
 
         release {
@@ -59,13 +60,9 @@ android {
         main {
             res.srcDirs = [
                     'src/main/res-main',
-                    'src/main/res-screen/search',
-                    'src/main/res-screen/trains',
-                    'src/main/res-screen/wagon',
-                    'src/main/res-screen/menu',
-                    'src/main/res-screen/login',
-                    'src/main/res-screen/profile',
-                    'src/main/res-screen/purchase'
+                    file('src/main/res-screen')
+                            .listFiles()
+                            .each { res.srcDirs += it.path }
             ]
         }
     }
@@ -97,4 +94,10 @@ dependencies {
     compile 'org.parceler:parceler-api:1.1.5'
     compile 'com.aurelhubert:ahbottomnavigation:1.1.8'
     compile 'com.android.support:support-v4:23.4.0'
+    apt 'org.parceler:parceler:1.1.5'
+    compile 'com.aurelhubert:ahbottomnavigation:1.2.3'
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.2@aar') {
+        transitive = true;
+    }
+    compile 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
 }

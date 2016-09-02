@@ -12,9 +12,20 @@ import com.uzapp.R;
  * Created by vika on 09.08.16.
  */
 public class BaseActivity extends AppCompatActivity {
-    private FragmentManager fragmentManager = getSupportFragmentManager();
+    protected FragmentManager fragmentManager = getSupportFragmentManager();
 
     public void replaceFragment(Fragment f, boolean addToBackStack) {
+        Fragment oldFragment = fragmentManager.findFragmentById(R.id.fragmentContainer);
+        if (oldFragment != null && oldFragment.getClass().equals(f.getClass())) {
+            return;
+        }
+        // prevent duplicates
+        String backStateName = f.getClass().getName();
+        /* check whether fragment with this class name is already in backstack and we must pop it
+         rather that adding new one. This will keep only one instance of every fragment in backstack */
+        boolean fragmentPopped = fragmentManager.popBackStackImmediate(backStateName, 0);
+        if (fragmentPopped) return;
+
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         if (addToBackStack) {
             transaction.addToBackStack(f.getClass().getName());
@@ -27,7 +38,7 @@ public class BaseActivity extends AppCompatActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.addToBackStack(null);
         transaction.setCustomAnimations(enter, exit, enter, exit);
-        transaction.add(R.id.fragmentContainer, f);
+        transaction.add(R.id.fragmentContainer, f, f.getClass().getName());
         transaction.commit();
     }
 

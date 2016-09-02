@@ -41,9 +41,11 @@ import retrofit2.Response;
  */
 public class ProfileFragment extends Fragment {
     private static final int REQUEST_EDIT_PROFILE = 1;
+    private static final int REQUEST_CHANGE_PASSWORD = 2;
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
     @BindView(R.id.bonusCardNumber) TextView bonusCardNumber;
     @BindView(R.id.firstName) TextView firstName;
+    @BindView(R.id.middleName) TextView middleName;
     @BindView(R.id.lastName) TextView lastName;
     @BindView(R.id.email) TextView email;
     @BindView(R.id.phoneNumber) TextView phoneNumber;
@@ -64,7 +66,14 @@ public class ProfileFragment extends Fragment {
         mainScrollView.setVisibility(View.GONE);
         Call call = ApiManager.getApi(getContext()).getUser();
         call.enqueue(userCallback);
+        ((MainActivity) getActivity()).showNavigationBar();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MainActivity) getActivity()).selectNoneItemsInNavBar();
     }
 
     @OnClick(R.id.backBtn)
@@ -74,10 +83,6 @@ public class ProfileFragment extends Fragment {
 
     @OnClick(R.id.filterBtn)
     void onFilterBtnClicked() {
-        PrefsUtil.clearAllPrefs(getContext());
-        Intent intent = new Intent(getActivity(), MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
     }
 
     @OnClick(R.id.editInfoBtn)
@@ -94,7 +99,7 @@ public class ProfileFragment extends Fragment {
     void onAddCardBtnClicked() {
     }
 
-    @OnClick({R.id.myTicketsBtn, R.id.ticketReturnBtn, R.id.bookingHistoryBtn, R.id.bonusProgramBtn})
+    @OnClick({R.id.myTicketsBtn, R.id.ticketReturnBtn, R.id.bookingHistoryBtn, R.id.bonusProgramBtn, R.id.changePasswordBtn, R.id.logoutBtn})
     void onButtonsClicked(View view) {
         switch (view.getId()) {
             case R.id.myTicketsBtn:
@@ -105,7 +110,26 @@ public class ProfileFragment extends Fragment {
                 break;
             case R.id.bonusProgramBtn:
                 break;
+            case R.id.changePasswordBtn:
+                showChangePasswordFragment();
+                break;
+            case R.id.logoutBtn:
+                logout();
+                break;
         }
+    }
+
+    private void logout() {
+        PrefsUtil.clearAllPrefs(getContext());
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    private void showChangePasswordFragment() {
+        Fragment fragment = new ChangePasswordFragment();
+        fragment.setTargetFragment(this, REQUEST_CHANGE_PASSWORD);
+        ((BaseActivity) getActivity()).addFragment(fragment, R.anim.slide_up, R.anim.slide_down);
     }
 
     private void showUserInfo() {
@@ -113,6 +137,7 @@ public class ProfileFragment extends Fragment {
             mainScrollView.setVisibility(View.VISIBLE);
             bonusCardNumber.setText("");
             firstName.setText(user.getFirstName());
+            middleName.setText(user.getMiddleName());
             lastName.setText(user.getLastName());
             email.setText(user.getEmail());
             phoneNumber.setText(formatPhoneNumber(user.getPhoneNumber()));
@@ -135,7 +160,7 @@ public class ProfileFragment extends Fragment {
 
     private String formatStudentId(String studentId) {
         StringBuilder formattedStudentId = new StringBuilder("");
-        if (!TextUtils.isEmpty(studentId)&& studentId.length()== studentIdLength) {
+        if (!TextUtils.isEmpty(studentId) && studentId.length() == studentIdLength) {
             formattedStudentId.append(studentId.substring(0, 2)).append(StudentIdTextInputEditText.SEPARATOR)
                     .append(studentId.substring(2));
         }
@@ -146,16 +171,24 @@ public class ProfileFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        ((MainActivity) getActivity()).hideNavigationBar();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == REQUEST_EDIT_PROFILE) {
-                user = Parcels.unwrap(data.getParcelableExtra("user"));
-                showUserInfo();
-                Snackbar.make(getView(), R.string.profile_edit_successful_result, Snackbar.LENGTH_SHORT).show();
+            if (getView() != null) {
+                switch (requestCode) {
+                    case REQUEST_EDIT_PROFILE:
+                        user = Parcels.unwrap(data.getParcelableExtra("user"));
+                        showUserInfo();
+                        CommonUtils.showMessage(getView(), R.string.profile_edit_successful_result);
+                        break;
+                    case REQUEST_CHANGE_PASSWORD:
+                        Snackbar.make(getView(), R.string.profile_edit_change_password_success_result, Snackbar.LENGTH_LONG).show();
+                        break;
+                }
             }
         }
     }
@@ -180,7 +213,7 @@ public class ProfileFragment extends Fragment {
         public void onFailure(Call<User> call, Throwable t) {
             if (getView() != null) {
                 progressBar.setVisibility(View.GONE);
-                Snackbar.make(getView(), t.getMessage(), Snackbar.LENGTH_SHORT).show();
+                CommonUtils.showMessage(getView(), t.getMessage());
             }
         }
     };

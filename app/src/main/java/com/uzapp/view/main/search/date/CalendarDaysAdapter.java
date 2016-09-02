@@ -25,12 +25,13 @@ import java.util.List;
 public class CalendarDaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<Date> dateList = new ArrayList<>();
     private Calendar calendar;
-    private Date firstAvailableDate;
-    private Date lastAvailableDate;
+//    private Date firstAvailableDate;
+//    private Date lastAvailableDate;
     private int textColor, textColorPast;
     private int selectedPosition = -1;
     private OnDateSelectedListener listener;
     private int pagePosition;
+    private List<Date> availableDates = new ArrayList<>();
 
     public interface OnDateSelectedListener {
         void onDateSelected(int pagePosition, int dayPosition);
@@ -42,15 +43,19 @@ public class CalendarDaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.dateList.clear();
         this.dateList.addAll(dateList);
         calendar = CommonUtils.getCalendar();
-        firstAvailableDate = calendar.getTime();
-        calendar.add(Calendar.DAY_OF_MONTH, Constants.MAX_DAYS);
-        lastAvailableDate = calendar.getTime();
+//        firstAvailableDate = calendar.getTime();
+//        calendar.add(Calendar.DAY_OF_MONTH, Constants.MAX_DAYS);
+//        lastAvailableDate = calendar.getTime();
         textColor = ContextCompat.getColor(context, R.color.textColor);
         textColorPast = ContextCompat.getColor(context, R.color.textColorHint);
     }
 
-    public void setFirstAvailableDate(Date firstAvailableDate) {
-        this.firstAvailableDate = firstAvailableDate;
+//    public void setFirstAvailableDate(Date firstAvailableDate) {
+//        this.firstAvailableDate = firstAvailableDate;
+//    }
+
+    public void setAvailableDates(List<Date> availableDates) {
+        this.availableDates = availableDates;
     }
 
     public void updateSelection(int pagePosition, int dayPosition) {
@@ -80,7 +85,11 @@ public class CalendarDaysAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         final Date date = dateList.get(position);
         calendar.setTime(date);
         ((DayHolder) holder).day.setText(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
-        if (date.before(firstAvailableDate) || date.after(lastAvailableDate)) {
+/// /        if (date.before(firstAvailableDate) || date.after(lastAvailableDate)) {
+//            ((DayHolder) holder).day.setTextColor(textColorPast);
+//            ((DayHolder) holder).day.setBackgroundColor(Color.TRANSPARENT);
+//        }
+        if (!availableDates.contains(date)) {
             ((DayHolder) holder).day.setTextColor(textColorPast);
             ((DayHolder) holder).day.setBackgroundColor(Color.TRANSPARENT);
         } else if (position == selectedPosition) {

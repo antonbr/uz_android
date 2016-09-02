@@ -21,7 +21,6 @@ import butterknife.ButterKnife;
  */
 public class WagonTypesAdapter extends RecyclerView.Adapter<WagonTypesAdapter.PlaceTypeHolder> {
     private List<TrainPlace> placeList = new ArrayList<>();
-    private String[] shortWagonTypeName, longWagonTypeName, shortWagonClassName, longWagonClassName;
     private Context context;
     private WagonTypeClickListener listener;
 
@@ -34,10 +33,6 @@ public class WagonTypesAdapter extends RecyclerView.Adapter<WagonTypesAdapter.Pl
         this.placeList = placeList;
         this.listener = listener;
         this.context = context;
-        shortWagonTypeName = context.getResources().getStringArray(R.array.wagon_types_short);
-        longWagonTypeName = context.getResources().getStringArray(R.array.wagon_types_long);
-        shortWagonClassName = context.getResources().getStringArray(R.array.wagon_class_short);
-        longWagonClassName = context.getResources().getStringArray(R.array.wagon_class_long);
     }
 
     @Override
@@ -54,31 +49,17 @@ public class WagonTypesAdapter extends RecyclerView.Adapter<WagonTypesAdapter.Pl
         String price = context.getString(R.string.trains_place_min_price, Math.round(trainPlace.getCost()),
                 trainPlace.getCostCurrency());
         holder.minPlacePrice.setText(price);
-        String wagonType = findLongNameMatchingShortName(trainPlace.getType(), shortWagonTypeName, longWagonTypeName);
-        String wagonClass = findLongNameMatchingShortName(trainPlace.getClassName(), shortWagonClassName, longWagonClassName);
-        if (wagonType != null) {
-            if (wagonClass == null) {
-                wagonClass = trainPlace.getClassName();
-            }
+        String wagonType = context.getString(trainPlace.getType().getLongNameStringRes());
+        String wagonClass = context.getString(trainPlace.getClassName().getLongNameStringRes());
+        if (wagonType != null && wagonClass != null) {
             holder.placeTypeName.setText(wagonType + "\n" + wagonClass);
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onWagonTypeClicked(trainPlace.getType(), trainPlace.getClassName());
+                listener.onWagonTypeClicked(trainPlace.getType().getShortName(), trainPlace.getClassName().getShortName());
             }
         });
-    }
-
-    private String findLongNameMatchingShortName(String shortName, String[] shortNames, String[] longNames) {
-        String longName = null;
-        for (int i = 0; i < shortNames.length; i++) {
-            if (shortNames[i].equals(shortName)) {
-                longName = longNames[i];
-                break;
-            }
-        }
-        return longName;
     }
 
     @Override

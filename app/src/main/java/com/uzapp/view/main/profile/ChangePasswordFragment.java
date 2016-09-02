@@ -25,6 +25,7 @@ import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.view.BaseActivity;
 import com.uzapp.view.login.ResetPasswordFragment;
+import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.search.CheckableImageView;
 
 import butterknife.BindDimen;
@@ -66,6 +67,7 @@ public class ChangePasswordFragment extends Fragment {
         passwordLayout.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         newPasswordLayout.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         confirmNewPasswordLayout.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
+        ((MainActivity) getActivity()).hideNavigationBar();
         return view;
     }
 
@@ -174,6 +176,7 @@ public class ChangePasswordFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        ((MainActivity) getActivity()).showNavigationBar();
     }
 
     private Callback<User> changePasswordCallback = new Callback<User>() {

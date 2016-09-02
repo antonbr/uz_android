@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:weightSum="2">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:divider="@drawable/menu_vertical_divider"
+              android:orientation="horizontal"
+              android:showDividers="middle"
+              android:weightSum="2">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="155dp"
         android:layout_weight="1"
+        android:background="?attr/selectableItemBackground"
         android:gravity="center"
-        android:background="@drawable/border_menu_item"
+        android:clickable="true"
         android:orientation="vertical">
 
         <ImageView
@@ -21,10 +24,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/menu_in_way"
-            android:textSize="12sp"
             android:layout_marginTop="14dp"
-            android:textAllCaps="true"/>
+            android:text="@string/menu_in_way"
+            android:textAllCaps="true"
+            android:textSize="12sp"/>
 
     </LinearLayout>
 
@@ -33,7 +36,8 @@
         android:layout_height="155dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:background="@drawable/border_menu_item"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackground"
         android:orientation="vertical">
 
         <ImageView
@@ -44,10 +48,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/menu_schedule"
-            android:textSize="12sp"
             android:layout_marginTop="14dp"
-            android:textAllCaps="true"/>
+            android:text="@string/menu_schedule"
+            android:textAllCaps="true"
+            android:textSize="12sp"/>
 
     </LinearLayout>
 
