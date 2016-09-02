@@ -33,6 +33,7 @@ import com.uzapp.util.Constants;
 import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.search.date.PickDateFragment;
 import com.uzapp.view.main.search.station.StationSearchFragment;
+import com.uzapp.view.main.tickets.TodayTicketsFragment;
 import com.uzapp.view.main.trains.SelectTrainFragment;
 
 import org.parceler.Parcels;
@@ -167,6 +168,11 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
                     firstDate.getTime(), secondDateTime);
             ((MainActivity) getActivity()).replaceFragment(fragment, true);
         }
+    }
+
+    @OnClick(R.id.todayTicketsBtn)
+    void onTodayTicketsBtnClicked() {
+        ((MainActivity) getActivity()).addFragment(new TodayTicketsFragment(), R.anim.slide_up, R.anim.slide_down);
     }
 
     @OnClick(R.id.resetBtn)

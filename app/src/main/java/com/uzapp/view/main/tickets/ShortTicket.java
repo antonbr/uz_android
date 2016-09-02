@@ -4,9 +4,12 @@ import com.uzapp.pojo.TicketKind;
 import com.uzapp.pojo.WagonClass;
 import com.uzapp.pojo.WagonType;
 
+import org.parceler.Parcel;
+
 /**
  * Created by vika on 23.08.16.
  */
+@Parcel
 public class ShortTicket {
     public boolean electronic;
     public String qrImage;

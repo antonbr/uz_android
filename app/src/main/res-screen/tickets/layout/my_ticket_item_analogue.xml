@@ -14,25 +14,25 @@
         android:showDividers="middle">
 
         <TextView
-            android:id="@+id/electronicTicketBtn"
+            android:id="@+id/exchangeTicketBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
+            android:background="@drawable/exchange_ticket_button"
             android:clickable="true"
-            android:drawableLeft="@drawable/ticket_qrcode"
+            android:drawableLeft="@drawable/ticket_alarm"
             android:drawablePadding="11dp"
-            android:drawableRight="@drawable/next_grey"
+            android:drawableRight="@drawable/next_black"
             android:paddingBottom="11dp"
             android:paddingLeft="16dp"
             android:paddingRight="14dp"
             android:paddingTop="11dp"
             android:text="@string/ticket_electronic"
-            android:textColor="@color/accentColor"
+            android:textColor="@android:color/black"
             android:textSize="18sp"/>
 
-        <include layout="@layout/ticket_item_front_side"/>
-    </LinearLayout>
 
+        <include layout="@layout/my_ticket_item_front_side"/>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ticketNumberLayout"
@@ -59,7 +59,6 @@
             android:textColor="@color/accentColor"
             android:textSize="18sp"/>
 
-        <include layout="@layout/ticket_item_back_side_electronic"/>
+        <include layout="@layout/my_ticket_item_back_side_analogue"/>
     </LinearLayout>
-
 </LinearLayout>

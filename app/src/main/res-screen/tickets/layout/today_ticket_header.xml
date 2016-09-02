@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:tools="http://schemas.android.com/tools"
+       tools:showIn="@layout/today_ticket_electronic_item">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="8dp">
+
+        <TextView
+            android:id="@+id/trainName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="143 Л «Галичина»"
+            android:textColor="@color/ticketTextColor"
+            android:textSize="18sp"/>
+
+        <ImageButton
+            android:id="@+id/shareButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="?attr/selectableItemBackground"
+            android:padding="8dp"
+            android:src="@drawable/share"/>
+
+
+        <TextView
+            android:id="@+id/stationFrom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/trainName"
+            android:layout_marginTop="8dp"
+            android:text="ИВАНО-ФРАНКОВСК"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/arrowStations"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/stationFrom"
+            android:layout_alignTop="@+id/stationFrom"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/stationFrom"
+            android:text="—"/>
+
+        <TextView
+            android:id="@+id/stationTo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/stationFrom"
+            android:layout_below="@+id/trainName"
+            android:layout_toRightOf="@+id/arrowStations"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="Киев"
+            android:textSize="18sp"/>
+    </RelativeLayout>
+
+    <android.support.v7.widget.GridLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/trainInfoLayout"
+        android:layout_marginTop="11dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        app:columnCount="3">
+
+        <TextView
+            android:id="@+id/departureTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ticket_departure"
+            android:textColor="@color/ticketTextColor"
+            android:textSize="@dimen/button_text_size"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"/>
+
+        <TextView
+            android:id="@+id/wagonTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wagon"
+            android:textColor="@color/ticketTextColor"
+            android:textSize="@dimen/button_text_size"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"/>
+
+        <TextView
+            android:id="@+id/placeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tickets_place"
+            android:textColor="@color/ticketTextColor"
+            android:textSize="@dimen/button_text_size"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"/>
+
+        <TextView
+            android:id="@+id/departureTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="15:53"
+            android:textAllCaps="true"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"/>
+
+        <TextView
+            android:id="@+id/wagonNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="15"
+            android:textSize="22sp"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"/>
+
+        <TextView
+            android:id="@+id/placeNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="15"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"/>
+    </android.support.v7.widget.GridLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="13dp"
+        android:background="@color/colorHintDivider"/>
+
+    <TextView
+        android:id="@+id/firstName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="11dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="Константи"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/lastName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="2dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="Константи"
+        android:textSize="18sp"/>
+
+</merge>

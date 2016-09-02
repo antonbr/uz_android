@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:showIn="@layout/ticket_item_analogue">
+    tools:showIn="@layout/my_ticket_item_analogue">
 
     <TextView
         android:layout_width="match_parent"

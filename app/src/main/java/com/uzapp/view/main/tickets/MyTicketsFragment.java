@@ -62,7 +62,7 @@ public class MyTicketsFragment extends Fragment {
     @BindString(R.string.ticket_pick_date) String ticketPickDateHint;
     private Unbinder unbinder;
     private LinkedHashSet<Order> orderList = new LinkedHashSet<Order>();
-    private MyTicketsAdapter ticketAdapter;
+    private MyTicketsListAdapter ticketAdapter;
     private Date filterDate;
     private Date todayDate;
     private EndlessRecyclerScrollListener scrollListener;
@@ -75,7 +75,7 @@ public class MyTicketsFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         ((MainActivity) getActivity()).showNavigationBar();
         ((MainActivity) getActivity()).getBottomNavigationBar().setCurrentItem(Constants.BOTTOM_NAVIGATION_TICKETS, false);
-        ticketAdapter = new MyTicketsAdapter(getContext());
+        ticketAdapter = new MyTicketsListAdapter(getContext());
         myTicketsList.setLayoutManager(new LinearLayoutManager(getContext()));
         myTicketsList.setAdapter(ticketAdapter);
         myTicketsList.setItemAnimator(new MyTicketsItemAnimator());

@@ -259,6 +259,14 @@
                 android:layout_marginRight="@dimen/small_padding"
                 android:enabled="false"
                 android:text="@string/search_find_tickets"/>
+
+            <Button
+                android:id="@+id/todayTicketsBtn"
+                style="@style/BlueButtonStyle"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="@dimen/small_padding"
+                android:layout_marginRight="@dimen/small_padding"
+                android:text="@string/tickets_today"/>
         </LinearLayout>
 
     </ScrollView>

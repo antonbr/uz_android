@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
 /**
  * Created by vika on 29.08.16.
  */
-public class MyTicketsAdapter extends RecyclerView.Adapter<MyTicketsAdapter.TicketHolder> {
+public class MyTicketsListAdapter extends RecyclerView.Adapter<MyTicketsListAdapter.TicketHolder> {
     private final int ELECTRONIC_TICKET_TYPE = 0;
     private final int ANALOGUE_TICKET_TYPE = 1;
     private final int CAMERA_DISTANCE = 5;
@@ -41,7 +41,7 @@ public class MyTicketsAdapter extends RecyclerView.Adapter<MyTicketsAdapter.Tick
     private List<ShortTicket> ticketList = new ArrayList<>();
     private Context context;
 
-    public MyTicketsAdapter(Context context) {
+    public MyTicketsListAdapter(Context context) {
         this.context = context;
     }
 
@@ -72,15 +72,15 @@ public class MyTicketsAdapter extends RecyclerView.Adapter<MyTicketsAdapter.Tick
     }
 
     @Override
-    public MyTicketsAdapter.TicketHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        MyTicketsAdapter.TicketHolder viewHolder;
+    public MyTicketsListAdapter.TicketHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        MyTicketsListAdapter.TicketHolder viewHolder;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView;
         if (viewType == ELECTRONIC_TICKET_TYPE) {
-            itemView = inflater.inflate(R.layout.ticket_item_electronic, parent, false);
+            itemView = inflater.inflate(R.layout.my_ticket_item_electronic, parent, false);
             viewHolder = new TicketElectronicHolder(itemView);
         } else {
-            itemView = inflater.inflate(R.layout.ticket_item_analogue, parent, false);
+            itemView = inflater.inflate(R.layout.my_ticket_item_analogue, parent, false);
             viewHolder = new TicketAnalogueHolder(itemView);
         }
         itemView.setCameraDistance(itemView.getCameraDistance() * CAMERA_DISTANCE);
@@ -88,13 +88,13 @@ public class MyTicketsAdapter extends RecyclerView.Adapter<MyTicketsAdapter.Tick
     }
 
     @Override
-    public void onBindViewHolder(MyTicketsAdapter.TicketHolder holder, int position) {
+    public void onBindViewHolder(MyTicketsListAdapter.TicketHolder holder, int position) {
         ShortTicket ticket = ticketList.get(position);
         holder.bindView(ticket, position);
     }
 
     @Override
-    public void onBindViewHolder(MyTicketsAdapter.TicketHolder holder, int position, List<Object> payloads) {
+    public void onBindViewHolder(MyTicketsListAdapter.TicketHolder holder, int position, List<Object> payloads) {
         if (payloads == null || payloads.size() == 0) {
             ShortTicket ticket = ticketList.get(position);
             holder.bindView(ticket, position);
@@ -102,7 +102,7 @@ public class MyTicketsAdapter extends RecyclerView.Adapter<MyTicketsAdapter.Tick
     }
 
     @Override
-    public void onViewRecycled(MyTicketsAdapter.TicketHolder holder) {
+    public void onViewRecycled(MyTicketsListAdapter.TicketHolder holder) {
         super.onViewRecycled(holder);
         holder.isShowingTicketInfo = true;
         holder.itemView.setScaleX(1);
@@ -183,7 +183,7 @@ public class MyTicketsAdapter extends RecyclerView.Adapter<MyTicketsAdapter.Tick
                 final Bitmap barcodeBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                 barCodeImage.setImageBitmap(barcodeBitmap);
             } catch (IllegalArgumentException e) {
-                Log.e(MyTicketsAdapter.class.getName(), e.getMessage());
+                Log.e(MyTicketsListAdapter.class.getName(), e.getMessage());
                 barCodeImage.setImageResource(0);
             }
             analogTicketNumber.setText(ticket.uid);//TODO is correct data? need formatting

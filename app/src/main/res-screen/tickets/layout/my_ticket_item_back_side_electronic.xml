@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:showIn="@layout/ticket_item_electronic">
+    tools:showIn="@layout/my_ticket_item_electronic">
 
     <ImageView
         android:id="@+id/qrCodeImage"

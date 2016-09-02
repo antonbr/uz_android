@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:background="@drawable/shadow"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="11dp"
+    android:paddingTop="3dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include layout="@layout/today_ticket_header"/>
+
+    <View
+        android:background="@color/colorHintDivider"
+        android:id="@+id/divider"
+        android:layout_height="1dp"
+        android:layout_width="match_parent"/>
+
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:padding="16dp"
+        android:text="@string/ticket_analog_message"
+        android:textSize="@dimen/button_text_size"/>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:adjustViewBounds="true"
+        android:id="@+id/barCodeImage"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_above="@+id/analogTicketNumber"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="8dp"
+        android:scaleType="fitCenter"/>
+
+
+    <TextView
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:id="@+id/analogTicketNumber"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="УЦ6-Е1-3995062-0907"
+        android:layout_alignParentBottom="true"
+        android:textSize="18sp"/>
+</RelativeLayout>
+
+</LinearLayout>
