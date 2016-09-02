@@ -15,8 +15,7 @@
         android:layout_below="@+id/toolbar"
         android:overScrollMode="never"
         android:clipChildren="false"
-        android:clipToPadding="false"
-        />
+        android:clipToPadding="false"/>
 
     <com.viewpagerindicator.IconPageIndicator
         android:id="@+id/pageIndicator"

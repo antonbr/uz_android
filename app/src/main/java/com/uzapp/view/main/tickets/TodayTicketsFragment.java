@@ -42,6 +42,8 @@ public class TodayTicketsFragment extends Fragment {
     private static final int NUMBER_OF_STACKED_ITEMS = 2;
     private static final float DEFAULT_CURRENT_PAGE_SCALE = 1f;
     private static final float DEFAULT_TOP_STACKED_SCALE = 0.81f;
+    private static final float DEFAULT_ALPHA_FACTOR = 0.4f;
+    private static final float DEFAULT_SHIFT_FACTOR = 0.15f;
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
     @BindView(R.id.closeBtn) ImageButton closeBtn;
     @BindView(R.id.viewPager) ViewPager viewPager;
@@ -67,7 +69,7 @@ public class TodayTicketsFragment extends Fragment {
         ticketAdapter.addTickets(ticketForAdapterList);
 
         viewPager.setPageTransformer(true, new StackPageTransformer(marginLeft, NUMBER_OF_STACKED_ITEMS,
-                DEFAULT_CURRENT_PAGE_SCALE, DEFAULT_TOP_STACKED_SCALE));
+                DEFAULT_CURRENT_PAGE_SCALE, DEFAULT_TOP_STACKED_SCALE, DEFAULT_ALPHA_FACTOR, DEFAULT_SHIFT_FACTOR));
         viewPager.setOffscreenPageLimit(NUMBER_OF_STACKED_ITEMS + 1);
         viewPager.setAdapter(ticketAdapter);
         pageIndicator.setViewPager(viewPager);
@@ -75,7 +77,7 @@ public class TodayTicketsFragment extends Fragment {
     }
 
     private void loadTickets() {
-        Call call = ApiManager.getApi(getContext()).getUserTickets(1469798400l, null, null);//TODO
+        Call call = ApiManager.getApi(getContext()).getUserTickets(null, null, null);//TODO
         call.enqueue(ticketsCallback);
     }
 

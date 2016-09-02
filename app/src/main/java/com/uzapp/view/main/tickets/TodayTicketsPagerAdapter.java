@@ -51,9 +51,4 @@ public class TodayTicketsPagerAdapter extends FragmentStatePagerAdapter implemen
         return ticketList.size();
     }
 
-    @Override
-    public float getPageWidth(int position) {
-        float width =  super.getPageWidth(position);
-        return (float) (width*0.84);
-    }
 }
