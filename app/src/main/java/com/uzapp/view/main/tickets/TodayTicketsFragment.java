@@ -49,6 +49,7 @@ public class TodayTicketsFragment extends Fragment {
     @BindView(R.id.viewPager) ViewPager viewPager;
     @BindView(R.id.progressBar) ProgressBar progressBar;
     @BindView(R.id.pageIndicator) IconPageIndicator pageIndicator;
+    @BindView(R.id.noContentLayout) ViewGroup noContentLayout;
     @BindDimen(R.dimen.small_padding) int marginLeft;
     private Unbinder unbinder;
     private TodayTicketsPagerAdapter ticketAdapter;
@@ -60,6 +61,9 @@ public class TodayTicketsFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         toolbarTitle.setText(R.string.tickets_today);
         progressBar.setVisibility(View.VISIBLE);
+        noContentLayout.setVisibility(View.GONE);
+        pageIndicator.setVisibility(View.GONE);
+        viewPager.setVisibility(View.GONE);
         loadTickets();
         return view;
     }
@@ -67,17 +71,16 @@ public class TodayTicketsFragment extends Fragment {
     private void setupViewPager(List<ShortTicket> ticketForAdapterList) {
         ticketAdapter = new TodayTicketsPagerAdapter(getChildFragmentManager());
         ticketAdapter.addTickets(ticketForAdapterList);
-
         viewPager.setPageTransformer(true, new StackPageTransformer(marginLeft, NUMBER_OF_STACKED_ITEMS,
                 DEFAULT_CURRENT_PAGE_SCALE, DEFAULT_TOP_STACKED_SCALE, DEFAULT_ALPHA_FACTOR, DEFAULT_SHIFT_FACTOR));
-        viewPager.setOffscreenPageLimit(NUMBER_OF_STACKED_ITEMS+1);
+        viewPager.setOffscreenPageLimit(NUMBER_OF_STACKED_ITEMS + 1);
         viewPager.setAdapter(ticketAdapter);
         pageIndicator.setViewPager(viewPager);
         onPageSelected(0);
     }
 
     private void loadTickets() {
-        Call call = ApiManager.getApi(getContext()).getUserTickets(null, null, null);//TODO
+        Call call = ApiManager.getApi(getContext()).getUserTickets(null, null, null);//TODO pass today seconds
         call.enqueue(ticketsCallback);
     }
 
@@ -86,6 +89,11 @@ public class TodayTicketsFragment extends Fragment {
         ticketAdapter.setCurrentPosition(position);
         pageIndicator.setCurrentItem(position);
         pageIndicator.notifyDataSetChanged();
+    }
+
+    @OnClick(R.id.searchBtn)
+    void onSearchBtnClicked() {
+        getActivity().onBackPressed();
     }
 
     @OnClick(R.id.closeBtn)
@@ -144,9 +152,16 @@ public class TodayTicketsFragment extends Fragment {
                 }
             }
         }
-        setupViewPager(ticketForAdapterList);
-        progressBar.setVisibility(View.GONE);
-        toolbarTitle.setText(getString(R.string.tickets_today_count, ticketForAdapterList.size()));
+        if (ticketForAdapterList.size() == 0) {
+            progressBar.setVisibility(View.GONE);
+            noContentLayout.setVisibility(View.VISIBLE);
+        } else {
+            setupViewPager(ticketForAdapterList);
+            progressBar.setVisibility(View.GONE);
+            toolbarTitle.setText(getString(R.string.tickets_today_count, ticketForAdapterList.size()));
+            pageIndicator.setVisibility(View.VISIBLE);
+            viewPager.setVisibility(View.VISIBLE);
+        }
     }
 
     private Callback<List<TicketsResponse>> ticketsCallback = new Callback<List<TicketsResponse>>() {
