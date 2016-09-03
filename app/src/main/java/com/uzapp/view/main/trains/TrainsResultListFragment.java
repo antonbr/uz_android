@@ -46,6 +46,7 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
     private long stationFromCode, stationToCode, date;
     private Call<TrainSearchResult> trainSearchCall;
     private TrainsListAdapter trainsAdapter;
+    private int departureDate, arrivalDate;
 
     @Nullable
     @Override
@@ -157,10 +158,13 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
 
     @Override
     public void onWagonItemClicked(Train train, String wagonType, String wagonClass) {
-//        Toast.makeText(getContext(), "On item clicked, see logs", Toast.LENGTH_SHORT).show();
         Log.d(TAG, "train number: " + train.getNumber() + " wagon type: " + wagonType + " wagon class: " + wagonClass
                 + " station from code: " + stationFromCode + " station to code: " + stationToCode + " date: " + date);
 
+        departureDate = (int) train.getDepartureDate();
+        arrivalDate = (int) train.getArrivalDate();
+
+        //backend uses mocks for trains, that's why the result is always the same
         Call<Prices> call = ApiManager.getApi(getActivity()).getPrices(stationFromCode, stationToCode, train.getNumber(), date);
         call.enqueue(pricesCallback);
     }
@@ -170,7 +174,8 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
         public void onResponse(Call<Prices> call, Response<Prices> response) {
             if (response.isSuccessful()) {
                 Prices prices = response.body();
-                ((MainActivity) getActivity()).replaceFragment(WagonPlaceFragment.newInstance(prices, 0), true);
+                ((MainActivity) getActivity()).replaceFragment(WagonPlaceFragment
+                        .newInstance(prices, 0, departureDate, arrivalDate, date), true);
             } else {
                 String error = ApiErrorUtil.parseError(response);
                 CommonUtils.showMessage(getView(), error);

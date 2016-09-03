@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
@@ -83,7 +84,8 @@ public class CommonUtils {
     }
 
     public static Drawable changeBackgroundPlace(Context context, Button button) {
-        return (isSelectedPlace(context, button)) ? ContextCompat.getDrawable(context, R.drawable.border_button_place) :
+        return (isSelectedPlace(button, ContextCompat.getDrawable(context, R.drawable.border_button_place_selected))) ?
+                ContextCompat.getDrawable(context, R.drawable.border_button_place) :
                 ContextCompat.getDrawable(context, R.drawable.border_button_place_selected);
     }
 
@@ -96,20 +98,18 @@ public class CommonUtils {
      * Change text color
      */
     public static int changeTextColorPlace(Context context, Button button, int color) {
-        return (isSelectedPlace(context, button)) ?
+        return (isSelectedPlace(button, ContextCompat.getDrawable(context, R.drawable.border_button_place_selected))) ?
                 ContextCompat.getColor(context, android.R.color.white) : ContextCompat.getColor(context, color);
     }
 
     /**
-     * @param context
      * @param button
      * @return selected place
      *
      * Is selected place
      */
-    public static boolean isSelectedPlace(Context context, Button button) {
-        return (button.getBackground().getConstantState().equals(ContextCompat.getDrawable(context,
-                R.drawable.border_button_place_selected).getConstantState()));
+    public static boolean isSelectedPlace(Button button, Drawable drawable) {
+        return (button.getBackground().getConstantState().equals(drawable.getConstantState()));
     }
 
     public static boolean isEmailValid(String email) {
@@ -137,5 +137,45 @@ public class CommonUtils {
 
     public static String getDeviceId(Context context) {
         return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+    }
+
+    public static boolean isInputCorrect(Editable s, int size, int dividerPosition, char divider) {
+        boolean isCorrect = s.length() <= size;
+        for (int i = 0; i < s.length(); i++) {
+            if (i > 0 && (i + 1) % dividerPosition == 0) {
+                isCorrect &= divider == s.charAt(i);
+            } else {
+                isCorrect &= Character.isDigit(s.charAt(i));
+            }
+        }
+        return isCorrect;
+    }
+
+    public static String concatString(char[] digits, int dividerPosition, char divider) {
+        final StringBuilder formatted = new StringBuilder();
+
+        for (int i = 0; i < digits.length; i++) {
+            if (digits[i] != 0) {
+                formatted.append(digits[i]);
+                if ((i > 0) && (i < (digits.length - 1)) && (((i + 1) % dividerPosition) == 0)) {
+                    formatted.append(divider);
+                }
+            }
+        }
+
+        return formatted.toString();
+    }
+
+    public static char[] getDigitArray(final Editable s, final int size) {
+        char[] digits = new char[size];
+        int index = 0;
+        for (int i = 0; i < s.length() && index < size; i++) {
+            char current = s.charAt(i);
+            if (Character.isDigit(current)) {
+                digits[index] = current;
+                index++;
+            }
+        }
+        return digits;
     }
 }

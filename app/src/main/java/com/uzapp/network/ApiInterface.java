@@ -7,6 +7,8 @@ import com.uzapp.pojo.Station;
 import com.uzapp.pojo.TrainSearchResult;
 import com.uzapp.pojo.User;
 import com.uzapp.pojo.UserTokenResponse;
+import com.uzapp.pojo.booking.Booking;
+import com.uzapp.pojo.booking.Uio;
 import com.uzapp.pojo.placeslist.PricesPlacesList;
 import com.uzapp.pojo.prices.Prices;
 import com.uzapp.pojo.tickets.TicketsResponse;
@@ -90,4 +92,23 @@ public interface ApiInterface {
     Call<User> changePassword(@Field("password") String password,
                               @Field("new_password") String newPassword);
 
+
+    @GET("order/booking")
+    Call<Booking> getBooking(@Query("train") String train, @Query("station_from_code") int stationFromCode,
+                             @Query("station_to_code") int stationToCode, @Query("wagon_type") String wagonType,
+                             @Query("wagon_class") int wagonClass, @Query("wagon_number") int wagonNumber,
+                             @Query("date") long date, @Query("places") String places,
+                             @Query("documents") String documents);
+
+    @GET("order/reserve")
+    Call<Booking> getReserve(@Query("train") String train, @Query("station_from_code") int stationFromCode,
+                             @Query("station_to_code") int stationToCode, @Query("wagon_type") String wagonType,
+                             @Query("wagon_class") int wagonClass, @Query("wagon_number") int wagonNumber,
+                             @Query("date") long date, @Query("places") String places,
+                             @Query("no_bedding") int noBedding, @Query("services") String services,
+                             @Query("documents") String documents);
+
+    @FormUrlEncoded
+    @POST("order/cancel")
+    Call<Uio> cancelReserveTickets(@Field("uio") String uio);
 }

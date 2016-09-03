@@ -31,4 +31,6 @@
     <color name="redColorButton">#c0392b</color>
     <color name="ticketTextColor">#607d8b</color>
     <color name="yellow">#b3f1c40f</color>
+    <color name="bg_progress_bar_red">#c0392b</color>
+    <color name="bg_progress_bar_yellow">#ffe600</color>
 </resources>

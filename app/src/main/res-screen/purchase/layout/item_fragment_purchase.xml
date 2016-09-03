@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+    android:id="@+id/purchaseCardView"
+    android:layout_width="match_parent"
+    android:layout_margin="10dp"
+    android:layout_height="wrap_content"
+    card_view:cardBackgroundColor="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/divider_hint_color_horizontal"
+        android:orientation="vertical"
+        android:showDividers="middle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/btnBuyTicket"
+                android:layout_width="match_parent"
+                android:layout_height="27dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_pressed_left"
+                android:text="@string/ticket_buy"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btnReserveTicket"
+                android:layout_width="match_parent"
+                android:layout_height="27dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_enabled_right"
+                android:text="@string/ticket_reserve"
+                android:textAllCaps="false"
+                android:textColor="@color/accentColor"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/trains_padding_inside"
+            android:paddingLeft="@dimen/trains_padding_inside"
+            android:paddingRight="1dp"
+            android:paddingTop="@dimen/trains_padding_inside">
+
+            <TextView
+                android:id="@+id/trainName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/stationFrom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/trainName"
+                android:textAllCaps="true"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/arrowStations"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/stationFrom"
+                android:layout_alignTop="@+id/stationFrom"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/stationFrom"
+                android:src="@drawable/arrow" />
+
+            <TextView
+                android:id="@+id/stationTo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/trainName"
+                android:layout_toLeftOf="@+id/shareButton"
+                android:layout_toRightOf="@+id/arrowStations"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textAllCaps="true"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/ticketTypeImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/qrcode" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/stationTo"
+                android:orientation="horizontal"
+                android:paddingTop="15dp"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Отправления"
+                        android:textAllCaps="true"
+                        android:textSize="12sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/txtDispatchDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/txtDispatchTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="10dp"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Прибытия"
+                        android:textAllCaps="true"
+                        android:textSize="12sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/txtArrivalDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/txtArrivalTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="10dp"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="Вагон"
+                android:textAllCaps="true"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txtWagonNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="1"
+                android:textAllCaps="true"
+                android:textColor="@color/accentColor"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="Место"
+                android:textAllCaps="true"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txtPlaceNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5"
+                android:textAllCaps="true"
+                android:textColor="@color/accentColor"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txtPriceTicket"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|right"
+                android:text="price"
+                android:textColor="@color/accentColor"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/trains_padding_inside"
+            android:paddingTop="@dimen/trains_padding_inside"
+            android:showDividers="middle">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/firstNameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/accentColor"
+                app:hintTextAppearance="@style/HintStyle">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/firstNameField"
+                    style="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:hint="@string/create_account_first_name"
+                    android:inputType="text"
+                    android:paddingBottom="@dimen/medium_padding"
+                    android:translationY="@dimen/hint_padding" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/stationsFromToDividerColor"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/lastNameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/accentColor"
+                app:hintTextAppearance="@style/HintStyle">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/lastNameField"
+                    style="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:hint="@string/create_account_last_name"
+                    android:inputType="text"
+                    android:paddingBottom="@dimen/medium_padding"
+                    android:translationY="@dimen/hint_padding" />
+
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_margin="12dp"
+            android:weightSum="3">
+
+            <Button
+                android:id="@+id/btnFull"
+                android:layout_width="match_parent"
+                android:layout_height="27dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="12sp"
+                android:textColor="@android:color/white"
+                android:background="@drawable/button_pressed_left"
+                android:text="Полный" />
+
+            <Button
+                android:id="@+id/btnChild"
+                android:layout_width="match_parent"
+                android:layout_height="27dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="12sp"
+                android:textColor="@color/accentColor"
+                android:background="@drawable/button_enabled_center"
+                android:text="Детский" />
+
+            <Button
+                android:id="@+id/btnStudent"
+                android:layout_width="match_parent"
+                android:layout_height="27dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="12sp"
+                android:textColor="@color/accentColor"
+                android:background="@drawable/button_enabled_right"
+                android:text="Студент" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/trains_padding_inside"
+            android:paddingTop="@dimen/medium_padding"
+            android:paddingBottom="@dimen/medium_padding">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Перевоз багажу"
+                android:textAllCaps="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:textSize="14sp" />
+
+            <ImageButton
+                android:id="@+id/imageBaggage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@android:color/white"
+                android:layout_marginRight="@dimen/trains_padding_inside"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_more" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txtDeleteTicket"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="16sp"
+            android:textAllCaps="true"
+            android:gravity="center"
+            android:padding="15dp"
+            android:textStyle="bold"
+            android:text="Удалить билет"/>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

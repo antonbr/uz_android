@@ -12,17 +12,26 @@ public class Ticket implements Serializable {
     private String placeNumber;
     private String placeType;
     private int ticketPrice;
+    private int departureDate;
+    private int arrivalDate;
+    private int wagonClasses;
+    private String wagonType;
 
     public Ticket() {
 
     }
 
-    public Ticket(int id, String wagonNumber, String placeNumber, String placeType, int ticketPrice) {
+    public Ticket(int id, String wagonNumber, String placeNumber, String placeType, int ticketPrice,
+                  int departureDate, int arrivalDate, int wagonClasses, String wagonType) {
         this.id = id;
         this.wagonNumber = wagonNumber;
         this.placeNumber = placeNumber;
         this.placeType = placeType;
         this.ticketPrice = ticketPrice;
+        this.departureDate = departureDate;
+        this.arrivalDate = arrivalDate;
+        this.wagonClasses = wagonClasses;
+        this.wagonType = wagonType;
     }
 
     public int getId() {
@@ -63,5 +72,37 @@ public class Ticket implements Serializable {
 
     public void setTicketPrice(int ticketPrice) {
         this.ticketPrice = ticketPrice;
+    }
+
+    public int getDepartureDate() {
+        return departureDate;
+    }
+
+    public void setDepartureDate(int departureDate) {
+        this.departureDate = departureDate;
+    }
+
+    public int getArrivalDate() {
+        return arrivalDate;
+    }
+
+    public void setArrivalDate(int arrivalDate) {
+        this.arrivalDate = arrivalDate;
+    }
+
+    public String getWagonType() {
+        return wagonType;
+    }
+
+    public void setWagonType(String wagonType) {
+        this.wagonType = wagonType;
+    }
+
+    public int getWagonClasses() {
+        return wagonClasses;
+    }
+
+    public void setWagonClasses(int wagonClasses) {
+        this.wagonClasses = wagonClasses;
     }
 }

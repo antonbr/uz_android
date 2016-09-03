@@ -29,6 +29,8 @@ import com.uzapp.pojo.prices.WagonsPrices;
 import com.uzapp.util.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
+import com.uzapp.view.main.MainActivity;
+import com.uzapp.view.main.purchase.fragment.PreparePurchaseFragment;
 import com.uzapp.view.main.wagon.adapter.HorizontalAdapter;
 import com.uzapp.view.main.wagon.adapter.TicketAdapter;
 import com.uzapp.view.main.wagon.adapter.WagonTypeAdapter;
@@ -59,6 +61,9 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
 
     public static final String EXTRA_PRICES = "EXTRA_PRICES";
     public static final String EXTRA_PRICES_POSITION = "EXTRA_PRICES_POSITION";
+    public static final String EXTRA_TRAIN_DEPARTURE_DATE = "EXTRA_TRAIN_DEPARTURE_DATE";
+    public static final String EXTRA_TRAIN_ARRIVAL_DATE = "EXTRA_TRAIN_ARRIVAL_DATE";
+    public static final String EXTRA_TRAIN_DATE = "EXTRA_TRAIN_DATE";
 
     @BindView(R.id.linearLayout)
     LinearLayout linearLayout;
@@ -84,10 +89,10 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
     RecyclerView horizontalRecyclerView;
     @BindView(R.id.listViewSelectTicket)
     ListViewMaxHeight listViewSelectTicket;
-    @BindView(R.id.btnBuyTicket)
-    Button btnBuyTicket;
-    @BindView(R.id.btnReserveTicket)
-    Button btnReserveTicket;
+//    @BindView(R.id.btnBuyTicket)
+//    Button btnBuyTicket;
+//    @BindView(R.id.btnReserveTicket)
+//    Button btnReserveTicket;
     @BindView(R.id.btnGoToRegistration)
     Button btnGoToRegistration;
     @BindView(R.id.progressBar)
@@ -109,21 +114,27 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
 
     private Unbinder unbinder;
 
-    private int stationFromCode, stationToCode, date, position;
-    private String train, wagonTypes, wagonClasses, wagonNumbers;
+    private int stationFromCode, stationToCode, dateTrain, departureDate, arrivalDate, position;
+    private String train, wagonTypes, wagonClasses, wagonNumbers, trainName, stationFromName, stationToName;
+    private boolean isBooking = true;
+    private boolean isReserve = false;
     private List<Ticket> listTickets = new ArrayList<>();
     private List<Wagon> wagonsLists;
     private List<Wagon> wagonsFilterList = null;
     private Prices prices;
+    private long selectDate;
 
     // filter
     private String titleJoinVisit, titleLocationPlaces, titleUpperLower = null;
 
-    public static WagonPlaceFragment newInstance(Prices prices, int position) {
+    public static WagonPlaceFragment newInstance(Prices prices, int position, int departureDate, int arrivalDate, long selectDate) {
         WagonPlaceFragment fragment = new WagonPlaceFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(EXTRA_PRICES, prices);
         bundle.putInt(EXTRA_PRICES_POSITION, position);
+        bundle.putInt(EXTRA_TRAIN_DEPARTURE_DATE, departureDate);
+        bundle.putInt(EXTRA_TRAIN_ARRIVAL_DATE, arrivalDate);
+        bundle.putLong(EXTRA_TRAIN_DATE, selectDate);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -141,15 +152,21 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
         if (getArguments() != null) {
             prices = getArguments().getParcelable(EXTRA_PRICES);
             position = getArguments().getInt(EXTRA_PRICES_POSITION);
+            departureDate = getArguments().getInt(EXTRA_TRAIN_DEPARTURE_DATE);
+            arrivalDate = getArguments().getInt(EXTRA_TRAIN_ARRIVAL_DATE);
+            selectDate = getArguments().getLong(EXTRA_TRAIN_DATE);
 
             if (prices != null) {
                 stationFromCode = prices.getStation_from_code();
                 stationToCode = prices.getStationToCode();
                 train = prices.getTrain().getNumber();
+                trainName = train + " \"" + prices.getTrain().getFastedName() + "\"";
+                stationFromName = prices.getStationFromName();
+                stationToName = prices.getStationToName();
                 wagonTypes = prices.getTrain().getWagons().get(position).getTypeCode();
                 wagonClasses = String.valueOf(prices.getTrain().getWagons().get(position).getClassCode());
                 wagonNumbers = prices.getTrain().getWagons().get(position).getNumber();
-                date = prices.getTrain().getDate();
+                dateTrain = prices.getTrain().getDate();
             }
         }
         // filter
@@ -174,7 +191,7 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
         showWagonLayout(false);
 
         Call<List<PricesPlacesList>> call = ApiManager.getApi(getActivity()).getPlacesList(stationFromCode,
-                stationToCode, train, wagonTypes, wagonClasses, wagonNumbers, date);
+                stationToCode, train, wagonTypes, wagonClasses, wagonNumbers, dateTrain);
         call.enqueue(listPlacesCallback);
 
         initSlideMenu();
@@ -190,21 +207,25 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
         getActivity().onBackPressed();
     }
 
-    @OnClick(R.id.btnBuyTicket)
-    void onClickBtnBuyTicket() {
-        Toast.makeText(getActivity(), "buy", Toast.LENGTH_SHORT).show();
-        setBackgroundBtn();
-    }
-
-    @OnClick(R.id.btnReserveTicket)
-    void onClickBtnReserveTicket() {
-        Toast.makeText(getActivity(), "reserve", Toast.LENGTH_SHORT).show();
-        setBackgroundBtn();
-    }
+//    @OnClick(R.id.btnBuyTicket)
+//    void onClickBtnBuyTicket() {
+//        setBackgroundBtn();
+//        isBooking = true;
+//        isReserve = false;
+//    }
+//
+//    @OnClick(R.id.btnReserveTicket)
+//    void onClickBtnReserveTicket() {
+//        setBackgroundBtn();
+//        isBooking = false;
+//        isReserve = true;
+//    }
 
     @OnClick(R.id.btnGoToRegistration)
     void onClickBtnGoToRegistration() {
-        Toast.makeText(getActivity(), "registration", Toast.LENGTH_SHORT).show();
+        ((MainActivity) getActivity()).replaceFragment(PreparePurchaseFragment
+                .getInstance(listTickets, isBooking, isReserve, trainName, stationFromName, stationToName,
+                        train, selectDate, stationFromCode, stationToCode), true);
     }
 
     @OnClick(R.id.okBtn)
@@ -350,16 +371,6 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
     }
 
     /**
-     * Change background Buy and Reserve button on click
-     */
-    private void setBackgroundBtn() {
-        btnReserveTicket.setBackground(CommonUtils.changeBackgroundPlace(getActivity(), btnReserveTicket));
-        btnReserveTicket.setTextColor(CommonUtils.changeTextColorPlace(getActivity(), btnReserveTicket, R.color.bgButtonWagonPlacesSelected));
-        btnBuyTicket.setBackground(CommonUtils.changeBackgroundPlace(getActivity(), btnBuyTicket));
-        btnBuyTicket.setTextColor(CommonUtils.changeTextColorPlace(getActivity(), btnBuyTicket, R.color.bgButtonWagonPlacesSelected));
-    }
-
-    /**
      * Initializing bottom slide menu
      */
     private void initSlideMenu() {
@@ -386,7 +397,8 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
 
         for (int i = 0; i < Constants.SECTION; i++) {
             WagonTypeAdapter adapter = new WagonTypeAdapter(getActivity(), listPlaces, wagonsList.get(position).getNumber(),
-                    wagonsList.get(position).getCost(), wagonsList.get(position).getTypeCode());
+                    wagonsList.get(position).getCost(), wagonsList.get(position).getTypeCode(), departureDate, arrivalDate,
+                    wagonsList.get(position).getClassCode());
             adapter.notifyDataSetChanged();
             View viewWagon = adapter.getView(i, null, linearLayout);
             // content in view

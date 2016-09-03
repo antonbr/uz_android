@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <clip>
+            <shape>
+                <gradient
+                    android:startColor="@color/bg_progress_bar_red"
+                    android:endColor="@color/bg_progress_bar_red"
+                    android:centerColor="@color/bg_progress_bar_red"
+                    android:centerY="0.1"
+                    android:type="linear"/>
+            </shape>
+
+        </clip>
+    </item>
+    <item>
+        <clip>
+            <bitmap
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:tileMode="repeat"
+                android:autoMirrored="false"
+                android:antialias="true"
+                android:dither="false"
+                android:filter="false"
+                android:gravity="left"
+                android:src="@drawable/ic_line_progress" />
+        </clip>
+    </item>
+</layer-list>
