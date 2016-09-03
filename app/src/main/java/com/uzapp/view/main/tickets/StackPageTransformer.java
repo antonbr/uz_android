@@ -29,7 +29,6 @@ public class StackPageTransformer implements ViewPager.PageTransformer {
         int screenWidth = view.getWidth();
         view.setPivotX(0f);
         view.setPivotY(view.getHeight() / 2);
-
         if (position >= (numberOfStacked + 1) || position <= -1) {
             view.setAlpha(0f);
         } else if (position > 0) {

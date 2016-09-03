@@ -70,7 +70,7 @@ public class TodayTicketsFragment extends Fragment {
 
         viewPager.setPageTransformer(true, new StackPageTransformer(marginLeft, NUMBER_OF_STACKED_ITEMS,
                 DEFAULT_CURRENT_PAGE_SCALE, DEFAULT_TOP_STACKED_SCALE, DEFAULT_ALPHA_FACTOR, DEFAULT_SHIFT_FACTOR));
-        viewPager.setOffscreenPageLimit(NUMBER_OF_STACKED_ITEMS + 1);
+        viewPager.setOffscreenPageLimit(NUMBER_OF_STACKED_ITEMS+1);
         viewPager.setAdapter(ticketAdapter);
         pageIndicator.setViewPager(viewPager);
         onPageSelected(0);

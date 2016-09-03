@@ -3,7 +3,6 @@
               xmlns:app="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:layout_marginBottom="@dimen/bottomBarHeight"
               android:orientation="vertical">
 
     <include layout="@layout/toolbar_edit_page"/>
@@ -11,6 +10,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         android:overScrollMode="never">
 
         <LinearLayout
@@ -254,20 +254,34 @@
             <Button
                 android:id="@+id/findTicketsBtn"
                 style="@style/BlueButtonStyle"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="15dp"
                 android:layout_marginLeft="@dimen/small_padding"
                 android:layout_marginRight="@dimen/small_padding"
                 android:enabled="false"
                 android:text="@string/search_find_tickets"/>
 
-            <Button
-                android:id="@+id/todayTicketsBtn"
-                style="@style/BlueButtonStyle"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="@dimen/small_padding"
-                android:layout_marginRight="@dimen/small_padding"
-                android:text="@string/tickets_today"/>
-        </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false">
 
+                <Button
+                    android:id="@+id/todayTicketsBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:background="@drawable/today_tickets_button_background"
+                    android:drawablePadding="7dp"
+                    android:drawableTop="@drawable/ic_footer_up"
+                    android:paddingBottom="60dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/tickets_today"
+                    android:textAllCaps="true"
+                    android:textColor="@color/accentColor"/>
+            </RelativeLayout>
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>
