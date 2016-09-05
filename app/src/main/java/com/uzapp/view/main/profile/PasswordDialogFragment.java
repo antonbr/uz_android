@@ -1,6 +1,7 @@
 package com.uzapp.view.main.profile;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -10,6 +11,7 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -82,6 +84,8 @@ public class PasswordDialogFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(passwordField.getWindowToken(), 0);
         unbinder.unbind();
     }
 }

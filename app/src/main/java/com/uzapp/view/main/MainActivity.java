@@ -98,7 +98,7 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
     }
 
     @Override
-    public void onTabSelected(int position, boolean wasSelected) {
+    public boolean onTabSelected(int position, boolean wasSelected) {
         switch (position) {
             case Constants.BOTTOM_NAVIGATION_SEARCH:
                 previousSelectedBottomItem = Constants.BOTTOM_NAVIGATION_SEARCH;
@@ -124,5 +124,6 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
             default:
                 break;
         }
+        return true;
     }
 }
