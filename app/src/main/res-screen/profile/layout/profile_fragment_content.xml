@@ -6,12 +6,11 @@
     android:id="@+id/mainScrollView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/toolbar"
+    android:layout_below="@+id/appbar"
     android:layout_marginBottom="@dimen/bottomBarHeight"
     android:clipToPadding="false"
     android:fillViewport="true"
-    android:overScrollMode="never"
-    tools:showIn="@layout/profile_fragment">
+    android:overScrollMode="never">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,239 +21,16 @@
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@android:color/white"
-            app:cardCornerRadius="0dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="22dp"
-                android:paddingRight="22dp"
-                android:paddingTop="17dp">
-
-                <TextView
-                    android:id="@+id/bonusCardLbl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/profile_bonus_card_number"
-                    android:textAllCaps="true"
-                    android:textColor="@color/textColorHint"
-                    android:textSize="11sp"/>
-
-                <TextView
-                    android:id="@+id/bonusCardNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/textColorHint"
-                    android:textSize="18sp"/>
-
-                <TextView
-                    android:id="@+id/firstNameLbl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="17dp"
-                    android:text="@string/create_account_first_name"
-                    android:textAllCaps="true"
-                    android:textColor="@color/textColorHint"
-                    android:textSize="11sp"/>
-
-                <TextView
-                    android:id="@+id/firstName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
-                    android:textSize="18sp"/>
-
-                <TextView
-                    android:id="@+id/middleNameLbl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="17dp"
-                    android:text="@string/profile_edit_middle_name"
-                    android:textAllCaps="true"
-                    android:textColor="@color/textColorHint"
-                    android:textSize="11sp"/>
-
-                <TextView
-                    android:id="@+id/middleName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
-                    android:textSize="18sp"/>
-
-                <TextView
-                    android:id="@+id/lastNameLbl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="17dp"
-                    android:text="@string/create_account_last_name"
-                    android:textAllCaps="true"
-                    android:textColor="@color/textColorHint"
-                    android:textSize="11sp"/>
-
-                <TextView
-                    android:id="@+id/lastName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
-                    android:textSize="18sp"/>
-
-                <TextView
-                    android:id="@+id/emailLbl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="17dp"
-                    android:text="@string/create_account_email_hint"
-                    android:textAllCaps="true"
-                    android:textColor="@color/textColorHint"
-                    android:textSize="11sp"/>
-
-                <TextView
-                    android:id="@+id/email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/phoneNumberLbl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="17dp"
-                    android:text="@string/profile_phone"
-                    android:textAllCaps="true"
-                    android:textColor="@color/textColorHint"
-                    android:textSize="11sp"/>
-
-                <TextView
-                    android:id="@+id/phoneNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:id="@+id/studentIdLbl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="17dp"
-                    android:text="@string/create_account_student_id"
-                    android:textAllCaps="true"
-                    android:textColor="@color/textColorHint"
-                    android:textSize="11sp"/>
-
-                <TextView
-                    android:id="@+id/studentId"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@color/colorHintDivider"/>
-
-                <Button
-                    android:id="@+id/editInfoBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="3dp"
-                    android:layout_marginTop="6dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:paddingBottom="11dp"
-                    android:paddingTop="11dp"
-                    android:stateListAnimator="@null"
-                    android:text="@string/profile_edit"
-                    android:textAllCaps="true"
-                    android:textColor="@color/accentColor"
-                    android:textSize="13.5sp"/>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="11dp"
-            app:cardBackgroundColor="@android:color/white">
+            android:layout_marginTop="21dp"
+            app:cardBackgroundColor="@color/lightColor">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:divider="@drawable/divider_hint_color_horizontal"
                 android:orientation="vertical"
+                android:paddingLeft="34dp"
                 android:showDividers="middle">
-
-                <include layout="@layout/profile_card_item"/>
-
-                <Button
-                    android:id="@+id/addCardBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
-                    android:fontFamily="sans-serif-medium"
-                    android:gravity="left"
-                    android:paddingBottom="18dp"
-                    android:paddingLeft="22dp"
-                    android:paddingTop="18dp"
-                    android:text="@string/profile_card_add"
-                    android:textAllCaps="true"
-                    android:textColor="@color/accentColor"
-                    android:textSize="13.5sp"/>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="11dp"
-            app:cardBackgroundColor="@android:color/white">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:divider="@drawable/divider_hint_color_horizontal"
-                android:orientation="vertical"
-                android:showDividers="middle">
-
-                <LinearLayout
-                    android:id="@+id/myTicketsBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingBottom="22dp"
-                    android:paddingLeft="22dp"
-                    android:paddingRight="16dp"
-                    android:paddingTop="22dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/profile_my_tickets"
-                        android:textSize="18sp"/>
-
-                    <TextView
-                        android:id="@+id/myTicketsCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="14dp"
-                        android:layout_marginRight="14dp"
-                        android:background="@drawable/count_background"
-                        android:paddingBottom="7dp"
-                        android:paddingLeft="14dp"
-                        android:paddingRight="14dp"
-                        android:paddingTop="7dp"
-                        android:text="2"
-                        android:textColor="@color/accentColor"
-                        android:textSize="14sp"/>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/profile_next"/>
-                </LinearLayout>
 
                 <TextView
                     android:id="@+id/ticketReturnBtn"
@@ -263,7 +39,6 @@
                     android:background="?attr/selectableItemBackground"
                     android:drawableRight="@drawable/profile_next"
                     android:paddingBottom="22dp"
-                    android:paddingLeft="22dp"
                     android:paddingRight="16dp"
                     android:paddingTop="22dp"
                     android:text="@string/profile_ticket_return"
@@ -276,7 +51,6 @@
                     android:background="?attr/selectableItemBackground"
                     android:drawableRight="@drawable/profile_next"
                     android:paddingBottom="22dp"
-                    android:paddingLeft="22dp"
                     android:paddingRight="16dp"
                     android:paddingTop="22dp"
                     android:text="@string/profile_booking_history"
@@ -289,7 +63,6 @@
                     android:background="?attr/selectableItemBackground"
                     android:drawableRight="@drawable/profile_next"
                     android:paddingBottom="22dp"
-                    android:paddingLeft="22dp"
                     android:paddingRight="16dp"
                     android:paddingTop="22dp"
                     android:text="@string/profile_bonus_program"
@@ -297,12 +70,89 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
+        <TextView
+            style="@style/LabelStyle"
+            android:layout_marginBottom="13.5dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="37dp"
+            android:text="@string/profile_last_destinations"/>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/lastDestinationCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/lightColor">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/lastDestinationsList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            style="@style/LabelStyle"
+            android:layout_marginBottom="13.5dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="37dp"
+            android:text="@string/profile_settings"/>
+
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="11dp"
-            android:layout_marginLeft="11dp"
-            android:layout_marginRight="11dp"
+            app:cardBackgroundColor="@color/lightColor">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/divider_hint_color_horizontal"
+                android:orientation="vertical"
+                android:paddingLeft="34dp"
+                android:showDividers="middle">
+
+                <TextView
+                    android:id="@+id/paymentMethodsBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawableRight="@drawable/profile_next"
+                    android:paddingBottom="22dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="22dp"
+                    android:text="@string/profile_payment_methods"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/profileSettingsBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawableRight="@drawable/profile_next"
+                    android:paddingBottom="22dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="22dp"
+                    android:text="@string/profile_settings_account"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/searchSettingsBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawableRight="@drawable/profile_next"
+                    android:paddingBottom="22dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="22dp"
+                    android:text="@string/profile_search_settings"
+                    android:textSize="18sp"/>
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="33dp"
+            android:layout_marginTop="33dp"
             app:cardBackgroundColor="@android:color/white">
 
             <LinearLayout

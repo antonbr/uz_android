@@ -95,7 +95,7 @@ public class EditProfileFragment extends Fragment {
 
     @OnClick(R.id.tickBtn)
     void onSaveBtnClicked() {
-        PasswordDialogFragment fragment = new PasswordDialogFragment();
+        EnterPasswordFragment fragment = new EnterPasswordFragment();
         fragment.setTargetFragment(this, REQUEST_PASSWORD);
         ((MainActivity) getActivity()).addFragment(fragment, R.anim.slide_up, R.anim.slide_down);
     }

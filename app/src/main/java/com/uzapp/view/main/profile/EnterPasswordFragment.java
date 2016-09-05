@@ -29,7 +29,7 @@ import butterknife.Unbinder;
 /**
  * Created by vika on 18.08.16.
  */
-public class PasswordDialogFragment extends Fragment {
+public class EnterPasswordFragment extends Fragment {
     @BindView(R.id.passwordField) EditText passwordField;
     @BindView(R.id.saveBtn) Button saveBtn;
     private Unbinder unbinder;

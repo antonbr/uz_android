@@ -54,7 +54,8 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
         if (bottomNavigationBar != null) {
             bottomNavigationBar.setOnTabSelectedListener(this);
         }
-
+        float textSize = getResources().getDimension(R.dimen.menu_textsize);
+        bottomNavigationBar.setTitleTextSize(textSize,textSize);
         //CREATE ITEMS
         AHBottomNavigationItem searchTrainItem = new AHBottomNavigationItem(getString(R.string.menu_search_ticket), R.drawable.ic_search_train);
         AHBottomNavigationItem myTicketsItem = new AHBottomNavigationItem(getString(R.string.menu_my_ticket), R.drawable.ic_my_tickets);

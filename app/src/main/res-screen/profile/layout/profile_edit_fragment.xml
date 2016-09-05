@@ -15,7 +15,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/white"
+            android:background="@color/lightColor"
             app:contentInsetLeft="0dp"
             app:contentInsetStart="0dp">
 
@@ -80,7 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
-                app:cardBackgroundColor="@android:color/white"
+                app:cardBackgroundColor="@color/lightColor"
                 app:cardCornerRadius="0dp">
 
                 <LinearLayout
@@ -126,7 +126,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
-                app:cardBackgroundColor="@android:color/white"
+                app:cardBackgroundColor="@color/lightColor"
                 app:cardCornerRadius="0dp">
 
                 <LinearLayout
@@ -204,7 +204,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="14dp"
                 android:layout_marginTop="14dp"
-                app:cardBackgroundColor="@android:color/white"
+                app:cardBackgroundColor="@color/lightColor"
                 app:cardCornerRadius="0dp"
                 app:contentPaddingLeft="34dp">
 

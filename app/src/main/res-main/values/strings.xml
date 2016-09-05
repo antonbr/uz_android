@@ -268,4 +268,10 @@
     <string name="profile_edit_password_title">Введите пароль</string>
     <string name="profile_edit_password_subtitle">Для сохранения изменений</string>
     <string name="profile_save_changes">Сохранить изменения</string>
+    <string name="profile_change_password_title">Изменение пароля</string>
+    <string name="profile_last_destinations">Недавние маршруты</string>
+    <string name="profile_settings">Настройки</string>
+    <string name="profile_payment_methods">Способы оплаты</string>
+    <string name="profile_settings_account">Настройки кабинета</string>
+    <string name="profile_search_settings">Настройки поиска билетов</string>
 </resources>
