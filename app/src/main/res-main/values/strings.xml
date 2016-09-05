@@ -155,6 +155,7 @@
     <string name="profile_edit_password">Пароль</string>
     <string name="profile_edit_connected_accounts">Связанные аккаунты</string>
     <string name="profile_edit_middle_name">Отчество</string>
+    <string name="profile_edit_middle_name_hint">Отчество (Необязательно)</string>
     <string name="profile_phone">Телефон</string>
     <string name="profile_password_not_valid">Пароль невалидный</string>
     <string name="profile_change_password_cancelation">Отмена</string>
@@ -255,4 +256,13 @@
     <string name="ticket_pick_date">Выбрать дату</string>
     <string name="tickets_no_content">У Вас пока нет билетов</string>
     <string name="tickets_no_content_search">Найдите билеты на нужный поезд</string>
+    <string name="profile_name">Имя</string>
+    <string name="profile_edit_contacts">Контакты</string>
+    <string name="profile_phone_hint">ХХ ХХХ ХХ ХХ</string>
+    <string name="profile_email_hint">example@example.com</string>
+    <string name="profile_edit_enter_studentid">Введите номер студенческого билета</string>
+    <string name="profile_studentid_series_hint">XX</string>
+    <string name="profile_studentid_number_hint">XXXXXXXX</string>
+    <string name="profile_edit_title">Настройки кабинета</string>
+    <string name="profile_phone_prefix">+380</string>
 </resources>

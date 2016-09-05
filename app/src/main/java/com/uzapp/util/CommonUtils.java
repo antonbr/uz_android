@@ -21,6 +21,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by vika on 17.07.16.
@@ -177,5 +179,13 @@ public class CommonUtils {
             }
         }
         return digits;
+    }
+
+
+    public static boolean isStudentIdValid(String studentId) {
+        if (studentId == null) return false;
+        Pattern p = Pattern.compile(Constants.STUDENT_ID_REGEX_PATTERN);
+        Matcher m = p.matcher(studentId.replaceAll("\\s+", ""));
+        return m.matches();
     }
 }

@@ -33,4 +33,5 @@ public class Constants {
     public static final int BOTTOM_NAVIGATION_TICKETS = 1;
     public static final int BOTTOM_NAVIGATION_MENU = 2;
     public static final double TICKETS_PAGE_MARGIN_PERCENT = 0.3;
+    public static final String STUDENT_ID_REGEX_PATTERN = "[a-zA-Z]{2}[0-9]{8}";
 }
