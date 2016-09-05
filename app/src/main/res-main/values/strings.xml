@@ -265,4 +265,7 @@
     <string name="profile_studentid_number_hint">XXXXXXXX</string>
     <string name="profile_edit_title">Настройки кабинета</string>
     <string name="profile_phone_prefix">+380</string>
+    <string name="profile_edit_password_title">Введите пароль</string>
+    <string name="profile_edit_password_subtitle">Для сохранения изменений</string>
+    <string name="profile_save_changes">Сохранить изменения</string>
 </resources>

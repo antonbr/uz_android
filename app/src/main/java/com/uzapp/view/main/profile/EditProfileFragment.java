@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.view.LayoutInflater;
@@ -55,7 +54,7 @@ public class EditProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.new_profile_edit_fragment, container, false);
+        View view = inflater.inflate(R.layout.profile_edit_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
         user = Parcels.unwrap(getArguments().getParcelable("user"));
         initViews();
@@ -96,9 +95,9 @@ public class EditProfileFragment extends Fragment {
 
     @OnClick(R.id.tickBtn)
     void onSaveBtnClicked() {
-        DialogFragment fragment = new PasswordDialogFragment();
+        PasswordDialogFragment fragment = new PasswordDialogFragment();
         fragment.setTargetFragment(this, REQUEST_PASSWORD);
-        fragment.show(getFragmentManager(), fragment.getClass().getName());
+        ((MainActivity) getActivity()).addFragment(fragment, R.anim.slide_up, R.anim.slide_down);
     }
 
     @OnTextChanged(value = {R.id.firstNameField, R.id.middleNameField, R.id.lastNameField, R.id.phoneField,

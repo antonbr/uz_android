@@ -1,58 +1,88 @@
 package com.uzapp.view.main.profile;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
+import android.support.v4.app.Fragment;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.uzapp.R;
 import com.uzapp.util.CommonUtils;
+import com.uzapp.util.Constants;
+import com.uzapp.view.main.search.CheckableImageView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnTextChanged;
+import butterknife.Unbinder;
 
 /**
  * Created by vika on 18.08.16.
  */
-public class PasswordDialogFragment extends DialogFragment {
-    @NonNull
+public class PasswordDialogFragment extends Fragment {
+    @BindView(R.id.passwordField) EditText passwordField;
+    @BindView(R.id.saveBtn) Button saveBtn;
+    private Unbinder unbinder;
+
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.AlertDialogCustom);
-        builder.setTitle(R.string.profile_edit_password);
-        View viewInflated = LayoutInflater.from(getContext()).inflate(R.layout.profile_password_dialog, null);
-        final EditText input = (EditText) viewInflated.findViewById(R.id.passwordField);
-        builder.setView(viewInflated);
-        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String password = input.getText().toString();
-                setResult(password);
-            }
-        });
-        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        return builder.create();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.profile_edit_password_fragment, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        return view;
     }
 
-    private void setResult(String password) {
-        if (CommonUtils.isPasswordValid(password)) {
-            Intent intent = new Intent();
-            intent.putExtra("password", password);
-            getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
-            dismiss();
-        } else {
-            Toast.makeText(getContext(), getContext().getString(R.string.profile_password_not_valid), Toast.LENGTH_SHORT).show();
+    @OnClick(R.id.closeBtn)
+    void onBackBtnClicked() {
+        getActivity().onBackPressed();
+    }
+
+    @OnTextChanged(R.id.passwordField)
+    void onTextChanged() {
+        saveBtn.setEnabled(CommonUtils.isPasswordValid(passwordField.getText().toString()));
+    }
+
+    @OnClick(R.id.saveBtn)
+    void onSaveBtnClicked() {
+        Intent intent = new Intent();
+        intent.putExtra("password", passwordField.getText().toString());
+        getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
+    }
+
+    @OnClick(R.id.showPasswordBtn)
+    void onShowPasswordBtnClicked(CheckableImageView view) {
+        if(passwordField.getText().length()>0) {
+            view.toggle();
+            passwordField.setInputType(view.isChecked() ? InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD :
+                    InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            setLetterSpacing(view.isChecked());
+            passwordField.setSelection(passwordField.length());
         }
+    }
+
+
+    private void setLetterSpacing(boolean isBigSpacing) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //TODO fix left padding
+            passwordField.setLetterSpacing(isBigSpacing ? Constants.PASSWORD_VISIBLE_LETTER_SPACING :
+                    Constants.PASSWORD_INVISIBLE_LETTER_SPACING);
+            //typeface is lost after setting letter spacing
+            passwordField.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }
 
