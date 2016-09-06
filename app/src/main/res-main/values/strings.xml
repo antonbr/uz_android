@@ -274,4 +274,6 @@
     <string name="profile_payment_methods">Способы оплаты</string>
     <string name="profile_settings_account">Настройки кабинета</string>
     <string name="profile_search_settings">Настройки поиска билетов</string>
+    <string name="profile_change_password_button">Изменить пароль</string>
+    <string name="reset_password_old">Старый пароль</string>
 </resources>

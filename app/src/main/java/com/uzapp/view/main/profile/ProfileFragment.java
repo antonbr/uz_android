@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -13,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.uzapp.R;
@@ -58,7 +58,7 @@ public class ProfileFragment extends Fragment implements ProfileLastStationsAdap
     @BindView(R.id.email) TextView email;
     @BindView(R.id.phoneNumber) TextView phoneNumber;
     @BindView(R.id.progressBar) ProgressBar progressBar;
-    @BindView(R.id.mainScrollView) ScrollView mainScrollView;
+    @BindView(R.id.mainScrollView) NestedScrollView mainScrollView;
     @BindView(R.id.lastDestinationsList) RecyclerView lastDestinationsList;
     @BindInt(R.integer.student_id_full_length) int studentIdLength;
     @BindDimen(R.dimen.profile_button_padding) int padding;
