@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.uzapp.util.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.PrefsUtil;
 import com.uzapp.view.BaseActivity;
+import com.uzapp.view.login.PhoneNumberTextInputEditText;
 import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.utils.VerticalDividerItemDecoration;
 
@@ -32,6 +34,7 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindDimen;
 import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,19 +54,14 @@ import retrofit2.Response;
 public class ProfileFragment extends Fragment implements ProfileLastStationsAdapter.OnStationClickListener {
     private static final int REQUEST_EDIT_PROFILE = 1;
     private static final int REQUEST_CHANGE_PASSWORD = 2;
-    //    @BindView(R.id.bonusCardNumber) TextView bonusCardNumber;
-//    @BindView(R.id.firstName) TextView firstName;
-//    @BindView(R.id.middleName) TextView middleName;
-//    @BindView(R.id.lastName) TextView lastName;
     @BindView(R.id.fullName) TextView fullName;
     @BindView(R.id.email) TextView email;
-    //    @BindView(R.id.phoneNumber) TextView phoneNumber;
-//    @BindView(R.id.studentId) TextView studentId;
-//    @BindView(R.id.myTicketsCount) TextView myTicketsCount;
+    @BindView(R.id.phoneNumber) TextView phoneNumber;
     @BindView(R.id.progressBar) ProgressBar progressBar;
     @BindView(R.id.mainScrollView) ScrollView mainScrollView;
     @BindView(R.id.lastDestinationsList) RecyclerView lastDestinationsList;
     @BindInt(R.integer.student_id_full_length) int studentIdLength;
+    @BindDimen(R.dimen.profile_button_padding) int padding;
     private Unbinder unbinder;
     private User user;
     private Realm realm;
@@ -88,29 +86,6 @@ public class ProfileFragment extends Fragment implements ProfileLastStationsAdap
         ((MainActivity) getActivity()).selectNoneItemsInNavBar();
     }
 
-//    @OnClick(R.id.backBtn)
-//    void onBackBtnClicked() {
-//        getActivity().onBackPressed();
-//    }
-//
-//    @OnClick(R.id.filterBtn)
-//    void onFilterBtnClicked() {
-//    }
-//
-//    @OnClick(R.id.editInfoBtn)
-//    void onEditInfoBtnClicked() {
-//        if (user != null) {
-//            Fragment fragment = EditProfileFragment.getInstance(user);
-//            fragment.setTargetFragment(this, REQUEST_EDIT_PROFILE);
-//            ((BaseActivity) getActivity()).addFragment(fragment, R.anim.slide_up, R.anim.slide_down);
-//            //TODO check navigation and animation
-//        }
-//    }
-//
-//    @OnClick(R.id.addCardBtn)
-//    void onAddCardBtnClicked() {
-//    }
-
     @OnClick({R.id.ticketReturnBtn, R.id.bookingHistoryBtn, R.id.bonusProgramBtn, R.id.paymentMethodsBtn, R.id.profileSettingsBtn,
             R.id.searchSettingsBtn, R.id.changePasswordBtn, R.id.logoutBtn})
     void onButtonsClicked(View view) {
@@ -124,6 +99,7 @@ public class ProfileFragment extends Fragment implements ProfileLastStationsAdap
             case R.id.paymentMethodsBtn:
                 break;
             case R.id.profileSettingsBtn:
+                showEditProfileFragment();
                 break;
             case R.id.searchSettingsBtn:
                 break;
@@ -133,6 +109,14 @@ public class ProfileFragment extends Fragment implements ProfileLastStationsAdap
             case R.id.logoutBtn:
                 logout();
                 break;
+        }
+    }
+
+    private void showEditProfileFragment() {
+        if (user != null) {
+            Fragment fragment = EditProfileFragment.getInstance(user);
+            fragment.setTargetFragment(this, REQUEST_EDIT_PROFILE);
+            ((BaseActivity) getActivity()).addFragment(fragment, R.anim.slide_up, R.anim.slide_down);
         }
     }
 
@@ -152,43 +136,34 @@ public class ProfileFragment extends Fragment implements ProfileLastStationsAdap
     private void showUserInfo() {
         if (user != null) {
             mainScrollView.setVisibility(View.VISIBLE);
-//            bonusCardNumber.setText("");
-//            firstName.setText(user.getFirstName());
-//            middleName.setText(user.getMiddleName());
-//            lastName.setText(user.getLastName());
             fullName.setText(user.getFirstName() + " " + user.getLastName());
             email.setText(user.getEmail());
+            if (!TextUtils.isEmpty(user.getPhoneNumber())) {
+                phoneNumber.setText(formatPhoneNumber(user.getPhoneNumber()));
+            } else {
+                phoneNumber.setVisibility(View.GONE);
+            }
             adapter = new ProfileLastStationsAdapter(this);
+            lastDestinationsList.setNestedScrollingEnabled(false);
             lastDestinationsList.setLayoutManager(new LinearLayoutManager(getContext()));
             lastDestinationsList.setAdapter(adapter);
-            lastDestinationsList.addItemDecoration(new VerticalDividerItemDecoration(getContext(), R.drawable.divider_hint_color_horizontal, 0, 0));
+            lastDestinationsList.addItemDecoration(new VerticalDividerItemDecoration(getContext(), R.drawable.profile_divider_hint_color_horizontal, padding, 0));
             showPopularStations();
-//            phoneNumber.setText(formatPhoneNumber(user.getPhoneNumber()));
-//            studentId.setText(formatStudentId(user.getStudentId()));
         }
     }
 
-//    private String formatPhoneNumber(String phone) {
-//        StringBuilder formattedPhone = new StringBuilder("");
-//        if (!TextUtils.isEmpty(phone)) {
-//            formattedPhone.append(PhoneNumberTextInputEditText.FIRST_SIGN).
-//                    append(phone.substring(0, 3)).
-//                    append(" (").append(phone.substring(3, 5)).append(") ").
-//                    append(phone.substring(5, 8)).append("−").
-//                    append(phone.substring(8, 10)).append("−").
-//                    append(phone.substring(10, 12));
-//        }
-//        return formattedPhone.toString();
-//    }
-//
-//    private String formatStudentId(String studentId) {
-//        StringBuilder formattedStudentId = new StringBuilder("");
-//        if (!TextUtils.isEmpty(studentId) && studentId.length() == studentIdLength) {
-//            formattedStudentId.append(studentId.substring(0, 2)).append(StudentIdTextInputEditText.SEPARATOR)
-//                    .append(studentId.substring(2));
-//        }
-//        return formattedStudentId.toString();
-//    }
+    private String formatPhoneNumber(String phone) {
+        StringBuilder formattedPhone = new StringBuilder("");
+        if (!TextUtils.isEmpty(phone)) {
+            formattedPhone.append(PhoneNumberTextInputEditText.FIRST_SIGN).
+                    append(phone.substring(0, 3)).
+                    append(" ").append(phone.substring(3, 5)).append(" ").
+                    append(phone.substring(5, 8)).append("−").
+                    append(phone.substring(8, 10)).append("−").
+                    append(phone.substring(10, 12));
+        }
+        return formattedPhone.toString();
+    }
 
     private void showPopularStations() {
         RealmResults<PopularStation> popularStations = realm.where(PopularStation.class).findAll().
