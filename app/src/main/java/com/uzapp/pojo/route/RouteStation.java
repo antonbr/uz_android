@@ -1,4 +1,4 @@
-package com.uzapp.pojo;
+package com.uzapp.pojo.route;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -9,9 +9,9 @@ public class RouteStation {
     private int code; //the code of station containing 7 numbers
     private String name; //station name
     @SerializedName("arrival_time")
-    private String arrivalTime; // format HH:MM:SS
+    private int arrivalTime; // seconds from start of the day
     @SerializedName("departure_time")
-    private String departureTime;  // format HH:MM:SS
+    private int departureTime;  //  seconds from start of the day
     private int distance; //distance between stations in km
     private int days; //the amount of changed days
 
@@ -31,19 +31,19 @@ public class RouteStation {
         this.name = name;
     }
 
-    public String getArrivalTime() {
+    public int getArrivalTime() {
         return arrivalTime;
     }
 
-    public void setArrivalTime(String arrivalTime) {
+    public void setArrivalTime(int arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
 
-    public String getDepartureTime() {
+    public int getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(String departureTime) {
+    public void setDepartureTime(int departureTime) {
         this.departureTime = departureTime;
     }
 

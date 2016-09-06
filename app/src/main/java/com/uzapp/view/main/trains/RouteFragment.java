@@ -11,8 +11,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.uzapp.R;
-import com.uzapp.pojo.RouteStation;
+import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.Train;
+import com.uzapp.pojo.route.RouteCountry;
+import com.uzapp.pojo.route.RouteResponse;
+import com.uzapp.pojo.route.RouteStation;
+import com.uzapp.util.ApiErrorUtil;
+import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 
 import org.parceler.Parcels;
@@ -28,6 +33,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by vika on 28.07.16.
@@ -58,6 +66,7 @@ public class RouteFragment extends Fragment {
         initExtras();
         setupViews();
         setupList();
+        loadTrainRoute();
         return view;
     }
 
@@ -98,20 +107,21 @@ public class RouteFragment extends Fragment {
         trainRouteListView.setLayoutManager(new LinearLayoutManager(getContext()));
         trainRouteListView.setAdapter(adapter);
         trainRouteListView.addItemDecoration(new RouteVerticalAndHorizontalDivider(getContext()));
+//        //todo add api request and remove test data
+//        List<RouteStation> stationList = new ArrayList<>();
+//        RouteStation routeStation = new RouteStation();
+//        routeStation.setArrivalTime("12:30:01");
+//        routeStation.setDepartureTime("12:34:08");
+//        routeStation.setDistance(29);
+//        routeStation.setName("Тарасовка");
+//        for (int i = 0; i < 15; i++) {
+//            stationList.add(routeStation);
+//        }
+    }
 
-        //todo add api request and remove test data
-        List<RouteStation> stationList = new ArrayList<>();
-        RouteStation routeStation = new RouteStation();
-        routeStation.setArrivalTime("12:30:01");
-        routeStation.setDepartureTime("12:34:08");
-        routeStation.setDistance(29);
-        routeStation.setName("Тарасовка");
-        for (int i = 0; i < 15; i++) {
-            stationList.add(routeStation);
-        }
-
-        adapter.setRouteStations(stationList);
-        adapter.notifyDataSetChanged();
+    private void loadTrainRoute() {
+        Call<RouteResponse> routeResponseCall = ApiManager.getApi(getContext()).getTrainRoute(stationFromCode, stationToCode, train.getNumber(), train.getDepartureDate());
+        routeResponseCall.enqueue(routeCallback);
     }
 
     @OnClick(R.id.ticketCloseBtn)
@@ -130,5 +140,31 @@ public class RouteFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
+    private Callback<RouteResponse> routeCallback = new Callback<RouteResponse>() {
+        @Override
+        public void onResponse(Call<RouteResponse> call, Response<RouteResponse> response) {
+            if (response.isSuccessful()) {
+                RouteResponse routeResponse = response.body();
+                List<RouteCountry> routeCountries = routeResponse.getCountries();
+                List<RouteStation> routeStations = new ArrayList<>();
+                for (RouteCountry country : routeCountries) {
+                    routeStations.addAll(country.getStations());
+                }
+                adapter.setRouteStations(routeStations);
+                adapter.notifyDataSetChanged();
+            } else {
+                String error = ApiErrorUtil.parseError(response);
+                CommonUtils.showMessage(getView(), error);
+            }
+        }
+
+        @Override
+        public void onFailure(Call<RouteResponse> call, Throwable t) {
+            if (getView() != null && t != null) {
+                CommonUtils.showMessage(getView(), t.getMessage());
+            }
+        }
+    };
 
 }

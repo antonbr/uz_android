@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,20 +17,30 @@ import android.widget.TextView;
 
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
+import com.uzapp.pojo.PopularStation;
+import com.uzapp.pojo.Station;
 import com.uzapp.pojo.User;
 import com.uzapp.util.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.PrefsUtil;
 import com.uzapp.view.BaseActivity;
 import com.uzapp.view.main.MainActivity;
+import com.uzapp.view.utils.VerticalDividerItemDecoration;
 
 import org.parceler.Parcels;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
+import io.realm.Sort;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,7 +48,7 @@ import retrofit2.Response;
 /**
  * Created by vika on 17.08.16.
  */
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements ProfileLastStationsAdapter.OnStationClickListener {
     private static final int REQUEST_EDIT_PROFILE = 1;
     private static final int REQUEST_CHANGE_PASSWORD = 2;
     //    @BindView(R.id.bonusCardNumber) TextView bonusCardNumber;
@@ -50,9 +62,12 @@ public class ProfileFragment extends Fragment {
 //    @BindView(R.id.myTicketsCount) TextView myTicketsCount;
     @BindView(R.id.progressBar) ProgressBar progressBar;
     @BindView(R.id.mainScrollView) ScrollView mainScrollView;
+    @BindView(R.id.lastDestinationsList) RecyclerView lastDestinationsList;
     @BindInt(R.integer.student_id_full_length) int studentIdLength;
     private Unbinder unbinder;
     private User user;
+    private Realm realm;
+    private ProfileLastStationsAdapter adapter;
 
     @Nullable
     @Override
@@ -143,6 +158,11 @@ public class ProfileFragment extends Fragment {
 //            lastName.setText(user.getLastName());
             fullName.setText(user.getFirstName() + " " + user.getLastName());
             email.setText(user.getEmail());
+            adapter = new ProfileLastStationsAdapter(this);
+            lastDestinationsList.setLayoutManager(new LinearLayoutManager(getContext()));
+            lastDestinationsList.setAdapter(adapter);
+            lastDestinationsList.addItemDecoration(new VerticalDividerItemDecoration(getContext(), R.drawable.divider_hint_color_horizontal, 0, 0));
+            showPopularStations();
 //            phoneNumber.setText(formatPhoneNumber(user.getPhoneNumber()));
 //            studentId.setText(formatStudentId(user.getStudentId()));
         }
@@ -170,6 +190,20 @@ public class ProfileFragment extends Fragment {
 //        return formattedStudentId.toString();
 //    }
 
+    private void showPopularStations() {
+        RealmResults<PopularStation> popularStations = realm.where(PopularStation.class).findAll().
+                sort("accessTime", Sort.DESCENDING);
+        if (popularStations.size() > 0) {
+            List<Station> stationList = new ArrayList<Station>(popularStations.size());
+            for (PopularStation popularStation : popularStations) {
+                stationList.add(new Station(popularStation.getCode(), popularStation.getName(), popularStation.getRailway()));
+            }
+            adapter.setStations(stationList);
+        } else {
+
+        }
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -196,6 +230,19 @@ public class ProfileFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder(getContext()).build();
+        realm = Realm.getInstance(realmConfig);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        realm.close();
+    }
+
     private Callback<User> userCallback = new Callback<User>() {
 
         @Override
@@ -220,4 +267,9 @@ public class ProfileFragment extends Fragment {
             }
         }
     };
+
+    @Override
+    public void onStationItemClick(Station station) {
+
+    }
 }

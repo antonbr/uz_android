@@ -1,4 +1,4 @@
-package com.uzapp.view.main.search.station;
+package com.uzapp.view.main.profile;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by vika on 14.07.16.
+ * Created by vika on 06.09.16.
  */
-public class StationsSearchResultAdapter extends RecyclerView.Adapter<StationsSearchResultAdapter.StationHolder> {
+public class ProfileLastStationsAdapter extends RecyclerView.Adapter<ProfileLastStationsAdapter.StationHolder> {
     private List<Station> stationsList = new ArrayList<>();
     private OnStationClickListener listener;
 
@@ -23,7 +23,7 @@ public class StationsSearchResultAdapter extends RecyclerView.Adapter<StationsSe
         void onStationItemClick(Station station);
     }
 
-    public StationsSearchResultAdapter(OnStationClickListener listener) {
+    public ProfileLastStationsAdapter(OnStationClickListener listener) {
         this.listener = listener;
     }
 
@@ -51,7 +51,7 @@ public class StationsSearchResultAdapter extends RecyclerView.Adapter<StationsSe
     @Override
     public StationHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.station_search_result_item, parent, false);
+                .inflate(R.layout.profile_station_item, parent, false);
         return new StationHolder(itemView);
     }
 

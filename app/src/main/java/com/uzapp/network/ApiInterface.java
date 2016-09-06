@@ -11,6 +11,7 @@ import com.uzapp.pojo.booking.Booking;
 import com.uzapp.pojo.booking.Uio;
 import com.uzapp.pojo.placeslist.PricesPlacesList;
 import com.uzapp.pojo.prices.Prices;
+import com.uzapp.pojo.route.RouteResponse;
 import com.uzapp.pojo.tickets.TicketsResponse;
 
 import java.util.List;
@@ -38,6 +39,13 @@ public interface ApiInterface {
     Call<TrainSearchResult> searchTrains(@Query("station_from_code") long stationFromCode,
                                          @Query("station_to_code") long stationToCode,
                                          @Query("date") long date);
+
+    @GET("order/train_route")
+    Call<RouteResponse> getTrainRoute(@Query("station_from_code") long stationFromCode,
+                                      @Query("station_to_code") long stationToCode,
+                                      @Query("train") String train,
+                                      @Query("date") long date);
+
 
     @GET("order/prices")
     Call<Prices> getPrices(@Query("station_from_code") long stationFromCode,

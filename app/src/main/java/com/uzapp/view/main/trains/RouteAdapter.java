@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +12,12 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.uzapp.R;
-import com.uzapp.pojo.RouteStation;
+import com.uzapp.pojo.route.RouteStation;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -51,8 +50,12 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.RouteStation
     @Override
     public void onBindViewHolder(final RouteStationHolder holder, final int position) {
         RouteStation station = routeStations.get(position);
-        Date arrivalTime = parseDate(station.getArrivalTime());
-        Date departureTime = parseDate(station.getDepartureTime());
+        Calendar calendar = CommonUtils.getCalendar();
+        calendar.add(Calendar.SECOND, station.getArrivalTime());
+        Date arrivalTime = calendar.getTime();
+        calendar = CommonUtils.getCalendar();
+        calendar.add(Calendar.SECOND, station.getDepartureTime());
+        Date departureTime = calendar.getTime();
         if (arrivalTime != null) {
             holder.time.setText(outputDateFormat.format(arrivalTime));
             holder.arrivalTime.setText(outputDateFormat.format(arrivalTime));
@@ -107,15 +110,6 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.RouteStation
         holder.time.setTypeface(Typeface.create(isViewBigger ? "sans-serif-medium" : "sans-serif", Typeface.NORMAL));
         holder.stationName.setTextSize(TypedValue.COMPLEX_UNIT_PX, isViewBigger ? holder.bigTextSize : holder.textSize);
         holder.stationName.setTypeface(Typeface.create(isViewBigger ? "sans-serif-medium" : "sans-serif", Typeface.NORMAL));
-    }
-
-    private Date parseDate(String date) {
-        try {
-            return inputDateFormat.parse(date);
-        } catch (ParseException e) {
-            Log.e(RouteAdapter.class.getName(), e.getMessage());
-            return null;
-        }
     }
 
     @Override
