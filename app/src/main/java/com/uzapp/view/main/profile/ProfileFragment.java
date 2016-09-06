@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -18,8 +19,7 @@ import android.widget.TextView;
 
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
-import com.uzapp.pojo.PopularStation;
-import com.uzapp.pojo.Station;
+import com.uzapp.pojo.RouteHistoryItem;
 import com.uzapp.pojo.User;
 import com.uzapp.util.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
@@ -31,7 +31,6 @@ import com.uzapp.view.utils.VerticalDividerItemDecoration;
 
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindDimen;
@@ -40,10 +39,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
-import io.realm.RealmResults;
-import io.realm.Sort;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,7 +46,7 @@ import retrofit2.Response;
 /**
  * Created by vika on 17.08.16.
  */
-public class ProfileFragment extends Fragment implements ProfileLastStationsAdapter.OnStationClickListener {
+public class ProfileFragment extends Fragment implements ProfileRouteHistoryAdapter.OnStationClickListener {
     private static final int REQUEST_EDIT_PROFILE = 1;
     private static final int REQUEST_CHANGE_PASSWORD = 2;
     @BindView(R.id.fullName) TextView fullName;
@@ -59,13 +54,14 @@ public class ProfileFragment extends Fragment implements ProfileLastStationsAdap
     @BindView(R.id.phoneNumber) TextView phoneNumber;
     @BindView(R.id.progressBar) ProgressBar progressBar;
     @BindView(R.id.mainScrollView) NestedScrollView mainScrollView;
-    @BindView(R.id.lastDestinationsList) RecyclerView lastDestinationsList;
+    @BindView(R.id.routeHistoryList) RecyclerView routeHistoryList;
+    @BindView(R.id.routeHistoryCard) CardView routeHistoryCard;
+    @BindView(R.id.routeHistoryLabel) TextView routeHistoryLabel;
     @BindInt(R.integer.student_id_full_length) int studentIdLength;
     @BindDimen(R.dimen.profile_button_padding) int padding;
     private Unbinder unbinder;
     private User user;
-    private Realm realm;
-    private ProfileLastStationsAdapter adapter;
+    private ProfileRouteHistoryAdapter adapter;
 
     @Nullable
     @Override
@@ -74,8 +70,7 @@ public class ProfileFragment extends Fragment implements ProfileLastStationsAdap
         unbinder = ButterKnife.bind(this, view);
         progressBar.setVisibility(View.VISIBLE);
         mainScrollView.setVisibility(View.GONE);
-        Call call = ApiManager.getApi(getContext()).getUser();
-        call.enqueue(userCallback);
+        loadUserInfo();
         ((MainActivity) getActivity()).showNavigationBar();
         return view;
     }
@@ -84,6 +79,16 @@ public class ProfileFragment extends Fragment implements ProfileLastStationsAdap
     public void onResume() {
         super.onResume();
         ((MainActivity) getActivity()).selectNoneItemsInNavBar();
+    }
+
+    private void loadUserInfo() {
+        Call<User> call = ApiManager.getApi(getContext()).getUser();
+        call.enqueue(userCallback);
+    }
+
+    private void loadRoutesHistory() {
+        Call<List<RouteHistoryItem>> call = ApiManager.getApi(getContext()).getRouteHistory();
+        call.enqueue(routeHistoryCallback);
     }
 
     @OnClick({R.id.ticketReturnBtn, R.id.bookingHistoryBtn, R.id.bonusProgramBtn, R.id.paymentMethodsBtn, R.id.profileSettingsBtn,
@@ -143,12 +148,7 @@ public class ProfileFragment extends Fragment implements ProfileLastStationsAdap
             } else {
                 phoneNumber.setVisibility(View.GONE);
             }
-            adapter = new ProfileLastStationsAdapter(this);
-            lastDestinationsList.setNestedScrollingEnabled(false);
-            lastDestinationsList.setLayoutManager(new LinearLayoutManager(getContext()));
-            lastDestinationsList.setAdapter(adapter);
-            lastDestinationsList.addItemDecoration(new VerticalDividerItemDecoration(getContext(), R.drawable.profile_divider_hint_color_horizontal, padding, 0));
-            showPopularStations();
+            loadRoutesHistory();
         }
     }
 
@@ -165,17 +165,18 @@ public class ProfileFragment extends Fragment implements ProfileLastStationsAdap
         return formattedPhone.toString();
     }
 
-    private void showPopularStations() {
-        RealmResults<PopularStation> popularStations = realm.where(PopularStation.class).findAll().
-                sort("accessTime", Sort.DESCENDING);
-        if (popularStations.size() > 0) {
-            List<Station> stationList = new ArrayList<Station>(popularStations.size());
-            for (PopularStation popularStation : popularStations) {
-                stationList.add(new Station(popularStation.getCode(), popularStation.getName(), popularStation.getRailway()));
-            }
-            adapter.setStations(stationList);
-        } else {
 
+    private void showPopularStations(List<RouteHistoryItem> items) {
+        if (items.size() > 0) {
+            adapter = new ProfileRouteHistoryAdapter(this);
+            routeHistoryList.setNestedScrollingEnabled(false);
+            routeHistoryList.setLayoutManager(new LinearLayoutManager(getContext()));
+            routeHistoryList.setAdapter(adapter);
+            routeHistoryList.addItemDecoration(new VerticalDividerItemDecoration(getContext(), R.drawable.profile_divider_hint_color_horizontal, padding, 0));
+            adapter.setStations(items);
+        } else {
+            routeHistoryCard.setVisibility(View.GONE);
+            routeHistoryLabel.setVisibility(View.VISIBLE);
         }
     }
 
@@ -205,18 +206,6 @@ public class ProfileFragment extends Fragment implements ProfileLastStationsAdap
         }
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        RealmConfiguration realmConfig = new RealmConfiguration.Builder(getContext()).build();
-        realm = Realm.getInstance(realmConfig);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        realm.close();
-    }
 
     private Callback<User> userCallback = new Callback<User>() {
 
@@ -243,8 +232,35 @@ public class ProfileFragment extends Fragment implements ProfileLastStationsAdap
         }
     };
 
-    @Override
-    public void onStationItemClick(Station station) {
+    private Callback<List<RouteHistoryItem>> routeHistoryCallback = new Callback<List<RouteHistoryItem>>() {
 
+        @Override
+        public void onResponse(Call<List<RouteHistoryItem>> call, Response<List<RouteHistoryItem>> response) {
+            if (getView() != null) {
+                progressBar.setVisibility(View.GONE);
+                if (response.isSuccessful()) {
+                    showPopularStations(response.body());
+                } else {
+                    String error = ApiErrorUtil.parseError(response);
+                    CommonUtils.showMessage(getView(), error);
+                }
+            }
+        }
+
+        @Override
+        public void onFailure(Call<List<RouteHistoryItem>> call, Throwable t) {
+            if (getView() != null) {
+                progressBar.setVisibility(View.GONE);
+                CommonUtils.showMessage(getView(), t.getMessage());
+            }
+        }
+    };
+
+    @Override
+    public void onStationItemClick(RouteHistoryItem routeHistoryItem) {
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("route", Parcels.wrap(routeHistoryItem));
+        startActivity(intent);
     }
 }

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.uzapp.R;
-import com.uzapp.pojo.Station;
+import com.uzapp.pojo.RouteHistoryItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,15 +15,15 @@ import java.util.List;
 /**
  * Created by vika on 06.09.16.
  */
-public class ProfileLastStationsAdapter extends RecyclerView.Adapter<ProfileLastStationsAdapter.StationHolder> {
-    private List<Station> stationsList = new ArrayList<>();
+public class ProfileRouteHistoryAdapter extends RecyclerView.Adapter<ProfileRouteHistoryAdapter.StationHolder> {
+    private List<RouteHistoryItem> routeHistoryItems = new ArrayList<>();
     private OnStationClickListener listener;
 
     public interface OnStationClickListener {
-        void onStationItemClick(Station station);
+        void onStationItemClick(RouteHistoryItem routeHistoryItem);
     }
 
-    public ProfileLastStationsAdapter(OnStationClickListener listener) {
+    public ProfileRouteHistoryAdapter(OnStationClickListener listener) {
         this.listener = listener;
     }
 
@@ -36,15 +36,15 @@ public class ProfileLastStationsAdapter extends RecyclerView.Adapter<ProfileLast
         }
     }
 
-    public void setStations(List<Station> stationsList) {
-        this.stationsList.clear();
-        this.stationsList.addAll(stationsList);
+    public void setStations(List<RouteHistoryItem> stationsList) {
+        this.routeHistoryItems.clear();
+        this.routeHistoryItems.addAll(stationsList);
         notifyDataSetChanged();
     }
 
 
     public void clearStations() {
-        this.stationsList.clear();
+        this.routeHistoryItems.clear();
         notifyDataSetChanged();
     }
 
@@ -57,13 +57,13 @@ public class ProfileLastStationsAdapter extends RecyclerView.Adapter<ProfileLast
 
     @Override
     public void onBindViewHolder(StationHolder holder, int position) {
-        final Station station = stationsList.get(position);
-        holder.name.setText(station.getName());
+        final RouteHistoryItem routeHistoryItem = routeHistoryItems.get(position);
+        holder.name.setText(holder.itemView.getContext().getString(R.string.profile_route_history_item, routeHistoryItem.getStationFromName(), routeHistoryItem.getStationToName()));
         if (listener != null) {
             holder.name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onStationItemClick(station);
+                    listener.onStationItemClick(routeHistoryItem);
                 }
             });
         }
@@ -71,6 +71,6 @@ public class ProfileLastStationsAdapter extends RecyclerView.Adapter<ProfileLast
 
     @Override
     public int getItemCount() {
-        return stationsList.size();
+        return routeHistoryItems.size();
     }
 }

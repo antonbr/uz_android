@@ -275,5 +275,6 @@
     <string name="profile_settings_account">Настройки кабинета</string>
     <string name="profile_search_settings">Настройки поиска билетов</string>
     <string name="profile_change_password_button">Изменить пароль</string>
+    <string name="profile_route_history_item">%1$s — %2$s</string>
     <string name="reset_password_old">Старый пароль</string>
 </resources>

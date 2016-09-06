@@ -26,6 +26,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
+import com.uzapp.pojo.RouteHistoryItem;
 import com.uzapp.pojo.Station;
 import com.uzapp.util.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
@@ -105,9 +106,31 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
         ((MainActivity) getActivity()).showNavigationBar();
         ((MainActivity) getActivity()).getBottomNavigationBar().setCurrentItem(Constants.BOTTOM_NAVIGATION_SEARCH, false);
         toolbarTitle.setText(R.string.search_title);
+        initArguments();
         initDatePickerList();
         checkAllFieldsFilled();
         return view;
+    }
+
+    public static SearchFragment getInstance(RouteHistoryItem routeHistoryItem) {
+        SearchFragment fragment = new SearchFragment();
+        if (routeHistoryItem != null) {
+            Bundle args = new Bundle();
+            args.putParcelable("fromStation", Parcels.wrap(new Station(routeHistoryItem.getStationFromCode(), routeHistoryItem.getStationFromName(), null)));
+            args.putParcelable("toStation", Parcels.wrap(new Station(routeHistoryItem.getStationToCode(), routeHistoryItem.getStationToName(), null)));
+            fragment.setArguments(args);
+        }
+        return fragment;
+    }
+
+    private void initArguments() {
+        Bundle args = getArguments();
+        if (args!=null && args.containsKey("fromStation") && args.containsKey("toStation")) {
+            fromStation = Parcels.unwrap(args.getParcelable("fromStation"));
+            toStation = Parcels.unwrap(args.getParcelable("toStation"));
+            pathFrom.setText(fromStation.getName());
+            pathTo.setText(toStation.getName());
+        }
     }
 
     @OnClick(R.id.useLocationBtn)
