@@ -50,11 +50,14 @@ import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import ru.ok.android.sdk.Odnoklassniki;
+import ru.ok.android.sdk.OkTokenRequestListener;
+import ru.ok.android.sdk.util.OkScope;
 
 /**
  * Created by vika on 14.08.16.
  */
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements OkTokenRequestListener {
     List<String> permissionNeeds = Arrays.asList("email");
     private Unbinder unbinder;
     @BindView(R.id.resetBtn) Button resetBtn;
@@ -66,7 +69,7 @@ public class LoginFragment extends Fragment {
     @BindView(R.id.loginBtn) Button loginBtn;
     @BindDimen(R.dimen.hint_padding) int hintPadding;
     private CallbackManager callbackManager;//used for facebook login
-
+    private Odnoklassniki odnoklassniki;
 
     @Nullable
     @Override
@@ -144,7 +147,12 @@ public class LoginFragment extends Fragment {
 
     @OnClick(R.id.okBtn)
     void onOkBtnClicked() {
-
+        String appId = getString(R.string.odnoklassniki_app_id);
+        String secretKey = getString(R.string.odnoklassniki_app_secret_key);
+        String publicKey = getString(R.string.odnoklassniki_app_public_key);
+        odnoklassniki = Odnoklassniki.createInstance(getActivity().getApplicationContext(), appId, secretKey, publicKey);
+        odnoklassniki.setTokenRequestListener(this);
+        odnoklassniki.requestAuthorization(getContext(), false, OkScope.VALUABLE_ACCESS);
     }
 
     private void checkFieldState() {
@@ -157,6 +165,9 @@ public class LoginFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        if (odnoklassniki != null) {
+            odnoklassniki.removeTokenRequestListener();
+        }
     }
 
     @Override
@@ -213,4 +224,20 @@ public class LoginFragment extends Fragment {
             }
         }
     };
+
+    @Override
+    public void onSuccess(String s) {
+        Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onError() {
+        Log.e(LoginFragment.class.getName(), "APIOK Error");
+    }
+
+    @Override
+    public void onCancel() {
+        //if back button was pressed
+        Log.e(LoginFragment.class.getName(), "APIOK Cancel");
+    }
 }

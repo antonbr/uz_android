@@ -4,6 +4,7 @@ import com.uzapp.pojo.CreateAccountInfo;
 import com.uzapp.pojo.LoginInfo;
 import com.uzapp.pojo.NewTicketDates;
 import com.uzapp.pojo.RouteHistoryItem;
+import com.uzapp.pojo.SocialLoginInfo;
 import com.uzapp.pojo.Station;
 import com.uzapp.pojo.TrainSearchResult;
 import com.uzapp.pojo.User;
@@ -77,6 +78,9 @@ public interface ApiInterface {
 
     @POST("user/login")
     Call<UserTokenResponse> login(@Body LoginInfo loginInfo);
+
+    @POST("user/social_login")
+    Call<UserTokenResponse> socialLogin(@Body SocialLoginInfo socialLoginInfo);
 
     @FormUrlEncoded
     @POST("user/refresh_token")

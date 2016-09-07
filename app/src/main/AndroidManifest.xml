@@ -42,7 +42,22 @@
         <activity
             android:name="com.vk.sdk.VKServiceActivity"
             android:label="ServiceActivity"
-            android:theme="@style/VK.Transparent" />
+            android:theme="@style/VK.Transparent"/>
+
+        <!-- odnoklasniki sdk -->
+        <activity
+            android:name="ru.ok.android.sdk.OkAuthActivity"
+            android:configChanges="orientation"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data
+                    android:host="@string/odnoklassniki_host"
+                    android:scheme="okauth"/>
+            </intent-filter>
+        </activity>
 
         <!-- crashlytic -->
         <meta-data

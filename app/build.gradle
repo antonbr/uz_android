@@ -71,11 +71,12 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-
     //ui
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
     //network
+
     //location
+
     //other
     apt 'org.parceler:parceler:1.1.5'
     compile('com.crashlytics.sdk.android:crashlytics:2.6.2@aar') {
@@ -103,4 +104,5 @@ dependencies {
     compile 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
     compile 'com.facebook.android:facebook-android-sdk:4.6.0'
     compile 'com.vk:androidsdk:1.6.7'
+    compile files('libs/odnoklassniki-android-sdk.jar')
 }
