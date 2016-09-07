@@ -28,18 +28,27 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <!-- facebook sdk -->
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
-
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="7a64f24ecd5d7e11e9f14a4224608c9c648dce24"/>
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
+
+        <!-- vkontakte sdk -->
+        <activity
+            android:name="com.vk.sdk.VKServiceActivity"
+            android:label="ServiceActivity"
+            android:theme="@style/VK.Transparent" />
+
+        <!-- crashlytic -->
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="7a64f24ecd5d7e11e9f14a4224608c9c648dce24"/>
+
     </application>
 
 </manifest>

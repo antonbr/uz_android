@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
 import com.facebook.FacebookSdk;
+import com.vk.sdk.VKSdk;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -16,6 +17,7 @@ public class UzApp extends Application {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
         FacebookSdk.sdkInitialize(getApplicationContext());
+        VKSdk.initialize(this);
     }
 
 }

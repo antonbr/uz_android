@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -30,6 +31,11 @@ import com.uzapp.util.CommonUtils;
 import com.uzapp.util.PrefsUtil;
 import com.uzapp.view.BaseActivity;
 import com.uzapp.view.main.MainActivity;
+import com.vk.sdk.VKAccessToken;
+import com.vk.sdk.VKCallback;
+import com.vk.sdk.VKScope;
+import com.vk.sdk.VKSdk;
+import com.vk.sdk.api.VKError;
 
 import java.util.Arrays;
 import java.util.List;
@@ -59,7 +65,7 @@ public class LoginFragment extends Fragment {
     @BindView(R.id.passwordLayout) TextInputLayout passwordLayout;
     @BindView(R.id.loginBtn) Button loginBtn;
     @BindDimen(R.dimen.hint_padding) int hintPadding;
-    private CallbackManager callbackManager;
+    private CallbackManager callbackManager;//used for facebook login
 
 
     @Nullable
@@ -71,7 +77,6 @@ public class LoginFragment extends Fragment {
         toolbarTitle.setText(R.string.login_title);
         emailLayout.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         passwordLayout.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
-
         return view;
     }
 
@@ -115,7 +120,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 AccessToken accessToken = loginResult.getAccessToken();
-
+                Toast.makeText(getContext(), accessToken.getToken(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -134,7 +139,7 @@ public class LoginFragment extends Fragment {
 
     @OnClick(R.id.vkBtn)
     void onVkBtnClicked() {
-
+        VKSdk.login(getActivity(), VKScope.EMAIL);
     }
 
     @OnClick(R.id.okBtn)
@@ -156,8 +161,29 @@ public class LoginFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+        if (!handleVkResult(requestCode, resultCode, data)) {
+            super.onActivityResult(requestCode, resultCode, data);
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private boolean handleVkResult(int requestCode, int resultCode, Intent data) {
+        return VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
+            @Override
+            public void onResult(VKAccessToken res) {
+                Toast.makeText(getContext(), res.accessToken, Toast.LENGTH_SHORT).show();
+//                setVkToken(res.accessToken);
+//                String email = res.email;
+//                isVKontakte = true;
+//                isFacebook = false;
+//                handleSocialSignInResult(res.accessToken, email, TAG_SOCIAL_VKONTAKTE);
+            }
+
+            @Override
+            public void onError(VKError error) {
+                Log.e(LoginFragment.class.getName(), "vk exception: " + error.toString());
+            }
+        });
     }
 
     private Callback<UserTokenResponse> callback = new Callback<UserTokenResponse>() {

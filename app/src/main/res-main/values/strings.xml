@@ -3,7 +3,6 @@
     <string name="terms_of_service" translatable="false">http://52.59.64.77/</string>
     <string name="bonus_program" translatable="false">http://52.59.64.77/</string>
     <string name="facebook_app_id">417284918442118</string>
-
     //all screens
     <string name="app_name">UzApp</string>
     <string name="ready">Готово</string>
