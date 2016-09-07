@@ -6,20 +6,19 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
+        android:name=".view.UzApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:name=".view.UzApp"
         android:theme="@style/AppTheme">
         <activity
             android:name=".view.main.MainActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".view.login.LoginFlowActivity"
-            android:screenOrientation="portrait"
-            android:noHistory="true"/>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".view.splash.SplashActivity"
             android:screenOrientation="portrait"
@@ -29,9 +28,18 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="7a64f24ecd5d7e11e9f14a4224608c9c648dce24" />
+            android:value="7a64f24ecd5d7e11e9f14a4224608c9c648dce24"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
     </application>
 
 </manifest>

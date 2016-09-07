@@ -15,4 +15,5 @@ public class LoginFlowActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         replaceFragment(new LoginFragment(), false);
     }
+
 }

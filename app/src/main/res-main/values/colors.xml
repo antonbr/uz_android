@@ -35,4 +35,7 @@
     <color name="bg_progress_bar_yellow">#ffe600</color>
     <color name="lightColor">#fafafa</color>
     <color name="profileTextColor">#5c6d70</color>
+    <color name="fbBtnBackground">#507cc0</color>
+    <color name="vkBtnBackground">#5d9cec</color>
+    <color name="okBtnBackground">#ff9800</color>
 </resources>

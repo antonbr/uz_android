@@ -42,6 +42,11 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
     public void replaceFragment(Fragment f, boolean addToBackStack) {
         removeMenuFromStack();
         super.replaceFragment(f, addToBackStack);

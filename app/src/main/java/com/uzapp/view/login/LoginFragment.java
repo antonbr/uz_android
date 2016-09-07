@@ -8,12 +8,19 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.LoginInfo;
@@ -23,6 +30,9 @@ import com.uzapp.util.CommonUtils;
 import com.uzapp.util.PrefsUtil;
 import com.uzapp.view.BaseActivity;
 import com.uzapp.view.main.MainActivity;
+
+import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
@@ -39,6 +49,7 @@ import retrofit2.Response;
  * Created by vika on 14.08.16.
  */
 public class LoginFragment extends Fragment {
+    List<String> permissionNeeds = Arrays.asList("email");
     private Unbinder unbinder;
     @BindView(R.id.resetBtn) Button resetBtn;
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
@@ -48,6 +59,8 @@ public class LoginFragment extends Fragment {
     @BindView(R.id.passwordLayout) TextInputLayout passwordLayout;
     @BindView(R.id.loginBtn) Button loginBtn;
     @BindDimen(R.dimen.hint_padding) int hintPadding;
+    private CallbackManager callbackManager;
+
 
     @Nullable
     @Override
@@ -58,6 +71,7 @@ public class LoginFragment extends Fragment {
         toolbarTitle.setText(R.string.login_title);
         emailLayout.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         passwordLayout.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
+
         return view;
     }
 
@@ -94,6 +108,40 @@ public class LoginFragment extends Fragment {
         ((BaseActivity) getActivity()).replaceFragment(new CreateAccountFragment(), true);
     }
 
+    @OnClick(R.id.fbBtn)
+    void onFbBtnClicked() {
+        callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                AccessToken accessToken = loginResult.getAccessToken();
+
+            }
+
+            @Override
+            public void onCancel() {
+                LoginManager.getInstance().logOut();
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                LoginManager.getInstance().logOut();
+                Log.e(LoginFragment.class.getName(), "facebook exception: " + exception.toString());
+            }
+        });
+        LoginManager.getInstance().logInWithReadPermissions(this, permissionNeeds);
+    }
+
+    @OnClick(R.id.vkBtn)
+    void onVkBtnClicked() {
+
+    }
+
+    @OnClick(R.id.okBtn)
+    void onOkBtnClicked() {
+
+    }
+
     private void checkFieldState() {
         boolean allowLogin = CommonUtils.isEmailValid(emailField.getText().toString()) &&
                 CommonUtils.isPasswordValid(passwordField.getText().toString());
@@ -104,6 +152,12 @@ public class LoginFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private Callback<UserTokenResponse> callback = new Callback<UserTokenResponse>() {
@@ -117,7 +171,7 @@ public class LoginFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     //bring back main activity from stack and start profile fragment
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.putExtra("profile",true);
+                    intent.putExtra("profile", true);
                     startActivity(intent);
                 } else {
                     String error = ApiErrorUtil.parseError(response);
