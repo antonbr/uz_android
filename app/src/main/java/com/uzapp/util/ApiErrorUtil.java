@@ -3,10 +3,12 @@ package com.uzapp.util;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.uzapp.pojo.SocialLoginErrorResponse;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -55,4 +57,18 @@ public class ApiErrorUtil {
         }
         return errorMessage;
     }
+
+    public static SocialLoginErrorResponse getSocialLoginErrorResponse(Response<?> response) {
+        try {
+            String errorJson = response.errorBody().string().trim();
+            if (TextUtils.isEmpty(errorJson)) return null;
+            Gson gson = new Gson();
+            SocialLoginErrorResponse errorResponse = gson.fromJson(errorJson, SocialLoginErrorResponse.class);
+            return errorResponse;
+        } catch (IOException e) {
+            Log.e(ApiErrorUtil.class.getName(), e.getMessage());
+        }
+        return null;
+    }
 }
+

@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -25,6 +24,8 @@ import com.facebook.login.LoginResult;
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.LoginInfo;
+import com.uzapp.pojo.SocialLoginErrorResponse;
+import com.uzapp.pojo.SocialLoginInfo;
 import com.uzapp.pojo.UserTokenResponse;
 import com.uzapp.util.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
@@ -37,6 +38,7 @@ import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKError;
 
+import java.net.HttpURLConnection;
 import java.util.Arrays;
 import java.util.List;
 
@@ -107,8 +109,8 @@ public class LoginFragment extends Fragment implements OkTokenRequestListener {
         String deviceId = CommonUtils.getDeviceId(getContext());
         LoginInfo loginInfo = new LoginInfo(deviceId, emailField.getText().toString(),
                 passwordField.getText().toString());
-        Call call = ApiManager.getApi(getContext()).login(loginInfo);
-        call.enqueue(callback);
+        Call<UserTokenResponse> call = ApiManager.getApi(getContext()).login(loginInfo);
+        call.enqueue(loginCallback);
     }
 
     @OnClick(R.id.registrationBtn)
@@ -119,24 +121,7 @@ public class LoginFragment extends Fragment implements OkTokenRequestListener {
     @OnClick(R.id.fbBtn)
     void onFbBtnClicked() {
         callbackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                AccessToken accessToken = loginResult.getAccessToken();
-                Toast.makeText(getContext(), accessToken.getToken(), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancel() {
-                LoginManager.getInstance().logOut();
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                LoginManager.getInstance().logOut();
-                Log.e(LoginFragment.class.getName(), "facebook exception: " + exception.toString());
-            }
-        });
+        LoginManager.getInstance().registerCallback(callbackManager, facebookCallback);
         LoginManager.getInstance().logInWithReadPermissions(this, permissionNeeds);
     }
 
@@ -161,6 +146,11 @@ public class LoginFragment extends Fragment implements OkTokenRequestListener {
         loginBtn.setEnabled(allowLogin);
     }
 
+    private void socialLogin(SocialLoginInfo socialLoginInfo) {
+        Call<UserTokenResponse> userTokenResponseCall = ApiManager.getApi(getContext()).socialLogin(socialLoginInfo);
+        userTokenResponseCall.enqueue(loginCallback);
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -182,12 +172,10 @@ public class LoginFragment extends Fragment implements OkTokenRequestListener {
         return VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
             @Override
             public void onResult(VKAccessToken res) {
-                Toast.makeText(getContext(), res.accessToken, Toast.LENGTH_SHORT).show();
-//                setVkToken(res.accessToken);
-//                String email = res.email;
-//                isVKontakte = true;
-//                isFacebook = false;
-//                handleSocialSignInResult(res.accessToken, email, TAG_SOCIAL_VKONTAKTE);
+                String deviceId = CommonUtils.getDeviceId(getContext());
+                SocialLoginInfo socialLoginInfo = new SocialLoginInfo(deviceId);
+                socialLoginInfo.setVkToken(res.accessToken);
+                socialLogin(socialLoginInfo);
             }
 
             @Override
@@ -197,7 +185,7 @@ public class LoginFragment extends Fragment implements OkTokenRequestListener {
         });
     }
 
-    private Callback<UserTokenResponse> callback = new Callback<UserTokenResponse>() {
+    private Callback<UserTokenResponse> loginCallback = new Callback<UserTokenResponse>() {
 
         @Override
         public void onResponse(Call<UserTokenResponse> call, Response<UserTokenResponse> response) {
@@ -211,6 +199,12 @@ public class LoginFragment extends Fragment implements OkTokenRequestListener {
                     intent.putExtra("profile", true);
                     startActivity(intent);
                 } else {
+                    if (response.code() == HttpURLConnection.HTTP_NOT_FOUND) {
+                        SocialLoginErrorResponse socialLoginErrorResponse = ApiErrorUtil.getSocialLoginErrorResponse(response);
+                        if (socialLoginErrorResponse != null) {
+                            //TODO
+                        }
+                    }
                     String error = ApiErrorUtil.parseError(response);
                     CommonUtils.showMessage(emailField, error);
                 }
@@ -224,10 +218,37 @@ public class LoginFragment extends Fragment implements OkTokenRequestListener {
             }
         }
     };
+    private FacebookCallback facebookCallback = new FacebookCallback<LoginResult>() {
+        @Override
+        public void onSuccess(LoginResult loginResult) {
+            AccessToken accessToken = loginResult.getAccessToken();
+            String deviceId = CommonUtils.getDeviceId(getContext());
+            SocialLoginInfo socialLoginInfo = new SocialLoginInfo(deviceId);
+            socialLoginInfo.setFbToken(accessToken.getToken());
+            socialLogin(socialLoginInfo);
+        }
 
+        @Override
+        public void onCancel() {
+            LoginManager.getInstance().logOut();
+        }
+
+        @Override
+        public void onError(FacebookException exception) {
+            LoginManager.getInstance().logOut();
+            Log.e(LoginFragment.class.getName(), "facebook exception: " + exception.toString());
+        }
+    };
+
+    /*
+    handling result of odnoklassniki login
+     */
     @Override
-    public void onSuccess(String s) {
-        Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+    public void onSuccess(String token) {
+        String deviceId = CommonUtils.getDeviceId(getContext());
+        SocialLoginInfo socialLoginInfo = new SocialLoginInfo(deviceId);
+        socialLoginInfo.setOkToken(token);
+        socialLogin(socialLoginInfo);
     }
 
     @Override
