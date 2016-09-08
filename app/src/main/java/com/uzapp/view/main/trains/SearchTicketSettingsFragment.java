@@ -1,4 +1,4 @@
-package com.uzapp.view.main.search;
+package com.uzapp.view.main.trains;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +7,7 @@ import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -22,13 +23,19 @@ import butterknife.Unbinder;
  * Created by vika on 08.09.16.
  */
 public class SearchTicketSettingsFragment extends Fragment {
+    private static final int MAX_PEOPLE_COUNT = 8;
+    private static final int MIN_PEOPLE_COUNT = 1;
+    private static final int MIN_PEOPLE_COUPE_OPTION = 2;
     private Unbinder unbinder;
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
     @BindView(R.id.passengersCount) TextView passengersCount;
     @BindView(R.id.placementRadioGroup) RadioGroup placementRadioGroup;
-    @BindView(R.id.singleCoupeBtn) SwitchCompat switchCompat;
+    @BindView(R.id.singleCoupeBtn) SwitchCompat singleCoupeBtn;
     @BindView(R.id.wcSwitchBtn) SwitchCompat wcSwitchBtn;
     @BindView(R.id.conductorSwitchBtn) SwitchCompat conductorSwitchBtn;
+    @BindView(R.id.minusBtn) ImageButton minusBtn;
+    @BindView(R.id.plusBtn) ImageButton plusBtn;
+    private int passengersCountValue = MIN_PEOPLE_COUNT;
 
     @Nullable
     @Override
@@ -37,6 +44,7 @@ public class SearchTicketSettingsFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         ((MainActivity) getActivity()).hideNavigationBar();
         toolbarTitle.setText(R.string.profile_search_settings);
+        togglePlusMinusBtnState();
         return view;
     }
 
@@ -52,18 +60,44 @@ public class SearchTicketSettingsFragment extends Fragment {
 
     @OnClick(R.id.minusBtn)
     void onMinusBtnClicked() {
+        if (passengersCountValue > MIN_PEOPLE_COUNT) {
+            passengersCountValue--;
+            updatePassengersCountLabel();
+        }
+        toggleVisibilityOfSingleCoupeOption();
+        togglePlusMinusBtnState();
 
     }
 
     @OnClick(R.id.plusBtn)
     void onPlusBtnClicked() {
+        if (passengersCountValue < MAX_PEOPLE_COUNT) {
+            passengersCountValue++;
+            updatePassengersCountLabel();
+        }
+        toggleVisibilityOfSingleCoupeOption();
+        togglePlusMinusBtnState();
+    }
 
+    private void updatePassengersCountLabel() {
+        passengersCount.setText(getResources().getQuantityString(R.plurals.passengers, passengersCountValue, passengersCountValue));
+    }
+
+    private void toggleVisibilityOfSingleCoupeOption() {
+        singleCoupeBtn.setVisibility(passengersCountValue >= MIN_PEOPLE_COUPE_OPTION ? View.VISIBLE : View.GONE);
+    }
+
+    private void togglePlusMinusBtnState() {
+        plusBtn.setAlpha(passengersCountValue == MAX_PEOPLE_COUNT ? 0.5f : 1f);
+        plusBtn.setEnabled(passengersCountValue != MAX_PEOPLE_COUNT);
+
+        minusBtn.setAlpha(passengersCountValue == MIN_PEOPLE_COUNT ? 0.5f : 1f);
+        minusBtn.setEnabled(passengersCountValue != MIN_PEOPLE_COUNT);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        ((MainActivity) getActivity()).showNavigationBar();
     }
 }

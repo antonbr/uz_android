@@ -95,7 +95,7 @@ public class EditProfileFragment extends Fragment {
 
     @OnClick(R.id.tickBtn)
     void onSaveBtnClicked() {
-      updateUserData();
+        updateUserData();
     }
 
     @OnTextChanged(value = {R.id.firstNameField, R.id.middleNameField, R.id.lastNameField, R.id.phoneField,

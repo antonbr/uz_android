@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.uzapp.R;
 import com.uzapp.util.Constants;
+import com.uzapp.view.main.MainActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -41,6 +42,7 @@ public class SelectTrainFragment extends Fragment implements ViewPager.OnPageCha
         View view = inflater.inflate(R.layout.select_train_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
         initArguments();
+        ((MainActivity) getActivity()).hideNavigationBar();
         setupViewPager();
         if (isGoingBack) {
             tabLayout.setupWithViewPager(viewPager);
@@ -108,10 +110,17 @@ public class SelectTrainFragment extends Fragment implements ViewPager.OnPageCha
         getActivity().onBackPressed();
     }
 
+    @OnClick(R.id.okBtn)
+    void onFilterBtnClicked() {
+        ((MainActivity) getActivity()).addFragment(new SearchTicketSettingsFragment(),
+                R.anim.slide_up, R.anim.slide_down);
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        ((MainActivity) getActivity()).showNavigationBar();
     }
 
     @Override
