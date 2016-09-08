@@ -95,8 +95,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("user")
-    Call<User> updateUser(@Field("password") String password,
-                          @Field("first_name") String firstName, @Field("middle_name") String middleName,
+    Call<User> updateUser(@Field("first_name") String firstName, @Field("middle_name") String middleName,
                           @Field("last_name") String lastName, @Field("phone_number") String phoneNumber,
                           @Field("email") String email, @Field("student_id") String studentId);
 

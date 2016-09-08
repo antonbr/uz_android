@@ -147,7 +147,7 @@
     <string name="login_registration_text">Еще не регистрировались? Это легко:</string>
     <string name="login_title">Вход в приложение</string>
     <string name="login_social">Войти с помощью соц.сетей:</string>
-
+    <string name="login_email_not_valid">E-mail невалидный</string>
 
     //reset password
     <string name="reset_password_text">Для восстановления пароля введите Ваш e-mail, на который вы регистрировались</string>
@@ -174,7 +174,6 @@
     <string name="profile_edit_middle_name">Отчество</string>
     <string name="profile_edit_middle_name_hint">Отчество (Необязательно)</string>
     <string name="profile_phone">Телефон</string>
-    <string name="profile_password_not_valid">Пароль невалидный</string>
     <string name="profile_change_password_cancelation">Отмена</string>
     <string name="profile_edit_change_password">Введите текущий пароль для подтверждения изменений</string>
     <string name="profile_current_password">Текущий пароль</string>

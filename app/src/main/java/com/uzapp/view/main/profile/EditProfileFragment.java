@@ -95,9 +95,7 @@ public class EditProfileFragment extends Fragment {
 
     @OnClick(R.id.tickBtn)
     void onSaveBtnClicked() {
-        EnterPasswordFragment fragment = new EnterPasswordFragment();
-        fragment.setTargetFragment(this, REQUEST_PASSWORD);
-        ((MainActivity) getActivity()).addFragment(fragment, R.anim.slide_up, R.anim.slide_down);
+      updateUserData();
     }
 
     @OnTextChanged(value = {R.id.firstNameField, R.id.middleNameField, R.id.lastNameField, R.id.phoneField,
@@ -153,10 +151,10 @@ public class EditProfileFragment extends Fragment {
         if (resultCode == Activity.RESULT_OK) {
             if (getView() != null) {
                 switch (requestCode) {
-                    case REQUEST_PASSWORD:
-                        String password = data.getStringExtra("password");
-                        updateUserData(password);
-                        break;
+//                    case REQUEST_PASSWORD:
+//                        String password = data.getStringExtra("password");
+//                        updateUserData(password);
+//                        break;
                     case REQUEST_CHANGE_PASSWORD:
                         Snackbar.make(getView(), R.string.profile_edit_change_password_success_result, Snackbar.LENGTH_LONG).show();
                         break;
@@ -165,7 +163,7 @@ public class EditProfileFragment extends Fragment {
         }
     }
 
-    private void updateUserData(String password) {
+    private void updateUserData() {
         String firstName = firstNameField.getText().toString();
         String lastName = lastNameField.getText().toString();
         String middleName = middleNameField.getText().toString();
@@ -173,8 +171,7 @@ public class EditProfileFragment extends Fragment {
         String email = emailField.getText().toString();
         String studentId = studentIdSeriesField.getText().toString() + studentIdNumberField.getText().toString();
         email = user.getEmail().equals(email) ? null : email;
-        Call call = ApiManager.getApi(getContext()).updateUser(password, firstName,
-                middleName, lastName, phone, email, studentId);
+        Call call = ApiManager.getApi(getContext()).updateUser(firstName, middleName, lastName, phone, email, studentId);
         call.enqueue(updateUserCallback);
     }
 

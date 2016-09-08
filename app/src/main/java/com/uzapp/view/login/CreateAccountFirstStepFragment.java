@@ -38,7 +38,7 @@ import butterknife.Unbinder;
 /**
  * Created by vika on 09.08.16.
  */
-public class CreateAccountFragment extends Fragment {
+public class CreateAccountFirstStepFragment extends Fragment {
     private Unbinder unbinder;
     @BindView(R.id.resetBtn) Button resetBtn;
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
@@ -142,7 +142,7 @@ public class CreateAccountFragment extends Fragment {
 
     @OnClick(R.id.registerBtn)
     void onRegisterBtnClicked() {
-        CreateAccountProfileFragment fragment = CreateAccountProfileFragment.getInstance(emailField.getText().toString(),
+        CreateAccountSecondStepFragment fragment = CreateAccountSecondStepFragment.getInstance(emailField.getText().toString(),
                 passwordField.getText().toString(), bonusProgramChb.isChecked());
         ((BaseActivity) getActivity()).replaceFragment(fragment, true);
     }

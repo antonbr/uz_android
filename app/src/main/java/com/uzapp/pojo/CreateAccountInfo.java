@@ -18,66 +18,124 @@ public class CreateAccountInfo {
     private String password;
     @SerializedName("student_id")
     private String studentId;
+    @SerializedName("fb_id")
+    private String fbId;
+    @SerializedName("vk_id")
+    private String vkId;
+    @SerializedName("ok_id")
+    private String okId;
 
-    public CreateAccountInfo(String deviceId, String email, String password) {
-        this.deviceId = deviceId;
-        this.email = email;
-        this.password = password;
+    public CreateAccountInfo(CreateAccountInfoBuilder builder) {
+        this.deviceId = builder.deviceId;
+        this.firstName = builder.firstName;
+        this.lastName = builder.lastName;
+        this.email = builder.email;
+        this.phoneNumber = builder.phoneNumber;
+        this.password = builder.password;
+        this.studentId = builder.studentId;
+        this.fbId = builder.fbId;
+        this.vkId = builder.vkId;
+        this.okId = builder.okId;
+    }
+
+
+    public static class CreateAccountInfoBuilder {
+        private String deviceId;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private String phoneNumber;
+        private String password;
+        private String studentId;
+        private String fbId, vkId, okId;
+
+        public CreateAccountInfoBuilder(String deviceId, String email) {
+            this.deviceId = deviceId;
+            this.email = email;
+        }
+
+        public CreateAccountInfoBuilder setFirstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public CreateAccountInfoBuilder setLastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public CreateAccountInfoBuilder setPhoneNumber(String phoneNumber) {
+            this.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        public CreateAccountInfoBuilder setPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public CreateAccountInfoBuilder setStudentId(String studentId) {
+            this.studentId = studentId;
+            return this;
+        }
+
+        public CreateAccountInfoBuilder setFbId(String fbId) {
+            this.fbId = fbId;
+            return this;
+        }
+
+        public CreateAccountInfoBuilder setVkId(String vkId) {
+            this.vkId = vkId;
+            return this;
+        }
+
+        public CreateAccountInfoBuilder setOkId(String okId) {
+            this.okId = okId;
+            return this;
+        }
+
+        public CreateAccountInfo build(){
+            return new CreateAccountInfo(this);
+        }
     }
 
     public String getDeviceId() {
         return deviceId;
     }
 
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
-    }
-
     public String getFirstName() {
         return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
+    public String getFbId() {
+        return fbId;
+    }
+
+    public String getVkId() {
+        return vkId;
+    }
+
+    public String getOkId() {
+        return okId;
     }
 }

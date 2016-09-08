@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
+import com.uzapp.pojo.CreateAccountInfo;
 import com.uzapp.pojo.LoginInfo;
 import com.uzapp.pojo.SocialLoginErrorResponse;
 import com.uzapp.pojo.SocialLoginInfo;
@@ -60,6 +63,7 @@ import ru.ok.android.sdk.util.OkScope;
  * Created by vika on 14.08.16.
  */
 public class LoginFragment extends Fragment implements OkTokenRequestListener {
+    public static final int REQUEST_USER_EMAIL = 1;
     List<String> permissionNeeds = Arrays.asList("email");
     private Unbinder unbinder;
     @BindView(R.id.resetBtn) Button resetBtn;
@@ -72,6 +76,9 @@ public class LoginFragment extends Fragment implements OkTokenRequestListener {
     @BindDimen(R.dimen.hint_padding) int hintPadding;
     private CallbackManager callbackManager;//used for facebook login
     private Odnoklassniki odnoklassniki;
+    private SocialLoginErrorResponse socialLoginErrorResponse; //when user doesn't exist api returns 404 and this object,
+    // than app requests email in dialog if social network doesn't provide and executes register api call with fields from this object.
+    // Password not needed when social id is set
 
     @Nullable
     @Override
@@ -115,7 +122,7 @@ public class LoginFragment extends Fragment implements OkTokenRequestListener {
 
     @OnClick(R.id.registrationBtn)
     void onRegistrationBtnClicked() {
-        ((BaseActivity) getActivity()).replaceFragment(new CreateAccountFragment(), true);
+        ((BaseActivity) getActivity()).replaceFragment(new CreateAccountFirstStepFragment(), true);
     }
 
     @OnClick(R.id.fbBtn)
@@ -162,10 +169,32 @@ public class LoginFragment extends Fragment implements OkTokenRequestListener {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (!handleVkResult(requestCode, resultCode, data)) {
+        if (requestCode == REQUEST_USER_EMAIL) {
+            String email = data.getStringExtra("email");
+            createSocialAccount(email);
+        } else if (!handleVkResult(requestCode, resultCode, data)) {
             super.onActivityResult(requestCode, resultCode, data);
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    private void createSocialAccount(String email) {
+        String deviceId = CommonUtils.getDeviceId(getContext());
+        boolean isFb = socialLoginErrorResponse.isFacebook();
+        boolean isVk = socialLoginErrorResponse.isVk();
+        boolean isOk = socialLoginErrorResponse.isOk();
+        CreateAccountInfo.CreateAccountInfoBuilder builder = new CreateAccountInfo.CreateAccountInfoBuilder(deviceId, email);
+        if (socialLoginErrorResponse.isFacebook()) {
+            builder.setFbId(socialLoginErrorResponse.getId());
+        } else if (socialLoginErrorResponse.isVk()) {
+            builder.setVkId(socialLoginErrorResponse.getId());
+        } else if (socialLoginErrorResponse.isOk()) {
+            builder.setOkId(socialLoginErrorResponse.getId());
+        }
+        builder.setFirstName(socialLoginErrorResponse.getFirstName());
+        builder.setLastName(socialLoginErrorResponse.getLastName());
+        Call call = ApiManager.getApi(getContext()).createAccount(builder.build());
+        call.enqueue(loginCallback);
     }
 
     private boolean handleVkResult(int requestCode, int resultCode, Intent data) {
@@ -185,6 +214,12 @@ public class LoginFragment extends Fragment implements OkTokenRequestListener {
         });
     }
 
+    private void showEmailDialog() {
+        DialogFragment fragment = new EmailDialogFragment();
+        fragment.setTargetFragment(this, REQUEST_USER_EMAIL);
+        fragment.show(getFragmentManager(), fragment.getClass().getName());
+    }
+
     private Callback<UserTokenResponse> loginCallback = new Callback<UserTokenResponse>() {
 
         @Override
@@ -200,9 +235,13 @@ public class LoginFragment extends Fragment implements OkTokenRequestListener {
                     startActivity(intent);
                 } else {
                     if (response.code() == HttpURLConnection.HTTP_NOT_FOUND) {
-                        SocialLoginErrorResponse socialLoginErrorResponse = ApiErrorUtil.getSocialLoginErrorResponse(response);
+                        socialLoginErrorResponse = ApiErrorUtil.getSocialLoginErrorResponse(response);
                         if (socialLoginErrorResponse != null) {
-                            //TODO
+                            if(TextUtils.isEmpty(socialLoginErrorResponse.getEmail())) {
+                                showEmailDialog();
+                            } else{
+                                createSocialAccount(socialLoginErrorResponse.getEmail());
+                            }
                         }
                     }
                     String error = ApiErrorUtil.parseError(response);

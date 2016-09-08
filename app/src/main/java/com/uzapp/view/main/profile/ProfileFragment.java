@@ -92,7 +92,9 @@ public class ProfileFragment extends Fragment implements ProfileRouteHistoryAdap
     @Override
     public void onDestroy() {
         super.onDestroy();
-        realm.close();
+        if(!realm.isClosed()) {
+            realm.close();
+        }
     }
 
     private void loadUserInfo() {
@@ -141,6 +143,7 @@ public class ProfileFragment extends Fragment implements ProfileRouteHistoryAdap
 
     private void logout() {
         PrefsUtil.clearAllPrefs(getContext());
+        realm.close();
         Realm.deleteRealm(realm.getConfiguration());
         Intent intent = new Intent(getActivity(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -191,7 +194,7 @@ public class ProfileFragment extends Fragment implements ProfileRouteHistoryAdap
             adapter.setStations(items);
         } else {
             routeHistoryCard.setVisibility(View.GONE);
-            routeHistoryLabel.setVisibility(View.VISIBLE);
+            routeHistoryLabel.setVisibility(View.GONE);
         }
     }
 

@@ -37,8 +37,8 @@ import retrofit2.Response;
 /**
  * Created by vika on 10.08.16.
  */
-public class CreateAccountProfileFragment extends Fragment {
-    private static final String TAG = CreateAccountProfileFragment.class.getName();
+public class CreateAccountSecondStepFragment extends Fragment {
+    private static final String TAG = CreateAccountSecondStepFragment.class.getName();
 
     private Unbinder unbinder;
     @BindView(R.id.resetBtn) Button resetBtn;
@@ -66,8 +66,8 @@ public class CreateAccountProfileFragment extends Fragment {
         return view;
     }
 
-    public static CreateAccountProfileFragment getInstance(String email, String password, boolean isBonusProgramChecked) {
-        CreateAccountProfileFragment fragment = new CreateAccountProfileFragment();
+    public static CreateAccountSecondStepFragment getInstance(String email, String password, boolean isBonusProgramChecked) {
+        CreateAccountSecondStepFragment fragment = new CreateAccountSecondStepFragment();
         Bundle args = new Bundle();
         args.putString("email", email);
         args.putString("password", password);
@@ -110,25 +110,23 @@ public class CreateAccountProfileFragment extends Fragment {
     @OnClick({R.id.saveBtn, R.id.skipBtn})
     void onSaveBtnClicked(View view) {
         String deviceId = CommonUtils.getDeviceId(getContext());
-        CreateAccountInfo createAccountInfo = new CreateAccountInfo(
-                deviceId,
-                email,
-                password);
+        CreateAccountInfo.CreateAccountInfoBuilder builder = new CreateAccountInfo.CreateAccountInfoBuilder(deviceId, email);
+        builder.setPassword(password);
         if (view.getId() == R.id.saveBtn) {
             if (isFirstNameValid() && firstNameField.getText().length() > 0) {
-                createAccountInfo.setFirstName(firstNameField.getText().toString());
+                builder.setFirstName(firstNameField.getText().toString());
             }
             if (isLastNameValid() && lastNameField.getText().length() > 0) {
-                createAccountInfo.setLastName(lastNameField.getText().toString());
+                builder.setLastName(lastNameField.getText().toString());
             }
             if (phoneField.isValid() && phoneField.getText().length() > 0) {
-                createAccountInfo.setPhoneNumber(phoneField.getPhoneNumber());
+                builder.setPhoneNumber(phoneField.getPhoneNumber());
             }
             if (studentIdField.isValid() && studentIdField.getText().length() > 0) {
-                createAccountInfo.setStudentId(studentIdField.getStudentId());
+                builder.setStudentId(studentIdField.getStudentId());
             }
         }
-        Call call = ApiManager.getApi(getContext()).createAccount(createAccountInfo);
+        Call call = ApiManager.getApi(getContext()).createAccount(builder.build());
         call.enqueue(callback);
     }
 
