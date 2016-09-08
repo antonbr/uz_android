@@ -29,7 +29,16 @@
     <string name="search_find_tickets">Найти билеты</string>
     <string name="search_title">Новая поездка</string>
     <string name="search_stations_not_valid">Станції відправлення та призначення співпадають</string>
-
+    //search filter
+    <string name="search_settings_passengers">Пассажиры:</string>
+    <string name="search_settings_placement_any">Любые места</string>
+    <string name="search_settings_placement">Размещение</string>
+    <string name="search_settings_placement_bottom">Только нижние места</string>
+    <string name="search_settings_placement_top">Только верхние места</string>
+    <string name="search_settings_single_coupe">Места в одном купе</string>
+    <string name="search_settings_wc_conductor">Туалет/Проводник</string>
+    <string name="search_settings_wc">Не возле туалета</string>
+    <string name="search_settings_conductor">Не возле проводника</string>
 
     //calendar
     <string name="calendar_when">Когда</string>
@@ -51,8 +60,8 @@
     <string name="trains_first_tab_name">Туда, %1$s</string>
     <string name="trains_second_tab_name">Обратно, %1$s</string>
     <string name="trains_no_places">К сожалению, на %1$s\nсвободных мест нет</string>
-    <string name="departure">ОТПРАВЛЕНИЕ</string>
-    <string name="arrival">ПРИБЫТИЕ</string>
+    <string name="trains_departure">ОТПРАВЛЕНИЕ</string>
+    <string name="trains_arrival">ПРИБЫТИЕ</string>
     <string name="train_route_distance">РАССТОЯНИЕ</string>
     <string name="train_route_stop_time">%1$s мин</string>
     <string name="train_route_distance_km">%1$s км</string>
@@ -127,6 +136,7 @@
     <string name="create_account_student">Вы студент?</string>
     <string name="create_account_student_id">Серия и номер студенческого</string>
     <string name="create_account_profile_info_title">Личные данные</string>
+    <string name="create_account_skip">Пропустить этот шаг</string>
 
     //login
     <string name="login_email">E-mail</string>
@@ -136,6 +146,8 @@
     <string name="login_skip">Продолжить без регистрации</string>
     <string name="login_registration_text">Еще не регистрировались? Это легко:</string>
     <string name="login_title">Вход в приложение</string>
+    <string name="login_social">Войти с помощью соц.сетей:</string>
+
 
     //reset password
     <string name="reset_password_text">Для восстановления пароля введите Ваш e-mail, на который вы регистрировались</string>
@@ -145,7 +157,7 @@
     <string name="reset_password_thank">Спасибо!</string>
     <string name="reset_password_instruction">Инструкция по восстановлению пароля отправлена на Ваш E-mail</string>
     <string name="reset_password_btn_search_screen">На страницу поиска</string>
-    <string name="create_account_skip">Пропустить этот шаг</string>
+    <string name="reset_password_old">Старый пароль</string>
 
     //profile
     <string name="profile_bonus_card_number">Номер бонусной карты</string>
@@ -172,6 +184,26 @@
     <string name="profile_edit_successful_result">Информация пользователя была успешно изменена</string>
     <string name="profile_change_password">Сменить пароль</string>
     <string name="profile_logout">Выйти из аккаунта</string>
+    <string name="profile_name">Имя</string>
+    <string name="profile_edit_contacts">Контакты</string>
+    <string name="profile_phone_hint">ХХ ХХХ ХХ ХХ</string>
+    <string name="profile_email_hint">example@example.com</string>
+    <string name="profile_edit_enter_studentid">Введите номер студенческого билета</string>
+    <string name="profile_studentid_series_hint">XX</string>
+    <string name="profile_studentid_number_hint">XXXXXXXX</string>
+    <string name="profile_edit_title">Настройки кабинета</string>
+    <string name="profile_phone_prefix">+380</string>
+    <string name="profile_edit_password_title">Введите пароль</string>
+    <string name="profile_edit_password_subtitle">Для сохранения изменений</string>
+    <string name="profile_save_changes">Сохранить изменения</string>
+    <string name="profile_change_password_title">Изменение пароля</string>
+    <string name="profile_last_destinations">Недавние маршруты</string>
+    <string name="profile_settings">Настройки</string>
+    <string name="profile_payment_methods">Способы оплаты</string>
+    <string name="profile_settings_account">Настройки кабинета</string>
+    <string name="profile_search_settings">Настройки поиска билетов</string>
+    <string name="profile_change_password_button">Изменить пароль</string>
+    <string name="profile_route_history_item">%1$s — %2$s</string>
 
     <string-array name="wagon_types_long">
         <item>Люкс</item>
@@ -234,6 +266,10 @@
     <string name="ticket_analog_message">Перед поездкой необходимо предоставить этот бланк заказа в любую автоматизированную билетную кассу на материковой части Украины и распечатать проездные и перевозочные документы до отправления поезда.\nПри отсутствии возможности распечатать содержимое данного бланка, пожалуйста, запишите номер заказа, приведенный ниже.</string>
     <string name="tickets_today">Билеты на сегодня</string>
     <string name="tickets_today_count">Билеты на сегодня (%1$d)</string>
+    <string name="ticket_print">Распечатать бланк заказа</string>
+    <string name="ticket_pick_date">Выбрать дату</string>
+    <string name="tickets_no_content">У Вас пока нет билетов</string>
+    <string name="tickets_no_content_search">Найдите билеты на нужный поезд</string>
 
     //ticket kind
     <string name="ticket_kind_full">Полный</string>
@@ -257,40 +293,6 @@
     <string name="wagon_class_1">1-й клас</string>
     <string name="wagon_class_2">2-й клас</string>
     <string name="wagon_class_3">3-й клас</string>
-    <string name="ticket_print">Распечатать бланк заказа</string>
-    <string name="ticket_pick_date">Выбрать дату</string>
-    <string name="tickets_no_content">У Вас пока нет билетов</string>
-    <string name="tickets_no_content_search">Найдите билеты на нужный поезд</string>
-    <string name="profile_name">Имя</string>
-    <string name="profile_edit_contacts">Контакты</string>
-    <string name="profile_phone_hint">ХХ ХХХ ХХ ХХ</string>
-    <string name="profile_email_hint">example@example.com</string>
-    <string name="profile_edit_enter_studentid">Введите номер студенческого билета</string>
-    <string name="profile_studentid_series_hint">XX</string>
-    <string name="profile_studentid_number_hint">XXXXXXXX</string>
-    <string name="profile_edit_title">Настройки кабинета</string>
-    <string name="profile_phone_prefix">+380</string>
-    <string name="profile_edit_password_title">Введите пароль</string>
-    <string name="profile_edit_password_subtitle">Для сохранения изменений</string>
-    <string name="profile_save_changes">Сохранить изменения</string>
-    <string name="profile_change_password_title">Изменение пароля</string>
-    <string name="profile_last_destinations">Недавние маршруты</string>
-    <string name="profile_settings">Настройки</string>
-    <string name="profile_payment_methods">Способы оплаты</string>
-    <string name="profile_settings_account">Настройки кабинета</string>
-    <string name="profile_search_settings">Настройки поиска билетов</string>
-    <string name="profile_change_password_button">Изменить пароль</string>
-    <string name="profile_route_history_item">%1$s — %2$s</string>
-    <string name="reset_password_old">Старый пароль</string>
-    <string name="login_social">Войти с помощью соц.сетей:</string>
-    <string name="search_ticket_settings_passengers">Пассажиры:</string>
-    <string name="search_ticket_settings_placement_any">Любые места</string>
-    <string name="search_ticket_settings_placement">Размещение</string>
-    <string name="search_ticket_settings_placement_bottom">Только нижние места</string>
-    <string name="search_ticket_settings_placement_top">Только верхние места</string>
-    <string name="search_ticket_settings_single_coupe">Места в одном купе</string>
-    <string name="search_ticket_settings_wc_conductor">Туалет/Проводник</string>
-    <string name="search_ticket_settings_wc">Не возле туалета</string>
-    <string name="search_ticket_settings_conductor">Не возле проводника</string>
+
 
 </resources>

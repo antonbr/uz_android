@@ -82,7 +82,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="17dp"
-                        android:text="@string/departure"
+                        android:text="@string/trains_departure"
                         android:textAllCaps="true"
                         android:textSize="@dimen/text_size_small"/>
 
@@ -120,7 +120,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="17dp"
-                        android:text="@string/arrival"
+                        android:text="@string/trains_arrival"
                         android:textAllCaps="true"
                         android:textSize="@dimen/text_size_small"/>
 
