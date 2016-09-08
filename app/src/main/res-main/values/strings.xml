@@ -283,5 +283,14 @@
     <string name="profile_route_history_item">%1$s — %2$s</string>
     <string name="reset_password_old">Старый пароль</string>
     <string name="login_social">Войти с помощью соц.сетей:</string>
+    <string name="search_ticket_settings_passengers">Пассажиры:</string>
+    <string name="search_ticket_settings_placement_any">Любые места</string>
+    <string name="search_ticket_settings_placement">Размещение</string>
+    <string name="search_ticket_settings_placement_bottom">Только нижние места</string>
+    <string name="search_ticket_settings_placement_top">Только верхние места</string>
+    <string name="search_ticket_settings_single_coupe">Места в одном купе</string>
+    <string name="search_ticket_settings_wc_conductor">Туалет/Проводник</string>
+    <string name="search_ticket_settings_wc">Не возле туалета</string>
+    <string name="search_ticket_settings_conductor">Не возле проводника</string>
 
 </resources>

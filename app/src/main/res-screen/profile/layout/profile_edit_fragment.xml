@@ -6,52 +6,7 @@
               android:background="@color/backgroundColor"
               android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.v7.widget.Toolbar
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/lightColor"
-            app:contentInsetLeft="0dp"
-            app:contentInsetStart="0dp">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageButton
-                    android:id="@+id/closeBtn"
-                    android:layout_width="?attr/actionBarSize"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/close_grey"/>
-
-                <TextView
-                    android:id="@+id/toolbarTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="@string/profile_edit_title"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/text_size"/>
-
-                <ImageButton
-                    android:id="@+id/tickBtn"
-                    android:layout_width="?attr/actionBarSize"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/tick"/>
-            </RelativeLayout>
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
+    <include layout="@layout/toolbar_light_edit"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -196,7 +151,7 @@
                 android:layout_marginLeft="28dp"
                 android:layout_marginTop="12dp"
                 android:text="@string/profile_edit_enter_studentid"
-                android:textColor="@color/ticketTextColor"
+                android:textColor="@color/textColorGrey"
                 android:textSize="14sp"/>
 
             <android.support.v7.widget.CardView
@@ -221,10 +176,10 @@
                         android:hint="@string/profile_studentid_series_hint"
                         android:inputType="textCapCharacters|textNoSuggestions"
                         android:maxLength="@integer/profile_student_id_series_length"
+                        android:nextFocusDown="@+id/studentIdNumberField"
                         android:paddingBottom="19dp"
                         android:paddingLeft="19dp"
                         android:paddingTop="19dp"
-                        android:nextFocusDown="@+id/studentIdNumberField"
                         android:textColorHint="@color/textColorHint"/>
 
                     <EditText

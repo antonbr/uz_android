@@ -17,7 +17,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="sans-serif-medium"
             android:text="143 Л «Галичина»"
-            android:textColor="@color/ticketTextColor"
+            android:textColor="@color/textColorGrey"
             android:textSize="18sp"/>
 
         <ImageButton
@@ -78,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ticket_departure"
-            android:textColor="@color/ticketTextColor"
+            android:textColor="@color/textColorGrey"
             android:textSize="@dimen/button_text_size"
             app:layout_columnWeight="1"
             app:layout_gravity="fill"/>
@@ -88,7 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/wagon"
-            android:textColor="@color/ticketTextColor"
+            android:textColor="@color/textColorGrey"
             android:textSize="@dimen/button_text_size"
             app:layout_columnWeight="1"
             app:layout_gravity="fill"/>
@@ -98,7 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tickets_place"
-            android:textColor="@color/ticketTextColor"
+            android:textColor="@color/textColorGrey"
             android:textSize="@dimen/button_text_size"
             app:layout_columnWeight="1"
             app:layout_gravity="fill"/>
