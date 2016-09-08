@@ -13,7 +13,6 @@ public class PrefsUtil {
     public static final String USER_REFRESH_TOKEN = "user_refresh_token";
     public static final String USER_ID = "user_id";
 
-
     public static boolean setStringPreference(Context context, String key, String value) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         if (preferences != null && !TextUtils.isEmpty(key)) {

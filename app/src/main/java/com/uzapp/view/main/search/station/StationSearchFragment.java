@@ -36,7 +36,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import retrofit2.Call;
@@ -145,8 +144,7 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        RealmConfiguration realmConfig = new RealmConfiguration.Builder(getContext()).build();
-        realm = Realm.getInstance(realmConfig);
+        realm = Realm.getDefaultInstance();
     }
 
     @Override

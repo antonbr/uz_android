@@ -28,6 +28,7 @@ import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.RouteHistoryItem;
 import com.uzapp.pojo.Station;
+import com.uzapp.pojo.User;
 import com.uzapp.util.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
@@ -56,6 +57,7 @@ import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
+import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -109,6 +111,9 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
         initArguments();
         initDatePickerList();
         checkAllFieldsFilled();
+        Realm realm = Realm.getDefaultInstance();
+        User user = realm.where(User.class).findFirst();
+        realm.close();
         return view;
     }
 
@@ -125,7 +130,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
 
     private void initArguments() {
         Bundle args = getArguments();
-        if (args!=null && args.containsKey("fromStation") && args.containsKey("toStation")) {
+        if (args != null && args.containsKey("fromStation") && args.containsKey("toStation")) {
             fromStation = Parcels.unwrap(args.getParcelable("fromStation"));
             toStation = Parcels.unwrap(args.getParcelable("toStation"));
             pathFrom.setText(fromStation.getName());

@@ -39,6 +39,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -62,6 +63,7 @@ public class ProfileFragment extends Fragment implements ProfileRouteHistoryAdap
     private Unbinder unbinder;
     private User user;
     private ProfileRouteHistoryAdapter adapter;
+    private Realm realm;
 
     @Nullable
     @Override
@@ -79,6 +81,18 @@ public class ProfileFragment extends Fragment implements ProfileRouteHistoryAdap
     public void onResume() {
         super.onResume();
         ((MainActivity) getActivity()).selectNoneItemsInNavBar();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        realm = Realm.getDefaultInstance();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        realm.close();
     }
 
     private void loadUserInfo() {
@@ -127,6 +141,7 @@ public class ProfileFragment extends Fragment implements ProfileRouteHistoryAdap
 
     private void logout() {
         PrefsUtil.clearAllPrefs(getContext());
+        Realm.deleteRealm(realm.getConfiguration());
         Intent intent = new Intent(getActivity(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
@@ -196,6 +211,7 @@ public class ProfileFragment extends Fragment implements ProfileRouteHistoryAdap
                     case REQUEST_EDIT_PROFILE:
                         user = Parcels.unwrap(data.getParcelableExtra("user"));
                         showUserInfo();
+                        saveUserToRealm();
                         CommonUtils.showMessage(getView(), R.string.profile_edit_successful_result);
                         break;
                     case REQUEST_CHANGE_PASSWORD:
@@ -206,6 +222,11 @@ public class ProfileFragment extends Fragment implements ProfileRouteHistoryAdap
         }
     }
 
+    private void saveUserToRealm() {
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(user);
+        realm.commitTransaction();
+    }
 
     private Callback<User> userCallback = new Callback<User>() {
 
@@ -216,6 +237,7 @@ public class ProfileFragment extends Fragment implements ProfileRouteHistoryAdap
                 if (response.isSuccessful()) {
                     user = response.body();
                     showUserInfo();
+                    saveUserToRealm();
                 } else {
                     String error = ApiErrorUtil.parseError(response);
                     CommonUtils.showMessage(getView(), error);
