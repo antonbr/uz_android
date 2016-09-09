@@ -1,6 +1,7 @@
 package com.uzapp.util;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.provider.Settings;
@@ -9,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Patterns;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -177,5 +179,25 @@ public class CommonUtils {
             }
         }
         return digits;
+    }
+
+    public static boolean isVisa(String str) {
+        String visa = "^4[0-9]{6,}$";
+        return str.matches(visa);
+    }
+    public static boolean isMasterCard(String str) {
+        String masterCard = "^5[1-5][0-9]{5,}$";
+        return str.matches(masterCard);
+    }
+
+    public static boolean isFullName(String str) {
+        String expression = " ^[a-zA-Z0-9._-]{3,}$";
+        return str.matches(expression);
+    }
+
+    public static int convertDpFromPx(Context context, int pixel) {
+        Resources resources = context.getResources();
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, pixel,
+                resources.getDisplayMetrics());
     }
 }

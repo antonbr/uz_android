@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/layoutConfirmPayment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:text="@string/your_email" />
+
+        <EditText
+            android:id="@+id/emailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:hint="@string/enter_your_email_address"
+            android:inputType="textEmailAddress"
+            android:padding="16dp"
+            android:textColor="@android:color/black"
+            android:textColorHint="@color/accentColor"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:text="@string/hint_your_first_and_last_name" />
+
+        <EditText
+            android:id="@+id/firstSureNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:hint="@string/hint_enter_first_and_last_name"
+            android:inputType="textCapWords"
+            android:padding="16dp"
+            android:textColor="@android:color/black"
+            android:textColorHint="@color/accentColor"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:text="@string/hint_phone_number" />
+
+        <com.uzapp.view.login.PhoneNumberTextInputEditText
+            android:id="@+id/phoneField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:hint="@string/hint_enter_phone_number"
+            android:inputType="number"
+            android:padding="16dp"
+            android:longClickable="false"
+            android:maxLength="@integer/phone_number_length"
+            android:textColor="@android:color/black"
+            android:textColorHint="@color/accentColor"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

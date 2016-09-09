@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class Ticket implements Serializable {
 
-    private int id;
+    int id;
     private String wagonNumber;
     private String placeNumber;
     private String placeType;
@@ -16,10 +16,16 @@ public class Ticket implements Serializable {
     private int arrivalDate;
     private int wagonClasses;
     private String wagonType;
+    private boolean isBooking;
+    private boolean isReserve;
+    private String firstName;
+    private String lastName;
+    private String kind;
+    private String privilege;
+    private String service;
+    private String baggage;
 
-    public Ticket() {
-
-    }
+    public Ticket() {}
 
     public Ticket(int id, String wagonNumber, String placeNumber, String placeType, int ticketPrice,
                   int departureDate, int arrivalDate, int wagonClasses, String wagonType) {
@@ -90,6 +96,14 @@ public class Ticket implements Serializable {
         this.arrivalDate = arrivalDate;
     }
 
+    public int getWagonClasses() {
+        return wagonClasses;
+    }
+
+    public void setWagonClasses(int wagonClasses) {
+        this.wagonClasses = wagonClasses;
+    }
+
     public String getWagonType() {
         return wagonType;
     }
@@ -98,11 +112,67 @@ public class Ticket implements Serializable {
         this.wagonType = wagonType;
     }
 
-    public int getWagonClasses() {
-        return wagonClasses;
+    public boolean isBooking() {
+        return isBooking;
     }
 
-    public void setWagonClasses(int wagonClasses) {
-        this.wagonClasses = wagonClasses;
+    public void setIsBooking(boolean isBooking) {
+        this.isBooking = isBooking;
+    }
+
+    public boolean isReserve() {
+        return isReserve;
+    }
+
+    public void setIsReserve(boolean isReserve) {
+        this.isReserve = isReserve;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getKind() {
+        return kind;
+    }
+
+    public void setKind(String kind) {
+        this.kind = kind;
+    }
+
+    public String getPrivilege() {
+        return privilege;
+    }
+
+    public void setPrivilege(String privilege) {
+        this.privilege = privilege;
+    }
+
+    public String getService() {
+        return service;
+    }
+
+    public void setService(String service) {
+        this.service = service;
+    }
+
+    public String getBaggage() {
+        return baggage;
+    }
+
+    public void setBaggage(String baggage) {
+        this.baggage = baggage;
     }
 }

@@ -12,6 +12,7 @@ import com.uzapp.pojo.booking.Uio;
 import com.uzapp.pojo.placeslist.PricesPlacesList;
 import com.uzapp.pojo.prices.Prices;
 import com.uzapp.pojo.tickets.TicketsResponse;
+import com.uzapp.pojo.transportation.Transportation;
 
 import java.util.List;
 
@@ -111,4 +112,14 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("order/cancel")
     Call<Uio> cancelReserveTickets(@Field("uio") String uio);
+
+    @FormUrlEncoded
+    @POST("order/payment")
+    Call<TicketsResponse> paymentTickets(@Field("uio") String uio, @Field("access_token") String accessToken,
+                                         @Field("card") String card, @Field("exp_month") int expMonth, @Field("exp_year") int exp_year,
+                                         @Field("cvv") String cvv, @Field("first_name") String firstName, @Field("last_name") String last_name,
+                                         @Field("email") String email, @Field("phone") String phone);
+
+    @GET("order/transportation")
+    Call<Transportation> getTransportation(@Query("kind") String kind, @Query("uid") String uid, @Query("weight") String weight);
 }

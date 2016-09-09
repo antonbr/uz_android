@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:divider="@drawable/divider_hint_color_horizontal"
+    android:showDividers="middle">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/trains_padding_inside">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/option_bed"
+            android:textSize="16sp" />
+
+        <ToggleButton
+            android:id="@+id/toggleBed"
+            android:layout_width="51dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/toggle_selector"
+            android:checked="true"
+            android:text=""
+            android:textOff=""
+            android:textOn="" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/trains_padding_inside">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/toggleTea"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="5dp"
+            android:text="@string/option_tea"
+            android:textSize="16sp" />
+
+        <ToggleButton
+            android:id="@+id/toggleTea"
+            android:layout_width="51dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/toggle_selector"
+            android:checked="false"
+            android:text=""
+            android:textOff=""
+            android:textOn="" />
+
+        <LinearLayout
+            android:id="@+id/layoutTea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toggleTea"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/stationsFromToDividerColor" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/toggleTea"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp">
+
+                <Button
+                    android:id="@+id/btnOneTea"
+                    android:layout_width="match_parent"
+                    android:layout_height="27dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_pressed_left"
+                    android:text="@string/service_one_tea"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/btnTwoTea"
+                    android:layout_width="match_parent"
+                    android:layout_height="27dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_enabled_right"
+                    android:text="@string/service_two_tea"
+                    android:textAllCaps="false"
+                    android:textColor="@color/accentColor"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/trains_padding_inside">
+
+        <TextView
+            android:id="@+id/txtBaggage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imageViewInfo"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="5dp"
+            android:text="@string/option_baggage"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/imageViewInfo"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/txtBaggage"
+            android:src="@drawable/ic_info" />
+
+        <ToggleButton
+            android:id="@+id/toggleBaggage"
+            android:layout_width="51dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/toggle_selector"
+            android:checked="false"
+            android:text=""
+            android:textOff=""
+            android:textOn="" />
+
+        <LinearLayout
+            android:id="@+id/layoutBaggage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toggleBaggage"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/stationsFromToDividerColor" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                android:weightSum="3">
+
+                <Button
+                    android:id="@+id/btnAnimal"
+                    android:layout_width="match_parent"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_pressed_left"
+                    android:gravity="center"
+                    android:text="@string/service_animal"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/btnEquipment"
+                    android:layout_width="match_parent"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_enabled_center"
+                    android:gravity="center"
+                    android:text="@string/service_equipment"
+                    android:textAllCaps="false"
+                    android:textColor="@color/accentColor"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/btnExcess"
+                    android:layout_width="match_parent"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_enabled_right"
+                    android:gravity="center"
+                    android:textAllCaps="false"
+                    android:text="Избыток"
+                    android:textColor="@color/accentColor"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

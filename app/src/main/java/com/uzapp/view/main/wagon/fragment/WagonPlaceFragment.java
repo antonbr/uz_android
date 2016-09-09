@@ -207,24 +207,10 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
         getActivity().onBackPressed();
     }
 
-//    @OnClick(R.id.btnBuyTicket)
-//    void onClickBtnBuyTicket() {
-//        setBackgroundBtn();
-//        isBooking = true;
-//        isReserve = false;
-//    }
-//
-//    @OnClick(R.id.btnReserveTicket)
-//    void onClickBtnReserveTicket() {
-//        setBackgroundBtn();
-//        isBooking = false;
-//        isReserve = true;
-//    }
-
     @OnClick(R.id.btnGoToRegistration)
     void onClickBtnGoToRegistration() {
         ((MainActivity) getActivity()).replaceFragment(PreparePurchaseFragment
-                .getInstance(listTickets, isBooking, isReserve, trainName, stationFromName, stationToName,
+                .getInstance(listTickets, trainName, stationFromName, stationToName,
                         train, selectDate, stationFromCode, stationToCode), true);
     }
 

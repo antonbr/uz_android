@@ -210,6 +210,9 @@
     <string name="hint_cvv_code">•••</string>
     <string name="error_invalid_email">Error invalid email address</string>
     <string name="error_field_required">This field is empty</string>
+    <string name="error_field_short">This field is short</string>
+    <string name="error_card_number_is_invalid">This card number is invalid</string>
+    <string name="error_name_invalid">This name is invalid</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -232,6 +235,7 @@
     <string name="ticket_kind_child">Детский</string>
     <string name="ticket_kind_privilege">Льготный</string>
     <string name="ticket_kind_military">Военный</string>
+    <string name="ticket_kind_student">Студент</string>
 
     //wagon types
     <string name="wagon_type_suite">Люкс</string>
@@ -253,4 +257,33 @@
     <string name="ticket_pick_date">Выбрать дату</string>
     <string name="tickets_no_content">У Вас пока нет билетов</string>
     <string name="tickets_no_content_search">Найдите билеты на нужный поезд</string>
+
+    // payment
+    <string name="thank_you_for_your_purchase">Спасибо за покупку!</string>
+    <string name="tickets_sent_to_your_email">Билеты высланы на ваш email</string>
+    <string name="go_to_my_tickets">Перейти в мои билеты</string>
+    <string name="go_to_payment">Перейти к оплате</string>
+    <string name="share">Поделиться</string>
+    <string name="your_email">Ваш email</string>
+    <string name="enter_your_email_address">Введите email адрес</string>
+    <string name="hint_your_first_and_last_name">Ваши имя и фамилия</string>
+    <string name="hint_phone_number">Ваш номер телефона</string>
+    <string name="hint_enter_phone_number">Введите номер телефона</string>
+    <string name="hint_enter_first_and_last_name">Введите имя и фамилию</string>
+    <string name="tickets_information">Заполните поля имя/фамилия \nи укажите дополнительные услуги \n(багаж, чай, постель) по необходимости</string>
+    <string name="departure_train">Отправления</string>
+    <string name="arrival_train">Прибытия</string>
+    <string name="enter_first_name">Введите имя</string>
+    <string name="enter_last_name">Введите фамилию</string>
+    <string name="delete_tickets">Удалить билет</string>
+    <string name="hint_enter_student_number">Введите номер студенческого билета</string>
+    <string name="option_bed">Постельное</string>
+    <string name="option_tea">Чай</string>
+    <string name="option_baggage">Багаж</string>
+    <string name="service_one_tea">1 чай</string>
+    <string name="service_two_tea">2 чая</string>
+    <string name="service_animal">Животные</string>
+    <string name="service_equipment">Аппаратура</string>
+    <string name="service_excess">Избыток</string>
+
 </resources>

@@ -3,7 +3,9 @@ package com.uzapp.view.main.purchase.fragment;
 
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,14 +19,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.booking.Booking;
 import com.uzapp.pojo.booking.Uio;
+import com.uzapp.pojo.tickets.TicketsResponse;
+import com.uzapp.pojo.transportation.Transportation;
 import com.uzapp.util.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
+import com.uzapp.util.PrefsUtil;
+import com.uzapp.view.login.PhoneNumberTextInputEditText;
+import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.purchase.ProgressCountDownTimer;
 
 import java.util.ArrayList;
@@ -33,6 +39,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 import retrofit2.Call;
@@ -60,6 +67,7 @@ public class PayFragment extends Fragment {
 
     public static final String KEY_PRICE_TICKETS = "KEY_PRICE_TICKETS";
     public static final String KEY_LIST_BOOKINGS = "KEY_LIST_BOOKINGS";
+    public static final String KEY_LIST_BAGGAGE = "KEY_LIST_BAGGAGE";
 
     @BindView(R.id.txtTimerPurchase) TextView txtTimerPurchase;
     @BindView(R.id.progressTime) ProgressBar progressTime;
@@ -71,6 +79,7 @@ public class PayFragment extends Fragment {
     @BindView(R.id.layoutConfirmPayment) LinearLayout layoutConfirmPayment;
     @BindView(R.id.emailEditText) EditText emailEditText;
     @BindView(R.id.firstSureNameEditText) EditText firstSureNameEditText;
+    @BindView(R.id.phoneField) PhoneNumberTextInputEditText phoneField;
     @BindView(R.id.cardNumberEditText) EditText cardNumberEditText;
     @BindView(R.id.cardDateEditText) EditText cardDateEditText;
     @BindView(R.id.cardCVCEditText) EditText cardCVCEditText;
@@ -81,17 +90,20 @@ public class PayFragment extends Fragment {
     private int priceTickets;
     private String btnText;
     private List<Booking> listBookings;
+    private List<Transportation> listTransportation;
+    private List<TicketsResponse> listTicketsResponses = new ArrayList<>();
     private int waitTime;
 
     public PayFragment() {
         // Required empty public constructor
     }
 
-    public static PayFragment newInstance(int priceTickets, List<Booking> listBookings) {
+    public static PayFragment newInstance(int priceTickets, List<Booking> listBookings, List<Transportation> listTransportation) {
         PayFragment fragment = new PayFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(KEY_PRICE_TICKETS, priceTickets);
         bundle.putParcelableArrayList(KEY_LIST_BOOKINGS, (ArrayList<? extends Parcelable>) listBookings);
+        bundle.putParcelableArrayList(KEY_LIST_BAGGAGE, (ArrayList<? extends Parcelable>) listTransportation);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -102,6 +114,7 @@ public class PayFragment extends Fragment {
         if (getArguments() != null) {
             priceTickets = getArguments().getInt(KEY_PRICE_TICKETS);
             listBookings = getArguments().getParcelableArrayList(KEY_LIST_BOOKINGS);
+            listTransportation = getArguments().getParcelableArrayList(KEY_LIST_BAGGAGE);
 
             if (listBookings != null && !listBookings.isEmpty()) {
                 waitTime = listBookings.get(0).getWaitSeconds() * 1000;
@@ -164,6 +177,7 @@ public class PayFragment extends Fragment {
             call.enqueue(cancelCallback);
         }
         listBookings.clear();
+        listTransportation.clear();
     }
 
     private Callback<Uio> cancelCallback = new Callback<Uio>() {
@@ -190,6 +204,16 @@ public class PayFragment extends Fragment {
             attemptPayment();
         } else {
             attemptConfirmPayment();
+        }
+    }
+
+    @OnFocusChange(R.id.phoneField)
+    void onFieldFocusChanged(boolean focus, TextInputEditText view) {
+        if (view.getId() == R.id.phoneField) {
+            String phoneText = phoneField.getText().toString();
+            if (phoneText.length() == 0 || (phoneText.length() == 1 && phoneText.startsWith("+"))) {
+                phoneField.setText(focus ? "+" : "");
+            }
         }
     }
 
@@ -236,6 +260,10 @@ public class PayFragment extends Fragment {
             firstSureNameEditText.setError(getString(R.string.error_field_required));
             focusView = firstSureNameEditText;
             cancel = true;
+        } else if (CommonUtils.isFullName(firstSureName)) {
+            firstSureNameEditText.setError(getString(R.string.error_name_invalid));
+            focusView = firstSureNameEditText;
+            cancel = true;
         }
 
         if (TextUtils.isEmpty(email)) {
@@ -251,9 +279,47 @@ public class PayFragment extends Fragment {
         if (cancel) {
             focusView.requestFocus();
         } else {
-            Toast.makeText(getActivity(), "Send request", Toast.LENGTH_SHORT).show();
+            for (Booking booking : listBookings) {
+                String cardNumber = (cardNumberEditText.getText().toString()).replace(" ", "");
+                int expMonth = Integer.parseInt((cardDateEditText.getText().toString()).substring(0, 2));
+                int expYear = Integer.parseInt(20 + (cardDateEditText.getText().toString()).substring(3, 5));
+                String cvv = cardCVCEditText.getText().toString();
+                String firstName = firstSureName.substring(0, firstSureName.indexOf(" "));
+                String lastName = firstSureName.substring(firstSureName.indexOf(" "), firstSureName.length());
+                String phone = phoneField.getPhoneNumber();
+                String accessToken = PrefsUtil.getStringPreference(getActivity(), PrefsUtil.USER_ACCESS_TOKEN);
+
+                Call<TicketsResponse> call = ApiManager.getApi(getContext()).paymentTickets(booking.getUio(), accessToken,
+                        cardNumber, expMonth, expYear, cvv, firstName, lastName, email, phone);
+                call.enqueue(paymentCallback);
+            }
         }
     }
+
+    private Callback<TicketsResponse> paymentCallback = new Callback<TicketsResponse>() {
+
+        @Override
+        public void onResponse(Call<TicketsResponse> call, Response<TicketsResponse> response) {
+            if (response.isSuccessful()) {
+                TicketsResponse ticketsResponse = response.body();
+
+                listTicketsResponses.add(ticketsResponse);
+
+                if (listBookings.size() == listTicketsResponses.size()) {
+                    getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    ((MainActivity) getActivity()).replaceFragment(new PaymentDoneFragment(), true);
+                }
+            } else {
+                String error = ApiErrorUtil.parseError(response);
+                CommonUtils.showMessage(getView(), error);
+            }
+        }
+
+        @Override
+        public void onFailure(Call<TicketsResponse> call, Throwable t) {
+            Log.d("PayFragment", call.toString());
+        }
+    };
 
     private void attemptPayment() {
         // Reset errors.
@@ -272,7 +338,20 @@ public class PayFragment extends Fragment {
             cardNumberEditText.setError(getString(R.string.error_field_required));
             focusView = cardNumberEditText;
             cancel = true;
+        } else if (cardNumber.length() < 19) {
+            cardNumberEditText.setError(getString(R.string.error_field_short));
+            focusView = cardNumberEditText;
+            cancel = true;
         }
+//        else if (CommonUtils.isVisa(cardNumber)) {
+//            cardNumberEditText.setError(getString(R.string.error_card_number_is_invalid));
+//            focusView = cardNumberEditText;
+//            cancel = true;
+//        } else if (CommonUtils.isMasterCard(cardNumber)) {
+//            cardNumberEditText.setError(getString(R.string.error_card_number_is_invalid));
+//            focusView = cardNumberEditText;
+//            cancel = true;
+//        }
 
         if (TextUtils.isEmpty(cardDate)) {
             cardDateEditText.setError(getString(R.string.error_field_required));

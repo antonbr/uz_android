@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toggleTea"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <Button
+                android:id="@+id/btnFull"
+                android:layout_width="match_parent"
+                android:layout_height="27dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/button_pressed_left"
+                android:gravity="center"
+                android:text="@string/ticket_kind_full"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btnChild"
+                android:layout_width="match_parent"
+                android:layout_height="27dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/button_enabled_center"
+                android:gravity="center"
+                android:text="@string/ticket_kind_child"
+                android:textAllCaps="false"
+                android:textColor="@color/accentColor"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btnStudent"
+                android:layout_width="match_parent"
+                android:layout_height="27dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/button_enabled_right"
+                android:gravity="center"
+                android:textAllCaps="false"
+                android:text="@string/ticket_kind_student"
+                android:textColor="@color/accentColor"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutStudentNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toggleTea"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/small_padding"
+                android:layout_marginTop="@dimen/small_padding"
+                android:background="@color/stationsFromToDividerColor" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/toggleTea"
+                android:orientation="horizontal"
+                android:padding="@dimen/small_padding">
+
+                <EditText
+                    android:id="@+id/studentEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:hint="@string/hint_enter_student_number"
+                    android:inputType="textCapCharacters"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@color/accentColor"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/trains_padding_inside"
+        android:paddingLeft="@dimen/trains_padding_inside"
+        android:paddingRight="1dp"
+        android:paddingTop="@dimen/trains_padding_inside">
+
+        <TextView
+            android:id="@+id/trainName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="143Л «Галичина»"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/stationFrom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/trainName"
+            android:text="Ивано-Франковск"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/arrowStations"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/stationFrom"
+            android:layout_alignTop="@+id/stationFrom"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/stationFrom"
+            android:src="@drawable/arrow" />
+
+        <TextView
+            android:id="@+id/stationTo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/trainName"
+            android:layout_toLeftOf="@+id/shareButton"
+            android:layout_toRightOf="@+id/arrowStations"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="Киев"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/ticketTypeImage"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_group" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/stationTo"
+            android:orientation="horizontal"
+            android:paddingTop="15dp"
+            android:weightSum="4">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/departure_train"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/txtDispatchTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="15:02"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtDispatchDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Пт, 17 авг"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/arrival_train"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/txtArrivalTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="18:38"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtArrivalDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Пт, 17 авг"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wagon"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/txtWagonNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:text="4"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtWagonType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Плацкарт"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tickets_place"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/txtPlaceNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:text="9"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtPlaceType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Нижнее"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

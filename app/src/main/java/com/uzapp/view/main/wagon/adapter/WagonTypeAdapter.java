@@ -202,7 +202,7 @@ public class WagonTypeAdapter extends BaseAdapter implements View.OnClickListene
     }
 
     private Ticket newInstanceTicket(int id, String placeNumber, String placeType) {
-        return new Ticket(id, wagonNumber, placeNumber, placeType, priceTicket, departureDate,
-                arrivalDate, wagonClasses,typeWagon);
+        return new Ticket(id, wagonNumber, placeNumber, placeType, priceTicket,
+                departureDate, arrivalDate, wagonClasses,typeWagon);
     }
 }
