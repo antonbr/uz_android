@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
+import com.uzapp.pojo.User;
 import com.uzapp.pojo.booking.Booking;
 import com.uzapp.pojo.booking.Uio;
 import com.uzapp.pojo.tickets.TicketsResponse;
@@ -42,6 +43,7 @@ import butterknife.OnClick;
 import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
+import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -87,6 +89,8 @@ public class PayFragment extends Fragment {
 
     private Unbinder unbinder;
     private ProgressCountDownTimer timer;
+    Realm realm;
+
     private int priceTickets;
     private String btnText;
     private List<Booking> listBookings;
@@ -111,6 +115,7 @@ public class PayFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        realm = Realm.getDefaultInstance();
         if (getArguments() != null) {
             priceTickets = getArguments().getInt(KEY_PRICE_TICKETS);
             listBookings = getArguments().getParcelableArrayList(KEY_LIST_BOOKINGS);
@@ -138,7 +143,24 @@ public class PayFragment extends Fragment {
         toolbarTitle.setText(title);
         payBtn.setText(btnText);
 
+        setFieldsUserData();
         startTimer();
+    }
+
+    private void setFieldsUserData() {
+        User user = realm.where(User.class).findFirst();
+        if (user != null) {
+            if (user.getEmail() != null) {
+                emailEditText.setText(user.getEmail());
+            }
+            if (user.getFirstName() != null && user.getLastName() != null) {
+                String fullName = user.getFirstName() + " " + user.getLastName();
+                firstSureNameEditText.setText(fullName);
+            }
+            if (user.getPhoneNumber() != null) {
+                phoneField.setText(user.getPhoneNumber());
+            }
+        }
     }
 
     private void startTimer() {
@@ -243,6 +265,7 @@ public class PayFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
         timer.cancel();
+        realm.close();
     }
 
     private void attemptConfirmPayment() {

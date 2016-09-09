@@ -7,12 +7,15 @@ import android.support.v4.app.Fragment;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.uzapp.R;
+import com.uzapp.pojo.RouteHistoryItem;
 import com.uzapp.util.Constants;
 import com.uzapp.view.BaseActivity;
 import com.uzapp.view.main.menu.MenuFragment;
 import com.uzapp.view.main.profile.ProfileFragment;
 import com.uzapp.view.main.search.SearchFragment;
 import com.uzapp.view.main.tickets.MyTicketsFragment;
+
+import org.parceler.Parcels;
 
 public class MainActivity extends BaseActivity implements AHBottomNavigation.OnTabSelectedListener {
     private AHBottomNavigation bottomNavigationBar;
@@ -30,10 +33,17 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
         super.onNewIntent(intent);
         if (intent.hasExtra("profile")) {
             replaceFragment(new ProfileFragment(), true);
+        } else if (intent.hasExtra("route")) {
+            RouteHistoryItem routeHistoryItem = Parcels.unwrap(intent.getParcelableExtra("route"));
+            selectBottomNavigationSearch(routeHistoryItem);
         } else {
-            clearBackstack();
-            bottomNavigationBar.setCurrentItem(0);
+            bottomNavigationBar.setCurrentItem(Constants.BOTTOM_NAVIGATION_SEARCH);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -54,7 +64,8 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
         if (bottomNavigationBar != null) {
             bottomNavigationBar.setOnTabSelectedListener(this);
         }
-
+        float textSize = getResources().getDimension(R.dimen.menu_textsize);
+        bottomNavigationBar.setTitleTextSize(textSize, textSize);
         //CREATE ITEMS
         AHBottomNavigationItem searchTrainItem = new AHBottomNavigationItem(getString(R.string.menu_search_ticket), R.drawable.ic_search_train);
         AHBottomNavigationItem myTicketsItem = new AHBottomNavigationItem(getString(R.string.menu_my_ticket), R.drawable.ic_my_tickets);
@@ -98,12 +109,10 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
     }
 
     @Override
-    public void onTabSelected(int position, boolean wasSelected) {
+    public boolean onTabSelected(int position, boolean wasSelected) {
         switch (position) {
             case Constants.BOTTOM_NAVIGATION_SEARCH:
-                previousSelectedBottomItem = Constants.BOTTOM_NAVIGATION_SEARCH;
-                clearBackstack();
-                replaceFragment(new SearchFragment(), false);
+                selectBottomNavigationSearch(null);
                 break;
             case Constants.BOTTOM_NAVIGATION_TICKETS:
                 previousSelectedBottomItem = Constants.BOTTOM_NAVIGATION_TICKETS;
@@ -124,5 +133,12 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
             default:
                 break;
         }
+        return true;
+    }
+
+    private void selectBottomNavigationSearch(RouteHistoryItem routeHistoryItem) {
+        previousSelectedBottomItem = Constants.BOTTOM_NAVIGATION_SEARCH;
+        clearBackstack();
+        replaceFragment(SearchFragment.getInstance(routeHistoryItem), false);
     }
 }

@@ -35,6 +35,10 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void addFragment(Fragment f, @AnimRes int enter, @AnimRes int exit) {
+        Fragment oldFragment = fragmentManager.findFragmentById(R.id.fragmentContainer);
+        if (oldFragment != null && oldFragment.getClass().equals(f.getClass())) {
+            return;
+        }
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.addToBackStack(null);
         transaction.setCustomAnimations(enter, exit, enter, exit);

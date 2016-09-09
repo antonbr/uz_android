@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="accentColor">#4183d7</color>
-    <color name="backgroundColor">#f5f7fa</color>
+    <color name="backgroundColor">#f0f0f0</color>
     <color name="textColor">#434a54</color>
     <color name="primaryDarkColor">#2666b7</color>
     <color name="stationsFromToDividerColor">#E6E9ED</color>
@@ -29,8 +29,13 @@
     <color name="fragmentDimBackground">#c8434a54</color>
     <color name="menuButtonDivider">#4c3aaeda</color>
     <color name="redColorButton">#c0392b</color>
-    <color name="ticketTextColor">#607d8b</color>
+    <color name="textColorGrey">#607d8b</color>
     <color name="yellow">#b3f1c40f</color>
     <color name="bg_progress_bar_red">#c0392b</color>
     <color name="bg_progress_bar_yellow">#ffe600</color>
+    <color name="lightColor">#fafafa</color>
+    <color name="profileTextColor">#5c6d70</color>
+    <color name="fbBtnBackground">#507cc0</color>
+    <color name="vkBtnBackground">#5d9cec</color>
+    <color name="okBtnBackground">#ff9800</color>
 </resources>

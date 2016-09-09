@@ -43,7 +43,7 @@ public class MyTicketsItemAnimator extends DefaultItemAnimator {
 
     @Override
     public boolean animateChange(@NonNull RecyclerView.ViewHolder oldHolder, @NonNull final RecyclerView.ViewHolder newHolder, @NonNull final ItemHolderInfo preInfo, @NonNull final ItemHolderInfo postInfo) {
-        final MyTicketsAdapter.TicketHolder ticketHolder = (MyTicketsAdapter.TicketHolder) newHolder;
+        final MyTicketsListAdapter.TicketHolder ticketHolder = (MyTicketsListAdapter.TicketHolder) newHolder;
         if (!animatorMap.containsKey(ticketHolder)) {
             float fromRotationY = ticketHolder.itemView.getRotationY();
             float middleRotationY = fromRotationY - ROTATION_DEGREE;

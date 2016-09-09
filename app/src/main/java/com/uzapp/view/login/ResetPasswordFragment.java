@@ -5,17 +5,15 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
@@ -29,7 +27,6 @@ import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 import retrofit2.Call;
@@ -41,16 +38,13 @@ import retrofit2.Response;
  */
 public class ResetPasswordFragment extends Fragment {
     private Unbinder unbinder;
-    @BindView(R.id.toolbarTitle) TextView toolbarTitle;
-    @BindView(R.id.emailField) TextInputEditText emailField;
-    @BindView(R.id.emailLayout) TextInputLayout emailLayout;
-    @BindView(R.id.newPasswordField) TextInputEditText passwordField;
-    @BindView(R.id.newPasswordLayout) TextInputLayout passwordLayout;
+    @BindView(R.id.emailField) EditText emailField;
+    @BindView(R.id.newPasswordField) EditText passwordField;
     @BindView(R.id.showPasswordBtn) CheckableImageView showPasswordBtn;
     @BindView(R.id.resetPasswordBtn) Button resetPasswordBtn;
     @BindView(R.id.resetPasswordLayout) ViewGroup resetPasswordLayout;
     @BindView(R.id.successResultLayout) ViewGroup successResultLayout;
-    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.toolbar) AppBarLayout toolbar;
     @BindDimen(R.dimen.hint_padding) int hintPadding;
 
     @Nullable
@@ -58,36 +52,8 @@ public class ResetPasswordFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.reset_password_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
-        toolbarTitle.setText(R.string.reset_passwword_title);
-        emailLayout.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
-        passwordLayout.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
+        setPasswordLetterSpacing(false);
         return view;
-    }
-
-    @OnFocusChange(R.id.emailField)
-    void onEmailFieldFocusChanged(boolean focus) {
-        if (focus || emailField.getText().length() > 0) {
-            emailLayout.setHint(getString(R.string.create_account_email_hint));
-            emailField.setTranslationY(hintPadding);
-        } else {
-            emailLayout.setHint(getString(R.string.create_account_email_hint_2));
-            emailField.setTranslationY(0);
-        }
-    }
-
-    @OnFocusChange(R.id.newPasswordField)
-    void onPasswordFieldFocusChanged(boolean focus) {
-        if (focus || passwordField.getText().length() > 0) {
-            passwordLayout.setHint(getString(R.string.create_account_password_hint));
-            passwordField.setTranslationY(hintPadding);
-            showPasswordBtn.setVisibility(View.VISIBLE);
-            setLetterSpacing(showPasswordBtn.isChecked());
-        } else {
-            passwordLayout.setHint(getString(R.string.create_account_password_hint_2));
-            passwordField.setTranslationY(0);
-            showPasswordBtn.setVisibility(View.GONE);
-            setLetterSpacing(false);
-        }
     }
 
     @OnClick(R.id.showPasswordBtn)
@@ -95,7 +61,7 @@ public class ResetPasswordFragment extends Fragment {
         view.toggle();
         passwordField.setInputType(view.isChecked() ? InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD :
                 InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        setLetterSpacing(view.isChecked());
+        setPasswordLetterSpacing(view.isChecked());
         passwordField.setSelection(passwordField.length());
     }
 
@@ -104,7 +70,7 @@ public class ResetPasswordFragment extends Fragment {
         checkFieldState();
     }
 
-    @OnClick(R.id.backBtn)
+    @OnClick(R.id.closeBtn)
     void onBackBtnPressed() {
         getActivity().onBackPressed();
     }
@@ -129,7 +95,7 @@ public class ResetPasswordFragment extends Fragment {
 
     }
 
-    private void setLetterSpacing(boolean isBigSpacing) {
+    private void setPasswordLetterSpacing(boolean isBigSpacing) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //TODO fix left padding
             passwordField.setLetterSpacing(isBigSpacing ? Constants.PASSWORD_VISIBLE_LETTER_SPACING :

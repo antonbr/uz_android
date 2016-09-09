@@ -1,6 +1,8 @@
 package com.uzapp.view.login;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import com.uzapp.R;
 import com.uzapp.view.BaseActivity;
@@ -14,5 +16,14 @@ public class LoginFlowActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         replaceFragment(new LoginFragment(), false);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Fragment fragment = (Fragment) fragmentManager.findFragmentById(R.id.fragmentContainer);
+        if (fragment != null) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

@@ -4,18 +4,29 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
+import io.realm.RealmObject;
+import io.realm.UserRealmProxy;
+import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
+
 /**
  * Created by vika on 17.08.16.
  */
-@Parcel
-public class User {
+@Parcel(implementations = {UserRealmProxy.class },
+        value = Parcel.Serialization.BEAN,
+        analyze = { User.class })
+public class User extends RealmObject{
+    @PrimaryKey
     private long id;
+    @Required
     @SerializedName("first_name")
     private String firstName;
+    @Required
     @SerializedName("last_name")
     private String lastName;
     @SerializedName("middle_name")
     private String middleName;
+    @Required
     private String email;
     @SerializedName("phone_number")
     private String phoneNumber;

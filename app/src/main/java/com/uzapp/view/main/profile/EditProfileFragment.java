@@ -5,15 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
@@ -21,9 +19,6 @@ import com.uzapp.pojo.User;
 import com.uzapp.util.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
-import com.uzapp.view.BaseActivity;
-import com.uzapp.view.login.PhoneNumberTextInputEditText;
-import com.uzapp.view.login.StudentIdTextInputEditText;
 import com.uzapp.view.main.MainActivity;
 
 import org.parceler.Parcels;
@@ -44,14 +39,15 @@ import retrofit2.Response;
 public class EditProfileFragment extends Fragment {
     private static final int REQUEST_PASSWORD = 1;
     private static final int REQUEST_CHANGE_PASSWORD = 2;
-    @BindView(R.id.firstNameField) TextInputEditText firstNameField;
-    @BindView(R.id.lastNameField) TextInputEditText lastNameField;
-    @BindView(R.id.middleNameField) TextInputEditText middleNameField;
-    @BindView(R.id.phoneField) PhoneNumberTextInputEditText phoneField;
-    @BindView(R.id.emailField) TextInputEditText emailField;
-    @BindView(R.id.studentIdField) StudentIdTextInputEditText studentIdField;
-    @BindView(R.id.saveBtn) Button saveBtn;
-    @BindInt(R.integer.student_id_full_length) int studentIdLength;
+    @BindView(R.id.firstNameField) EditText firstNameField;
+    @BindView(R.id.lastNameField) EditText lastNameField;
+    @BindView(R.id.middleNameField) EditText middleNameField;
+    @BindView(R.id.phoneField) PhoneNumberEditText phoneField;
+    @BindView(R.id.emailField) EditText emailField;
+    @BindView(R.id.studentIdSeriesField) EditText studentIdSeriesField;
+    @BindView(R.id.studentIdNumberField) EditText studentIdNumberField;
+    @BindView(R.id.tickBtn) ImageButton tickBtn;
+    @BindInt(R.integer.profile_student_id_series_length) int studentIdSeriesLenght;
     private Unbinder unbinder;
     private User user;
 
@@ -80,38 +76,51 @@ public class EditProfileFragment extends Fragment {
             middleNameField.setText(user.getMiddleName());
             lastNameField.setText(user.getLastName());
             emailField.setText(user.getEmail());
-            phoneField.setText(user.getPhoneNumber());
+            phoneField.setPhone(user.getPhoneNumber());
             String studentId = user.getStudentId();
-            if (!TextUtils.isEmpty(studentId) && studentId.length() == studentIdLength) {
-                studentIdField.setText(user.getStudentId());
+            if (CommonUtils.isStudentIdValid(studentId)) {
+                String studentIdSeries = studentId.substring(0, 2);
+                studentIdSeriesField.setText(studentIdSeries);
+                String studentIdNumber = studentId.substring(2, studentId.length());
+                studentIdNumberField.setText(studentIdNumber);
             }
         }
     }
 
-    @OnClick(R.id.backBtn)
+
+    @OnClick(R.id.closeBtn)
     void onBackBtnClicked() {
         getActivity().onBackPressed();
     }
 
-    @OnClick(R.id.saveBtn)
+    @OnClick(R.id.tickBtn)
     void onSaveBtnClicked() {
-        DialogFragment fragment = new PasswordDialogFragment();
-        fragment.setTargetFragment(this, REQUEST_PASSWORD);
-        fragment.show(getFragmentManager(), fragment.getClass().getName());
+      updateUserData();
     }
 
     @OnTextChanged(value = {R.id.firstNameField, R.id.middleNameField, R.id.lastNameField, R.id.phoneField,
-            R.id.emailField, R.id.studentIdField},
+            R.id.emailField},
             callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void onFieldsChanged(Editable editable) {
         checkFieldsState();
     }
 
-    @OnClick(R.id.passwordBtn)
-    void onPasswordBtnClicked() {
-        Fragment fragment = new ChangePasswordFragment();
-        fragment.setTargetFragment(this, REQUEST_CHANGE_PASSWORD);
-        ((BaseActivity) getActivity()).addFragment(fragment, R.anim.slide_up, R.anim.slide_down);
+    @OnTextChanged(value = {R.id.studentIdSeriesField},
+            callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    void onStudentIdSeriesChanged(Editable editable) {
+        if (editable.length() == studentIdSeriesLenght) {
+            studentIdNumberField.requestFocus();
+        }
+        checkFieldsState();
+    }
+
+    @OnTextChanged(value = {R.id.studentIdNumberField},
+            callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    void onStudentIdNumberChanged(Editable editable) {
+        if (editable.length() == 0) {
+            studentIdSeriesField.requestFocus();
+        }
+        checkFieldsState();
     }
 
     private void checkFieldsState() {
@@ -120,8 +129,8 @@ public class EditProfileFragment extends Fragment {
                 && isLastNameValid()
                 && phoneField.isValid()
                 && CommonUtils.isEmailValid(emailField.getText().toString())
-                && studentIdField.isValid();
-        saveBtn.setEnabled(allowSaving);
+                && CommonUtils.isStudentIdValid(studentIdSeriesField.getText().toString() + studentIdNumberField.getText().toString());
+        tickBtn.setEnabled(allowSaving);
     }
 
     private boolean isFirstNameValid() {
@@ -142,10 +151,10 @@ public class EditProfileFragment extends Fragment {
         if (resultCode == Activity.RESULT_OK) {
             if (getView() != null) {
                 switch (requestCode) {
-                    case REQUEST_PASSWORD:
-                        String password = data.getStringExtra("password");
-                        updateUserData(password);
-                        break;
+//                    case REQUEST_PASSWORD:
+//                        String password = data.getStringExtra("password");
+//                        updateUserData(password);
+//                        break;
                     case REQUEST_CHANGE_PASSWORD:
                         Snackbar.make(getView(), R.string.profile_edit_change_password_success_result, Snackbar.LENGTH_LONG).show();
                         break;
@@ -154,16 +163,15 @@ public class EditProfileFragment extends Fragment {
         }
     }
 
-    private void updateUserData(String password) {
+    private void updateUserData() {
         String firstName = firstNameField.getText().toString();
         String lastName = lastNameField.getText().toString();
         String middleName = middleNameField.getText().toString();
         String phone = phoneField.getPhoneNumber();
         String email = emailField.getText().toString();
-        String studentId = studentIdField.getStudentId();
-        email = user.getEmail().equals(email)?null:email;
-        Call call = ApiManager.getApi(getContext()).updateUser(password, firstName,
-                middleName, lastName, phone, email, studentId);
+        String studentId = studentIdSeriesField.getText().toString() + studentIdNumberField.getText().toString();
+        email = user.getEmail().equals(email) ? null : email;
+        Call call = ApiManager.getApi(getContext()).updateUser(firstName, middleName, lastName, phone, email, studentId);
         call.enqueue(updateUserCallback);
     }
 

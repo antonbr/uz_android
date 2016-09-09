@@ -3,6 +3,8 @@ package com.uzapp.network;
 import com.uzapp.pojo.CreateAccountInfo;
 import com.uzapp.pojo.LoginInfo;
 import com.uzapp.pojo.NewTicketDates;
+import com.uzapp.pojo.RouteHistoryItem;
+import com.uzapp.pojo.SocialLoginInfo;
 import com.uzapp.pojo.Station;
 import com.uzapp.pojo.TrainSearchResult;
 import com.uzapp.pojo.User;
@@ -11,6 +13,7 @@ import com.uzapp.pojo.booking.Booking;
 import com.uzapp.pojo.booking.Uio;
 import com.uzapp.pojo.placeslist.PricesPlacesList;
 import com.uzapp.pojo.prices.Prices;
+import com.uzapp.pojo.route.RouteResponse;
 import com.uzapp.pojo.tickets.TicketsResponse;
 import com.uzapp.pojo.transportation.Transportation;
 
@@ -39,6 +42,13 @@ public interface ApiInterface {
     Call<TrainSearchResult> searchTrains(@Query("station_from_code") long stationFromCode,
                                          @Query("station_to_code") long stationToCode,
                                          @Query("date") long date);
+
+    @GET("order/train_route")
+    Call<RouteResponse> getTrainRoute(@Query("station_from_code") long stationFromCode,
+                                      @Query("station_to_code") long stationToCode,
+                                      @Query("train") String train,
+                                      @Query("date") long date);
+
 
     @GET("order/prices")
     Call<Prices> getPrices(@Query("station_from_code") long stationFromCode,
@@ -70,6 +80,9 @@ public interface ApiInterface {
     @POST("user/login")
     Call<UserTokenResponse> login(@Body LoginInfo loginInfo);
 
+    @POST("user/social_login")
+    Call<UserTokenResponse> socialLogin(@Body SocialLoginInfo socialLoginInfo);
+
     @FormUrlEncoded
     @POST("user/refresh_token")
     Call<UserTokenResponse> refreshToken(@Field("refresh_token") String refreshToken);
@@ -83,8 +96,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("user")
-    Call<User> updateUser(@Field("password") String password,
-                          @Field("first_name") String firstName, @Field("middle_name") String middleName,
+    Call<User> updateUser(@Field("first_name") String firstName, @Field("middle_name") String middleName,
                           @Field("last_name") String lastName, @Field("phone_number") String phoneNumber,
                           @Field("email") String email, @Field("student_id") String studentId);
 
@@ -93,6 +105,9 @@ public interface ApiInterface {
     Call<User> changePassword(@Field("password") String password,
                               @Field("new_password") String newPassword);
 
+
+    @GET("order/routes_history")
+    Call<List<RouteHistoryItem>> getRouteHistory();
 
     @GET("order/booking")
     Call<Booking> getBooking(@Query("train") String train, @Query("station_from_code") int stationFromCode,

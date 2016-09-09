@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/backgroundColor"
+              android:orientation="vertical">
+
+    <include layout="@layout/toolbar_light_edit"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@drawable/divider_hint_color_horizontal"
+                    android:orientation="vertical"
+                    android:showDividers="middle">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="22dp"
+                        android:layout_marginLeft="34dp"
+                        android:layout_marginRight="34dp"
+                        android:layout_marginTop="22dp">
+
+                        <TextView
+                            android:id="@+id/passengersTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="9dp"
+                            android:gravity="center"
+                            android:text="@string/search_settings_passengers"
+                            android:textColor="@color/textColorGrey"
+                            android:textSize="18sp"/>
+
+                        <ImageButton
+                            android:id="@+id/minusBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_below="@+id/passengersTitle"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:padding="8dp"
+                            android:src="@drawable/search_minus"/>
+
+                        <TextView
+                            android:id="@+id/passengersCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/minusBtn"
+                            android:layout_alignTop="@+id/minusBtn"
+                            android:layout_toLeftOf="@+id/plusBtn"
+                            android:layout_toRightOf="@+id/minusBtn"
+                            android:gravity="center"
+                            android:text="1 человек"
+                            android:textColor="@color/accentColor"
+                            android:textSize="22sp"
+                            app:layout_gravity="fill_vertical|fill_horizontal"/>
+
+                        <ImageButton
+                            android:id="@+id/plusBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_below="@+id/passengersTitle"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:padding="8dp"
+                            android:src="@drawable/search_plus"/>
+                    </RelativeLayout>
+
+                    <android.support.v7.widget.SwitchCompat
+                        android:id="@+id/singleCoupeBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:button="@null"
+                        android:drawableRight="@drawable/search_settings_tick"
+                        android:paddingBottom="16dp"
+                        android:paddingLeft="@dimen/profile_button_padding"
+                        android:paddingRight="16dp"
+                        android:paddingTop="16dp"
+                        android:text="@string/search_settings_single_coupe"
+                        android:textColor="@color/textColor"
+                        android:textSize="18sp"
+                        android:visibility="gone"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                style="@style/LabelStyle"
+                android:layout_marginBottom="13.5dp"
+                android:layout_marginLeft="28dp"
+                android:layout_marginTop="37dp"
+                android:text="@string/search_settings_placement"/>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="0dp">
+
+                <RadioGroup
+                    android:id="@+id/placementRadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@drawable/divider_hint_color_horizontal"
+                    android:orientation="vertical"
+                    android:showDividers="middle">
+
+                    <RadioButton
+                        android:id="@+id/anyPlacementRadioBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:button="@null"
+                        android:checked="true"
+                        android:drawableRight="@drawable/search_settings_tick"
+                        android:paddingBottom="16dp"
+                        android:paddingLeft="@dimen/profile_button_padding"
+                        android:paddingRight="16dp"
+                        android:paddingTop="16dp"
+                        android:text="@string/search_settings_placement_any"
+                        android:textColor="@color/textColor"
+                        android:textSize="18sp"/>
+
+                    <RadioButton
+                        android:id="@+id/bottomPlacementRadioBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:button="@null"
+                        android:drawableRight="@drawable/search_settings_tick"
+                        android:paddingBottom="16dp"
+                        android:paddingLeft="@dimen/profile_button_padding"
+                        android:paddingRight="16dp"
+                        android:paddingTop="16dp"
+                        android:text="@string/search_settings_placement_bottom"
+                        android:textColor="@color/textColor"
+                        android:textSize="18sp"/>
+
+                    <RadioButton
+                        android:id="@+id/topPlacementRadioBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:button="@null"
+                        android:drawableRight="@drawable/search_settings_tick"
+                        android:paddingBottom="16dp"
+                        android:paddingLeft="@dimen/profile_button_padding"
+                        android:paddingRight="16dp"
+                        android:paddingTop="16dp"
+                        android:text="@string/search_settings_placement_top"
+                        android:textColor="@color/textColor"
+                        android:textSize="18sp"/>
+                </RadioGroup>
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                style="@style/LabelStyle"
+                android:layout_marginBottom="13.5dp"
+                android:layout_marginLeft="28dp"
+                android:layout_marginTop="37dp"
+                android:text="@string/search_settings_wc_conductor"/>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="37dp"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.SwitchCompat
+                        android:id="@+id/wcSwitchBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:button="@null"
+                        android:drawableRight="@drawable/search_settings_tick"
+                        android:paddingBottom="16dp"
+                        android:paddingLeft="@dimen/profile_button_padding"
+                        android:paddingRight="16dp"
+                        android:paddingTop="16dp"
+                        android:text="@string/search_settings_wc"
+                        android:textColor="@color/textColor"
+                        android:textSize="18sp"/>
+
+                    <android.support.v7.widget.SwitchCompat
+                        android:id="@+id/conductorSwitchBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:button="@null"
+                        android:drawableRight="@drawable/search_settings_tick"
+                        android:paddingBottom="16dp"
+                        android:paddingLeft="@dimen/profile_button_padding"
+                        android:paddingRight="16dp"
+                        android:paddingTop="16dp"
+                        android:text="@string/search_settings_conductor"
+                        android:textColor="@color/textColor"
+                        android:textSize="18sp"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

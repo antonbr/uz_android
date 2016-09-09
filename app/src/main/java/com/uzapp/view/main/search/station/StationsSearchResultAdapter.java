@@ -19,7 +19,6 @@ public class StationsSearchResultAdapter extends RecyclerView.Adapter<StationsSe
     private List<Station> stationsList = new ArrayList<>();
     private OnStationClickListener listener;
 
-
     public interface OnStationClickListener {
         void onStationItemClick(Station station);
     }

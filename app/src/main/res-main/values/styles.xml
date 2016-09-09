@@ -38,6 +38,13 @@
         <item name="android:inputType">textNoSuggestions</item>
     </style>
 
+    <style name="ProfileEditTextStyle" parent="EditTextStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">19dp</item>
+        <item name="android:textColorHint">@color/textColorHint</item>
+    </style>
+
     <style name="ButtonStyle">
         <item name="android:minHeight">0dp</item>
         <item name="android:minWidth">0dp</item>
@@ -93,5 +100,14 @@
         <item name="colorPrimary">@color/accentColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorAccent">@color/accentColor</item>
+    </style>
+
+    <style name="LabelStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/accentColor</item>
+        <item name="android:textSize">14sp</item>
     </style>
 </resources>
