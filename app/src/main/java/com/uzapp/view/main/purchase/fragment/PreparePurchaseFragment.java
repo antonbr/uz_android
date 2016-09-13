@@ -76,6 +76,7 @@ public class PreparePurchaseFragment extends Fragment {
     private long selectDate;
     private int totalPrice = 0;
     private boolean[] emptyFieldsArray;
+    private boolean[] baggageArray;
 
     public PreparePurchaseFragment() {
         // Required empty public constructor
@@ -165,6 +166,8 @@ public class PreparePurchaseFragment extends Fragment {
 
     private void payment() {
         emptyFieldsArray = new boolean[listTickets.size()];
+        baggageArray = new boolean[listTickets.size()];
+
         boolean isEmptyField = true;
 
         for (int i = 0; i < listTickets.size(); i++) {
@@ -172,7 +175,6 @@ public class PreparePurchaseFragment extends Fragment {
             EditText lastNameEditText = (EditText) ticketsLinearLayout.getChildAt(i).findViewById(R.id.lastNameEditText);
             EditText studentEditText = (EditText) ticketsLinearLayout.getChildAt(i).findViewById(R.id.studentEditText);
             LinearLayout layoutStudentNumber = (LinearLayout) ticketsLinearLayout.getChildAt(i).findViewById(R.id.layoutStudentNumber);
-
             isEmptyErrorField(i, firstNameEditText, lastNameEditText, studentEditText, layoutStudentNumber);
             setTicketDataToList(i, firstNameEditText.getText().toString(), lastNameEditText.getText().toString(),
                     studentEditText.getText().toString());
@@ -189,7 +191,6 @@ public class PreparePurchaseFragment extends Fragment {
 
         if (isEmptyField) {
             showProgress(true);
-            showTicketsLayout(false);
             bookingOrReserveTicket();
         }
     }
@@ -241,12 +242,11 @@ public class PreparePurchaseFragment extends Fragment {
 
     private void bookingOrReserveTicket() {
         for (int i = 0; i < listTickets.size(); i++) {
-
             Ticket ticket = (Ticket) listTickets.get(i);
-            totalPrice = ticket.getTicketPrice() + totalPrice;
+            totalPrice = (ticket.isBooking()) ? ticket.getTicketPrice() + totalPrice : totalPrice + 17;
 
             String wagonType = ticket.getWagonType();
-            String wagonPlace = String.valueOf(ticket.getPlaceNumber());
+            String wagonPlace = ticket.getPlaceNumber();
             int wagonNumber = Integer.parseInt(ticket.getWagonNumber());
             int wagonClass = ticket.getWagonClasses();
             String firstName = ticket.getFirstName();
@@ -258,8 +258,6 @@ public class PreparePurchaseFragment extends Fragment {
             baggage = ticket.getBaggage();
             isBaggage = isVisibilityBaggage(i);
 
-            //Using builder to get the object in a single line of code and
-            //without any inconsistent state or arguments management issues
             Document document = (ticket.isBooking()) ?
                     new Document.DocumentBuilder().setNumber(i + 1).setCountPlace(Integer.parseInt(wagonPlace))
                             .setFirstName(firstName).setLastName(lastName).setPassport(privilege).build() :
@@ -302,7 +300,6 @@ public class PreparePurchaseFragment extends Fragment {
                 String error = ApiErrorUtil.parseError(response);
                 CommonUtils.showMessage(getView(), error);
                 showProgress(false);
-                showTicketsLayout(true);
             }
         }
 
@@ -310,7 +307,6 @@ public class PreparePurchaseFragment extends Fragment {
         public void onFailure(Call<Booking> call, Throwable t) {
             Toast.makeText(getActivity(), call.toString(), Toast.LENGTH_SHORT).show();
             showProgress(false);
-            showTicketsLayout(true);
         }
     };
 
@@ -328,7 +324,6 @@ public class PreparePurchaseFragment extends Fragment {
                 String error = ApiErrorUtil.parseError(response);
                 CommonUtils.showMessage(getView(), error);
                 showProgress(false);
-                showTicketsLayout(true);
             }
         }
 
@@ -336,28 +331,30 @@ public class PreparePurchaseFragment extends Fragment {
         public void onFailure(Call<Transportation> call, Throwable t) {
             Toast.makeText(getActivity(), call.toString(), Toast.LENGTH_SHORT).show();
             showProgress(false);
-            showTicketsLayout(true);
         }
     };
 
     private void goPaymentFragment(List<Booking> listBookings, List<Transportation> listTransportation) {
         showProgress(false);
-        showTicketsLayout(true);
         ((MainActivity) getActivity()).replaceFragment(PayFragment.newInstance(totalPrice, listBookings, listTransportation), true);
         totalPrice = 0;
     }
 
     private void showProgress(boolean show) {
-        progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
-    }
-
-    private void showTicketsLayout(boolean show) {
-        scrollView.setVisibility(show ? View.VISIBLE : View.GONE);
+        if (progressBar != null && scrollView != null) {
+            progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+            scrollView.setVisibility(!show ? View.VISIBLE : View.GONE);
+        }
     }
 
     private int getBedding(int position) {
-        ToggleButton leftBtn = (ToggleButton) ticketsLinearLayout.getChildAt(position).findViewById(R.id.toggleBed);
-        return leftBtn.isChecked() ? 1 : 0;
+        ToggleButton toggleBed = (ToggleButton) ticketsLinearLayout.getChildAt(position).findViewById(R.id.toggleBed);
+        return toggleBed.isChecked() ? 1 : 0;
+    }
+
+    private boolean isCheckedBaggage(int position) {
+        ToggleButton toggleBaggage = (ToggleButton) ticketsLinearLayout.getChildAt(position).findViewById(R.id.toggleBaggage);
+        return toggleBaggage.isChecked();
     }
 
     private boolean isVisibilityBaggage(int position) {

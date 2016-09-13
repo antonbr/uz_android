@@ -87,6 +87,7 @@
                     android:background="@android:color/white"
                     android:hint="@string/hint_enter_student_number"
                     android:inputType="textCapCharacters"
+                    android:maxLength="10"
                     android:textColor="@android:color/black"
                     android:textColorHint="@color/accentColor"
                     android:textSize="14sp" />

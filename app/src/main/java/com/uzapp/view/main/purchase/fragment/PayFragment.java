@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.uzapp.R;
@@ -86,10 +87,11 @@ public class PayFragment extends Fragment {
     @BindView(R.id.cardDateEditText) EditText cardDateEditText;
     @BindView(R.id.cardCVCEditText) EditText cardCVCEditText;
     @BindView(R.id.progressBar) ProgressBar progressBar;
+    @BindView(R.id.scrollView) ScrollView scrollView;
 
     private Unbinder unbinder;
     private ProgressCountDownTimer timer;
-    Realm realm;
+    private Realm realm;
 
     private int priceTickets;
     private String btnText;
@@ -115,14 +117,13 @@ public class PayFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        realm = Realm.getDefaultInstance();
         if (getArguments() != null) {
             priceTickets = getArguments().getInt(KEY_PRICE_TICKETS);
             listBookings = getArguments().getParcelableArrayList(KEY_LIST_BOOKINGS);
             listTransportation = getArguments().getParcelableArrayList(KEY_LIST_BAGGAGE);
 
             if (listBookings != null && !listBookings.isEmpty()) {
-                waitTime = listBookings.get(0).getWaitSeconds() * 1000;
+                waitTime = listBookings.get(0).getWaitSeconds();
             }
         }
     }
@@ -148,6 +149,7 @@ public class PayFragment extends Fragment {
     }
 
     private void setFieldsUserData() {
+        realm = Realm.getDefaultInstance();
         User user = realm.where(User.class).findFirst();
         if (user != null) {
             if (user.getEmail() != null) {
@@ -164,12 +166,10 @@ public class PayFragment extends Fragment {
     }
 
     private void startTimer() {
-//        int time = (waitTime * 1000);
-        int time = 900000;
-        progressTime.setMax(900);
-//        progressTime.setProgress(time);
-        timer = new ProgressCountDownTimer(getActivity(), time,
-                1000, progressTime, txtTimerPurchase);
+        int time = (waitTime * 1000);
+        progressTime.setMax(waitTime);
+        timer = new ProgressCountDownTimer(getActivity(),
+                time, 1000, progressTime, txtTimerPurchase);
         timer.start();
     }
 
@@ -190,10 +190,14 @@ public class PayFragment extends Fragment {
     }
 
     private void showProgress(boolean show) {
-        progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+        if (progressBar != null && scrollView != null) {
+            progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+            scrollView.setVisibility(!show ? View.VISIBLE : View.GONE);
+        }
     }
 
     private void cancelReserveTicket() {
+        showProgress(true);
         for (Booking booking : listBookings) {
             Call<Uio> call = ApiManager.getApi(getContext()).cancelReserveTickets(booking.getUio());
             call.enqueue(cancelCallback);
@@ -208,7 +212,9 @@ public class PayFragment extends Fragment {
         public void onResponse(Call<Uio> call, Response<Uio> response) {
             if (response.isSuccessful()) {
                 Uio uio = response.body();
+                showProgress(false);
             } else {
+                showProgress(false);
                 String error = ApiErrorUtil.parseError(response);
                 CommonUtils.showMessage(getView(), error);
             }
@@ -217,6 +223,7 @@ public class PayFragment extends Fragment {
         @Override
         public void onFailure(Call<Uio> call, Throwable t) {
             Log.d("PayFragment", call.toString());
+            showProgress(false);
         }
     };
 
@@ -272,10 +279,8 @@ public class PayFragment extends Fragment {
         // Reset errors.
         emailEditText.setError(null);
         firstSureNameEditText.setError(null);
-
         String email = emailEditText.getText().toString();
         String firstSureName = firstSureNameEditText.getText().toString();
-
         boolean cancel = false;
         View focusView = null;
 
@@ -302,20 +307,25 @@ public class PayFragment extends Fragment {
         if (cancel) {
             focusView.requestFocus();
         } else {
-            for (Booking booking : listBookings) {
-                String cardNumber = (cardNumberEditText.getText().toString()).replace(" ", "");
-                int expMonth = Integer.parseInt((cardDateEditText.getText().toString()).substring(0, 2));
-                int expYear = Integer.parseInt(20 + (cardDateEditText.getText().toString()).substring(3, 5));
-                String cvv = cardCVCEditText.getText().toString();
-                String firstName = firstSureName.substring(0, firstSureName.indexOf(" "));
-                String lastName = firstSureName.substring(firstSureName.indexOf(" "), firstSureName.length());
-                String phone = phoneField.getPhoneNumber();
-                String accessToken = PrefsUtil.getStringPreference(getActivity(), PrefsUtil.USER_ACCESS_TOKEN);
+            showProgress(true);
+            callPayment(firstSureName);
+        }
+    }
 
-                Call<TicketsResponse> call = ApiManager.getApi(getContext()).paymentTickets(booking.getUio(), accessToken,
-                        cardNumber, expMonth, expYear, cvv, firstName, lastName, email, phone);
-                call.enqueue(paymentCallback);
-            }
+    private void callPayment(String firstSureName) {
+        for (Booking booking : listBookings) {
+            String cardNumber = (cardNumberEditText.getText().toString()).replace(" ", "");
+            int expMonth = Integer.parseInt((cardDateEditText.getText().toString()).substring(0, 2));
+            int expYear = Integer.parseInt(20 + (cardDateEditText.getText().toString()).substring(3, 5));
+            String cvv = cardCVCEditText.getText().toString();
+            String firstName = firstSureName.substring(0, firstSureName.indexOf(" "));
+            String lastName = firstSureName.substring(firstSureName.indexOf(" "), firstSureName.length());
+            String phone = phoneField.getPhoneNumber();
+            String accessToken = PrefsUtil.getStringPreference(getActivity(), PrefsUtil.USER_ACCESS_TOKEN);
+
+            Call<TicketsResponse> call = ApiManager.getApi(getContext()).paymentTickets(booking.getUio(), accessToken,
+                    cardNumber, expMonth, expYear, cvv, firstName, lastName, emailEditText.getText().toString(), phone);
+            call.enqueue(paymentCallback);
         }
     }
 
@@ -325,14 +335,14 @@ public class PayFragment extends Fragment {
         public void onResponse(Call<TicketsResponse> call, Response<TicketsResponse> response) {
             if (response.isSuccessful()) {
                 TicketsResponse ticketsResponse = response.body();
-
                 listTicketsResponses.add(ticketsResponse);
-
                 if (listBookings.size() == listTicketsResponses.size()) {
+                    showProgress(false);
                     getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     ((MainActivity) getActivity()).replaceFragment(new PaymentDoneFragment(), true);
                 }
             } else {
+                showProgress(false);
                 String error = ApiErrorUtil.parseError(response);
                 CommonUtils.showMessage(getView(), error);
             }
@@ -341,6 +351,7 @@ public class PayFragment extends Fragment {
         @Override
         public void onFailure(Call<TicketsResponse> call, Throwable t) {
             Log.d("PayFragment", call.toString());
+            showProgress(false);
         }
     };
 

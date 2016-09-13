@@ -115,23 +115,13 @@ public class PaymentTicketView extends CardView {
         stationFromTextView.setText(stationFrom);
         stationToTextView.setText(stationTo);
 
-        btnBuyTicket.setText("Купить, " + price);
-        btnReserveTicket.setText("Резерв, 17 грн");
+        String strBuyTicketButton = getContext().getString(R.string.ticket_buy) + " " + price;
+        String strReserveTicketButton = getContext().getString(R.string.ticket_reserve_short) + ", 17 " +
+                getContext().getString(R.string.ticket_currency);
+
+        btnBuyTicket.setText(strBuyTicketButton);
+        btnReserveTicket.setText(strReserveTicketButton);
     }
-
-//    private static final int CARD_NUMBER_TOTAL_SYMBOLS = 11;
-//    private static final int CARD_NUMBER_TOTAL_DIGITS = 10; // max numbers of digits in pattern: 0000 x 4
-//    private static final int CARD_NUMBER_DIVIDER_MODULO = 3; // means divider position is every 5th symbol beginning with 1
-//    private static final int CARD_NUMBER_DIVIDER_POSITION = 2; // means divider position is every 4th symbol beginning with 0
-//    private static final char CARD_NUMBER_DIVIDER = ' ';
-
-//    @OnTextChanged(value = R.id.studentEditText, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-//    protected void onStudentNumberTextChanged(Editable s) {
-//        if (!CommonUtils.isInputCorrect(s, CARD_NUMBER_TOTAL_SYMBOLS, CARD_NUMBER_DIVIDER_MODULO, CARD_NUMBER_DIVIDER)) {
-//            s.replace(0, s.length(), CommonUtils.concatString(CommonUtils.getDigitArray(s, CARD_NUMBER_TOTAL_DIGITS),
-//                    CARD_NUMBER_DIVIDER_POSITION, CARD_NUMBER_DIVIDER));
-//        }
-//    }
 
     @OnClick(R.id.btnAnimal)
     void onClickAnimalBtn() {

@@ -86,6 +86,7 @@
     // register fragment string
     <string name="ticket_buy">Купить</string>
     <string name="ticket_reserve">Резервировать</string>
+    <string name="ticket_reserve_short">Резерв</string>
     <string name="ticket_go_to_registration">Перейти к оформлению</string>
     <string name="ticket_currency">грн</string>
     // menu item string
