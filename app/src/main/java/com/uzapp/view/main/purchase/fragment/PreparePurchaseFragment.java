@@ -1,10 +1,10 @@
 package com.uzapp.view.main.purchase.fragment;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.gson.Gson;
@@ -48,6 +47,8 @@ import retrofit2.Response;
  */
 public class PreparePurchaseFragment extends Fragment {
 
+    public final String TAG = PreparePurchaseFragment.class.getSimpleName();
+
     public static final String KEY_TICKET_LIST = "KEY_TICKET_LIST";
     public static final String KEY_STATION_FROM_NAME = "KEY_STATION_FROM_NAME";
     public static final String KEY_STATION_TO_NAME = "KEY_STATION_TO_NAME";
@@ -69,14 +70,13 @@ public class PreparePurchaseFragment extends Fragment {
     private ArrayList listTickets = new ArrayList<>();
     private List<Booking> listBookings = new ArrayList<>();
     private List<Transportation> listTransportation = new ArrayList<>();
+    private List<String> listBaggage = new ArrayList<>();
 
-    private boolean isBaggage;
-    private String stationFromName, stationToName, trainName, train, baggage;
+    private String stationFromName, stationToName, trainName, train;
     private int stationFromCode, stationToCode;
     private long selectDate;
     private int totalPrice = 0;
     private boolean[] emptyFieldsArray;
-    private boolean[] baggageArray;
 
     public PreparePurchaseFragment() {
         // Required empty public constructor
@@ -166,7 +166,6 @@ public class PreparePurchaseFragment extends Fragment {
 
     private void payment() {
         emptyFieldsArray = new boolean[listTickets.size()];
-        baggageArray = new boolean[listTickets.size()];
 
         boolean isEmptyField = true;
 
@@ -236,8 +235,15 @@ public class PreparePurchaseFragment extends Fragment {
         ticket.setLastName(lastName);
         ticket.setKind(getCheckedParam3Btn(position, false, R.id.btnFull, R.id.btnChild, R.id.btnStudent));
         ticket.setPrivilege(privilege);
-        ticket.setService(getCheckedParam2Btn(position, R.id.btnOneTea, R.id.btnTwoTea));
-        ticket.setBaggage(getCheckedParam3Btn(position, true, R.id.btnAnimal, R.id.btnEquipment, R.id.btnExcess));
+
+        if (isCheckedToggle(position, R.id.toggleBaggage)) {
+            listBaggage.add(ticket.getBaggage());
+            ticket.setBaggage(getCheckedParam3Btn(position, true, R.id.btnAnimal, R.id.btnEquipment, R.id.btnExcess));
+        }
+
+        if (isCheckedToggle(position, R.id.toggleTea)) {
+            ticket.setService(getCheckedParam2Btn(position, R.id.btnOneTea, R.id.btnTwoTea));
+        }
     }
 
     private void bookingOrReserveTicket() {
@@ -255,13 +261,10 @@ public class PreparePurchaseFragment extends Fragment {
             String privilege = ticket.getPrivilege();
             String service = ticket.getService();
             int bedding = getBedding(i);
-            baggage = ticket.getBaggage();
-            isBaggage = isVisibilityBaggage(i);
 
             Document document = (ticket.isBooking()) ?
                     new Document.DocumentBuilder().setNumber(i + 1).setCountPlace(Integer.parseInt(wagonPlace))
                             .setFirstName(firstName).setLastName(lastName).setPassport(privilege).build() :
-
                     new Document.DocumentBuilder().setNumber(i + 1).setKind(kind).setPrivilege(privilege)
                             .setCountPlace(Integer.parseInt(wagonPlace))
                             .setFirstName(firstName).setLastName(lastName).build();
@@ -275,40 +278,9 @@ public class PreparePurchaseFragment extends Fragment {
                     ApiManager.getApi(getActivity()).getReserve(train, stationFromCode, stationToCode, wagonType,
                             wagonClass, wagonNumber, selectDate, wagonPlace, bedding, service, gson.toJson(documentList));
 
-            call.enqueue(bookingCallback);
+            call.enqueue(new BookingCallback(i));
         }
     }
-
-    private Callback<Booking> bookingCallback = new Callback<Booking>() {
-
-        @Override
-        public void onResponse(Call<Booking> call, Response<Booking> response) {
-            if (response.isSuccessful()) {
-                Booking booking = response.body();
-                listBookings.add(booking);
-                if (isBaggage) {
-                    Call<Transportation> callTransportation = ApiManager.getApi(getActivity())
-                            .getTransportation(baggage, booking.getDocumentsList().get(0).getUid(), "2");
-                    callTransportation.enqueue(transportationCallback);
-                } else {
-                    if (listTickets.size() == listBookings.size()) {
-                        goPaymentFragment(listBookings, listTransportation);
-                    }
-                }
-
-            } else {
-                String error = ApiErrorUtil.parseError(response);
-                CommonUtils.showMessage(getView(), error);
-                showProgress(false);
-            }
-        }
-
-        @Override
-        public void onFailure(Call<Booking> call, Throwable t) {
-            Toast.makeText(getActivity(), call.toString(), Toast.LENGTH_SHORT).show();
-            showProgress(false);
-        }
-    };
 
     private Callback<Transportation> transportationCallback = new Callback<Transportation>() {
 
@@ -318,7 +290,9 @@ public class PreparePurchaseFragment extends Fragment {
                 Transportation transportation = response.body();
                 listTransportation.add(transportation);
                 if (listTickets.size() == listBookings.size()) {
-                    goPaymentFragment(listBookings, listTransportation);
+                    if (listBaggage.size() == listTransportation.size()) {
+                        goPaymentFragment(listBookings, listTransportation);
+                    }
                 }
             } else {
                 String error = ApiErrorUtil.parseError(response);
@@ -329,7 +303,7 @@ public class PreparePurchaseFragment extends Fragment {
 
         @Override
         public void onFailure(Call<Transportation> call, Throwable t) {
-            Toast.makeText(getActivity(), call.toString(), Toast.LENGTH_SHORT).show();
+            Log.e(TAG, call.toString());
             showProgress(false);
         }
     };
@@ -338,6 +312,7 @@ public class PreparePurchaseFragment extends Fragment {
         showProgress(false);
         ((MainActivity) getActivity()).replaceFragment(PayFragment.newInstance(totalPrice, listBookings, listTransportation), true);
         totalPrice = 0;
+        listBaggage.clear();
     }
 
     private void showProgress(boolean show) {
@@ -352,14 +327,9 @@ public class PreparePurchaseFragment extends Fragment {
         return toggleBed.isChecked() ? 1 : 0;
     }
 
-    private boolean isCheckedBaggage(int position) {
-        ToggleButton toggleBaggage = (ToggleButton) ticketsLinearLayout.getChildAt(position).findViewById(R.id.toggleBaggage);
+    private boolean isCheckedToggle(int position, int idToggle) {
+        ToggleButton toggleBaggage = (ToggleButton) ticketsLinearLayout.getChildAt(position).findViewById(idToggle);
         return toggleBaggage.isChecked();
-    }
-
-    private boolean isVisibilityBaggage(int position) {
-        LinearLayout layoutBaggage = (LinearLayout) ticketsLinearLayout.getChildAt(position).findViewById(R.id.layoutBaggage);
-        return layoutBaggage.getVisibility() == View.VISIBLE;
     }
 
     private boolean isPressedLeftBtn(int position, int idLeftBtn) {
@@ -398,5 +368,46 @@ public class PreparePurchaseFragment extends Fragment {
             return "Ч";
         }
         return null;
+    }
+
+    class BookingCallback implements Callback<Booking> {
+
+        public final String TAG = BookingCallback.class.getSimpleName();
+
+        private int position;
+
+        public BookingCallback(int position) {
+            this.position = position;
+        }
+
+        @Override
+        public void onResponse(Call<Booking> call, Response<Booking> response) {
+            if (response.isSuccessful()) {
+                Booking booking = response.body();
+                listBookings.add(booking);
+                if (isCheckedToggle(position, R.id.toggleBaggage)) {
+                    String baggage = ((Ticket) listTickets.get(position)).getBaggage();
+                    Call<Transportation> callTransportation = ApiManager.getApi(getActivity())
+                            .getTransportation(baggage, booking.getDocumentsList().get(0).getUid(), "2");
+                    callTransportation.enqueue(transportationCallback);
+                } else {
+                    if (listTickets.size() == listBookings.size()) {
+                        if (listBaggage.size() == listTransportation.size()) {
+                            goPaymentFragment(listBookings, listTransportation);
+                        }
+                    }
+                }
+            } else {
+                String error = ApiErrorUtil.parseError(response);
+                CommonUtils.showMessage(getView(), error);
+                showProgress(false);
+            }
+        }
+
+        @Override
+        public void onFailure(Call<Booking> call, Throwable t) {
+            Log.e(TAG, call.toString());
+            showProgress(false);
+        }
     }
 }

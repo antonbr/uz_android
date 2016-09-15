@@ -204,6 +204,7 @@ public class PayFragment extends Fragment {
         }
         listBookings.clear();
         listTransportation.clear();
+        priceTickets = 0;
     }
 
     private Callback<Uio> cancelCallback = new Callback<Uio>() {

@@ -18,8 +18,8 @@ apply plugin: 'android-apt'
 apply plugin: 'realm-android'
 
 String APK_NAME = "UZ"
-String VERSION_NAME = "0.0.3"
-int VERSION_CODE = 4
+String VERSION_NAME = "0.0.5"
+int VERSION_CODE = 6
 
 android {
     compileSdkVersion 23
