@@ -79,7 +79,7 @@ public class WagonTypeAdapter extends BaseAdapter implements View.OnClickListene
 
         if (view == null) {
             if (typeWagon.equalsIgnoreCase(Constants.TYPE_ECONOMY)) {
-                view = layoutInflater.inflate(R.layout.item_fragment_econom, parent, false);
+                view = layoutInflater.inflate(R.layout.item_fragment_econom_redesign, parent, false);
                 placeLowStandardLeft = 1 + (position * 4);
                 placeUpperStandardLeft = 2 + (position * 4);
                 placeLowStandardRight = 3 + (position * 4);
@@ -87,7 +87,7 @@ public class WagonTypeAdapter extends BaseAdapter implements View.OnClickListene
                 placeLowSide = 59 - (position * 2);
                 placeUpperSide = 60 - (position * 2);
             } else if (typeWagon.equalsIgnoreCase(Constants.TYPE_KUPE)) {
-                view = layoutInflater.inflate(R.layout.item_fragment_kupe, parent, false);
+                view = layoutInflater.inflate(R.layout.item_fragment_kupe_redesign, parent, false);
                 placeLowStandardLeft = 1 + (position * 4);
                 placeUpperStandardLeft = 2 + (position * 4);
                 placeLowStandardRight = 3 + (position * 4);
@@ -194,15 +194,15 @@ public class WagonTypeAdapter extends BaseAdapter implements View.OnClickListene
         button.setBackground(CommonUtils.changeBackgroundPlace(context, button));
         button.setTextColor(CommonUtils.changeTextColorPlace(context, button, android.R.color.black));
 
-        Ticket ticket = newInstanceTicket(button.getTag().hashCode(), button.getText().toString(), placeType);
+        Ticket ticket = newInstanceTicket(button.getText().toString(), placeType);
         boolean isRemove = (CommonUtils.isSelectedPlace(button, ContextCompat
                 .getDrawable(context, R.drawable.border_button_place_selected)));
         WagonPlaceFragment fragment = (WagonPlaceFragment) manager.findFragmentById(R.id.fragmentContainer);
         fragment.setAdapter(ticket, !isRemove);
     }
 
-    private Ticket newInstanceTicket(int id, String placeNumber, String placeType) {
-        return new Ticket(id, wagonNumber, placeNumber, placeType, priceTicket,
+    private Ticket newInstanceTicket(String placeNumber, String placeType) {
+        return new Ticket(wagonNumber, placeNumber, placeType, priceTicket,
                 departureDate, arrivalDate, wagonClasses,typeWagon);
     }
 }

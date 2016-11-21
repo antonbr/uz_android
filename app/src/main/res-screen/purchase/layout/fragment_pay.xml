@@ -71,7 +71,7 @@
 
             <Button
                 android:id="@+id/payBtn"
-                style="@style/BlueButtonStyle2"
+                style="@style/BlueButtonStyleSmall"
                 android:layout_margin="@dimen/small_padding"
                 android:enabled="true"
                 android:text="@string/payment" />

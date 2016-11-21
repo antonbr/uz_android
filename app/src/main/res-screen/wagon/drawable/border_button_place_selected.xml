@@ -15,9 +15,9 @@
         android:bottom="5dp" />
 
     <stroke
-        android:width="2px"
-        android:color="@color/bgButtonWagonPlacesSelected" />
+        android:width="4px"
+        android:color="@color/bgButtonWagonPlaces" />
 
-    <corners android:radius= "20px" />
+    <corners android:radius= "14px" />
 
 </shape>

@@ -3,47 +3,95 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.uzapp.view.wagon.fragment.WagonPlaceFragment">
+    tools:context="com.uzapp.view.main.wagon.fragment.WagonPlaceFragment">
 
-    <include
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/layoutToolbar"
-        layout="@layout/toolbar_back" />
-
-    <RelativeLayout
-        android:id="@+id/containerTopLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/layoutToolbar">
+        card_view:cardBackgroundColor="@color/lightColor"
+        card_view:cardElevation="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/toolbar_back" />
+
+            <TextView
+                android:id="@+id/txtWagonNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                android:layout_marginBottom="12dp"
+                android:textColor="@color/textColorGrey"
+                android:text="Вагон №" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <!--<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
+        <!--android:id="@+id/containerTopLayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/layoutToolbar"-->
+        <!--card_view:cardBackgroundColor="@android:color/white"-->
+        <!--card_view:cardElevation="5dp">-->
 
         <LinearLayout
             android:id="@+id/layoutBuyReserveTicket"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/layoutToolbar"
             android:visibility="gone">
 
             <include layout="@layout/include_buy_reserve" />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/layoutFilterPlace"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:visibility="gone">
+    <!--</android.support.v7.widget.CardView>-->
 
-            <include layout="@layout/include_filter_wagon" />
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/containerTopLayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/layoutToolbar">-->
 
-        </LinearLayout>
+        <!--<LinearLayout-->
+            <!--android:id="@+id/layoutBuyReserveTicket"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:visibility="gone">-->
 
-    </RelativeLayout>
+            <!--<include layout="@layout/include_buy_reserve" />-->
+
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout-->
+        <!--android:id="@+id/layoutFilterPlace"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@android:color/white"-->
+        <!--android:visibility="gone">-->
+
+        <!--<include layout="@layout/include_filter_wagon" />-->
+
+        <!--</LinearLayout>-->
+
+    <!--</RelativeLayout>-->
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bgSelectPlaceColor"
-        android:layout_below="@+id/containerTopLayout"
+        android:layout_above="@+id/cardViewWagon"
+        android:layout_below="@+id/layoutBuyReserveTicket"
+        android:background="@color/backgroundColor"
+        android:layout_marginBottom="1dp"
         android:fillViewport="true">
 
         <LinearLayout
@@ -58,20 +106,12 @@
                 android:gravity="center"
                 android:paddingTop="15dp">
 
-                <LinearLayout
+                <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/head_platskart_ru"
-                    android:gravity="center_horizontal">
-
-                    <TextView
-                        android:id="@+id/txtWagonNumber"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
+                    android:src="@drawable/ic_head_lux"
+                    android:adjustViewBounds="true"
+                    android:gravity="center_horizontal"/>
 
             </LinearLayout>
 
@@ -89,12 +129,11 @@
                 android:gravity="center"
                 android:paddingBottom="35dp">
 
-                <LinearLayout
+                <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/footer_platskart_ru">
-
-                </LinearLayout>
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_footer_lux"/>
 
             </LinearLayout>
         </LinearLayout>
@@ -105,36 +144,26 @@
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="43dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:visibility="visible"/>
+        android:layout_marginTop="43dp"
+        android:visibility="visible" />
 
-    <SlidingDrawer
-        android:id="@+id/slidingDrawer"
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/cardViewWagon"
         android:layout_width="match_parent"
-        android:layout_height="110dip"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:content="@+id/horizontalRecyclerView"
-        android:handle="@+id/slidePanelFooter">
-
-        <ImageButton
-            android:id="@+id/slidePanelFooter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/bgSlidePanelFooterColor"
-            android:paddingBottom="3dp"
-            android:paddingTop="3dp"
-            android:src="@drawable/ic_footer_up" />
+        card_view:cardBackgroundColor="@color/lightColor"
+        card_view:cardElevation="5dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/horizontalRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#fff" />
+            android:background="#ffffffff" />
 
-    </SlidingDrawer>
+    </android.support.v7.widget.CardView>
 
 </RelativeLayout>
-
-    <!--</LinearLayout>-->

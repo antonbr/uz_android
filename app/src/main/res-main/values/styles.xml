@@ -84,7 +84,7 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
-    <style name="BlueButtonStyle2">
+    <style name="BlueButtonStyleSmall">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
         <item name="android:background">@drawable/find_tickets_button_selector</item>

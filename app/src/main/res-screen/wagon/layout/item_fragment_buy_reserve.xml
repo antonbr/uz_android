@@ -9,21 +9,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingLeft="10dp"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textAllCaps="true"
+            android:textSize="16sp"
+            android:textColor="@color/bgViewLine"
             android:text="Вагон " />
 
         <TextView
             android:id="@+id/txtWagonNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textSize="16sp"
             android:textColor="@color/accentColor"
             android:textAllCaps="true"
             android:text="1" />
@@ -31,15 +30,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textAllCaps="true"
-            android:text=", Место " />
+            android:textSize="16sp"
+            android:textColor="@color/bgViewLine"
+            android:text=", место " />
 
         <TextView
             android:id="@+id/txtPlaceNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textSize="16sp"
             android:textColor="@color/accentColor"
             android:textAllCaps="true"
             android:text="11" />
@@ -48,9 +47,9 @@
             android:id="@+id/txtUpperLowerShelf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textAllCaps="true"
-            android:text=", Нижнее" />
+            android:textSize="16sp"
+            android:textColor="@color/bgViewLine"
+            android:text=", нижнее" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -63,7 +62,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/accentColor"
-                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textSize="11sp"
                 android:text="price" />
 
             <ImageButton
@@ -73,12 +73,10 @@
                 android:background="@drawable/ic_remove_ticket"
                 android:maxWidth="15dp"
                 android:maxHeight="15dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginEnd="10dp"/>
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:layout_marginBottom="7dp"
+                android:layout_marginTop="7dp"/>
 
         </LinearLayout>
 

@@ -7,7 +7,6 @@ import java.io.Serializable;
  */
 public class Ticket implements Serializable {
 
-    int id;
     private String wagonNumber;
     private String placeNumber;
     private String placeType;
@@ -27,9 +26,8 @@ public class Ticket implements Serializable {
 
     public Ticket() {}
 
-    public Ticket(int id, String wagonNumber, String placeNumber, String placeType, int ticketPrice,
+    public Ticket(String wagonNumber, String placeNumber, String placeType, int ticketPrice,
                   int departureDate, int arrivalDate, int wagonClasses, String wagonType) {
-        this.id = id;
         this.wagonNumber = wagonNumber;
         this.placeNumber = placeNumber;
         this.placeType = placeType;
@@ -38,14 +36,6 @@ public class Ticket implements Serializable {
         this.arrivalDate = arrivalDate;
         this.wagonClasses = wagonClasses;
         this.wagonType = wagonType;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getWagonNumber() {

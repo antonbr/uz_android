@@ -73,9 +73,7 @@ public class TicketAdapter extends ArrayAdapter<Ticket> {
      * Remove item from ticket list
      */
     private void removeItem(int position) {
-
         removeItemBtn(position);
-
         list.remove(position);
         notifyDataSetChanged();
         if (list.isEmpty()) {

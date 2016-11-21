@@ -1,5 +1,6 @@
 <resources>
-    <string name="api_endpoint" translatable="false">http://52.59.64.77/v1/</string>
+    <string name="api_endpoint" translatable="false">http://uz.teamforproduct.pp.ua/</string>
+    <!--<string name="api_endpoint" translatable="false">http://52.59.64.77/v1/</string>-->
     <string name="terms_of_service" translatable="false">http://52.59.64.77/</string>
     <string name="bonus_program" translatable="false">http://52.59.64.77/</string>
     <string name="facebook_app_id">417284918442118</string>
@@ -80,8 +81,8 @@
     <string name="filter_not_selected">Не выбрано</string>
     <string name="filter_lateral">Боковое</string>
     <string name="filter_standard">Стандартное</string>
-    <string name="filter_top">Верхнее</string>
-    <string name="filter_bottom">Нижнее</string>
+    <string name="filter_top">верх</string>
+    <string name="filter_bottom">нижн</string>
     <string name="filter_any">Любое</string>
     // register fragment string
     <string name="ticket_buy">Купить</string>
