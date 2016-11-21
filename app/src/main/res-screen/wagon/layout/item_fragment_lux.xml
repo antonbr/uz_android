@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:orientation="vertical"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content">-->
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="132dp"
-        android:background="@drawable/sector_lux"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp">
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="132dp"
+    android:background="@drawable/ic_sector_lux"
+    android:paddingLeft="50dp"
+    android:paddingRight="50dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -17,7 +17,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -32,9 +32,9 @@
                     android:textColor="@android:color/darker_gray"
                     android:background="@drawable/border_button_place"/>
 
-            </LinearLayout>
+            </RelativeLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -49,10 +49,10 @@
                     android:textColor="@android:color/darker_gray"
                     android:background="@drawable/border_button_place"/>
 
-            </LinearLayout>
+            </RelativeLayout>
 
         </RelativeLayout>
 
     </RelativeLayout>
 
-</LinearLayout>
+<!--</LinearLayout>-->

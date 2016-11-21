@@ -43,7 +43,7 @@
 
                 <Button
                     android:id="@+id/toPayBtn"
-                    style="@style/BlueButtonStyle2"
+                    style="@style/BlueButtonStyleSmall"
                     android:layout_margin="@dimen/small_padding"
                     android:enabled="true"
                     android:text="@string/go_to_payment"/>

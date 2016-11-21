@@ -23,6 +23,7 @@
     <color name="bgFilterColor">#ffffff</color>
     <color name="bgBorderColor">#ecf0f1</color>
     <color name="bgButtonWagonPlaces">#f5f9fd</color>
+    <color name="borderButtonWagonPlaces">#bfd3f1</color>
     <color name="bgButtonWagonPlacesSelected">#4183d7</color>
     <color name="bgViewLine">#aab2bd</color>
     <color name="resetPasswordColor">#979797</color>

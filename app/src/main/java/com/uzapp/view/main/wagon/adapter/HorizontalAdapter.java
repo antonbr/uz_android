@@ -3,16 +3,15 @@ package com.uzapp.view.main.wagon.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.uzapp.R;
-import com.uzapp.util.Constants;
 import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.wagon.fragment.WagonPlaceFragment;
 import com.uzapp.view.main.wagon.model.Wagon;
@@ -21,6 +20,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Vladimir on 01.08.2016.
@@ -29,16 +29,28 @@ public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.Vi
 
     private Context context;
     private List<Wagon> listWagon;
+//    private int oldPosition = 0;
+    private int selectedPosition = 0;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
         @BindView(R.id.txtNumberWagon) TextView txtNumberWagon;
         @BindView(R.id.txtTotalPlaces) TextView txtTotalPlaces;
         @BindView(R.id.layoutCountWagons) LinearLayout layoutCountWagons;
-        @BindView(R.id.progressBarPlaces) ProgressBar progressBarPlaces;
 
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+        }
+
+        @OnClick(R.id.layoutCountWagons)
+        void onClickLayoutCountWagons() {
+            FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
+            WagonPlaceFragment wagonPlaceFragment = (WagonPlaceFragment) manager.findFragmentById(R.id.fragmentContainer);
+            wagonPlaceFragment.addWagonView(listWagon, getAdapterPosition());
+
+            selectedPosition = getAdapterPosition();
+            notifyDataSetChanged();
         }
     }
 
@@ -55,45 +67,24 @@ public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.Vi
         return new ViewHolder(itemView);
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         int total = listWagon.get(position).getPlacesPrices().getTotal();
 
-        String typeWagon = listWagon.get(position).getTypeCode();
-        int totalPlaces = getProgressPlaces(typeWagon);
-        int progress = (total * 100 / totalPlaces);
+        if (position == selectedPosition) {
+            holder.layoutCountWagons.setBackground(ContextCompat.getDrawable(context, R.drawable.ic_item_wagon_pressed));
+            holder.txtTotalPlaces.setBackgroundColor(ContextCompat.getColor(context, R.color.accentColor));
+        } else {
+            holder.layoutCountWagons.setBackground(ContextCompat.getDrawable(context, R.drawable.ic_item_wagon));
+            holder.txtTotalPlaces.setBackgroundColor(ContextCompat.getColor(context, R.color.bgBorderColor));
+        }
 
         holder.txtNumberWagon.setText(listWagon.get(position).getNumber());
         holder.txtTotalPlaces.setText(Integer.toString(total));
-        holder.progressBarPlaces.setProgress(progress);
-
-        holder.layoutCountWagons.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
-                WagonPlaceFragment wagonPlaceFragment = (WagonPlaceFragment) manager.findFragmentById(R.id.fragmentContainer);
-                wagonPlaceFragment.addWagonView(listWagon, position);
-            }
-        });
     }
 
     @Override
     public int getItemCount() {
         return listWagon.size();
-    }
-
-    /**
-     * @param typeWagon
-     * @return places for type wagon
-     */
-    private int getProgressPlaces(String typeWagon) {
-        if (typeWagon.equalsIgnoreCase(Constants.TYPE_LUX)) {
-            return 20;
-        } else if (typeWagon.equalsIgnoreCase(Constants.TYPE_KUPE)) {
-            return 40;
-        } else {
-            return 60;
-        }
     }
 }

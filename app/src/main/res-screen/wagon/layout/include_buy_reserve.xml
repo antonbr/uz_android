@@ -2,78 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
 
-    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        card_view:cardBackgroundColor="@android:color/white">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <com.uzapp.view.main.wagon.view.ListViewMaxHeight
+            android:id="@+id/listViewSelectTicket"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:transcriptMode="alwaysScroll"
+            android:stackFromBottom="true"
+            android:divider="@drawable/divider_hint_color_horizontal"
+            android:showDividers="middle"
+            app:maxHeight="118dp" />
 
-            <com.uzapp.view.main.wagon.view.ListViewMaxHeight
-                android:id="@+id/listViewSelectTicket"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:maxHeight="120dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingBottom="10dp">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/bgViewLine" />
-
-                <!--<LinearLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:orientation="horizontal"-->
-                    <!--android:paddingTop="15dp">-->
-
-                    <!--<Button-->
-                        <!--android:id="@+id/btnBuyTicket"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="27dp"-->
-                        <!--android:layout_weight="1"-->
-                        <!--android:background="@drawable/button_pressed_left"-->
-                        <!--android:text="@string/ticket_buy"-->
-                        <!--android:textAllCaps="false"-->
-                        <!--android:textColor="@android:color/white"-->
-                        <!--android:textSize="13sp" />-->
-
-                    <!--<Button-->
-                        <!--android:id="@+id/btnReserveTicket"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="27dp"-->
-                        <!--android:layout_weight="1"-->
-                        <!--android:background="@drawable/button_enabled_right"-->
-                        <!--android:text="@string/ticket_reserve"-->
-                        <!--android:textAllCaps="false"-->
-                        <!--android:textColor="@color/accentColor"-->
-                        <!--android:textSize="13sp" />-->
-                <!--</LinearLayout>-->
-
-            </LinearLayout>
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/containerTopLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            card_view:cardBackgroundColor="@android:color/white">
 
             <Button
                 android:id="@+id/btnGoToRegistration"
-                style="@style/BlueButtonStyle2"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                style="@style/BlueButtonStyleSmall"
+                android:layout_margin="10dp"
                 android:text="@string/ticket_go_to_registration" />
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
+
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
 
 </LinearLayout>

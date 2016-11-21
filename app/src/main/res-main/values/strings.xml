@@ -80,8 +80,8 @@
     <string name="filter_not_selected">Не выбрано</string>
     <string name="filter_lateral">Боковое</string>
     <string name="filter_standard">Стандартное</string>
-    <string name="filter_top">Верхнее</string>
-    <string name="filter_bottom">Нижнее</string>
+    <string name="filter_top">верх</string>
+    <string name="filter_bottom">нижн</string>
     <string name="filter_any">Любое</string>
     // register fragment string
     <string name="ticket_buy">Купить</string>

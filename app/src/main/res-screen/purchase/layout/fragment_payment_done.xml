@@ -36,7 +36,7 @@
 
         <Button
             android:id="@+id/btnGoMyTicket"
-            style="@style/BlueButtonStyle2"
+            style="@style/BlueButtonStyleSmall"
             android:layout_margin="20dp"
             android:text="@string/go_to_my_tickets"/>
 

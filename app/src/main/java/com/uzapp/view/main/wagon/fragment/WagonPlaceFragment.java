@@ -1,11 +1,8 @@
 package com.uzapp.view.main.wagon.fragment;
 
-
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,7 +13,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.SlidingDrawer;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,15 +29,13 @@ import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.purchase.fragment.PreparePurchaseFragment;
 import com.uzapp.view.main.wagon.adapter.HorizontalAdapter;
 import com.uzapp.view.main.wagon.adapter.TicketAdapter;
-import com.uzapp.view.main.wagon.adapter.WagonTypeAdapter;
-import com.uzapp.view.main.wagon.filter.WagonFactory;
 import com.uzapp.view.main.wagon.model.Ticket;
 import com.uzapp.view.main.wagon.model.Wagon;
+import com.uzapp.view.main.wagon.type.WagonKupeView;
+import com.uzapp.view.main.wagon.type.WagonLuxView;
 import com.uzapp.view.main.wagon.view.ListViewMaxHeight;
-import com.uzapp.view.main.wagon.view.WheelView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -56,8 +50,7 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDrawerOpenListener,
-        SlidingDrawer.OnDrawerCloseListener {
+public class WagonPlaceFragment extends Fragment {
 
     public static final String EXTRA_PRICES = "EXTRA_PRICES";
     public static final String EXTRA_PRICES_POSITION = "EXTRA_PRICES_POSITION";
@@ -71,20 +64,20 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
     LinearLayout layoutWagon;
     @BindView(R.id.layoutBuyReserveTicket)
     LinearLayout layoutBuyReserveTicket;
-    @BindView(R.id.layoutFilterPlace)
-    LinearLayout layoutFilterPlace;
+//    @BindView(R.id.layoutFilterPlace)
+//    LinearLayout layoutFilterPlace;
     @BindView(R.id.txtWagonNumber)
     TextView txtWagonNumber;
     @BindView(R.id.backBtn)
     ImageButton backImageBtn;
-    @BindView(R.id.okBtn)
-    Button btnFilter;
+//    @BindView(R.id.okBtn)
+//    Button btnFilter;
     @BindView(R.id.toolbarTitle)
     TextView toolbarTitle;
-    @BindView(R.id.slidePanelFooter)
-    ImageButton slidePanelFooter;
-    @BindView(R.id.slidingDrawer)
-    SlidingDrawer slidingDrawer;
+//    @BindView(R.id.slidePanelFooter)
+//    ImageButton slidePanelFooter;
+//    @BindView(R.id.slidingDrawer)
+//    SlidingDrawer slidingDrawer;
     @BindView(R.id.horizontalRecyclerView)
     RecyclerView horizontalRecyclerView;
     @BindView(R.id.listViewSelectTicket)
@@ -98,19 +91,19 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
-    // filter components
-    @BindView(R.id.layoutJoinVisit)
-    LinearLayout layoutJoinVisit;
-    @BindView(R.id.layoutLocationPlaces)
-    LinearLayout layoutLocationPlaces;
-    @BindView(R.id.layoutUpperLower)
-    LinearLayout layoutUpperLower;
-    @BindView(R.id.txtJoinVisit)
-    TextView txtJoinVisit;
-    @BindView(R.id.txtLocationPlaces)
-    TextView txtLocationPlaces;
-    @BindView(R.id.txtUpperLower)
-    TextView txtUpperLower;
+//    // filter components
+//    @BindView(R.id.layoutJoinVisit)
+//    LinearLayout layoutJoinVisit;
+//    @BindView(R.id.layoutLocationPlaces)
+//    LinearLayout layoutLocationPlaces;
+//    @BindView(R.id.layoutUpperLower)
+//    LinearLayout layoutUpperLower;
+//    @BindView(R.id.txtJoinVisit)
+//    TextView txtJoinVisit;
+//    @BindView(R.id.txtLocationPlaces)
+//    TextView txtLocationPlaces;
+//    @BindView(R.id.txtUpperLower)
+//    TextView txtUpperLower;
 
     private Unbinder unbinder;
 
@@ -194,7 +187,7 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
                 stationToCode, train, wagonTypes, wagonClasses, wagonNumbers, dateTrain);
         call.enqueue(listPlacesCallback);
 
-        initSlideMenu();
+//        initSlideMenu();
 
         if (listTickets != null && listTickets.size() > 0) {
             layoutBuyReserveTicket.setVisibility(View.VISIBLE);
@@ -214,39 +207,39 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
                         train, selectDate, stationFromCode, stationToCode), true);
     }
 
-    @OnClick(R.id.okBtn)
-    void onFilterClicked() {
-        int visibility = (layoutFilterPlace.getVisibility() == View.GONE) ? View.VISIBLE : View.GONE;
-        layoutFilterPlace.setVisibility(visibility);
-    }
+//    @OnClick(R.id.okBtn)
+//    void onFilterClicked() {
+//        int visibility = (layoutFilterPlace.getVisibility() == View.GONE) ? View.VISIBLE : View.GONE;
+//        layoutFilterPlace.setVisibility(visibility);
+//    }
 
-    @OnClick(R.id.layoutJoinVisit)
-    void onFilterJoinVisit() {
-        showWheelDialog(titleJoinVisit,
-                getResources().getStringArray(R.array.filter_join_visit_array));
-    }
+//    @OnClick(R.id.layoutJoinVisit)
+//    void onFilterJoinVisit() {
+//        showWheelDialog(titleJoinVisit,
+//                getResources().getStringArray(R.array.filter_join_visit_array));
+//    }
+//
+//    @OnClick(R.id.layoutLocationPlaces)
+//    void onFilterLocationPlaces() {
+//        showWheelDialog(titleLocationPlaces,
+//                getResources().getStringArray(R.array.filter_location_places_array));
+//    }
+//
+//    @OnClick(R.id.layoutUpperLower)
+//    void onFilterUpperLower() {
+//        showWheelDialog(titleUpperLower,
+//                getResources().getStringArray(R.array.filter_upper_lower_array));
+//    }
 
-    @OnClick(R.id.layoutLocationPlaces)
-    void onFilterLocationPlaces() {
-        showWheelDialog(titleLocationPlaces,
-                getResources().getStringArray(R.array.filter_location_places_array));
-    }
-
-    @OnClick(R.id.layoutUpperLower)
-    void onFilterUpperLower() {
-        showWheelDialog(titleUpperLower,
-                getResources().getStringArray(R.array.filter_upper_lower_array));
-    }
-
-    @Override
-    public void onDrawerClosed() {
-        slidePanelFooter.setImageResource(R.drawable.ic_footer_up);
-    }
-
-    @Override
-    public void onDrawerOpened() {
-        slidePanelFooter.setImageResource(R.drawable.ic_footer_down);
-    }
+//    @Override
+//    public void onDrawerClosed() {
+//        slidePanelFooter.setImageResource(R.drawable.ic_footer_up);
+//    }
+//
+//    @Override
+//    public void onDrawerOpened() {
+//        slidePanelFooter.setImageResource(R.drawable.ic_footer_down);
+//    }
 
     @Override
     public void onDestroyView() {
@@ -356,13 +349,13 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
         }
     }
 
-    /**
-     * Initializing bottom slide menu
-     */
-    private void initSlideMenu() {
-        slidingDrawer.setOnDrawerOpenListener(this);
-        slidingDrawer.setOnDrawerCloseListener(this);
-    }
+//    /**
+//     * Initializing bottom slide menu
+//     */
+//    private void initSlideMenu() {
+//        slidingDrawer.setOnDrawerOpenListener(this);
+//        slidingDrawer.setOnDrawerCloseListener(this);
+//    }
 
     /**
      * @param wagonsList
@@ -371,8 +364,8 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
     public void addWagonView(List<Wagon> wagonsList, int position) {
         this.position = position;
 
-        String title = wagonsList.get(position).getTypeName() + " ("
-                + prices.getTrain().getWagons().get(position).getPlacesPrices().getTotal() + ")";
+        String title = wagonsList.get(position).getTypeName();
+//                + " (" + prices.getTrain().getWagons().get(position).getPlacesPrices().getTotal() + ")";
         toolbarTitle.setText(title);
         txtWagonNumber.setText(getString(R.string.wagon) + " №" + wagonsList.get(position).getNumber());
 
@@ -381,14 +374,30 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
         if ((linearLayout).getChildCount() > 0)
             (linearLayout).removeAllViews();
 
+//        for (int i = 0; i < Constants.SECTION; i++) {
+//            WagonTypeAdapter adapter = new WagonTypeAdapter(getActivity(), listPlaces, wagonsList.get(position).getNumber(),
+//                    wagonsList.get(position).getCost(), wagonsList.get(position).getTypeCode(), departureDate, arrivalDate,
+//                    wagonsList.get(position).getClassCode());
+//            adapter.notifyDataSetChanged();
+//            View viewWagon = adapter.getView(i, null, linearLayout);
+//            // content in view
+//            linearLayout.addView(viewWagon);
+//        }
         for (int i = 0; i < Constants.SECTION; i++) {
-            WagonTypeAdapter adapter = new WagonTypeAdapter(getActivity(), listPlaces, wagonsList.get(position).getNumber(),
-                    wagonsList.get(position).getCost(), wagonsList.get(position).getTypeCode(), departureDate, arrivalDate,
-                    wagonsList.get(position).getClassCode());
-            adapter.notifyDataSetChanged();
-            View viewWagon = adapter.getView(i, null, linearLayout);
-            // content in view
-            linearLayout.addView(viewWagon);
+            if (wagonsList.get(position).getTypeCode().equalsIgnoreCase(Constants.TYPE_LUX)) {
+                WagonLuxView wagonLuxView = new WagonLuxView(getContext(), wagonsList.get(position).getTypeCode(),
+                        wagonsList.get(position).getNumber(), wagonsList.get(position).getCost(), departureDate, arrivalDate,
+                        wagonsList.get(position).getClassCode());
+                linearLayout.addView(wagonLuxView);
+                wagonLuxView.initView(listPlaces, i);
+            } else if (wagonsList.get(position).getTypeCode().equalsIgnoreCase(Constants.TYPE_KUPE)) {
+                WagonKupeView wagonKupeView = new WagonKupeView(getContext(), wagonsList.get(position).getTypeCode(),
+                        wagonsList.get(position).getNumber(), wagonsList.get(position).getCost(), departureDate, arrivalDate,
+                        wagonsList.get(position).getClassCode());
+                linearLayout.addView(wagonKupeView);
+                wagonKupeView.initView(listPlaces, i);
+            }
+//            wagonLuxView.initView(listPlaces, i);
         }
 
         if (listTickets != null) {
@@ -451,7 +460,7 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
                                 }
                             } else {
                                 for (int index5 = 0; index5 < relativeLayoutChildAt2.getChildCount(); ++index5) {
-                                    LinearLayout linearLayoutChildAt2 = (LinearLayout) relativeLayoutChildAt2.getChildAt(index5);
+                                    RelativeLayout linearLayoutChildAt2 = (RelativeLayout) relativeLayoutChildAt2.getChildAt(index5);
                                     for (int index6 = 0; index6 < linearLayoutChildAt2.getChildCount(); ++index6) {
                                         View viewChildAt3 = linearLayoutChildAt2.getChildAt(index6);
                                         if (viewChildAt3.getTag() == Integer.valueOf(place)) {
@@ -479,95 +488,95 @@ public class WagonPlaceFragment extends Fragment implements SlidingDrawer.OnDraw
         horizontalRecyclerView.setAdapter(horizontalAdapter);
     }
 
-    /**
-     * @param title
-     * @param filter Show wheel dialog
-     */
-    public void showWheelDialog(final String title, String[] filter) {
-        final String[] value = {null};
-        View outerView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_filter_wheel_view, null);
-        final WheelView wheelView = (WheelView) outerView.findViewById(R.id.wheelView);
-        wheelView.setOffset(1);
-        wheelView.setItems(Arrays.asList(filter));
-        wheelView.setSeletion(3);
-        wheelView.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
-            @Override
-            public void onSelected(int selectedIndex, String item) {
-                value[0] = item;
-            }
-        });
-
-        new AlertDialog.Builder(getActivity())
-                .setTitle(title)
-                .setView(outerView)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        String valueWheelItem = (value[0] == null) ? wheelView.getItems().get(wheelView.getSelectedIndex()) : value[0];
-                        setFilterData(title, valueWheelItem);
-                    }
-                }).show();
-    }
-
-    /**
-     * @param filterType
-     * @param value      Set data to filter
-     */
-    private void setFilterData(String filterType, String value) {
-        if (value != null) {
-            if (filterType.equalsIgnoreCase(titleJoinVisit)) {
-                txtJoinVisit.setText(value);
-            } else if (filterType.equalsIgnoreCase(titleLocationPlaces)) {
-                txtLocationPlaces.setText(value);
-            } else {
-                txtUpperLower.setText(value);
-            }
-            wagonsFilterList = wagonsLists;
-            filterWagons();
-        }
-    }
-
-    /**
-     * Put list wagon after filter in adapter
-     */
-    private void filterWagons() {
-        String filterValueJoinVisit = txtJoinVisit.getText().toString();
-        String filterValueLocationPlace = txtLocationPlaces.getText().toString();
-        String filterValueUpperLower = txtUpperLower.getText().toString();
-
-        WagonFactory wagonFactory = new WagonFactory();
-
-        int count = 0;
-
-        if (!filterValueJoinVisit.equalsIgnoreCase(getString(R.string.filter_not_selected))) {
-            wagonsFilterList = (wagonsFilterList != null) ? wagonsFilterList : wagonsLists;
-            wagonsFilterList = wagonFactory.getWagons(getActivity(), wagonsFilterList,
-                    filterValueJoinVisit, titleJoinVisit);
-            count++;
-        }
-        if (!filterValueLocationPlace.equalsIgnoreCase(getString(R.string.filter_not_selected))) {
-            wagonsFilterList = (wagonsFilterList != null) ? wagonsFilterList : wagonsLists;
-            wagonsFilterList = wagonFactory.getWagons(getActivity(), wagonsFilterList,
-                    filterValueLocationPlace, titleLocationPlaces);
-            count++;
-        }
-        if (!filterValueUpperLower.equalsIgnoreCase(getString(R.string.filter_any))) {
-            wagonsFilterList = (wagonsFilterList != null) ? wagonsFilterList : wagonsLists;
-            wagonsFilterList = wagonFactory.getWagons(getActivity(), wagonsFilterList,
-                    filterValueUpperLower, titleUpperLower);
-            count++;
-        }
-
-        String btnFilterText = (count == 0) ? getString(R.string.filter) : getString(R.string.filter) + " (" + count + ")";
-        btnFilter.setText(btnFilterText);
-
-        if (wagonsFilterList != null) {
-            setHorizontalWagonsAdapter(wagonsFilterList);
-            if (!wagonsFilterList.isEmpty()) {
-                addWagonView(wagonsFilterList, 0);
-                showWagonLayout(true);
-            } else {
-                showWagonLayout(false);
-            }
-        }
-    }
+//    /**
+//     * @param title
+//     * @param filter Show wheel dialog
+//     */
+//    public void showWheelDialog(final String title, String[] filter) {
+//        final String[] value = {null};
+//        View outerView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_filter_wheel_view, null);
+//        final WheelView wheelView = (WheelView) outerView.findViewById(R.id.wheelView);
+//        wheelView.setOffset(1);
+//        wheelView.setItems(Arrays.asList(filter));
+//        wheelView.setSeletion(3);
+//        wheelView.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+//            @Override
+//            public void onSelected(int selectedIndex, String item) {
+//                value[0] = item;
+//            }
+//        });
+//
+//        new AlertDialog.Builder(getActivity())
+//                .setTitle(title)
+//                .setView(outerView)
+//                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int whichButton) {
+//                        String valueWheelItem = (value[0] == null) ? wheelView.getItems().get(wheelView.getSelectedIndex()) : value[0];
+//                        setFilterData(title, valueWheelItem);
+//                    }
+//                }).show();
+//    }
+//
+//    /**
+//     * @param filterType
+//     * @param value      Set data to filter
+//     */
+//    private void setFilterData(String filterType, String value) {
+//        if (value != null) {
+//            if (filterType.equalsIgnoreCase(titleJoinVisit)) {
+//                txtJoinVisit.setText(value);
+//            } else if (filterType.equalsIgnoreCase(titleLocationPlaces)) {
+//                txtLocationPlaces.setText(value);
+//            } else {
+//                txtUpperLower.setText(value);
+//            }
+//            wagonsFilterList = wagonsLists;
+//            filterWagons();
+//        }
+//    }
+//
+//    /**
+//     * Put list wagon after filter in adapter
+//     */
+//    private void filterWagons() {
+//        String filterValueJoinVisit = txtJoinVisit.getText().toString();
+//        String filterValueLocationPlace = txtLocationPlaces.getText().toString();
+//        String filterValueUpperLower = txtUpperLower.getText().toString();
+//
+//        WagonFactory wagonFactory = new WagonFactory();
+//
+//        int count = 0;
+//
+//        if (!filterValueJoinVisit.equalsIgnoreCase(getString(R.string.filter_not_selected))) {
+//            wagonsFilterList = (wagonsFilterList != null) ? wagonsFilterList : wagonsLists;
+//            wagonsFilterList = wagonFactory.getWagons(getActivity(), wagonsFilterList,
+//                    filterValueJoinVisit, titleJoinVisit);
+//            count++;
+//        }
+//        if (!filterValueLocationPlace.equalsIgnoreCase(getString(R.string.filter_not_selected))) {
+//            wagonsFilterList = (wagonsFilterList != null) ? wagonsFilterList : wagonsLists;
+//            wagonsFilterList = wagonFactory.getWagons(getActivity(), wagonsFilterList,
+//                    filterValueLocationPlace, titleLocationPlaces);
+//            count++;
+//        }
+//        if (!filterValueUpperLower.equalsIgnoreCase(getString(R.string.filter_any))) {
+//            wagonsFilterList = (wagonsFilterList != null) ? wagonsFilterList : wagonsLists;
+//            wagonsFilterList = wagonFactory.getWagons(getActivity(), wagonsFilterList,
+//                    filterValueUpperLower, titleUpperLower);
+//            count++;
+//        }
+//
+////        String btnFilterText = (count == 0) ? getString(R.string.filter) : getString(R.string.filter) + " (" + count + ")";
+////        btnFilter.setText(btnFilterText);
+//
+//        if (wagonsFilterList != null) {
+//            setHorizontalWagonsAdapter(wagonsFilterList);
+//            if (!wagonsFilterList.isEmpty()) {
+//                addWagonView(wagonsFilterList, 0);
+//                showWagonLayout(true);
+//            } else {
+//                showWagonLayout(false);
+//            }
+//        }
+//    }
 }
