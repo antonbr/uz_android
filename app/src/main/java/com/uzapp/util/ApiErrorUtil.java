@@ -4,10 +4,10 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.uzapp.pojo.SocialLoginErrorResponse;
 
 import java.io.IOException;
@@ -27,7 +27,10 @@ public class ApiErrorUtil {
         try {
             String errorJson = response.errorBody().string().trim();
             if (TextUtils.isEmpty(errorJson)) return errorMessage;
-            JsonObject jsonObject = (new JsonParser()).parse(errorJson).getAsJsonObject();
+            Gson gson = new GsonBuilder().setLenient().create();
+            JsonElement element = gson.fromJson (errorJson, JsonElement.class);
+            JsonObject jsonObject = element.getAsJsonObject();
+            //JsonObject jsonObject = (new JsonParser()).parse(errorJson).getAsJsonObject();
             if (jsonObject != null && jsonObject.has("status")) {
                 //non-field error
                 errorMessage = jsonObject.get("status").getAsString();
