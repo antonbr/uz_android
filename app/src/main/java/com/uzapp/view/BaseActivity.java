@@ -47,7 +47,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void clearBackstack() {
-        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     @Override

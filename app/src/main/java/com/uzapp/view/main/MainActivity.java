@@ -55,7 +55,7 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
     private void removeMenuFromStack() {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(MenuFragment.class.getName());
         if (fragment instanceof MenuFragment && fragment.isVisible()) {
-            getSupportFragmentManager().popBackStack();
+            getSupportFragmentManager().popBackStackImmediate();
         }
     }
 

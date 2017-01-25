@@ -103,9 +103,9 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.search_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
+        toolbarTitle.setText(R.string.search_title);
         ((MainActivity) getActivity()).showNavigationBar();
         ((MainActivity) getActivity()).getBottomNavigationBar().setCurrentItem(Constants.BOTTOM_NAVIGATION_SEARCH, false);
-        toolbarTitle.setText(R.string.search_title);
         initArguments();
         initDatePickerList();
         checkAllFieldsFilled();
@@ -389,7 +389,6 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        ((MainActivity) getActivity()).hideNavigationBar();
     }
 
     @Override

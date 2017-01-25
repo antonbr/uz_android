@@ -64,6 +64,5 @@ public class SearchTicketSettingsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        ((MainActivity) getActivity()).showNavigationBar();
     }
 }

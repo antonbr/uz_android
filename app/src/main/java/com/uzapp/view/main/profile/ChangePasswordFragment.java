@@ -137,7 +137,6 @@ public class ChangePasswordFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        ((MainActivity) getActivity()).showNavigationBar();
     }
 
     private Callback<User> changePasswordCallback = new Callback<User>() {

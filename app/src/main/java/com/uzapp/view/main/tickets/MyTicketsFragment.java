@@ -52,14 +52,22 @@ import retrofit2.Response;
 public class MyTicketsFragment extends Fragment {
     protected static final int SELECT_FILTER_DATE = 1;
     private SimpleDateFormat filterDateFormat = new SimpleDateFormat("EEEE, d MMM");
-    @BindView(R.id.progressBar) ProgressBar progressBar;
-    @BindView(R.id.myTicketsList) RecyclerView myTicketsList;
-    @BindView(R.id.filterDate) TextView filterDateView;
-    @BindView(R.id.ticketCloseBtn) ImageButton ticketCloseBtn;
-    @BindView(R.id.ticketCalendarBtn) ImageButton ticketCalendarBtn;
-    @BindView(R.id.noContentLayout) ViewGroup noContentLayout;
-    @BindView(R.id.ticketDateLayout) ViewGroup ticketDateLayout;
-    @BindString(R.string.ticket_pick_date) String ticketPickDateHint;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+    @BindView(R.id.myTicketsList)
+    RecyclerView myTicketsList;
+    @BindView(R.id.filterDate)
+    TextView filterDateView;
+    @BindView(R.id.ticketCloseBtn)
+    ImageButton ticketCloseBtn;
+    @BindView(R.id.ticketCalendarBtn)
+    ImageButton ticketCalendarBtn;
+    @BindView(R.id.noContentLayout)
+    ViewGroup noContentLayout;
+    @BindView(R.id.ticketDateLayout)
+    ViewGroup ticketDateLayout;
+    @BindString(R.string.ticket_pick_date)
+    String ticketPickDateHint;
     private Unbinder unbinder;
     private LinkedHashSet<Order> orderList = new LinkedHashSet<Order>();
     private MyTicketsListAdapter ticketAdapter;
@@ -89,7 +97,6 @@ public class MyTicketsFragment extends Fragment {
         loadTicketDates();
         return view;
     }
-
 
     private void setScrollListener() {
         scrollListener = new EndlessRecyclerScrollListener((LinearLayoutManager) myTicketsList.getLayoutManager()) {
@@ -142,14 +149,13 @@ public class MyTicketsFragment extends Fragment {
 
     @OnClick(R.id.searchBtn)
     void onSearchBtnClicked() {
-        ((MainActivity)getActivity()).getBottomNavigationBar().setCurrentItem(Constants.BOTTOM_NAVIGATION_SEARCH, true);
+        ((MainActivity) getActivity()).getBottomNavigationBar().setCurrentItem(Constants.BOTTOM_NAVIGATION_SEARCH, true);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        ((MainActivity) getActivity()).hideNavigationBar();
     }
 
     private void prepareAndShowTickets(List<TicketsResponse> ticketsResponses) {

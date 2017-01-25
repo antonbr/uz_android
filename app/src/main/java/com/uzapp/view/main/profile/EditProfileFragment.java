@@ -179,7 +179,6 @@ public class EditProfileFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        ((MainActivity) getActivity()).showNavigationBar();
     }
 
     private Callback<User> updateUserCallback = new Callback<User>() {

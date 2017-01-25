@@ -202,7 +202,6 @@ public class ProfileFragment extends Fragment implements ProfileRouteHistoryAdap
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        ((MainActivity) getActivity()).hideNavigationBar();
     }
 
     @Override
