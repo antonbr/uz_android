@@ -1,5 +1,6 @@
 package com.uzapp.view.main.profile;
 
+import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -71,7 +73,9 @@ public class ChangePasswordFragment extends Fragment {
 
     @OnClick(R.id.changePasswordBtn)
     void onSaveBtnClicked() {
-        Call call = ApiManager.getApi(getContext()).changePassword(passwordField.getText().toString(),
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(changePasswordBtn.getWindowToken(), 0);
+        Call<User> call = ApiManager.getApi(getContext()).changePassword(passwordField.getText().toString(),
                 newPasswordField.getText().toString());
         call.enqueue(changePasswordCallback);
     }

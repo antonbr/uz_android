@@ -1,5 +1,6 @@
 package com.uzapp.view.login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -12,6 +13,7 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -53,7 +55,7 @@ public class ResetPasswordFragment extends Fragment {
         View view = inflater.inflate(R.layout.reset_password_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
         setPasswordLetterSpacing(false);
-        if(getActivity() instanceof MainActivity){
+        if (getActivity() instanceof MainActivity) {
             ((MainActivity) getActivity()).hideNavigationBar();
         }
         return view;
@@ -80,7 +82,9 @@ public class ResetPasswordFragment extends Fragment {
 
     @OnClick(R.id.resetPasswordBtn)
     void onResetPasswordBtnClicked() {
-        Call call = ApiManager.getApi(getActivity()).restorePassword(emailField.getText().toString(), passwordField.getText().toString());
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(resetPasswordBtn.getWindowToken(), 0);
+        Call<Object> call = ApiManager.getApi(getActivity()).restorePassword(emailField.getText().toString(), passwordField.getText().toString());
         call.enqueue(callback);
     }
 
