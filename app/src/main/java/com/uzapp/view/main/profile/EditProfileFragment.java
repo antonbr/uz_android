@@ -18,7 +18,6 @@ import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.User;
 import com.uzapp.util.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
-import com.uzapp.util.Constants;
 import com.uzapp.view.main.MainActivity;
 
 import org.parceler.Parcels;
@@ -78,7 +77,7 @@ public class EditProfileFragment extends Fragment {
             emailField.setText(user.getEmail());
             phoneField.setPhone(user.getPhoneNumber());
             String studentId = user.getStudentId();
-            if (CommonUtils.isStudentIdValid(studentId) && studentId.length()>0) {
+            if (CommonUtils.isStudentIdValid(studentId) && studentId.length() > 0) {
                 String studentIdSeries = studentId.substring(0, 2);
                 studentIdSeriesField.setText(studentIdSeries);
                 String studentIdNumber = studentId.substring(2, studentId.length());
@@ -95,7 +94,7 @@ public class EditProfileFragment extends Fragment {
 
     @OnClick(R.id.tickBtn)
     void onSaveBtnClicked() {
-      updateUserData();
+        updateUserData();
     }
 
     @OnTextChanged(value = {R.id.firstNameField, R.id.middleNameField, R.id.lastNameField, R.id.phoneField,
@@ -124,25 +123,13 @@ public class EditProfileFragment extends Fragment {
     }
 
     private void checkFieldsState() {
-        boolean allowSaving = isFirstNameValid()
-                && isMiddleNameValid()
-                && isLastNameValid()
+        boolean allowSaving = CommonUtils.isFirstNameValid(firstNameField.getText().toString())
+                && CommonUtils.isMiddleNameValid(middleNameField.getText().toString())
+                && CommonUtils.isLastNameValid(lastNameField.getText().toString())
                 && phoneField.isValid()
                 && CommonUtils.isEmailValid(emailField.getText().toString())
                 && CommonUtils.isStudentIdValid(studentIdSeriesField.getText().toString() + studentIdNumberField.getText().toString());
         tickBtn.setEnabled(allowSaving);
-    }
-
-    private boolean isFirstNameValid() {
-        return firstNameField.getText().length() == 0 || firstNameField.getText().length() > Constants.FIRST_NAME_MIN_LENGTH;
-    }
-
-    private boolean isLastNameValid() {
-        return lastNameField.getText().length() == 0 || lastNameField.getText().length() > Constants.LAST_NAME_MIN_LENGTH;
-    }
-
-    private boolean isMiddleNameValid() {
-        return middleNameField.getText().length() == 0 || middleNameField.getText().length() > Constants.MIDDLE_NAME_MIN_LENGTH;
     }
 
     @Override

@@ -114,12 +114,24 @@ public class CommonUtils {
         return (button.getBackground().getConstantState().equals(drawable.getConstantState()));
     }
 
+    public static boolean isFirstNameValid(String firstName) {
+        return firstName != null && (firstName.length() == 0 || firstName.length() >= Constants.FIRST_NAME_MIN_LENGTH);
+    }
+
+    public static boolean isLastNameValid(String lastName) {
+        return lastName != null && (lastName.length() == 0 || lastName.length() >= Constants.LAST_NAME_MIN_LENGTH);
+    }
+
+    public static boolean isMiddleNameValid(String middleName) {
+        return middleName != null && (middleName.length() == 0 || middleName.length() >= Constants.MIDDLE_NAME_MIN_LENGTH);
+    }
+
     public static boolean isEmailValid(String email) {
-        return Patterns.EMAIL_ADDRESS.matcher(email).matches();
+        return email != null && Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     public static boolean isPasswordValid(String password) {
-        return password.length() >= Constants.MIN_PASSWORD_LENGTH;
+        return password != null && password.length() >= Constants.MIN_PASSWORD_LENGTH;
     }
 
     public static void showMessage(View view, String text) {

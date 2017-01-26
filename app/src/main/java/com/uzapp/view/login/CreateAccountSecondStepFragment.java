@@ -140,17 +140,17 @@ public class CreateAccountSecondStepFragment extends Fragment {
 
     private boolean isFirstNameValid() {
         if (isBonusProgramChecked) {
-            return firstNameField.getText().length() > Constants.FIRST_NAME_MIN_LENGTH;
+            return firstNameField.getText().length() >= Constants.FIRST_NAME_MIN_LENGTH;
         } else {
-            return firstNameField.getText().length() == 0 || firstNameField.getText().length() > Constants.FIRST_NAME_MIN_LENGTH;
+            return CommonUtils.isFirstNameValid(firstNameField.getText().toString());
         }
     }
 
     private boolean isLastNameValid() {
         if (isBonusProgramChecked) {
-            return lastNameField.getText().length() > Constants.LAST_NAME_MIN_LENGTH;
+            return lastNameField.getText().length() >= Constants.LAST_NAME_MIN_LENGTH;
         } else {
-            return lastNameField.getText().length() == 0 || lastNameField.getText().length() > Constants.LAST_NAME_MIN_LENGTH;
+            return CommonUtils.isLastNameValid(lastNameField.getText().toString());
         }
     }
 
