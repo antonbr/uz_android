@@ -163,6 +163,7 @@ public class ProfileFragment extends Fragment implements ProfileRouteHistoryAdap
             email.setText(user.getEmail());
             if (!TextUtils.isEmpty(user.getPhoneNumber())) {
                 phoneNumber.setText(formatPhoneNumber(user.getPhoneNumber()));
+                phoneNumber.setVisibility(View.VISIBLE);
             } else {
                 phoneNumber.setVisibility(View.GONE);
             }

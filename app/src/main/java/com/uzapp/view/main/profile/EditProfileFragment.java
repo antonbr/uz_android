@@ -78,7 +78,7 @@ public class EditProfileFragment extends Fragment {
             emailField.setText(user.getEmail());
             phoneField.setPhone(user.getPhoneNumber());
             String studentId = user.getStudentId();
-            if (CommonUtils.isStudentIdValid(studentId)) {
+            if (CommonUtils.isStudentIdValid(studentId) && studentId.length()>0) {
                 String studentIdSeries = studentId.substring(0, 2);
                 studentIdSeriesField.setText(studentIdSeries);
                 String studentIdNumber = studentId.substring(2, studentId.length());
@@ -179,6 +179,7 @@ public class EditProfileFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        ((MainActivity) getActivity()).showNavigationBar();
     }
 
     private Callback<User> updateUserCallback = new Callback<User>() {

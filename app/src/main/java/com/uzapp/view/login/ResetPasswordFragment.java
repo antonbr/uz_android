@@ -53,6 +53,9 @@ public class ResetPasswordFragment extends Fragment {
         View view = inflater.inflate(R.layout.reset_password_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
         setPasswordLetterSpacing(false);
+        if(getActivity() instanceof MainActivity){
+            ((MainActivity) getActivity()).hideNavigationBar();
+        }
         return view;
     }
 

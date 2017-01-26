@@ -49,6 +49,8 @@ public class CreateAccountFirstStepFragment extends Fragment {
     @BindView(R.id.showPasswordBtn) CheckableImageView showPasswordBtn;
     @BindView(R.id.termsOfServiceChb) CheckBox termsOfServiceChb;
     @BindView(R.id.bonusProgramChb) CheckBox bonusProgramChb;
+    @BindView(R.id.termsOfServiceLbl) TextView termsOfServiceLbl;
+    @BindView(R.id.bonusProgramLbl) TextView bonusProgramLbl;
     @BindView(R.id.registerBtn) Button registerBtn;
     @BindDimen(R.dimen.hint_padding) int hintPadding;
 
@@ -61,14 +63,14 @@ public class CreateAccountFirstStepFragment extends Fragment {
         toolbarTitle.setText(R.string.create_account_title);
         emailLayout.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         passwordLayout.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
-        setClickableTextInCheckbox(termsOfServiceChb, R.string.create_account_terms_of_service,
+        setClickableTextInCheckboxLabel(termsOfServiceLbl, R.string.create_account_terms_of_service,
                 R.string.create_account_terms_of_service_clickable, R.string.terms_of_service);
-        setClickableTextInCheckbox(bonusProgramChb, R.string.create_account_bonus_program,
+        setClickableTextInCheckboxLabel(bonusProgramLbl, R.string.create_account_bonus_program,
                 R.string.create_account_bonus_program_clickable, R.string.bonus_program);
         return view;
     }
 
-    private void setClickableTextInCheckbox(CheckBox checkBox, int textRes, int clickableTextRes, final int urlRes) {
+    private void setClickableTextInCheckboxLabel(TextView textView, int textRes, int clickableTextRes, final int urlRes) {
         SpannableString checkboxText = new SpannableString(getString(textRes));
         String clickableText = getString(clickableTextRes);
         ClickableSpan span = new ClickableSpan() {
@@ -81,8 +83,8 @@ public class CreateAccountFirstStepFragment extends Fragment {
         int start = checkboxText.toString().indexOf(clickableText);
         int end = start + clickableText.length();
         checkboxText.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        checkBox.setText(checkboxText);
-        checkBox.setMovementMethod(LinkMovementMethod.getInstance());
+        textView.setText(checkboxText);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @OnFocusChange(R.id.emailField)

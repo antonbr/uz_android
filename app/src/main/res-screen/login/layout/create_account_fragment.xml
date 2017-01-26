@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <include layout="@layout/toolbar_edit_page"/>
+    <include layout="@layout/toolbar_edit_page" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,15 +18,13 @@
             android:orientation="vertical"
             android:padding="@dimen/small_padding">
 
-            <android.support.v7.widget.CardView
-                xmlns:android="http://schemas.android.com/apk/res/android"
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 card_view:cardBackgroundColor="@android:color/white">
 
-                <android.support.design.widget.TextInputLayout
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                <android.support.design.widget.TextInputLayout xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/emailLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -45,12 +43,11 @@
                         android:hint="@string/create_account_email_hint_2"
                         android:inputType="textEmailAddress"
                         android:paddingBottom="@dimen/big_padding"
-                        android:translationY="@dimen/hint_padding"/>
+                        android:translationY="@dimen/hint_padding" />
                 </android.support.design.widget.TextInputLayout>
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
-                xmlns:android="http://schemas.android.com/apk/res/android"
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,8 +59,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <android.support.design.widget.TextInputLayout
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                    <android.support.design.widget.TextInputLayout xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/passwordLayout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -82,7 +78,7 @@
                             android:hint="@string/create_account_password_hint_2"
                             android:inputType="textPassword"
                             android:paddingBottom="@dimen/big_padding"
-                            android:translationY="@dimen/hint_padding"/>
+                            android:translationY="@dimen/hint_padding" />
                     </android.support.design.widget.TextInputLayout>
 
                     <com.uzapp.view.main.search.CheckableImageView
@@ -92,7 +88,7 @@
                         android:paddingLeft="22dp"
                         android:paddingRight="22dp"
                         android:src="@drawable/eye_selector"
-                        android:visibility="gone"/>
+                        android:visibility="gone" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -103,54 +99,76 @@
                 android:paddingRight="@dimen/big_padding"
                 android:paddingTop="5dp"
                 android:text="@string/create_account_password_info"
-                android:textSize="13.5sp"/>
+                android:textSize="13.5sp" />
 
-            <android.support.v7.widget.CardView
-                xmlns:android="http://schemas.android.com/apk/res/android"
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 card_view:cardBackgroundColor="@android:color/white">
 
-                <CheckBox
-                    android:id="@+id/termsOfServiceChb"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="18dp"
                     android:layout_marginLeft="22dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="20dp"
-                    android:checked="false"
-                    android:drawableLeft="@android:color/transparent"
-                    android:drawablePadding="5dp"
-                    android:gravity="top|left"
-                    android:text="@string/create_account_terms_of_service"
-                    android:textSize="16sp"/>
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/termsOfServiceChb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:drawableLeft="@android:color/transparent"
+                        android:drawablePadding="5dp"
+                        android:gravity="top|left" />
+
+                    <TextView
+                        android:id="@+id/termsOfServiceLbl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/create_account_terms_of_service"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
-                xmlns:android="http://schemas.android.com/apk/res/android"
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 card_view:cardBackgroundColor="@android:color/white">
 
-                <CheckBox
-                    android:id="@+id/bonusProgramChb"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="18dp"
                     android:layout_marginLeft="22dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="20dp"
-                    android:checked="false"
-                    android:drawableLeft="@android:color/transparent"
-                    android:drawablePadding="5dp"
-                    android:gravity="top"
-                    android:text="@string/create_account_bonus_program"
-                    android:textSize="16sp"/>
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/bonusProgramChb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:drawableLeft="@android:color/transparent"
+                        android:drawablePadding="5dp"
+                        android:gravity="top" />
+
+                    <TextView
+                        android:id="@+id/bonusProgramLbl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/create_account_bonus_program"
+                        android:textSize="16sp" />
+                </LinearLayout>
             </android.support.v7.widget.CardView>
 
             <Button
@@ -160,7 +178,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:enabled="false"
-                android:text="@string/create_account_register"/>
+                android:text="@string/create_account_register" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -79,9 +79,7 @@ public class CommonUtils {
 
     /**
      * @param value
-     * @return
-     *
-     * Is odd place
+     * @return Is odd place
      */
     public static boolean isOdd(int value) {
         return (value & 0x01) != 0;
@@ -98,7 +96,7 @@ public class CommonUtils {
      * @param button
      * @param color
      * @return color
-     *
+     * <p>
      * Change text color
      */
     public static int changeTextColorPlace(Context context, Button button, int color) {
@@ -109,7 +107,7 @@ public class CommonUtils {
     /**
      * @param button
      * @return selected place
-     *
+     * <p>
      * Is selected place
      */
     public static boolean isSelectedPlace(Button button, Drawable drawable) {
@@ -125,7 +123,7 @@ public class CommonUtils {
     }
 
     public static void showMessage(View view, String text) {
-        if(!TextUtils.isEmpty(text)) {
+        if (!TextUtils.isEmpty(text)) {
             Snackbar snackbar = Snackbar.make(view, text, Snackbar.LENGTH_LONG);
             View snackbarView = snackbar.getView();
             int snackbarTextId = android.support.design.R.id.snackbar_text;
@@ -187,6 +185,7 @@ public class CommonUtils {
         String visa = "^4[0-9]{6,}$";
         return str.matches(visa);
     }
+
     public static boolean isMasterCard(String str) {
         String masterCard = "^5[1-5][0-9]{5,}$";
         return str.matches(masterCard);
@@ -206,6 +205,7 @@ public class CommonUtils {
 
     public static boolean isStudentIdValid(String studentId) {
         if (studentId == null) return false;
+        if (studentId.length() == 0) return true;
         Pattern p = Pattern.compile(Constants.STUDENT_ID_REGEX_PATTERN);
         Matcher m = p.matcher(studentId.replaceAll("\\s+", ""));
         return m.matches();

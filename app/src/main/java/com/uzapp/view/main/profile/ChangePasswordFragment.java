@@ -41,6 +41,7 @@ import retrofit2.Response;
  * Created by vika on 19.08.16.
  */
 public class ChangePasswordFragment extends Fragment {
+    private static final int REQUEST_RESET_PASSWORD = 1;
     @BindView(R.id.passwordField) EditText passwordField;
     @BindView(R.id.newPasswordField) EditText newPasswordField;
     @BindView(R.id.showPasswordBtn) CheckableImageView showPasswordBtn;
@@ -77,7 +78,10 @@ public class ChangePasswordFragment extends Fragment {
 
     @OnClick(R.id.forgotPasswordBtn)
     void onForgotPasswordBtnClicked() {
-        ((BaseActivity) getActivity()).replaceFragment(new ResetPasswordFragment(), true);
+        //((BaseActivity) getActivity()).replaceFragment(new ResetPasswordFragment(), true);
+            Fragment fragment = new ResetPasswordFragment();
+            fragment.setTargetFragment(this, REQUEST_RESET_PASSWORD);
+            ((BaseActivity) getActivity()).addFragment(fragment, R.anim.slide_up, R.anim.slide_down);
     }
 
     @OnClick(R.id.profileScreenBtn)
@@ -137,6 +141,7 @@ public class ChangePasswordFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        ((MainActivity) getActivity()).showNavigationBar();
     }
 
     private Callback<User> changePasswordCallback = new Callback<User>() {
