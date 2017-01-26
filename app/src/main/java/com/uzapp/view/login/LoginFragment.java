@@ -24,13 +24,13 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.uzapp.R;
+import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.CreateAccountInfo;
 import com.uzapp.pojo.LoginInfo;
 import com.uzapp.pojo.SocialLoginErrorResponse;
 import com.uzapp.pojo.SocialLoginInfo;
 import com.uzapp.pojo.UserTokenResponse;
-import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.PrefsUtil;
 import com.uzapp.view.BaseActivity;
@@ -113,7 +113,7 @@ public class LoginFragment extends Fragment implements OkTokenRequestListener {
 
     @OnClick(R.id.loginBtn)
     void onLoginBtnClicked() {
-        ((BaseActivity)getActivity()).hideKeyboard(this);
+        ((BaseActivity) getActivity()).hideKeyboard(this);
         String deviceId = CommonUtils.getDeviceId(getContext());
         LoginInfo loginInfo = new LoginInfo(deviceId, emailField.getText().toString(),
                 passwordField.getText().toString());
@@ -181,9 +181,6 @@ public class LoginFragment extends Fragment implements OkTokenRequestListener {
 
     private void createSocialAccount(String email) {
         String deviceId = CommonUtils.getDeviceId(getContext());
-        boolean isFb = socialLoginErrorResponse.isFacebook();
-        boolean isVk = socialLoginErrorResponse.isVk();
-        boolean isOk = socialLoginErrorResponse.isOk();
         CreateAccountInfo.CreateAccountInfoBuilder builder = new CreateAccountInfo.CreateAccountInfoBuilder(deviceId, email);
         if (socialLoginErrorResponse.isFacebook()) {
             builder.setFbId(socialLoginErrorResponse.getId());
@@ -194,7 +191,7 @@ public class LoginFragment extends Fragment implements OkTokenRequestListener {
         }
         builder.setFirstName(socialLoginErrorResponse.getFirstName());
         builder.setLastName(socialLoginErrorResponse.getLastName());
-        Call call = ApiManager.getApi(getContext()).createAccount(builder.build());
+        Call<UserTokenResponse> call = ApiManager.getApi(getContext()).createAccount(builder.build());
         call.enqueue(loginCallback);
     }
 
@@ -234,17 +231,16 @@ public class LoginFragment extends Fragment implements OkTokenRequestListener {
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.putExtra("profile", true);
                     startActivity(intent);
-                } else {
-                    if (response.code() == HttpURLConnection.HTTP_NOT_FOUND) {
-                        socialLoginErrorResponse = ApiErrorUtil.getSocialLoginErrorResponse(response);
-                        if (socialLoginErrorResponse != null) {
-                            if(TextUtils.isEmpty(socialLoginErrorResponse.getEmail())) {
-                                showEmailDialog();
-                            } else{
-                                createSocialAccount(socialLoginErrorResponse.getEmail());
-                            }
+                } else if (response.code() == HttpURLConnection.HTTP_NOT_FOUND) {
+                    socialLoginErrorResponse = ApiErrorUtil.getSocialLoginErrorResponse(response);
+                    if (socialLoginErrorResponse != null) {
+                        if (TextUtils.isEmpty(socialLoginErrorResponse.getEmail())) {
+                            showEmailDialog();
+                        } else {
+                            createSocialAccount(socialLoginErrorResponse.getEmail());
                         }
                     }
+                } else {
                     String error = ApiErrorUtil.getErrorMessage(response, getActivity());
                     CommonUtils.showSnackbar(emailField, error);
                 }

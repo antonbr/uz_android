@@ -40,7 +40,7 @@ public class ApiErrorUtil {
             String errorJson = response.errorBody().string().trim();
             if (TextUtils.isEmpty(errorJson)) return errorMessage;
             Gson gson = new GsonBuilder().setLenient().create();
-            JsonElement element = gson.fromJson(errorMessage, JsonElement.class);
+            JsonElement element = gson.fromJson(errorJson, JsonElement.class);
             JsonObject jsonObject = element.getAsJsonObject();
             //JsonObject jsonObject = (new JsonParser()).parse(errorJson).getAsJsonObject();
             if (jsonObject != null && jsonObject.has("status")) {
