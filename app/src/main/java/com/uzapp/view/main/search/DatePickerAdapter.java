@@ -57,7 +57,7 @@ public class DatePickerAdapter extends RecyclerView.Adapter<DatePickerAdapter.Da
     @Override
     public DateHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         DateItemView itemView = new DateItemView(parent.getContext());
-        parent.addView(itemView);
+       // parent.addView(itemView);
         itemView.setViewWidth(itemWidth);
         return new DateHolder(itemView);
     }

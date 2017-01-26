@@ -28,7 +28,7 @@ import com.uzapp.pojo.booking.Booking;
 import com.uzapp.pojo.booking.Uio;
 import com.uzapp.pojo.tickets.TicketsResponse;
 import com.uzapp.pojo.transportation.Transportation;
-import com.uzapp.util.ApiErrorUtil;
+import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.PrefsUtil;
 import com.uzapp.view.login.PhoneNumberTextInputEditText;
@@ -216,8 +216,8 @@ public class PayFragment extends Fragment {
                 showProgress(false);
             } else {
                 showProgress(false);
-                String error = ApiErrorUtil.parseError(response);
-                CommonUtils.showMessage(getView(), error);
+                String error = ApiErrorUtil.getErrorMessage(response, getActivity());
+                CommonUtils.showSnackbar(getView(), error);
             }
         }
 
@@ -225,6 +225,8 @@ public class PayFragment extends Fragment {
         public void onFailure(Call<Uio> call, Throwable t) {
             Log.d("PayFragment", call.toString());
             showProgress(false);
+            String error = ApiErrorUtil.getErrorMessage(t, getActivity());
+            CommonUtils.showSnackbar(getView(), error);
         }
     };
 
@@ -344,8 +346,8 @@ public class PayFragment extends Fragment {
                 }
             } else {
                 showProgress(false);
-                String error = ApiErrorUtil.parseError(response);
-                CommonUtils.showMessage(getView(), error);
+                String error = ApiErrorUtil.getErrorMessage(response, getActivity());
+                CommonUtils.showSnackbar(getView(), error);
             }
         }
 
@@ -353,6 +355,8 @@ public class PayFragment extends Fragment {
         public void onFailure(Call<TicketsResponse> call, Throwable t) {
             Log.d("PayFragment", call.toString());
             showProgress(false);
+            String error = ApiErrorUtil.getErrorMessage(t, getActivity());
+            CommonUtils.showSnackbar(getView(), error);
         }
     };
 

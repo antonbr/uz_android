@@ -1,6 +1,5 @@
 package com.uzapp.view.login;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -13,15 +12,15 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
-import com.uzapp.util.ApiErrorUtil;
+import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
+import com.uzapp.view.BaseActivity;
 import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.search.CheckableImageView;
 
@@ -82,8 +81,7 @@ public class ResetPasswordFragment extends Fragment {
 
     @OnClick(R.id.resetPasswordBtn)
     void onResetPasswordBtnClicked() {
-        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(resetPasswordBtn.getWindowToken(), 0);
+        ((BaseActivity)getActivity()).hideKeyboard(this);
         Call<Object> call = ApiManager.getApi(getActivity()).restorePassword(emailField.getText().toString(), passwordField.getText().toString());
         call.enqueue(callback);
     }
@@ -128,8 +126,8 @@ public class ResetPasswordFragment extends Fragment {
                     successResultLayout.setVisibility(View.VISIBLE);
                     toolbar.setVisibility(View.INVISIBLE);
                 } else {
-                    String error = ApiErrorUtil.parseError(response);
-                    CommonUtils.showMessage(getView(), error);
+                    String error = ApiErrorUtil.getErrorMessage(response, getActivity());
+                    CommonUtils.showSnackbar(getView(), error);
                 }
             }
         }
@@ -137,7 +135,8 @@ public class ResetPasswordFragment extends Fragment {
         @Override
         public void onFailure(Call<Object> call, Throwable t) {
             if (getView() != null && t != null) {
-                CommonUtils.showMessage(getView(), t.getMessage());
+                String error = ApiErrorUtil.getErrorMessage(t, getActivity());
+                CommonUtils.showSnackbar(getView(), error);
             }
         }
     };

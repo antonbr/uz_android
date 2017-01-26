@@ -17,7 +17,7 @@ import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.tickets.Order;
 import com.uzapp.pojo.tickets.Ticket;
 import com.uzapp.pojo.tickets.TicketsResponse;
-import com.uzapp.util.ApiErrorUtil;
+import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.view.main.MainActivity;
 import com.viewpagerindicator.IconPageIndicator;
@@ -171,8 +171,8 @@ public class TodayTicketsFragment extends Fragment {
                 if (response.isSuccessful()) {
                     prepareAndShowTickets(response.body());
                 } else {
-                    String error = ApiErrorUtil.parseError(response);
-                    CommonUtils.showMessage(getView(), error);
+                    String error = ApiErrorUtil.getErrorMessage(response, getActivity());
+                    CommonUtils.showSnackbar(getView(), error);
                     progressBar.setVisibility(View.GONE);
                 }
             }
@@ -181,8 +181,9 @@ public class TodayTicketsFragment extends Fragment {
         @Override
         public void onFailure(Call<List<TicketsResponse>> call, Throwable t) {
             if (getView() != null && t != null) {
-                CommonUtils.showMessage(getView(), t.getMessage());
                 progressBar.setVisibility(View.GONE);
+                String error = ApiErrorUtil.getErrorMessage(t, getActivity());
+                CommonUtils.showSnackbar(getView(), error);
             }
         }
     };

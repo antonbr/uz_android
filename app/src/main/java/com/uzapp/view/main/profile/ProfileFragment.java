@@ -21,7 +21,7 @@ import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.RouteHistoryItem;
 import com.uzapp.pojo.User;
-import com.uzapp.util.ApiErrorUtil;
+import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.PrefsUtil;
 import com.uzapp.view.BaseActivity;
@@ -215,7 +215,7 @@ public class ProfileFragment extends Fragment implements ProfileRouteHistoryAdap
                         user = Parcels.unwrap(data.getParcelableExtra("user"));
                         showUserInfo();
                         saveUserToRealm();
-                        CommonUtils.showMessage(getView(), R.string.profile_edit_successful_result);
+                        CommonUtils.showSnackbar(getView(), R.string.profile_edit_successful_result);
                         break;
                     case REQUEST_CHANGE_PASSWORD:
                         Snackbar.make(getView(), R.string.profile_edit_change_password_success_result, Snackbar.LENGTH_LONG).show();
@@ -242,8 +242,8 @@ public class ProfileFragment extends Fragment implements ProfileRouteHistoryAdap
                     showUserInfo();
                     saveUserToRealm();
                 } else {
-                    String error = ApiErrorUtil.parseError(response);
-                    CommonUtils.showMessage(getView(), error);
+                    String error = ApiErrorUtil.getErrorMessage(response, getActivity());
+                    CommonUtils.showSnackbar(getView(), error);
                 }
             }
         }
@@ -252,7 +252,8 @@ public class ProfileFragment extends Fragment implements ProfileRouteHistoryAdap
         public void onFailure(Call<User> call, Throwable t) {
             if (getView() != null) {
                 progressBar.setVisibility(View.GONE);
-                CommonUtils.showMessage(getView(), t.getMessage());
+                String error = ApiErrorUtil.getErrorMessage(t, getActivity());
+                CommonUtils.showSnackbar(getView(), error);
             }
         }
     };
@@ -266,8 +267,8 @@ public class ProfileFragment extends Fragment implements ProfileRouteHistoryAdap
                 if (response.isSuccessful()) {
                     showPopularStations(response.body());
                 } else {
-                    String error = ApiErrorUtil.parseError(response);
-                    CommonUtils.showMessage(getView(), error);
+                    String error = ApiErrorUtil.getErrorMessage(response, getActivity());
+                    CommonUtils.showSnackbar(getView(), error);
                 }
             }
         }
@@ -276,7 +277,8 @@ public class ProfileFragment extends Fragment implements ProfileRouteHistoryAdap
         public void onFailure(Call<List<RouteHistoryItem>> call, Throwable t) {
             if (getView() != null) {
                 progressBar.setVisibility(View.GONE);
-                CommonUtils.showMessage(getView(), t.getMessage());
+                String error = ApiErrorUtil.getErrorMessage(t, getActivity());
+                CommonUtils.showSnackbar(getView(), error);
             }
         }
     };

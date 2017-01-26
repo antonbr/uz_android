@@ -16,7 +16,7 @@ import com.uzapp.pojo.Train;
 import com.uzapp.pojo.route.RouteCountry;
 import com.uzapp.pojo.route.RouteResponse;
 import com.uzapp.pojo.route.RouteStation;
-import com.uzapp.util.ApiErrorUtil;
+import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 
@@ -154,15 +154,16 @@ public class RouteFragment extends Fragment {
                 adapter.setRouteStations(routeStations);
                 adapter.notifyDataSetChanged();
             } else {
-                String error = ApiErrorUtil.parseError(response);
-                CommonUtils.showMessage(getView(), error);
+                String error = ApiErrorUtil.getErrorMessage(response, getActivity());
+                CommonUtils.showSnackbar(getView(), error);
             }
         }
 
         @Override
         public void onFailure(Call<RouteResponse> call, Throwable t) {
             if (getView() != null && t != null) {
-                CommonUtils.showMessage(getView(), t.getMessage());
+                String error = ApiErrorUtil.getErrorMessage(t, getActivity());
+                CommonUtils.showSnackbar(getView(), error);
             }
         }
     };

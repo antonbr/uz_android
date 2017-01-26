@@ -325,7 +325,8 @@
     <string name="service_animal">Животные</string>
     <string name="service_equipment">Аппаратура</string>
     <string name="service_excess">Избыток</string>
-
+    <string name="no_internet">Пожалуйста проверьте подключение к Интернету</string>
+    <string name="error">Ошибка</string>
 
 
 </resources>

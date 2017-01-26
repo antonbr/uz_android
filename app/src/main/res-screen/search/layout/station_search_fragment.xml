@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:background="@color/backgroundColor"
-              android:orientation="vertical">
-    <include layout="@layout/toolbar_picker_page"/>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_picker_page" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,15 +21,14 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:hint="@string/search_select_station_hint"
-            android:padding="@dimen/big_padding"
-            android:singleLine="true"
             android:inputType="textNoSuggestions"
+            android:maxLines="1"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:padding="@dimen/big_padding"
             android:textColor="@color/textColor"
             android:textColorHint="@color/textColorHint"
-            android:textSize="@dimen/text_size">
-
-            <requestFocus/>
-        </com.uzapp.view.main.search.station.SearchEditText>
+            android:textSize="@dimen/text_size"/>
 
         <ProgressBar
             android:id="@+id/searchProgress"
@@ -38,13 +39,13 @@
             android:indeterminate="true"
             android:indeterminateTint="@color/textColorHint"
             android:indeterminateTintMode="src_in"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider_height"
-        android:background="@color/dividerColor"/>
+        android:background="@color/dividerColor" />
 
     <TextView
         android:id="@+id/stationsHeader"
@@ -55,12 +56,12 @@
         android:text="@string/search_popular_destinations"
         android:textAllCaps="true"
         android:textColor="@color/accentColor"
-        android:textSize="@dimen/text_size_small"/>
+        android:textSize="@dimen/text_size_small" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/stationsList"
-        app:stackFromEnd="true"
-        android:overScrollMode="never"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        app:stackFromEnd="true" />
 </LinearLayout>

@@ -1,10 +1,13 @@
 package com.uzapp.view;
 
+import android.app.Activity;
 import android.support.annotation.AnimRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.uzapp.R;
 
@@ -56,5 +59,11 @@ public class BaseActivity extends AppCompatActivity {
         if (fragmentManager.getBackStackEntryCount() == 0) {
             super.onBackPressed();
         }
+    }
+
+    public void hideKeyboard(Fragment fragment) {
+        View view = fragment.getView().getRootView();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

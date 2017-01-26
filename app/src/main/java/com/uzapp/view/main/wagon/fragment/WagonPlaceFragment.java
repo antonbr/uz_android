@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
@@ -22,7 +21,7 @@ import com.uzapp.pojo.placeslist.PricesPlacesList;
 import com.uzapp.pojo.placeslist.WagonsPlacesList;
 import com.uzapp.pojo.prices.Prices;
 import com.uzapp.pojo.prices.WagonsPrices;
-import com.uzapp.util.ApiErrorUtil;
+import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.view.main.MainActivity;
@@ -275,14 +274,15 @@ public class WagonPlaceFragment extends Fragment {
                 showProgress(false);
                 showWagonLayout(true);
             } else {
-                String error = ApiErrorUtil.parseError(response);
-                CommonUtils.showMessage(getView(), error);
+                String error = ApiErrorUtil.getErrorMessage(response, getActivity());
+                CommonUtils.showSnackbar(getView(), error);
             }
         }
 
         @Override
         public void onFailure(Call<List<PricesPlacesList>> call, Throwable t) {
-            Toast.makeText(getActivity(), call.toString(), Toast.LENGTH_SHORT).show();
+            String error = ApiErrorUtil.getErrorMessage(t, getActivity());
+            CommonUtils.showSnackbar(getView(), error);
         }
     };
 

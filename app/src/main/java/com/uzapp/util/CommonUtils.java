@@ -134,7 +134,7 @@ public class CommonUtils {
         return password != null && password.length() >= Constants.MIN_PASSWORD_LENGTH;
     }
 
-    public static void showMessage(View view, String text) {
+    public static void showSnackbar(View view, String text) {
         if (!TextUtils.isEmpty(text)) {
             Snackbar snackbar = Snackbar.make(view, text, Snackbar.LENGTH_LONG);
             View snackbarView = snackbar.getView();
@@ -145,8 +145,8 @@ public class CommonUtils {
         }
     }
 
-    public static void showMessage(View view, int textRes) {
-        showMessage(view, view.getContext().getString(textRes));
+    public static void showSnackbar(View view, int textRes) {
+        showSnackbar(view, view.getContext().getString(textRes));
     }
 
     public static String getDeviceId(Context context) {
@@ -222,6 +222,5 @@ public class CommonUtils {
         Matcher m = p.matcher(studentId.replaceAll("\\s+", ""));
         return m.matches();
     }
-
 
 }

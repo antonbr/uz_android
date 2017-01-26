@@ -30,7 +30,7 @@ import com.uzapp.pojo.LoginInfo;
 import com.uzapp.pojo.SocialLoginErrorResponse;
 import com.uzapp.pojo.SocialLoginInfo;
 import com.uzapp.pojo.UserTokenResponse;
-import com.uzapp.util.ApiErrorUtil;
+import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.PrefsUtil;
 import com.uzapp.view.BaseActivity;
@@ -113,6 +113,7 @@ public class LoginFragment extends Fragment implements OkTokenRequestListener {
 
     @OnClick(R.id.loginBtn)
     void onLoginBtnClicked() {
+        ((BaseActivity)getActivity()).hideKeyboard(this);
         String deviceId = CommonUtils.getDeviceId(getContext());
         LoginInfo loginInfo = new LoginInfo(deviceId, emailField.getText().toString(),
                 passwordField.getText().toString());
@@ -244,8 +245,8 @@ public class LoginFragment extends Fragment implements OkTokenRequestListener {
                             }
                         }
                     }
-                    String error = ApiErrorUtil.parseError(response);
-                    CommonUtils.showMessage(emailField, error);
+                    String error = ApiErrorUtil.getErrorMessage(response, getActivity());
+                    CommonUtils.showSnackbar(emailField, error);
                 }
             }
         }
@@ -253,7 +254,8 @@ public class LoginFragment extends Fragment implements OkTokenRequestListener {
         @Override
         public void onFailure(Call<UserTokenResponse> call, Throwable t) {
             if (getView() != null && t != null) {
-                CommonUtils.showMessage(getView(), t.getMessage());
+                String error = ApiErrorUtil.getErrorMessage(t, getActivity());
+                CommonUtils.showSnackbar(getView(), error);
             }
         }
     };

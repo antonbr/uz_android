@@ -17,7 +17,7 @@ import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.Train;
 import com.uzapp.pojo.TrainSearchResult;
 import com.uzapp.pojo.prices.Prices;
-import com.uzapp.util.ApiErrorUtil;
+import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.wagon.fragment.WagonPlaceFragment;
@@ -119,8 +119,8 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
                 }
                 showNoContentIfNeeded();
             } else {
-                String error = ApiErrorUtil.parseError(response);
-                CommonUtils.showMessage(getView(), error);
+                String error = ApiErrorUtil.getErrorMessage(response, getActivity());
+                CommonUtils.showSnackbar(getView(), error);
                 showNoContentIfNeeded();
             }
             showProgress(false);
@@ -129,7 +129,8 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
         @Override
         public void onFailure(Call<TrainSearchResult> call, Throwable t) {
             if (getView() != null && t != null) {
-                CommonUtils.showMessage(getView(), t.getMessage());
+                String error = ApiErrorUtil.getErrorMessage(t, getActivity());
+                CommonUtils.showSnackbar(getView(), error);
                 showNoContentIfNeeded();
                 showProgress(false);
             }
@@ -177,15 +178,16 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
                 ((MainActivity) getActivity()).replaceFragment(WagonPlaceFragment
                         .newInstance(prices, 0, departureDate, arrivalDate, date), true);
             } else {
-                String error = ApiErrorUtil.parseError(response);
-                CommonUtils.showMessage(getView(), error);
+                String error = ApiErrorUtil.getErrorMessage(response, getActivity());
+                CommonUtils.showSnackbar(getView(), error);
             }
         }
 
         @Override
         public void onFailure(Call<Prices> call, Throwable t) {
             if (getView() != null && t != null) {
-                CommonUtils.showMessage(getView(), t.getMessage());
+                String error = ApiErrorUtil.getErrorMessage(t, getActivity());
+                CommonUtils.showSnackbar(getView(), error);
             }
         }
     };

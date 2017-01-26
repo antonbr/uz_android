@@ -96,8 +96,9 @@ public class DateItemView extends RelativeLayout {
         dayOfMonth.setTextColor(selectedColor);
         dayOfWeek.setTextColor(selectedColor);
     }
+
     public void setViewWidth(int viewWidth) {
-        ViewGroup.LayoutParams layoutParams = getLayoutParams();
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.width = viewWidth;
         setLayoutParams(layoutParams);
         invalidate();

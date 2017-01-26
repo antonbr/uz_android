@@ -18,7 +18,7 @@ import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.PopularStation;
 import com.uzapp.pojo.Station;
-import com.uzapp.util.ApiErrorUtil;
+import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.view.main.MainActivity;
@@ -216,8 +216,8 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
                 if (response.isSuccessful()) {
                     adapter.setStations(response.body());
                 } else {
-                    String error = ApiErrorUtil.parseError(response);
-                    CommonUtils.showMessage(getView(), error);
+                    String error = ApiErrorUtil.getErrorMessage(response, getActivity());
+                    CommonUtils.showSnackbar(getView(), error);
                 }
             }
         }
@@ -226,6 +226,8 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
         public void onFailure(Call<List<Station>> call, Throwable t) {
             if (!call.isCanceled()) {
                 searchProgress.setVisibility(View.GONE);
+                String error = ApiErrorUtil.getErrorMessage(t, getActivity());
+                CommonUtils.showSnackbar(getView(), error);
             }
         }
     };

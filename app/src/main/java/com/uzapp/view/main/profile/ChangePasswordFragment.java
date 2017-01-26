@@ -1,11 +1,9 @@
 package com.uzapp.view.main.profile;
 
-import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
@@ -13,7 +11,6 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -21,7 +18,7 @@ import android.widget.ImageButton;
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.User;
-import com.uzapp.util.ApiErrorUtil;
+import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.view.BaseActivity;
@@ -73,8 +70,7 @@ public class ChangePasswordFragment extends Fragment {
 
     @OnClick(R.id.changePasswordBtn)
     void onSaveBtnClicked() {
-        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(changePasswordBtn.getWindowToken(), 0);
+        ((BaseActivity)getActivity()).hideKeyboard(this);
         Call<User> call = ApiManager.getApi(getContext()).changePassword(passwordField.getText().toString(),
                 newPasswordField.getText().toString());
         call.enqueue(changePasswordCallback);
@@ -159,8 +155,8 @@ public class ChangePasswordFragment extends Fragment {
                     changePasswordBtn.setVisibility(View.INVISIBLE);
                     closeBtn.setVisibility(View.INVISIBLE);
                 } else {
-                    String error = ApiErrorUtil.parseError(response);
-                    CommonUtils.showMessage(getView(), error);
+                    String error = ApiErrorUtil.getErrorMessage(response, getActivity());
+                    CommonUtils.showSnackbar(getView(), error);
                 }
             }
         }
@@ -168,7 +164,8 @@ public class ChangePasswordFragment extends Fragment {
         @Override
         public void onFailure(Call<User> call, Throwable t) {
             if (getView() != null) {
-                Snackbar.make(getView(), t.getMessage(), Snackbar.LENGTH_SHORT).show();
+                String error = ApiErrorUtil.getErrorMessage(t, getActivity());
+                CommonUtils.showSnackbar(getView(), error);
             }
         }
     };

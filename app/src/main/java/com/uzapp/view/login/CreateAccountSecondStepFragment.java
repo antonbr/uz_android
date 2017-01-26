@@ -17,7 +17,7 @@ import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.CreateAccountInfo;
 import com.uzapp.pojo.UserTokenResponse;
-import com.uzapp.util.ApiErrorUtil;
+import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.util.PrefsUtil;
@@ -173,22 +173,23 @@ public class CreateAccountSecondStepFragment extends Fragment {
                 intent.putExtra("profile", true);
                 startActivity(intent);
             } else {
-                String error = ApiErrorUtil.parseError(response);
-                CommonUtils.showMessage(getView(), error);
+                String error = ApiErrorUtil.getErrorMessage(response, getActivity());
+                CommonUtils.showSnackbar(getView(), error);
             }
         }
 
         @Override
         public void onFailure(Call<UserTokenResponse> call, Throwable t) {
             if (getView() != null && t != null) {
-                showError(t.getMessage());
+                String error = ApiErrorUtil.getErrorMessage(t, getActivity());
+                CommonUtils.showSnackbar(getView(), error);
             }
         }
     };
 
     private void showError(String message) {
         Log.d(TAG, message);
-        CommonUtils.showMessage(getView(), message);
+        CommonUtils.showSnackbar(getView(), message);
     }
 
 

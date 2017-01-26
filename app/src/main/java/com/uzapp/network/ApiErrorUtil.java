@@ -1,5 +1,6 @@
-package com.uzapp.util;
+package com.uzapp.network;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -8,6 +9,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.uzapp.R;
 import com.uzapp.pojo.SocialLoginErrorResponse;
 
 import java.io.IOException;
@@ -22,13 +24,23 @@ import retrofit2.Response;
  */
 public class ApiErrorUtil {
 
-    public static String parseError(Response<?> response) {
-        String errorMessage = "";
+    public static String getErrorMessage(Throwable t, Context context) {
+        if (t instanceof IOException) {
+            return context.getString(R.string.no_internet);
+        } else if (t.getMessage() != null) {
+            return t.getMessage();
+        } else {
+            return context.getString(R.string.error);
+        }
+    }
+
+    public static String getErrorMessage(Response<?> response, Context context) {
+        String errorMessage = context.getString(R.string.error);
         try {
             String errorJson = response.errorBody().string().trim();
             if (TextUtils.isEmpty(errorJson)) return errorMessage;
             Gson gson = new GsonBuilder().setLenient().create();
-            JsonElement element = gson.fromJson (errorJson, JsonElement.class);
+            JsonElement element = gson.fromJson(errorMessage, JsonElement.class);
             JsonObject jsonObject = element.getAsJsonObject();
             //JsonObject jsonObject = (new JsonParser()).parse(errorJson).getAsJsonObject();
             if (jsonObject != null && jsonObject.has("status")) {

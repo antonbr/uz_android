@@ -16,7 +16,7 @@ import android.widget.ImageButton;
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.User;
-import com.uzapp.util.ApiErrorUtil;
+import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.view.main.MainActivity;
 
@@ -183,8 +183,8 @@ public class EditProfileFragment extends Fragment {
                     }
                     getActivity().onBackPressed();
                 } else {
-                    String error = ApiErrorUtil.parseError(response);
-                    CommonUtils.showMessage(getView(), error);
+                    String error = ApiErrorUtil.getErrorMessage(response, getActivity());
+                    CommonUtils.showSnackbar(getView(), error);
                 }
             }
         }
@@ -192,7 +192,8 @@ public class EditProfileFragment extends Fragment {
         @Override
         public void onFailure(Call<User> call, Throwable t) {
             if (getView() != null) {
-                Snackbar.make(getView(), t.getMessage(), Snackbar.LENGTH_SHORT).show();
+                String error = ApiErrorUtil.getErrorMessage(t, getActivity());
+                CommonUtils.showSnackbar(getView(), error);
             }
         }
     };

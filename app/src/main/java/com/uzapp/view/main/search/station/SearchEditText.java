@@ -40,7 +40,13 @@ public class SearchEditText extends EditText {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        showKeyboard();
+        post(new Runnable() {
+            @Override
+            public void run() {
+                requestFocus();
+                showKeyboard();
+            }
+        });
     }
 
     @Override

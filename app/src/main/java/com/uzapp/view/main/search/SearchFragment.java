@@ -28,7 +28,7 @@ import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.RouteHistoryItem;
 import com.uzapp.pojo.Station;
-import com.uzapp.util.ApiErrorUtil;
+import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.view.main.MainActivity;
@@ -184,7 +184,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
     @OnClick(R.id.findTicketsBtn)
     void onFindTicketsBtnClicked() {
         if (fromStation.getCode() == toStation.getCode()) {
-            CommonUtils.showMessage(getView(), R.string.search_stations_not_valid);
+            CommonUtils.showSnackbar(getView(), R.string.search_stations_not_valid);
         } else {
             long secondDateTime = secondDate == null ? 0 : secondDate.getTime();
             Fragment fragment = SelectTrainFragment.getInstance(fromStation.getCode(), toStation.getCode(),
@@ -222,11 +222,6 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
         setSelectedDateLayoutVisibility(false);
     }
 
-    private boolean isLocationPermissionGranted() {
-        return ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED;
-    }
-
     private void requestLocationPermission() {
         this.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                 PERMISSION_ACCESS_FINE_LOCATION);
@@ -235,7 +230,8 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
 
     private void loadNearestStation() {
         if (googleApiClient.isConnected()) {
-            if (isLocationPermissionGranted()) {
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
                 requestLocationPermission();
             } else {
                 Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
@@ -420,15 +416,16 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
                 //TODO show message no stations found
                 useLocationBtn.setChecked(false);
             } else {
-                String error = ApiErrorUtil.parseError(response);
-                CommonUtils.showMessage(getView(), error);
+                String error = ApiErrorUtil.getErrorMessage(response, getActivity());
+                CommonUtils.showSnackbar(getView(), error);
             }
         }
 
         @Override
         public void onFailure(Call<List<Station>> call, Throwable t) {
             if (getView() != null && t != null) {
-                CommonUtils.showMessage(getView(), t.getMessage());
+                String error = ApiErrorUtil.getErrorMessage(t, getActivity());
+                CommonUtils.showSnackbar(getView(), error);
             }
         }
     };

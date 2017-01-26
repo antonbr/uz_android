@@ -23,7 +23,7 @@ import com.uzapp.R;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.booking.Booking;
 import com.uzapp.pojo.transportation.Transportation;
-import com.uzapp.util.ApiErrorUtil;
+import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.purchase.PaymentTicketView;
@@ -295,8 +295,8 @@ public class PreparePurchaseFragment extends Fragment {
                     }
                 }
             } else {
-                String error = ApiErrorUtil.parseError(response);
-                CommonUtils.showMessage(getView(), error);
+                String error = ApiErrorUtil.getErrorMessage(response, getActivity());
+                CommonUtils.showSnackbar(getView(), error);
                 showProgress(false);
             }
         }
@@ -305,6 +305,8 @@ public class PreparePurchaseFragment extends Fragment {
         public void onFailure(Call<Transportation> call, Throwable t) {
             Log.e(TAG, call.toString());
             showProgress(false);
+            String error = ApiErrorUtil.getErrorMessage(t, getActivity());
+            CommonUtils.showSnackbar(getView(), error);
         }
     };
 
@@ -398,8 +400,8 @@ public class PreparePurchaseFragment extends Fragment {
                     }
                 }
             } else {
-                String error = ApiErrorUtil.parseError(response);
-                CommonUtils.showMessage(getView(), error);
+                String error = ApiErrorUtil.getErrorMessage(response, getActivity());
+                CommonUtils.showSnackbar(getView(), error);
                 showProgress(false);
             }
         }
@@ -408,6 +410,8 @@ public class PreparePurchaseFragment extends Fragment {
         public void onFailure(Call<Booking> call, Throwable t) {
             Log.e(TAG, call.toString());
             showProgress(false);
+            String error = ApiErrorUtil.getErrorMessage(t, getActivity());
+            CommonUtils.showSnackbar(getView(), error);
         }
     }
 }
