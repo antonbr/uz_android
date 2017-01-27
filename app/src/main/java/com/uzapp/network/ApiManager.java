@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.uzapp.R;
-import com.uzapp.pojo.UserTokenResponse;
+import com.uzapp.pojo.profile.UserTokenResponse;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.PrefsUtil;
 import com.uzapp.view.login.LoginFlowActivity;

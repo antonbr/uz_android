@@ -1,4 +1,4 @@
-package com.uzapp.pojo;
+package com.uzapp.pojo.route;
 
 import java.util.Date;
 

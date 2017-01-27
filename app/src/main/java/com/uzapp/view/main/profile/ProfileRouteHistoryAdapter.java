@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.uzapp.R;
-import com.uzapp.pojo.RouteHistoryItem;
+import com.uzapp.pojo.route.RouteHistoryItem;
 
 import java.util.ArrayList;
 import java.util.List;

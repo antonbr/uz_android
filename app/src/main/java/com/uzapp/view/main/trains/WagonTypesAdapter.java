@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.uzapp.R;
-import com.uzapp.pojo.TrainPlace;
+import com.uzapp.pojo.trains.TrainPlace;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -26,8 +26,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
-import com.uzapp.pojo.RouteHistoryItem;
-import com.uzapp.pojo.Station;
+import com.uzapp.pojo.route.RouteHistoryItem;
+import com.uzapp.pojo.route.RouteResponse;
 import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
@@ -91,7 +91,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
     @BindDimen(R.dimen.small_padding) int datePickerItemPadding;
     private Unbinder unbinder;
     private GoogleApiClient googleApiClient;
-    private Station nearestStation, fromStation, toStation;
+    private RouteResponse.Station nearestStation, fromStation, toStation;
     private Date firstDate, secondDate;
     private Map<Integer, String> monthPositionMap;
     private LinearLayoutManager datePickerLayoutManager;
@@ -116,8 +116,8 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
         SearchFragment fragment = new SearchFragment();
         if (routeHistoryItem != null) {
             Bundle args = new Bundle();
-            args.putParcelable("fromStation", Parcels.wrap(new Station(routeHistoryItem.getStationFromCode(), routeHistoryItem.getStationFromName(), null)));
-            args.putParcelable("toStation", Parcels.wrap(new Station(routeHistoryItem.getStationToCode(), routeHistoryItem.getStationToName(), null)));
+            args.putParcelable("fromStation", Parcels.wrap(new RouteResponse.Station(routeHistoryItem.getStationFromCode(), routeHistoryItem.getStationFromName(), null)));
+            args.putParcelable("toStation", Parcels.wrap(new RouteResponse.Station(routeHistoryItem.getStationToCode(), routeHistoryItem.getStationToName(), null)));
             fragment.setArguments(args);
         }
         return fragment;
@@ -237,7 +237,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
                 Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
                 if (lastLocation != null) {
                     double lat = lastLocation.getLatitude(), lon = lastLocation.getLongitude();
-                    Call<List<Station>> call = ApiManager.getApi(getContext()).getNearestStations(lat, lon);
+                    Call<List<RouteResponse.Station>> call = ApiManager.getApi(getContext()).getNearestStations(lat, lon);
                     call.enqueue(nearestStationCallback);
                 } else {
                     useLocationBtn.setChecked(false);
@@ -402,11 +402,11 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
 
     }
 
-    private Callback<List<Station>> nearestStationCallback = new Callback<List<Station>>() {
+    private Callback<List<RouteResponse.Station>> nearestStationCallback = new Callback<List<RouteResponse.Station>>() {
         @Override
-        public void onResponse(Call<List<Station>> call, Response<List<Station>> response) {
+        public void onResponse(Call<List<RouteResponse.Station>> call, Response<List<RouteResponse.Station>> response) {
             if (response.isSuccessful() && response.body().size() > 0) {
-                List<Station> result = response.body();
+                List<RouteResponse.Station> result = response.body();
                 nearestStation = result.get(0);
                 if (useLocationBtn.isChecked()) {
                     pathFrom.setText(nearestStation.getName());
@@ -422,7 +422,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
         }
 
         @Override
-        public void onFailure(Call<List<Station>> call, Throwable t) {
+        public void onFailure(Call<List<RouteResponse.Station>> call, Throwable t) {
             if (getView() != null && t != null) {
                 String error = ApiErrorUtil.getErrorMessage(t, getActivity());
                 CommonUtils.showSnackbar(getView(), error);

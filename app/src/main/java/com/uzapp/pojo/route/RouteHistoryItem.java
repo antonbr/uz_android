@@ -1,4 +1,4 @@
-package com.uzapp.pojo;
+package com.uzapp.pojo.route;
 
 import com.google.gson.annotations.SerializedName;
 

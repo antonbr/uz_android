@@ -10,7 +10,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.uzapp.R;
-import com.uzapp.pojo.SocialLoginErrorResponse;
+import com.uzapp.pojo.login.SocialLoginErrorResponse;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;

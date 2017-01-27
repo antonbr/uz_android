@@ -19,8 +19,8 @@ import android.widget.TextView;
 
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
-import com.uzapp.pojo.RouteHistoryItem;
-import com.uzapp.pojo.User;
+import com.uzapp.pojo.route.RouteHistoryItem;
+import com.uzapp.pojo.profile.User;
 import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.PrefsUtil;
@@ -28,7 +28,7 @@ import com.uzapp.view.BaseActivity;
 import com.uzapp.view.login.PhoneNumberTextInputEditText;
 import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.search.SearchTicketSettingsFragment;
-import com.uzapp.view.utils.VerticalDividerItemDecoration;
+import com.uzapp.view.common.VerticalDividerItemDecoration;
 
 import org.parceler.Parcels;
 

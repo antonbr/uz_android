@@ -23,7 +23,7 @@ import android.widget.TextView;
 
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
-import com.uzapp.pojo.User;
+import com.uzapp.pojo.profile.User;
 import com.uzapp.pojo.booking.Booking;
 import com.uzapp.pojo.booking.Uio;
 import com.uzapp.pojo.tickets.TicketsResponse;

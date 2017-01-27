@@ -1,6 +1,8 @@
-package com.uzapp.pojo;
+package com.uzapp.pojo.trains;
 
 import com.google.gson.annotations.SerializedName;
+import com.uzapp.pojo.WagonClass;
+import com.uzapp.pojo.WagonType;
 
 import org.parceler.Parcel;
 

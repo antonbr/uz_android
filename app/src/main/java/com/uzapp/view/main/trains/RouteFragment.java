@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
-import com.uzapp.pojo.Train;
+import com.uzapp.pojo.trains.Train;
 import com.uzapp.pojo.route.RouteCountry;
 import com.uzapp.pojo.route.RouteResponse;
 import com.uzapp.pojo.route.RouteStation;

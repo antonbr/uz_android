@@ -1,4 +1,4 @@
-package com.uzapp.pojo;
+package com.uzapp.pojo.profile;
 
 import com.google.gson.annotations.SerializedName;
 

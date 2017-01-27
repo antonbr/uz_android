@@ -15,8 +15,8 @@ import android.widget.TextView;
 
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
-import com.uzapp.pojo.CreateAccountInfo;
-import com.uzapp.pojo.UserTokenResponse;
+import com.uzapp.pojo.login.CreateAccountInfo;
+import com.uzapp.pojo.profile.UserTokenResponse;
 import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;

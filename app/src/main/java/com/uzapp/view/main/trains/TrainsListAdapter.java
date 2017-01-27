@@ -11,9 +11,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.uzapp.R;
-import com.uzapp.pojo.Train;
+import com.uzapp.pojo.trains.Train;
 import com.uzapp.util.Constants;
-import com.uzapp.view.utils.VerticalDividerItemDecoration;
+import com.uzapp.view.common.VerticalDividerItemDecoration;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

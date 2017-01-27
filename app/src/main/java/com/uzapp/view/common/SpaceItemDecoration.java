@@ -1,4 +1,4 @@
-package com.uzapp.view.utils;
+package com.uzapp.view.common;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;

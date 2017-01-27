@@ -16,13 +16,13 @@ import android.widget.TextView;
 
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
-import com.uzapp.pojo.PopularStation;
-import com.uzapp.pojo.Station;
+import com.uzapp.pojo.route.PopularStation;
+import com.uzapp.pojo.route.RouteResponse;
 import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.view.main.MainActivity;
-import com.uzapp.view.utils.VerticalDividerItemDecoration;
+import com.uzapp.view.common.VerticalDividerItemDecoration;
 
 import org.parceler.Parcels;
 
@@ -55,8 +55,8 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
     private Unbinder unbinder;
     private StationsSearchResultAdapter adapter;
     private Realm realm;
-    private Station selectedStation;
-    private Call<List<Station>> searchStationCall;
+    private RouteResponse.Station selectedStation;
+    private Call<List<RouteResponse.Station>> searchStationCall;
 
     @Nullable
     @Override
@@ -107,9 +107,9 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
         RealmResults<PopularStation> popularStations = realm.where(PopularStation.class).findAll().
                 sort("accessTime", Sort.DESCENDING);
         if (popularStations.size() > 0) {
-            List<Station> stationList = new ArrayList<Station>(popularStations.size());
+            List<RouteResponse.Station> stationList = new ArrayList<RouteResponse.Station>(popularStations.size());
             for (PopularStation popularStation : popularStations) {
-                stationList.add(new Station(popularStation.getCode(), popularStation.getName(), popularStation.getRailway()));
+                stationList.add(new RouteResponse.Station(popularStation.getCode(), popularStation.getName(), popularStation.getRailway()));
             }
             adapter.setStations(stationList);
             stationsHeader.setText(R.string.search_popular_destinations);
@@ -162,7 +162,7 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
         unbinder.unbind();
     }
 
-    private void saveToPopularStations(Station station) {
+    private void saveToPopularStations(RouteResponse.Station station) {
         //if first lookup of the station by user, save it, if not first - update access time,
         // if try to save more than limit - change the oldest station
         PopularStation popularStation = realm.where(PopularStation.class).equalTo("name", station.getName()).findFirst();
@@ -187,7 +187,7 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
     }
 
     @Override
-    public void onStationItemClick(Station station) {
+    public void onStationItemClick(RouteResponse.Station station) {
         selectedStation = station;
         cityEditText.setText(selectedStation.getName());
         cityEditText.setSelection(selectedStation.getName().length());
@@ -208,9 +208,9 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
         }
     }
 
-    private Callback<List<Station>> searchCallback = new Callback<List<Station>>() {
+    private Callback<List<RouteResponse.Station>> searchCallback = new Callback<List<RouteResponse.Station>>() {
         @Override
-        public void onResponse(Call<List<Station>> call, Response<List<Station>> response) {
+        public void onResponse(Call<List<RouteResponse.Station>> call, Response<List<RouteResponse.Station>> response) {
             if (getView() != null) {
                 searchProgress.setVisibility(View.GONE);
                 if (response.isSuccessful()) {
@@ -223,7 +223,7 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
         }
 
         @Override
-        public void onFailure(Call<List<Station>> call, Throwable t) {
+        public void onFailure(Call<List<RouteResponse.Station>> call, Throwable t) {
             if (!call.isCanceled()) {
                 searchProgress.setVisibility(View.GONE);
                 String error = ApiErrorUtil.getErrorMessage(t, getActivity());

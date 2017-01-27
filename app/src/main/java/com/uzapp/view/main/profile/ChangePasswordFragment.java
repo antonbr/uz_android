@@ -17,7 +17,7 @@ import android.widget.ImageButton;
 
 import com.uzapp.R;
 import com.uzapp.network.ApiManager;
-import com.uzapp.pojo.User;
+import com.uzapp.pojo.profile.User;
 import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;

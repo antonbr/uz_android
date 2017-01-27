@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.uzapp.R;
-import com.uzapp.pojo.RouteHistoryItem;
+import com.uzapp.pojo.route.RouteHistoryItem;
 import com.uzapp.util.Constants;
 import com.uzapp.view.BaseActivity;
 import com.uzapp.view.main.menu.MenuFragment;
