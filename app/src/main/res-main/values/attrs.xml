@@ -2,7 +2,17 @@
 <resources>
 
     <declare-styleable name="ListViewMaxHeight">
-        <attr name="maxHeight" format="dimension" />
+        <attr name="maxHeight" format="dimension"/>
     </declare-styleable>
 
+    <declare-styleable name="UzToolbar">
+        <attr name="title" format="string"/>
+        <attr name="toolbarColor" format="color"/>
+        <attr name="showLeftImageBtn" format="boolean"/>
+        <attr name="showRightImageBtn" format="boolean"/>
+        <attr name="showRightBtn" format="boolean"/>
+        <attr name="leftImageRes" format="integer"/>
+        <attr name="rightImageRes" format="integer"/>
+        <attr name="rightBtnText" format="string"/>
+    </declare-styleable>
 </resources>

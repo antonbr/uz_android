@@ -28,7 +28,7 @@ import com.uzapp.view.BaseActivity;
 import com.uzapp.view.login.PhoneNumberTextInputEditText;
 import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.search.SearchTicketSettingsFragment;
-import com.uzapp.view.utils.VerticalDividerItemDecoration;
+import com.uzapp.view.common.VerticalDividerItemDecoration;
 
 import org.parceler.Parcels;
 

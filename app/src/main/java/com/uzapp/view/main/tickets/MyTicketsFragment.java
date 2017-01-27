@@ -26,8 +26,8 @@ import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.search.date.PickDateFragment;
-import com.uzapp.view.utils.EndlessRecyclerScrollListener;
-import com.uzapp.view.utils.SpaceItemDecoration;
+import com.uzapp.view.common.EndlessRecyclerScrollListener;
+import com.uzapp.view.common.SpaceItemDecoration;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

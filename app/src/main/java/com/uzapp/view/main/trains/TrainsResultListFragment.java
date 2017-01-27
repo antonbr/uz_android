@@ -21,7 +21,7 @@ import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.wagon.fragment.WagonPlaceFragment;
-import com.uzapp.view.utils.SpaceItemDecoration;
+import com.uzapp.view.common.SpaceItemDecoration;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

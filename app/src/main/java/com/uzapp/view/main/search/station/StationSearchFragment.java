@@ -22,7 +22,7 @@ import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.view.main.MainActivity;
-import com.uzapp.view.utils.VerticalDividerItemDecoration;
+import com.uzapp.view.common.VerticalDividerItemDecoration;
 
 import org.parceler.Parcels;
 

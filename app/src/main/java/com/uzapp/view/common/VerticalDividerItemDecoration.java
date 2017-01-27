@@ -1,4 +1,4 @@
-package com.uzapp.view.utils;
+package com.uzapp.view.common;
 
 import android.content.Context;
 import android.content.res.TypedArray;
