@@ -39,6 +39,12 @@
     <string name="search_settings_wc_conductor">Туалет/Проводник</string>
     <string name="search_settings_wc">Не возле туалета</string>
     <string name="search_settings_conductor">Не возле проводника</string>
+    <string name="search_filter">Фильтр поиска</string>
+    <string name="search_sort_departure">Отправ.</string>
+    <string name="search_sort_arrival">Прибытие</string>
+    <string name="search_sort_travel_time">В пути</string>
+    <string name="search_sort_price">Цена</string>
+    <string name="search_sort_by">Сортировать по:</string>
 
     //calendar
     <string name="calendar_when">Когда</string>
@@ -297,7 +303,7 @@
     <string name="wagon_class_1">1-й клас</string>
     <string name="wagon_class_2">2-й клас</string>
     <string name="wagon_class_3">3-й клас</string>
-    
+
     // payment
     <string name="thank_you_for_your_purchase">Спасибо за покупку!</string>
     <string name="tickets_sent_to_your_email">Билеты высланы на ваш email</string>
@@ -327,6 +333,4 @@
     <string name="service_excess">Избыток</string>
     <string name="no_internet">Пожалуйста проверьте подключение к Интернету</string>
     <string name="error">Ошибка</string>
-
-
 </resources>

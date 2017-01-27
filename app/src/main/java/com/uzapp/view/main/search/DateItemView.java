@@ -98,7 +98,10 @@ public class DateItemView extends RelativeLayout {
     }
 
     public void setViewWidth(int viewWidth) {
-        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        ViewGroup.LayoutParams layoutParams = getLayoutParams();
+        if (layoutParams == null) {
+            layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
         layoutParams.width = viewWidth;
         setLayoutParams(layoutParams);
         invalidate();

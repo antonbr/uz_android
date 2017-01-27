@@ -15,4 +15,12 @@
         <item quantity="many">Найдено %1$d поездов</item>
         <item quantity="other">Найдено %1$d поездов</item>
     </plurals>
+
+    <plurals name="passengers_count">
+        <item quantity="one">%1$d человек</item>
+        <item quantity="two">%1$d человека</item>
+        <item quantity="few">%1$d человека</item>
+        <item quantity="many">%1$d человек</item>
+        <item quantity="other">%1$d человек</item>
+    </plurals>
 </resources>

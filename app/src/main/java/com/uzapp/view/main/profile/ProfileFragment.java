@@ -27,6 +27,7 @@ import com.uzapp.util.PrefsUtil;
 import com.uzapp.view.BaseActivity;
 import com.uzapp.view.login.PhoneNumberTextInputEditText;
 import com.uzapp.view.main.MainActivity;
+import com.uzapp.view.main.search.SearchTicketSettingsFragment;
 import com.uzapp.view.utils.VerticalDividerItemDecoration;
 
 import org.parceler.Parcels;
@@ -92,7 +93,7 @@ public class ProfileFragment extends Fragment implements ProfileRouteHistoryAdap
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(!realm.isClosed()) {
+        if (!realm.isClosed()) {
             realm.close();
         }
     }
@@ -123,6 +124,7 @@ public class ProfileFragment extends Fragment implements ProfileRouteHistoryAdap
                 showEditProfileFragment();
                 break;
             case R.id.searchSettingsBtn:
+                showSearchSettingsFragment();
                 break;
             case R.id.changePasswordBtn:
                 showChangePasswordFragment();
@@ -139,6 +141,11 @@ public class ProfileFragment extends Fragment implements ProfileRouteHistoryAdap
             fragment.setTargetFragment(this, REQUEST_EDIT_PROFILE);
             ((BaseActivity) getActivity()).addFragment(fragment, R.anim.slide_up, R.anim.slide_down);
         }
+    }
+
+    private void showSearchSettingsFragment() {
+        Fragment fragment = SearchTicketSettingsFragment.getInstance(SearchTicketSettingsFragment.Type.PROFILE_SETTINGS);
+        ((BaseActivity) getActivity()).addFragment(fragment, R.anim.slide_up, R.anim.slide_down);
     }
 
     private void logout() {

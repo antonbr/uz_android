@@ -20,10 +20,54 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/sortTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="11dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/search_sort_by"
+                android:textSize="16sp"/>
+
+            <info.hoang8f.android.segmented.SegmentedGroup
+                xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/sortRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="11dp"
+                android:layout_marginRight="11dp"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                segmentedgroup:sc_border_width="1dp"
+                segmentedgroup:sc_corner_radius="4dp">
+
+                <RadioButton
+                    android:id="@+id/sortDepartureRadioBtn"
+                    style="@style/SegmentedRadioButton"
+                    android:checked="true"
+                    android:text="@string/search_sort_departure"/>
+
+                <RadioButton
+                    android:id="@+id/sortArrivalRadioBtn"
+                    style="@style/SegmentedRadioButton"
+                    android:text="@string/search_sort_arrival"/>
+
+                <RadioButton
+                    android:id="@+id/timeRadioBtn"
+                    style="@style/SegmentedRadioButton"
+                    android:text="@string/search_sort_travel_time"/>
+
+                <RadioButton
+                    android:id="@+id/priceRadioBtn"
+                    style="@style/SegmentedRadioButton"
+                    android:text="@string/search_sort_price"/>
+            </info.hoang8f.android.segmented.SegmentedGroup>
+
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
+                android:layout_marginTop="21dp"
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="0dp">
 
@@ -93,10 +137,9 @@
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackground"
                         android:button="@null"
-                        android:drawableRight="@drawable/search_settings_tick"
                         android:paddingBottom="16dp"
-                        android:paddingLeft="@dimen/profile_button_padding"
-                        android:paddingRight="16dp"
+                        android:paddingLeft="30dp"
+                        android:paddingRight="21dp"
                         android:paddingTop="16dp"
                         android:text="@string/search_settings_single_coupe"
                         android:textColor="@color/textColor"
@@ -107,9 +150,9 @@
 
             <TextView
                 style="@style/LabelStyle"
-                android:layout_marginBottom="13.5dp"
-                android:layout_marginLeft="28dp"
-                android:layout_marginTop="37dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="23dp"
                 android:text="@string/search_settings_placement"/>
 
             <android.support.v7.widget.CardView
@@ -135,8 +178,8 @@
                         android:checked="true"
                         android:drawableRight="@drawable/search_settings_tick"
                         android:paddingBottom="16dp"
-                        android:paddingLeft="@dimen/profile_button_padding"
-                        android:paddingRight="16dp"
+                        android:paddingLeft="30dp"
+                        android:paddingRight="21dp"
                         android:paddingTop="16dp"
                         android:text="@string/search_settings_placement_any"
                         android:textColor="@color/textColor"
@@ -150,8 +193,8 @@
                         android:button="@null"
                         android:drawableRight="@drawable/search_settings_tick"
                         android:paddingBottom="16dp"
-                        android:paddingLeft="@dimen/profile_button_padding"
-                        android:paddingRight="16dp"
+                        android:paddingLeft="30dp"
+                        android:paddingRight="21dp"
                         android:paddingTop="16dp"
                         android:text="@string/search_settings_placement_bottom"
                         android:textColor="@color/textColor"
@@ -165,8 +208,8 @@
                         android:button="@null"
                         android:drawableRight="@drawable/search_settings_tick"
                         android:paddingBottom="16dp"
-                        android:paddingLeft="@dimen/profile_button_padding"
-                        android:paddingRight="16dp"
+                        android:paddingLeft="30dp"
+                        android:paddingRight="21dp"
                         android:paddingTop="16dp"
                         android:text="@string/search_settings_placement_top"
                         android:textColor="@color/textColor"
@@ -176,9 +219,9 @@
 
             <TextView
                 style="@style/LabelStyle"
-                android:layout_marginBottom="13.5dp"
-                android:layout_marginLeft="28dp"
-                android:layout_marginTop="37dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="23dp"
                 android:text="@string/search_settings_wc_conductor"/>
 
             <android.support.v7.widget.CardView
@@ -191,7 +234,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:divider="@drawable/divider_hint_color_horizontal"
+                    android:orientation="vertical"
+                    android:showDividers="middle">
 
                     <android.support.v7.widget.SwitchCompat
                         android:id="@+id/wcSwitchBtn"
@@ -199,10 +244,9 @@
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackground"
                         android:button="@null"
-                        android:drawableRight="@drawable/search_settings_tick"
                         android:paddingBottom="16dp"
-                        android:paddingLeft="@dimen/profile_button_padding"
-                        android:paddingRight="16dp"
+                        android:paddingLeft="30dp"
+                        android:paddingRight="21dp"
                         android:paddingTop="16dp"
                         android:text="@string/search_settings_wc"
                         android:textColor="@color/textColor"
@@ -214,10 +258,9 @@
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackground"
                         android:button="@null"
-                        android:drawableRight="@drawable/search_settings_tick"
                         android:paddingBottom="16dp"
-                        android:paddingLeft="@dimen/profile_button_padding"
-                        android:paddingRight="16dp"
+                        android:paddingLeft="30dp"
+                        android:paddingRight="21dp"
                         android:paddingTop="16dp"
                         android:text="@string/search_settings_conductor"
                         android:textColor="@color/textColor"

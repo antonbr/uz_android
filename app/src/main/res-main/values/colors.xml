@@ -39,4 +39,8 @@
     <color name="fbBtnBackground">#507cc0</color>
     <color name="vkBtnBackground">#5d9cec</color>
     <color name="okBtnBackground">#ff9800</color>
+
+    //for segmented switch view lib
+    <color name="radio_button_selected_color">#4183d7</color>
+    <color name="radio_button_unselected_color">@android:color/transparent</color>
 </resources>

@@ -40,4 +40,5 @@
     <dimen name="ticket_stations_padding">11dp</dimen>
     <dimen name="ticket_name_padding">3dp</dimen>
     <dimen name="profile_button_padding">34dp</dimen>
+
 </resources>

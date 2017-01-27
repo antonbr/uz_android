@@ -110,4 +110,11 @@
         <item name="android:textColor">@color/accentColor</item>
         <item name="android:textSize">14sp</item>
     </style>
+
+    <style name="SegmentedRadioButton" parent="RadioButton">
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
 </resources>
