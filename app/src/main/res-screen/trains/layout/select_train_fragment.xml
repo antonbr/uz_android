@@ -11,8 +11,13 @@
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Light">
 
-
-        <include layout="@layout/toolbar_back"/>
+        <com.uzapp.view.common.UzToolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:leftImageRes="@drawable/back_blue"
+            app:showLeftImageBtn="true"
+            app:toolbarColor="@color/lightColor"
+            />
         <!--app:layout_scrollFlags="scroll|enterAlways"-->
 
         <android.support.design.widget.TabLayout
@@ -20,16 +25,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/lightColor"
-            app:tabMode="fixed"
+            app:tabGravity="fill"
             app:tabIndicatorColor="@color/accentColor"
-            app:tabGravity="fill"/>
+            app:tabMode="fixed"/>
 
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:overScrollMode="ifContentScrolls"
         android:layout_height="match_parent"
+        android:overScrollMode="ifContentScrolls"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 </android.support.design.widget.CoordinatorLayout>

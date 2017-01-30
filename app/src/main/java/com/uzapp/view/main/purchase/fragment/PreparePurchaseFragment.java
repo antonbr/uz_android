@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -20,10 +19,10 @@ import android.widget.ToggleButton;
 
 import com.google.gson.Gson;
 import com.uzapp.R;
+import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.booking.Booking;
 import com.uzapp.pojo.transportation.Transportation;
-import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.purchase.PaymentTicketView;
@@ -61,7 +60,6 @@ public class PreparePurchaseFragment extends Fragment {
     @BindView(R.id.scrollView) ScrollView scrollView;
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
     @BindView(R.id.toPayBtn) Button toPayBtn;
-    @BindView(R.id.backBtn) ImageButton backBtn;
     @BindView(R.id.progressBar) ProgressBar progressBar;
 
     private Unbinder unbinder;
@@ -137,7 +135,7 @@ public class PreparePurchaseFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick(R.id.backBtn)
+    @OnClick(R.id.leftImageBtn)
     void onClickBack() {
         getActivity().onBackPressed();
     }

@@ -9,19 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.uzapp.R;
+import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.placeslist.PricesPlacesList;
 import com.uzapp.pojo.placeslist.WagonsPlacesList;
 import com.uzapp.pojo.prices.Prices;
 import com.uzapp.pojo.prices.WagonsPrices;
-import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.view.main.MainActivity;
@@ -67,8 +66,6 @@ public class WagonPlaceFragment extends Fragment {
 //    LinearLayout layoutFilterPlace;
     @BindView(R.id.txtWagonNumber)
     TextView txtWagonNumber;
-    @BindView(R.id.backBtn)
-    ImageButton backImageBtn;
 //    @BindView(R.id.okBtn)
 //    Button btnFilter;
     @BindView(R.id.toolbarTitle)
@@ -194,7 +191,7 @@ public class WagonPlaceFragment extends Fragment {
         }
     }
 
-    @OnClick(R.id.backBtn)
+    @OnClick(R.id.leftImageBtn)
     void onBackBtnPressed() {
         getActivity().onBackPressed();
     }

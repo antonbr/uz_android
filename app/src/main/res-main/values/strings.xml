@@ -241,7 +241,7 @@
     </string-array>
 
     // prepare purchase fragment
-    <string name="prepare_purchase">Оформления</string>
+    <string name="prepare_purchase">Оформление</string>
     <string name="tickets">билетов</string>
     <string name="purchase_tickets">Оплата билетов</string>
     <string name="confirm_payment">Подтвердить оплату</string>

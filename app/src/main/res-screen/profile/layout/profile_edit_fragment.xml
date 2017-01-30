@@ -6,7 +6,20 @@
               android:background="@color/backgroundColor"
               android:orientation="vertical">
 
-    <include layout="@layout/toolbar_light_edit"/>
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.uzapp.view.common.UzToolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:leftImageRes="@drawable/close_grey"
+            app:rightImageRes="@drawable/tick_selector"
+            app:showLeftImageBtn="true"
+            app:showRightImageBtn="true"
+            app:title="@string/profile_edit_title"
+            app:toolbarColor="@color/lightColor"/>
+    </android.support.design.widget.AppBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"

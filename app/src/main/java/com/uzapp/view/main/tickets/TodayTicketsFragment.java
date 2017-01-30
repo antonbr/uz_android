@@ -8,16 +8,15 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.uzapp.R;
+import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.tickets.Order;
 import com.uzapp.pojo.tickets.Ticket;
 import com.uzapp.pojo.tickets.TicketsResponse;
-import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.view.main.MainActivity;
 import com.viewpagerindicator.IconPageIndicator;
@@ -45,7 +44,6 @@ public class TodayTicketsFragment extends Fragment {
     private static final float DEFAULT_ALPHA_FACTOR = 0.4f;
     private static final float DEFAULT_SHIFT_FACTOR = 0.15f;
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
-    @BindView(R.id.closeBtn) ImageButton closeBtn;
     @BindView(R.id.viewPager) ViewPager viewPager;
     @BindView(R.id.progressBar) ProgressBar progressBar;
     @BindView(R.id.pageIndicator) IconPageIndicator pageIndicator;
@@ -59,7 +57,6 @@ public class TodayTicketsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.today_ticket_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
-        toolbarTitle.setText(R.string.tickets_today);
         progressBar.setVisibility(View.VISIBLE);
         noContentLayout.setVisibility(View.GONE);
         pageIndicator.setVisibility(View.GONE);
@@ -96,7 +93,7 @@ public class TodayTicketsFragment extends Fragment {
         getActivity().onBackPressed();
     }
 
-    @OnClick(R.id.closeBtn)
+    @OnClick(R.id.leftImageBtn)
     void onCloseBtnClicked() {
         getActivity().onBackPressed();
     }

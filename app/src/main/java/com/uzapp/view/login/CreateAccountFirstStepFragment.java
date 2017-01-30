@@ -40,8 +40,6 @@ import butterknife.Unbinder;
  */
 public class CreateAccountFirstStepFragment extends Fragment {
     private Unbinder unbinder;
-    @BindView(R.id.resetBtn) Button resetBtn;
-    @BindView(R.id.toolbarTitle) TextView toolbarTitle;
     @BindView(R.id.emailField) TextInputEditText emailField;
     @BindView(R.id.emailLayout) TextInputLayout emailLayout;
     @BindView(R.id.passwordField) TextInputEditText passwordField;
@@ -59,8 +57,6 @@ public class CreateAccountFirstStepFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.create_account_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
-        resetBtn.setVisibility(View.GONE);
-        toolbarTitle.setText(R.string.create_account_title);
         emailLayout.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         passwordLayout.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         setClickableTextInCheckboxLabel(termsOfServiceLbl, R.string.create_account_terms_of_service,

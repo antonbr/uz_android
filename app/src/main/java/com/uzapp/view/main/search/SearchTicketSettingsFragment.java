@@ -66,12 +66,12 @@ public class SearchTicketSettingsFragment extends Fragment {
         return fragment;
     }
 
-    @OnClick(R.id.closeBtn)
+    @OnClick(R.id.leftImageBtn)
     void onBackBtnClicked() {
         getActivity().onBackPressed();
     }
 
-    @OnClick(R.id.tickBtn)
+    @OnClick(R.id.rightImageBtn)
     void onSaveBtnClicked() {
         //TODO
     }
@@ -116,5 +116,6 @@ public class SearchTicketSettingsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        ((MainActivity) getActivity()).showNavigationBar();
     }
 }
