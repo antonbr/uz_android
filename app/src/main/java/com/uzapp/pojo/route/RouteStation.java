@@ -2,9 +2,12 @@ package com.uzapp.pojo.route;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 /**
  * Created by vika on 28.07.16.
  */
+@Parcel
 public class RouteStation {
     private int code; //the code of station containing 7 numbers
     private String name; //station name

@@ -24,7 +24,7 @@ import com.uzapp.util.Constants;
 import com.uzapp.view.BaseActivity;
 import com.uzapp.view.login.ResetPasswordFragment;
 import com.uzapp.view.main.MainActivity;
-import com.uzapp.view.main.search.CheckableImageView;
+import com.uzapp.view.common.CheckableImageView;
 
 import butterknife.BindDimen;
 import butterknife.BindView;

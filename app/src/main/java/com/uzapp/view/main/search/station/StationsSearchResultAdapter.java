@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.uzapp.R;
-import com.uzapp.pojo.route.RouteResponse;
+import com.uzapp.pojo.route.Station;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +16,11 @@ import java.util.List;
  * Created by vika on 14.07.16.
  */
 public class StationsSearchResultAdapter extends RecyclerView.Adapter<StationsSearchResultAdapter.StationHolder> {
-    private List<RouteResponse.Station> stationsList = new ArrayList<>();
+    private List<Station> stationsList = new ArrayList<>();
     private OnStationClickListener listener;
 
     public interface OnStationClickListener {
-        void onStationItemClick(RouteResponse.Station station);
+        void onStationItemClick(Station station);
     }
 
     public StationsSearchResultAdapter(OnStationClickListener listener) {
@@ -36,7 +36,7 @@ public class StationsSearchResultAdapter extends RecyclerView.Adapter<StationsSe
         }
     }
 
-    public void setStations(List<RouteResponse.Station> stationsList) {
+    public void setStations(List<Station> stationsList) {
         this.stationsList.clear();
         this.stationsList.addAll(stationsList);
         notifyDataSetChanged();
@@ -57,7 +57,7 @@ public class StationsSearchResultAdapter extends RecyclerView.Adapter<StationsSe
 
     @Override
     public void onBindViewHolder(StationHolder holder, int position) {
-        final RouteResponse.Station station = stationsList.get(position);
+        final Station station = stationsList.get(position);
         holder.name.setText(station.getName());
         if (listener != null) {
             holder.name.setOnClickListener(new View.OnClickListener() {

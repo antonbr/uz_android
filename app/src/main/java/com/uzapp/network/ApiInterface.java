@@ -1,19 +1,20 @@
 package com.uzapp.network;
 
-import com.uzapp.pojo.login.CreateAccountInfo;
-import com.uzapp.pojo.login.LoginInfo;
 import com.uzapp.pojo.NewTicketDates;
-import com.uzapp.pojo.route.RouteHistoryItem;
-import com.uzapp.pojo.login.SocialLoginInfo;
-import com.uzapp.pojo.trains.TrainSearchResult;
-import com.uzapp.pojo.profile.User;
-import com.uzapp.pojo.profile.UserTokenResponse;
 import com.uzapp.pojo.booking.Booking;
 import com.uzapp.pojo.booking.Uio;
+import com.uzapp.pojo.login.CreateAccountInfo;
+import com.uzapp.pojo.login.LoginInfo;
+import com.uzapp.pojo.login.SocialLoginInfo;
 import com.uzapp.pojo.placeslist.PricesPlacesList;
 import com.uzapp.pojo.prices.Prices;
+import com.uzapp.pojo.profile.User;
+import com.uzapp.pojo.profile.UserTokenResponse;
+import com.uzapp.pojo.route.RouteHistoryItem;
 import com.uzapp.pojo.route.RouteResponse;
+import com.uzapp.pojo.route.Station;
 import com.uzapp.pojo.tickets.TicketsResponse;
+import com.uzapp.pojo.trains.TrainSearchResult;
 import com.uzapp.pojo.transportation.Transportation;
 
 import java.util.List;
@@ -31,11 +32,11 @@ import retrofit2.http.Query;
  */
 public interface ApiInterface {
     @GET("order/nearest_stations")
-    Call<List<RouteResponse.Station>> getNearestStations(@Query("latitude") double latitude,
+    Call<List<Station>> getNearestStations(@Query("latitude") double latitude,
                                                          @Query("longitude") double longitude);
 
     @GET("order/stations")
-    Call<List<RouteResponse.Station>> searchStations(@Query("name") String name);
+    Call<List<Station>> searchStations(@Query("name") String name);
 
     @GET("order/trains_and_prices")
     Call<TrainSearchResult> searchTrains(@Query("station_from_code") long stationFromCode,
