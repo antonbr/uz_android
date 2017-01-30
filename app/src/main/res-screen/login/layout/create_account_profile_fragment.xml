@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app1="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
-    <include layout="@layout/toolbar_edit_page"/>
+    <com.uzapp.view.common.UzToolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app1:title="@string/create_account_profile_info_title"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -184,9 +188,9 @@
                 android:fontFamily="sans-serif-medium"
                 android:minWidth="0dp"
                 android:padding="11dp"
-                android:textAllCaps="true"
                 android:stateListAnimator="@null"
                 android:text="@string/create_account_skip"
+                android:textAllCaps="true"
                 android:textColor="@drawable/skip_button_text_selector"
                 android:textSize="13.5sp"/>
         </LinearLayout>

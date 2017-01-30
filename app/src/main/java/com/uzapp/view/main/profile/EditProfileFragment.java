@@ -45,7 +45,7 @@ public class EditProfileFragment extends Fragment {
     @BindView(R.id.emailField) EditText emailField;
     @BindView(R.id.studentIdSeriesField) EditText studentIdSeriesField;
     @BindView(R.id.studentIdNumberField) EditText studentIdNumberField;
-    @BindView(R.id.tickBtn) ImageButton tickBtn;
+    @BindView(R.id.rightImageBtn) ImageButton tickBtn;
     @BindInt(R.integer.profile_student_id_series_length) int studentIdSeriesLenght;
     private Unbinder unbinder;
     private User user;
@@ -87,12 +87,12 @@ public class EditProfileFragment extends Fragment {
     }
 
 
-    @OnClick(R.id.closeBtn)
+    @OnClick(R.id.leftImageBtn)
     void onBackBtnClicked() {
         getActivity().onBackPressed();
     }
 
-    @OnClick(R.id.tickBtn)
+    @OnClick(R.id.rightImageBtn)
     void onSaveBtnClicked() {
         updateUserData();
     }

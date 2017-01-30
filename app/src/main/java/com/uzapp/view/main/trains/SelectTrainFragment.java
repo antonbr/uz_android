@@ -24,7 +24,7 @@ import butterknife.Unbinder;
 /**
  * Created by vika on 26.07.16.
  */
-public class SelectTrainFragment extends Fragment implements ViewPager.OnPageChangeListener {
+public class  SelectTrainFragment extends Fragment implements ViewPager.OnPageChangeListener {
     private static final String TAG = SelectTrainFragment.class.getName();
     private SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.DAY_MONTH_WEEK_FORMAT);
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
@@ -103,7 +103,7 @@ public class SelectTrainFragment extends Fragment implements ViewPager.OnPageCha
         }
     }
 
-    @OnClick(R.id.backBtn)
+    @OnClick(R.id.leftImageBtn)
     void onBackBtnPressed() {
         getActivity().onBackPressed();
     }

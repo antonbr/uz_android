@@ -2,57 +2,51 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
 
         <ImageButton
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:id="@+id/leftImageBtn"
-            android:layout_centerVertical="true"
-            android:layout_height="match_parent"
             android:layout_width="?attr/actionBarSize"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/close_grey"/>
 
         <TextView
+            android:id="@+id/toolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
-            android:id="@+id/toolbarTitle"
-            android:layout_centerInParent="true"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
             android:text="@string/app_name"
             android:textColor="@color/textColor"
             android:textSize="@dimen/text_size"/>
 
-        <FrameLayout
-            android:id="@+id/rightBtnLayout"
+        <ImageButton
+            android:id="@+id/rightImageBtn"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/tick_selector"/>
+
+        <Button
+            android:id="@+id/rightBtn"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_width="wrap_content">
-
-            <ImageButton
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:id="@+id/rightImageBtn"
-                android:layout_height="match_parent"
-                android:layout_width="?attr/actionBarSize"
-                android:src="@drawable/tick_selector"/>
-
-            <Button
-                android:background="?attr/selectableItemBackground"
-                android:id="@+id/rightBtn"
-                android:layout_height="match_parent"
-                android:layout_width="wrap_content"
-                android:minWidth="0dp"
-                android:padding="11dp"
-                android:stateListAnimator="@null"
-                android:text="@string/reset"
-                android:textAllCaps="true"
-                android:textColor="@color/accentColor"
-                android:textSize="@dimen/button_text_size"
-                android:visibility="gone"/>
-        </FrameLayout>
-
-
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackground"
+            android:minWidth="0dp"
+            android:padding="11dp"
+            android:stateListAnimator="@null"
+            android:text="@string/reset"
+            android:textAllCaps="true"
+            android:textColor="@color/accentColor"
+            android:textSize="@dimen/button_text_size"
+            android:visibility="gone"/>
     </RelativeLayout>
 </merge>

@@ -6,8 +6,6 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <include layout="@layout/toolbar_edit_page"/>
-
     <com.uzapp.view.common.UzToolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

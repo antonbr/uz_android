@@ -79,7 +79,6 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
     @BindView(R.id.datePickerList) RecyclerView datePickerList;
     @BindView(R.id.monthName) TextView monthName;
     @BindView(R.id.findTicketsBtn) Button findTicketsBtn;
-    @BindView(R.id.toolbarTitle) TextView toolbarTitle;
     @BindView(R.id.selectedDateLayout) RelativeLayout selectedDateLayout;
     @BindView(R.id.firstMonthName) TextView firstMonthName;
     @BindView(R.id.secondMonthName) TextView secondMonthName;
@@ -103,7 +102,6 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.search_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
-        toolbarTitle.setText(R.string.search_title);
         ((MainActivity) getActivity()).showNavigationBar();
         ((MainActivity) getActivity()).getBottomNavigationBar().setCurrentItem(Constants.BOTTOM_NAVIGATION_SEARCH, false);
         initArguments();
@@ -198,7 +196,7 @@ public class SearchFragment extends Fragment implements GoogleApiClient.Connecti
         ((MainActivity) getActivity()).addFragment(new TodayTicketsFragment(), R.anim.slide_up, R.anim.slide_down);
     }
 
-    @OnClick(R.id.resetBtn)
+    @OnClick(R.id.rightBtn)
     void onResetBtnClicked() {
         fromStation = null;
         toStation = null;

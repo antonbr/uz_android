@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -22,13 +21,13 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.uzapp.R;
+import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.User;
 import com.uzapp.pojo.booking.Booking;
 import com.uzapp.pojo.booking.Uio;
 import com.uzapp.pojo.tickets.TicketsResponse;
 import com.uzapp.pojo.transportation.Transportation;
-import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.PrefsUtil;
 import com.uzapp.view.login.PhoneNumberTextInputEditText;
@@ -75,7 +74,6 @@ public class PayFragment extends Fragment {
     @BindView(R.id.txtTimerPurchase) TextView txtTimerPurchase;
     @BindView(R.id.progressTime) ProgressBar progressTime;
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
-    @BindView(R.id.backBtn) ImageButton backBtn;
     @BindView(R.id.imageViewInfo) ImageView imageViewInfo;
     @BindView(R.id.payBtn) Button payBtn;
     @BindView(R.id.layoutPayment) LinearLayout layoutPayment;
@@ -179,7 +177,7 @@ public class PayFragment extends Fragment {
         payBtn.setText(isPayment ? btnText : getString(R.string.confirm_payment));
     }
 
-    @OnClick(R.id.backBtn)
+    @OnClick(R.id.leftImageBtn)
     void onClickBack() {
         if (layoutConfirmPayment.getVisibility() == View.VISIBLE) {
             showLayout(true, false);

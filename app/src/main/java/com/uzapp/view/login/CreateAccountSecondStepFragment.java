@@ -11,13 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.uzapp.R;
+import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.CreateAccountInfo;
 import com.uzapp.pojo.UserTokenResponse;
-import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
 import com.uzapp.util.PrefsUtil;
@@ -41,8 +40,6 @@ public class CreateAccountSecondStepFragment extends Fragment {
     private static final String TAG = CreateAccountSecondStepFragment.class.getName();
 
     private Unbinder unbinder;
-    @BindView(R.id.resetBtn) Button resetBtn;
-    @BindView(R.id.toolbarTitle) TextView toolbarTitle;
     @BindView(R.id.firstNameField) TextInputEditText firstNameField;
     @BindView(R.id.lastNameField) TextInputEditText lastNameField;
     @BindView(R.id.phoneField) PhoneNumberTextInputEditText phoneField;
@@ -59,8 +56,6 @@ public class CreateAccountSecondStepFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.create_account_profile_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
-        resetBtn.setVisibility(View.GONE);
-        toolbarTitle.setText(R.string.create_account_profile_info_title);
         initExtras();
         skipBtn.setEnabled(!isBonusProgramChecked);
         return view;

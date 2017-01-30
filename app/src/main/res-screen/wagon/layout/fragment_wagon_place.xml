@@ -15,10 +15,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:orientation="vertical">
 
-            <include layout="@layout/toolbar_back" />
-
+            <com.uzapp.view.common.UzToolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:leftImageRes="@drawable/back_blue"
+                app:showLeftImageBtn="true"
+                app:toolbarColor="@android:color/white"/>
             <TextView
                 android:id="@+id/txtWagonNumber"
                 android:layout_width="match_parent"
