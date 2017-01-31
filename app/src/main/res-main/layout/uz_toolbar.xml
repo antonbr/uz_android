@@ -39,7 +39,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="?attr/selectableItemBackground"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:minWidth="0dp"
             android:padding="11dp"
             android:stateListAnimator="@null"

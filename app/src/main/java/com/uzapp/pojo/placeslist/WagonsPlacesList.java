@@ -33,7 +33,7 @@ public class WagonsPlacesList {
     @SerializedName("class_name")
     String className;
     @SerializedName("class_code")
-    int classCode;
+    String classCode;
     @SerializedName("cost_currency")
     String costCurrency;
     @SerializedName("cost")
@@ -55,7 +55,7 @@ public class WagonsPlacesList {
 
     public WagonsPlacesList(String charline, String number, String typeName, String typeCode, String countryName,
                             String countryCode, String railwayName, String railwayCode, boolean sitting, String className,
-                            int classCode, String costCurrency, int cost, String costReserveCurrency, int costReserve,
+                            String classCode, String costCurrency, int cost, String costReserveCurrency, int costReserve,
                             boolean allowBonus, List<ServicesPrices> services, List<Integer> places) {
         this.charline = charline;
         this.number = number;
@@ -157,11 +157,11 @@ public class WagonsPlacesList {
         this.className = className;
     }
 
-    public int getClassCode() {
+    public String getClassCode() {
         return classCode;
     }
 
-    public void setClassCode(int classCode) {
+    public void setClassCode(String classCode) {
         this.classCode = classCode;
     }
 

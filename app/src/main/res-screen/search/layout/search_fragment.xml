@@ -44,23 +44,24 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <android.support.design.widget.TextInputLayout xmlns:app="http://schemas.android.com/apk/res-auto"
                                                                        android:layout_width="0dp"
                                                                        android:layout_height="wrap_content"
                                                                        android:layout_weight="1"
-                                                                       android:paddingLeft="@dimen/big_padding"
-                                                                       android:paddingRight="@dimen/big_padding"
-                                                                       android:paddingTop="@dimen/small_padding"
+                                                                       android:paddingLeft="15dp"
+                                                                       android:paddingRight="15dp"
+                                                                       android:paddingTop="10dp"
+                                                                       android:paddingBottom="10dp"
                                                                        android:textColorHint="@color/accentColor"
                                                                        app:hintTextAppearance="@style/HintStyle">
 
                             <android.support.design.widget.TextInputEditText
                                 android:id="@+id/pathFrom"
                                 style="@style/PathTextFieldStyle"
-                                android:hint="@string/search_path_from"
-                                android:translationY="@dimen/hint_padding"/>
+                                android:hint="@string/search_path_from"/>
 
 
                         </android.support.design.widget.TextInputLayout>
@@ -68,9 +69,10 @@
                         <com.uzapp.view.common.CheckableImageView
                             android:id="@+id/useLocationBtn"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
-                            android:padding="@dimen/big_padding"
+                            android:paddingRight="15dp"
+                            android:paddingLeft="15dp"
                             android:src="@drawable/location_selector"/>
 
                     </LinearLayout>
@@ -79,9 +81,10 @@
                     <android.support.design.widget.TextInputLayout xmlns:app="http://schemas.android.com/apk/res-auto"
                                                                    android:layout_width="match_parent"
                                                                    android:layout_height="wrap_content"
-                                                                   android:paddingLeft="@dimen/big_padding"
-                                                                   android:paddingRight="@dimen/big_padding"
-                                                                   android:paddingTop="@dimen/small_padding"
+                                                                   android:paddingLeft="15dp"
+                                                                   android:paddingRight="15dp"
+                                                                   android:paddingTop="10dp"
+                                                                   android:paddingBottom="10dp"
                                                                    android:textColorHint="@color/accentColor"
                                                                    app:hintTextAppearance="@style/HintStyle">
 
@@ -108,25 +111,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/searchDateTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/backRouteToggle"
-                        android:layout_alignTop="@+id/backRouteToggle"
-                        android:layout_marginLeft="@dimen/big_padding"
-                        android:gravity="center_vertical"
-                        android:text="@string/search_date_title"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/text_size"/>
-
                     <ToggleButton
                         android:id="@+id/backRouteToggle"
                         style="@style/ButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_margin="14dp"
+                        android:layout_margin="7dp"
                         android:background="@drawable/back_toggle_background_selector"
                         android:checked="false"
                         android:enabled="false"
@@ -139,18 +130,8 @@
                     <TextView
                         android:id="@+id/monthName"
                         style="@style/MonthNameStyle"
-                        android:layout_alignLeft="@+id/searchDateTitle"
+                        android:layout_marginLeft="20dp"
                         android:layout_below="@+id/backRouteToggle"/>
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/datePickerList"
-                        android:layout_width="match_parent"
-                        android:layout_height="75dp"
-                        android:layout_below="@+id/monthName"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:minHeight="0dp"
-                        android:overScrollMode="never"/>
 
                     <RelativeLayout
                         android:id="@+id/selectedDateLayout"
@@ -247,8 +228,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/datePickerList"
                         android:layout_marginBottom="7dp"
-                        android:layout_marginLeft="@dimen/medium_padding"
-                        android:layout_marginTop="7dp"
+                        android:layout_marginLeft="7dp"
                         android:background="?attr/selectableItemBackground"
                         android:drawablePadding="5dp"
                         android:drawableRight="@drawable/next"
@@ -256,13 +236,34 @@
                         android:stateListAnimator="@null"
                         android:text="@string/search_see_full_calendar"
                         android:textColor="@color/accentColor"/>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/datePickerList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="0dp"
+                        android:overScrollMode="never"
+                        android:layout_below="@+id/monthName"
+                        android:layout_centerHorizontal="true"/>
+
+                    <TextView
+                        android:id="@+id/searchDateTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/search_date_title"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_size"
+                        android:layout_alignBaseline="@+id/backRouteToggle"
+                        android:layout_alignBottom="@+id/backRouteToggle"
+                        android:layout_marginLeft="15dp"/>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 
             <Button
                 android:id="@+id/findTicketsBtn"
                 style="@style/BlueButtonStyle"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="@dimen/small_padding"
                 android:layout_marginRight="@dimen/small_padding"
                 android:enabled="false"
@@ -286,6 +287,7 @@
                     android:drawableTop="@drawable/ic_footer_up"
                     android:paddingBottom="60dp"
                     android:paddingTop="10dp"
+                    android:textSize="12sp"
                     android:text="@string/tickets_today"
                     android:textAllCaps="true"
                     android:textColor="@color/accentColor"/>

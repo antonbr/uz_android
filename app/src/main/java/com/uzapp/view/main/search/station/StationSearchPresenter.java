@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.uzapp.R;
 import com.uzapp.network.ApiErrorUtil;
+import com.uzapp.network.ApiInterface;
 import com.uzapp.network.ApiManager;
 import com.uzapp.pojo.route.PopularStation;
 import com.uzapp.pojo.route.Station;
@@ -27,6 +28,7 @@ import retrofit2.Response;
 
 class StationSearchPresenter {
     private Realm realm;
+    private ApiInterface api;
     private Station selectedStation;
     private Call<List<Station>> searchStationCall;
     private StationSearchView view;
@@ -34,6 +36,7 @@ class StationSearchPresenter {
     void attachView(StationSearchView view, Bundle arguments) {
         this.view = view;
         realm = Realm.getDefaultInstance();
+        api = ApiManager.getApi(view.getContext());
         showPopularStations();
         if (arguments != null && arguments.containsKey("title")) {
             view.setToolbarTitle(arguments.getString("title"));
@@ -75,7 +78,7 @@ class StationSearchPresenter {
     private void searchStations(String query) {
         view.setStationsHeaderText(view.getContext().getString(R.string.search_result));
         view.showProgress(true);
-        searchStationCall = ApiManager.getApi(view.getContext()).searchStations(query);
+        searchStationCall = api.searchStations(query);
         searchStationCall.enqueue(searchCallback);
     }
 

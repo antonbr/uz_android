@@ -20,6 +20,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.vk.sdk.api.model.VKApiPhotoSize.S;
+
 /**
  * Created by Vladimir on 15.09.2016.
  */
@@ -33,17 +35,18 @@ public class WagonLuxView extends LinearLayout {
 //    @BindView(R.id.btnPlaceUpperStandardRight) Button btnPlaceUpperStandardRight;
 
     private String type, wagonNumber;
-    private int priceTicket, departureDate, arrivalDate, wagonClasses;
+    private int priceTicket, departureDate, arrivalDate;
+    private String wagonClasses;
     private int placeLowStandardLeft, placeUpperStandardLeft, placeLowStandardRight,
             placeUpperStandardRight, placeLowSide, placeUpperSide;
 
     public WagonLuxView(Context context, String type, String wagonNumber, int priceTicket,
-                        int departureDate, int arrivalDate, int wagonClasses) {
+                        int departureDate, int arrivalDate, String wagonClasses) {
         this(context, null, type, wagonNumber, priceTicket, departureDate, arrivalDate, wagonClasses);
     }
 
     private void newInstanceData(String type, String wagonNumber, int priceTicket,
-                         int departureDate, int arrivalDate, int wagonClasses) {
+                         int departureDate, int arrivalDate, String wagonClasses) {
         this.type = type;
         this.wagonNumber = wagonNumber;
         this.priceTicket = priceTicket;
@@ -53,7 +56,7 @@ public class WagonLuxView extends LinearLayout {
     }
 
     public WagonLuxView(Context context, AttributeSet attrs, String type, String wagonNumber, int priceTicket,
-                        int departureDate, int arrivalDate, int wagonClasses) {
+                        int departureDate, int arrivalDate, String wagonClasses) {
         super(context, attrs);
         newInstanceData(type, wagonNumber, priceTicket, departureDate, arrivalDate, wagonClasses);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -210,7 +213,7 @@ public class WagonLuxView extends LinearLayout {
     }
 
     private Ticket newInstanceTicket(String wagonNumber, String placeNumber, String placeType, int priceTicket,
-                                     int departureDate, int arrivalDate, int wagonClasses, String typeWagon) {
+                                     int departureDate, int arrivalDate, String wagonClasses, String typeWagon) {
         return new Ticket(wagonNumber, placeNumber, placeType, priceTicket, departureDate, arrivalDate, wagonClasses,typeWagon);
     }
 }

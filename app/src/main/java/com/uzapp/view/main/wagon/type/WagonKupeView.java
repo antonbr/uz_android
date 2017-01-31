@@ -33,17 +33,18 @@ public class WagonKupeView extends LinearLayout {
     @BindView(R.id.btnPlaceUpperStandardRight) Button btnPlaceUpperStandardRight;
 
     private String type, wagonNumber;
-    private int priceTicket, departureDate, arrivalDate, wagonClasses;
+    private int priceTicket, departureDate, arrivalDate;
+    private String wagonClasses;
     private int placeLowStandardLeft, placeUpperStandardLeft, placeLowStandardRight,
             placeUpperStandardRight, placeLowSide, placeUpperSide;
 
     public WagonKupeView(Context context, String type, String wagonNumber, int priceTicket,
-                         int departureDate, int arrivalDate, int wagonClasses) {
+                         int departureDate, int arrivalDate, String wagonClasses) {
         this(context, null, type, wagonNumber, priceTicket, departureDate, arrivalDate, wagonClasses);
     }
 
     private void newInstanceData(String type, String wagonNumber, int priceTicket,
-                         int departureDate, int arrivalDate, int wagonClasses) {
+                         int departureDate, int arrivalDate, String wagonClasses) {
         this.type = type;
         this.wagonNumber = wagonNumber;
         this.priceTicket = priceTicket;
@@ -53,7 +54,7 @@ public class WagonKupeView extends LinearLayout {
     }
 
     public WagonKupeView(Context context, AttributeSet attrs, String type, String wagonNumber, int priceTicket,
-                         int departureDate, int arrivalDate, int wagonClasses) {
+                         int departureDate, int arrivalDate, String wagonClasses) {
         super(context, attrs);
         newInstanceData(type, wagonNumber, priceTicket, departureDate, arrivalDate, wagonClasses);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -214,7 +215,7 @@ public class WagonKupeView extends LinearLayout {
     }
 
     private Ticket newInstanceTicket(String wagonNumber, String placeNumber, String placeType, int priceTicket,
-                                     int departureDate, int arrivalDate, int wagonClasses, String typeWagon) {
+                                     int departureDate, int arrivalDate, String wagonClasses, String typeWagon) {
         return new Ticket(wagonNumber, placeNumber, placeType, priceTicket, departureDate, arrivalDate, wagonClasses,typeWagon);
     }
 }

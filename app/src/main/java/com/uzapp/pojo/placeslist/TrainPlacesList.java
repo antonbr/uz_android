@@ -22,7 +22,7 @@ public class TrainPlacesList {
     @SerializedName("station_to_name")
     String stationToName;
     @SerializedName("class_code")
-    int classCode;
+    String classCode;
     @SerializedName("class_name")
     String className;
     @SerializedName("fasted_code")
@@ -39,7 +39,7 @@ public class TrainPlacesList {
     }
 
     public TrainPlacesList(String number, int stationFromCode, String stationFromName, int stationToCode,
-                           String stationToName, int classCode, String className, int fastedCode,
+                           String stationToName, String classCode, String className, int fastedCode,
                            String fastedName, int date, List<WagonsPlacesList> wagons) {
         this.number = number;
         this.stationFromCode = stationFromCode;
@@ -94,11 +94,11 @@ public class TrainPlacesList {
         this.stationToName = stationToName;
     }
 
-    public int getClassCode() {
+    public String getClassCode() {
         return classCode;
     }
 
-    public void setClassCode(int classCode) {
+    public void setClassCode(String classCode) {
         this.classCode = classCode;
     }
 

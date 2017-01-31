@@ -23,7 +23,7 @@ public class Wagon implements Parcelable {
     private String railwayCode;
     private boolean sitting;
     private String className;
-    private int classCode;
+    private String classCode;
     private String costCurrency;
     private int cost;
     private String costReserveCurrency;
@@ -115,11 +115,11 @@ public class Wagon implements Parcelable {
         this.className = className;
     }
 
-    public int getClassCode() {
+    public String getClassCode() {
         return classCode;
     }
 
-    public void setClassCode(int classCode) {
+    public void setClassCode(String classCode) {
         this.classCode = classCode;
     }
 

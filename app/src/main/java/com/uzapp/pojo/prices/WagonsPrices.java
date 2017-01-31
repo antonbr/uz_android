@@ -32,7 +32,7 @@ public class WagonsPrices {
     @SerializedName("class_name")
     String className;
     @SerializedName("class_code")
-    int classCode;
+    String classCode;
     @SerializedName("cost_currency")
     String costCurrency;
     @SerializedName("cost")
@@ -132,11 +132,11 @@ public class WagonsPrices {
         this.className = className;
     }
 
-    public int getClassCode() {
+    public String getClassCode() {
         return classCode;
     }
 
-    public void setClassCode(int classCode) {
+    public void setClassCode(String classCode) {
         this.classCode = classCode;
     }
 

@@ -252,7 +252,7 @@ public class PreparePurchaseFragment extends Fragment {
             String wagonType = ticket.getWagonType();
             String wagonPlace = ticket.getPlaceNumber();
             int wagonNumber = Integer.parseInt(ticket.getWagonNumber());
-            int wagonClass = ticket.getWagonClasses();
+            String wagonClass = ticket.getWagonClasses();
             String firstName = ticket.getFirstName();
             String lastName = ticket.getLastName();
             String kind = ticket.getKind();

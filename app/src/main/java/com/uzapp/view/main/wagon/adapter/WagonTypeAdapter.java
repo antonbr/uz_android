@@ -29,7 +29,8 @@ public class WagonTypeAdapter extends BaseAdapter implements View.OnClickListene
     private ViewHolder holder = null;
     private FragmentManager manager;
     private String wagonNumber;
-    private int priceTicket, departureDate, arrivalDate, wagonClasses;
+    private int priceTicket, departureDate, arrivalDate;
+    private String wagonClasses;
     private String typeWagon;
 
     private int placeLowStandardLeft, placeUpperStandardLeft, placeLowStandardRight,
@@ -37,7 +38,7 @@ public class WagonTypeAdapter extends BaseAdapter implements View.OnClickListene
 
     public WagonTypeAdapter(Context context, List<Integer> listPlaces, String wagonNumber,
                             int priceTicket, String typeWagon, int departureDate,
-                            int arrivalDate, int wagonClasses) {
+                            int arrivalDate, String wagonClasses) {
         this.context = context;
         this.listPlaces = listPlaces;
         this.wagonNumber = wagonNumber;

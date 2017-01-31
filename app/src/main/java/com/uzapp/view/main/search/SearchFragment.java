@@ -95,7 +95,7 @@ public class SearchFragment extends Fragment implements DatePickerAdapter.OnDate
     @OnClick(R.id.useLocationBtn)
     void onLocationBtnClicked() {
         useLocationBtn.toggle();
-        pathFrom.setTranslationY(useLocationBtn.isChecked() ? hintPadding : 0);
+        //pathFrom.setTranslationY(useLocationBtn.isChecked() ? hintPadding : 0);
         presenter.onLocationBtnClicked(useLocationBtn.isChecked());
     }
 

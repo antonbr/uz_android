@@ -13,7 +13,7 @@ public class Ticket implements Serializable {
     private int ticketPrice;
     private int departureDate;
     private int arrivalDate;
-    private int wagonClasses;
+    private String wagonClasses;
     private String wagonType;
     private boolean isBooking;
     private boolean isReserve;
@@ -27,7 +27,7 @@ public class Ticket implements Serializable {
     public Ticket() {}
 
     public Ticket(String wagonNumber, String placeNumber, String placeType, int ticketPrice,
-                  int departureDate, int arrivalDate, int wagonClasses, String wagonType) {
+                  int departureDate, int arrivalDate, String wagonClasses, String wagonType) {
         this.wagonNumber = wagonNumber;
         this.placeNumber = placeNumber;
         this.placeType = placeType;
@@ -86,11 +86,11 @@ public class Ticket implements Serializable {
         this.arrivalDate = arrivalDate;
     }
 
-    public int getWagonClasses() {
+    public String getWagonClasses() {
         return wagonClasses;
     }
 
-    public void setWagonClasses(int wagonClasses) {
+    public void setWagonClasses(String wagonClasses) {
         this.wagonClasses = wagonClasses;
     }
 

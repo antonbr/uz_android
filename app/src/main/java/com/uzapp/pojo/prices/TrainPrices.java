@@ -22,7 +22,7 @@ public class TrainPrices {
     @SerializedName("station_to_name")
     String stationToName;
     @SerializedName("class_code")
-    int classCode;
+    String classCode;
     @SerializedName("class_name")
     String className;
     @SerializedName("fasted_code")
@@ -78,11 +78,11 @@ public class TrainPrices {
         this.stationToName = stationToName;
     }
 
-    public int getClassCode() {
+    public String getClassCode() {
         return classCode;
     }
 
-    public void setClassCode(int classCode) {
+    public void setClassCode(String classCode) {
         this.classCode = classCode;
     }
 

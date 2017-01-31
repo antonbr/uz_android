@@ -112,14 +112,14 @@ public interface ApiInterface {
     @GET("order/booking")
     Call<Booking> getBooking(@Query("train") String train, @Query("station_from_code") int stationFromCode,
                              @Query("station_to_code") int stationToCode, @Query("wagon_type") String wagonType,
-                             @Query("wagon_class") int wagonClass, @Query("wagon_number") int wagonNumber,
+                             @Query("wagon_class") String wagonClass, @Query("wagon_number") int wagonNumber,
                              @Query("date") long date, @Query("places") String places,
                              @Query("documents") String documents);
 
     @GET("order/reserve")
     Call<Booking> getReserve(@Query("train") String train, @Query("station_from_code") int stationFromCode,
                              @Query("station_to_code") int stationToCode, @Query("wagon_type") String wagonType,
-                             @Query("wagon_class") int wagonClass, @Query("wagon_number") int wagonNumber,
+                             @Query("wagon_class") String wagonClass, @Query("wagon_number") int wagonNumber,
                              @Query("date") long date, @Query("places") String places,
                              @Query("no_bedding") int noBedding, @Query("services") String services,
                              @Query("documents") String documents);
