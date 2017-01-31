@@ -5,7 +5,7 @@ package com.uzapp.util;
  */
 public class Constants {
     public static final int SEARCH_AUTOCOMPLETE_DELAY = 500;
-    public static final int SEARCH_MIN_LENGTH = 2;
+    public static final int SEARCH_MIN_LENGTH = 3;
     public static final int MAX_POPULAR_STATIONS_TO_SAVE = 5;
     public static final int MAX_DAYS = 45;
     public static final int HOURS_IN_DAY = 24;
@@ -35,5 +35,6 @@ public class Constants {
     public static final double TICKETS_PAGE_MARGIN_PERCENT = 0.3;
     public static final String STUDENT_ID_REGEX_PATTERN = "[a-zA-Z]{2}[0-9]{8}";
     public static final String SEPARATOR = " ";
+    public static final float MILI = 0.001f;
 
 }

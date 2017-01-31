@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +12,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.uzapp.R;
+import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.network.ApiManager;
+import com.uzapp.pojo.prices.Prices;
 import com.uzapp.pojo.trains.Train;
 import com.uzapp.pojo.trains.TrainSearchResult;
-import com.uzapp.pojo.prices.Prices;
-import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.util.CommonUtils;
+import com.uzapp.util.Constants;
+import com.uzapp.view.common.SpaceItemDecoration;
 import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.wagon.fragment.WagonPlaceFragment;
-import com.uzapp.view.common.SpaceItemDecoration;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,7 +38,7 @@ import retrofit2.Response;
  */
 public class TrainsResultListFragment extends Fragment implements TrainsListAdapter.OnTrainClickListener {
     private static final String TAG = TrainsResultListFragment.class.getName();
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM");
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d MMMM");
     @BindView(R.id.trainsList) RecyclerView trainsList;
     @BindView(R.id.noContent) TextView noContent;
     @BindView(R.id.progressBar) ProgressBar progressBar;
@@ -89,7 +89,7 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
 
     private void loadTrains() {
         showProgress(true);
-        trainSearchCall = ApiManager.getApi(getContext()).searchTrains(stationFromCode, stationToCode, date);
+        trainSearchCall = ApiManager.getApi(getContext()).searchTrains(stationFromCode, stationToCode, (long) (date * Constants.MILI));
         trainSearchCall.enqueue(callback);
     }
 
@@ -159,14 +159,9 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
 
     @Override
     public void onWagonItemClicked(Train train, String wagonType, String wagonClass) {
-        Log.d(TAG, "train number: " + train.getNumber() + " wagon type: " + wagonType + " wagon class: " + wagonClass
-                + " station from code: " + stationFromCode + " station to code: " + stationToCode + " date: " + date);
-
         departureDate = (int) train.getDepartureDate();
         arrivalDate = (int) train.getArrivalDate();
-
-        //backend uses mocks for trains, that's why the result is always the same
-        Call<Prices> call = ApiManager.getApi(getActivity()).getPrices(stationFromCode, stationToCode, train.getNumber(), date);
+        Call<Prices> call = ApiManager.getApi(getActivity()).getPrices(stationFromCode, stationToCode, train.getNumber(),  (long) (date* Constants.MILI));
         call.enqueue(pricesCallback);
     }
 

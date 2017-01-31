@@ -15,7 +15,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:leftImageRes="@drawable/back_blue"
+            app:rightBtnText="@string/filter"
             app:showLeftImageBtn="true"
+            app:showRightBtn="true"
+            app:title=""
             app:toolbarColor="@color/lightColor"
             />
         <!--app:layout_scrollFlags="scroll|enterAlways"-->

@@ -77,7 +77,9 @@ public class SearchFragment extends Fragment implements DatePickerAdapter.OnDate
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.search_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
-        presenter = new SearchPresenter(getArguments());
+        if (presenter == null) {
+            presenter = new SearchPresenter(getArguments());
+        }
         presenter.attachView(this);
         ((MainActivity) getActivity()).showNavigationBar();
         ((MainActivity) getActivity()).getBottomNavigationBar().setCurrentItem(Constants.BOTTOM_NAVIGATION_SEARCH, false);
