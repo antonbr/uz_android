@@ -38,6 +38,7 @@ class StationSearchPresenter {
         realm = Realm.getDefaultInstance();
         api = ApiManager.getApi(view.getContext());
         showPopularStations();
+        view.setOkBtnEnabled(selectedStation != null);
         if (arguments != null && arguments.containsKey("title")) {
             view.setToolbarTitle(arguments.getString("title"));
         }
@@ -51,6 +52,7 @@ class StationSearchPresenter {
     void onSearchLetterEntered(String msg) {
         if (selectedStation != null && !selectedStation.getName().equals(msg)) {
             selectedStation = null;
+            view.setOkBtnEnabled(false);
         }
         if (msg.length() >= Constants.SEARCH_MIN_LENGTH) {
             searchStations(msg);
@@ -63,6 +65,7 @@ class StationSearchPresenter {
     void onStationItemClick(Station station) {
         selectedStation = station;
         view.setCityName(station.getName());
+        view.setOkBtnEnabled(true);
     }
 
     void onOkBtnClick() {
@@ -70,8 +73,6 @@ class StationSearchPresenter {
             saveToPopularStations(selectedStation);
             view.hideKeyboard();
             view.returnResult(selectedStation);
-        } else {
-            //todo show message
         }
     }
 
@@ -158,5 +159,7 @@ class StationSearchPresenter {
         void hideKeyboard();
 
         void returnResult(Station station);
+
+        void setOkBtnEnabled(boolean isEnabled);
     }
 }

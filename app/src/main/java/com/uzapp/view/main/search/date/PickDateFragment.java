@@ -6,10 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,15 +17,10 @@ import android.widget.ToggleButton;
 
 import com.uzapp.R;
 import com.uzapp.util.CommonUtils;
-import com.uzapp.util.Constants;
 import com.uzapp.view.main.MainActivity;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -37,10 +32,7 @@ import butterknife.Unbinder;
 /**
  * Created by vika on 19.07.16.
  */
-public class PickDateFragment extends Fragment implements CalendarDaysAdapter.OnDateSelectedListener {
-    private SimpleDateFormat selectedDateFormat = new SimpleDateFormat("d MMMM yyyy, EE");
-    private SimpleDateFormat nearestDateFormat = new SimpleDateFormat("d MMMM, EE");
-    private SimpleDateFormat availableDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+public class PickDateFragment extends Fragment implements CalendarDaysAdapter.OnDateSelectedListener, PickDatePresenter.PickDateView {
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
     @BindView(R.id.dateTextField) EditText dateTextField;
     @BindView(R.id.tomorrowDate) TextView tomorrowDateView;
@@ -50,11 +42,10 @@ public class PickDateFragment extends Fragment implements CalendarDaysAdapter.On
     @BindView(R.id.todayBtn) ToggleButton todayBtn;
     @BindView(R.id.monthPager) VerticalViewPager monthPager;
     @BindView(R.id.bottomBar) LinearLayout bottomBar;
-    private Date today, tomorrow, dayAfterTomorrow, minDate, selectedDate;
+    @BindView(R.id.okBtn) Button okBtn;
     private Unbinder unbinder;
     private MonthPagerAdapter monthPagerAdapter;
-    private List<List<Date>> allDaysByMonths;
-    private List<Date> availableDates = new ArrayList<>();
+    private PickDatePresenter presenter;
 
     @Nullable
     @Override
@@ -62,36 +53,10 @@ public class PickDateFragment extends Fragment implements CalendarDaysAdapter.On
         View view = inflater.inflate(R.layout.pick_date_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
         toolbarTitle.setText(R.string.calendar_when);
-        if (getArguments() != null && getArguments().containsKey("minDate")) {
-            minDate = (Date) getArguments().getSerializable("minDate");
-        } else if (getArguments() != null && getArguments().containsKey("availableDates")) {
-            bottomBar.setVisibility(View.GONE);
-            availableDates = getAvailableDatesFromBundle(getArguments());
-            if (availableDates != null && availableDates.size() > 0) {
-                minDate = availableDates.get(0);
-            }
-        }
-        initNearestDates();
-        allDaysByMonths = getDaysByMonths();
-        monthPagerAdapter = new MonthPagerAdapter(getContext(), allDaysByMonths, availableDates, this);
-        monthPager.setOffscreenPageLimit(2);
-        monthPager.setAdapter(monthPagerAdapter);
+        presenter = new PickDatePresenter(this, getArguments());
         return view;
     }
 
-    private List<Date> getAvailableDatesFromBundle(Bundle bundle) {
-        List<String> stringDatesList = bundle.getStringArrayList("availableDates");
-        List<Date> dateList = new ArrayList<>();
-        for (String s : stringDatesList) {
-            try {
-                Date date = availableDateFormat.parse(s);
-                dateList.add(date);
-            } catch (ParseException e) {
-                Log.e(PickDateFragment.class.getName(), e.getMessage());
-            }
-        }
-        return dateList;
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -121,55 +86,6 @@ public class PickDateFragment extends Fragment implements CalendarDaysAdapter.On
         return fragment;
     }
 
-
-    private void initNearestDates() {
-        Calendar calendar = CommonUtils.getCalendar();
-        today = calendar.getTime();
-        calendar.add(Calendar.DAY_OF_MONTH, 1);
-        tomorrow = calendar.getTime();
-        calendar.add(Calendar.DAY_OF_MONTH, 1);
-        dayAfterTomorrow = calendar.getTime();
-        tomorrowDateView.setText(nearestDateFormat.format(tomorrow));
-        dayAfterTomorrowDateView.setText(nearestDateFormat.format(dayAfterTomorrow));
-        todayBtn.setEnabled(today.after(minDate) || today.equals(minDate));
-        tomorrowBtn.setEnabled(tomorrow.after(minDate) || tomorrow.equals(minDate));
-        dayAfterTomorrowBtn.setEnabled(dayAfterTomorrow.after(minDate) || dayAfterTomorrow.equals(minDate));
-    }
-
-    private List<List<Date>> getDaysByMonths() {
-        List<List<Date>> daysByMonths = new ArrayList<>();
-
-        Calendar calendar = GregorianCalendar.getInstance();
-
-        int maxDays = Constants.MAX_DAYS;
-        if (!minDate.equals(today)) {
-            calendar.setTime(minDate);
-            maxDays -= CommonUtils.getDaysDifference(minDate, today);
-        }
-        calendar.add(Calendar.DAY_OF_MONTH, maxDays);
-        Date lastAvailableDate = calendar.getTime();
-        int monthsCount = CommonUtils.getMonthDifference(minDate, calendar.getTime());
-        boolean needPopulateAvailableDays = availableDates.isEmpty();
-        for (int i = 0; i <= monthsCount; i++) {
-            calendar = CommonUtils.getCalendar();
-            calendar.setTime(minDate);
-            calendar.add(Calendar.MONTH, i);
-            calendar.set(Calendar.DAY_OF_MONTH, 1);
-
-            ArrayList<Date> days = new ArrayList<>();
-            int daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-            while (days.size() < daysInMonth) {
-                days.add(calendar.getTime());
-                if (needPopulateAvailableDays && !calendar.getTime().before(minDate) && !calendar.getTime().after(lastAvailableDate)) {
-                    availableDates.add(calendar.getTime());
-                }
-                calendar.add(Calendar.DAY_OF_MONTH, 1);
-            }
-            daysByMonths.add(days);
-        }
-        return daysByMonths;
-    }
-
     @OnClick(R.id.ticketCloseBtn)
     void onCloseBtnClick() {
         getActivity().onBackPressed();
@@ -177,40 +93,22 @@ public class PickDateFragment extends Fragment implements CalendarDaysAdapter.On
 
     @OnClick(R.id.okBtn)
     void onOkBtnClick() {
-        if (selectedDate != null) {
-            Fragment targetFragment = getTargetFragment();
-            if (targetFragment != null) {
-                Intent i = new Intent();
-                i.putExtra("date", selectedDate);
-                targetFragment.onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, i);
-            }
-            getActivity().onBackPressed();
-        } else {
-            //todo show message
-        }
+        presenter.onOkBtnClick();
     }
 
     @OnCheckedChanged(R.id.todayBtn)
     void onTodayBtnClicked(boolean checked) {
-        if (checked) {
-            selectedDate = today;
-            selectDateInCalendarView(selectedDate);
-            showSelectedDateText();
-        }
+        presenter.onTodayBtnClicked(checked);
     }
 
     @OnClick(R.id.tomorrowBtn)
     void onTomorrowBtnClicked() {
-        selectedDate = tomorrow;
-        selectDateInCalendarView(selectedDate);
-        showSelectedDateText();
+        presenter.onTomorrowBtnClicked();
     }
 
     @OnClick(R.id.dayAfterTomorrowBtn)
     void onDayAfterTomorrowBtnClicked() {
-        selectedDate = dayAfterTomorrow;
-        selectDateInCalendarView(selectedDate);
-        showSelectedDateText();
+        presenter.onDayAfterTomorrowBtnClicked();
     }
 
     @Override
@@ -219,34 +117,95 @@ public class PickDateFragment extends Fragment implements CalendarDaysAdapter.On
         unbinder.unbind();
     }
 
-    private void selectDateInCalendarView(Date selectedDate) {
-        for (int i = 0; i < allDaysByMonths.size(); i++) {
-            List<Date> month = allDaysByMonths.get(i);
-            for (int j = 0; j < month.size(); j++) {
-                if (month.get(j).equals(selectedDate)) {
-                    monthPagerAdapter.updateSelection(i, j);
-                    monthPager.setCurrentItem(i);
-                    break;
-                }
-            }
-        }
-    }
 
     @Override
     public void onDateSelected(int pagePosition, int dayPosition) {
-        monthPagerAdapter.updateSelection(pagePosition, dayPosition);
-        selectedDate = allDaysByMonths.get(pagePosition).get(dayPosition);
-        showSelectedDateText();
-        if (todayBtn.isChecked() && !selectedDate.equals(today)) {
-            todayBtn.setChecked(false);
-        }
+        presenter.onDateSelected(pagePosition, dayPosition);
     }
 
-    private void showSelectedDateText() {
-        if (selectedDate != null) {
-            dateTextField.setText(selectedDateFormat.format(selectedDate));
-        }
+    @Override
+    public void showSelectedDateText(String text) {
+        dateTextField.setText(text);
+    }
+
+    @Override
+    public boolean isTodayBtnChecked() {
+        return todayBtn.isChecked();
+    }
+
+    @Override
+    public void setTodayBtnCheckedState(boolean isChecked) {
+        todayBtn.setChecked(isChecked);
     }
 
 
+    @Override
+    public void setOkBtnEnabled(boolean isEnabled) {
+        okBtn.setEnabled(isEnabled);
+    }
+
+
+    @Override
+    public void showProgress(boolean isLoading) {
+
+    }
+
+    @Override
+    public void showError(String error) {
+        CommonUtils.showSnackbar(getView(), error);
+    }
+
+    @Override
+    public void showBottomBar(boolean isVisible) {
+        bottomBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void setTomorrowBtnEnabled(boolean isEnabled) {
+        tomorrowBtn.setEnabled(isEnabled);
+    }
+
+    @Override
+    public void setDayAfterTomorrowBtnEnabled(boolean isEnabled) {
+        dayAfterTomorrowBtn.setEnabled(isEnabled);
+    }
+
+    @Override
+    public void setTomorrowBtnText(String text) {
+        tomorrowDateView.setText(text);
+    }
+
+    @Override
+    public void setDayAfterTomorrowBtnText(String text) {
+        dayAfterTomorrowDateView.setText(text);
+    }
+
+    @Override
+    public void setTodayBtnEnabled(boolean isEnabled) {
+        todayBtn.setEnabled(isEnabled);
+    }
+
+    @Override
+    public void initView(List<List<Date>> allDaysByMonths, List<Date> availableDates) {
+        monthPagerAdapter = new MonthPagerAdapter(getContext(), allDaysByMonths, availableDates, this);
+        monthPager.setOffscreenPageLimit(2);
+        monthPager.setAdapter(monthPagerAdapter);
+    }
+
+    @Override
+    public void returnResult(Date selectedDate) {
+        Fragment targetFragment = getTargetFragment();
+        if (targetFragment != null) {
+            Intent i = new Intent();
+            i.putExtra("date", selectedDate);
+            targetFragment.onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, i);
+        }
+        getActivity().onBackPressed();
+    }
+
+    @Override
+    public void selectDateInCalendarView(int pagePosition, int monthPosition) {
+        monthPagerAdapter.updateSelection(pagePosition, monthPosition);
+        monthPager.setCurrentItem(pagePosition);
+    }
 }

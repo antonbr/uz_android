@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -39,6 +40,7 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
     @BindView(R.id.stationsList) RecyclerView stationsList;
     @BindView(R.id.stationsHeader) TextView stationsHeader;
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
+    @BindView(R.id.okBtn) Button okBtn;
     @BindDimen(R.dimen.big_padding) int padding;
     private Unbinder unbinder;
     private StationsSearchResultAdapter adapter;
@@ -106,13 +108,13 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
 
     @Override
     public void onStationItemClick(Station station) {
-       presenter.onStationItemClick(station);
+        presenter.onStationItemClick(station);
     }
 
     @Override
     public void onSearchLetterEntered(String msg) {
         if (getView() != null) {
-           presenter.onSearchLetterEntered(msg);
+            presenter.onSearchLetterEntered(msg);
         }
     }
 
@@ -159,8 +161,13 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
     }
 
     @Override
+    public void setOkBtnEnabled(boolean isEnabled) {
+        okBtn.setEnabled(isEnabled);
+    }
+
+    @Override
     public void showProgress(boolean isLoading) {
-        searchProgress.setVisibility(isLoading?View.VISIBLE:View.GONE);
+        searchProgress.setVisibility(isLoading ? View.VISIBLE : View.GONE);
     }
 
     @Override
