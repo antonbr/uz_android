@@ -24,8 +24,8 @@ import butterknife.Unbinder;
 /**
  * Created by vika on 26.07.16.
  */
-public class  SelectTrainFragment extends Fragment implements ViewPager.OnPageChangeListener {
-    private static final String TAG = SelectTrainFragment.class.getName();
+public class TabbedTrainFragment extends Fragment implements ViewPager.OnPageChangeListener {
+    private static final String TAG = TabbedTrainFragment.class.getName();
     private SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.DAY_MONTH_WEEK_FORMAT);
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
     @BindView(R.id.tabLayout) TabLayout tabLayout;
@@ -33,7 +33,7 @@ public class  SelectTrainFragment extends Fragment implements ViewPager.OnPageCh
     private Unbinder unbinder;
     private long stationFromCode, stationToCode, firstDate, secondDate;
     private boolean isGoingBack = false;
-    private TrainWaysViewPagerAdapter viewPagerAdapter;
+    private TrainTabViewPagerAdapter viewPagerAdapter;
 
     @Nullable
     @Override
@@ -51,14 +51,14 @@ public class  SelectTrainFragment extends Fragment implements ViewPager.OnPageCh
     }
 
     private void setupViewPager() {
-        viewPagerAdapter = new TrainWaysViewPagerAdapter(getChildFragmentManager());
+        viewPagerAdapter = new TrainTabViewPagerAdapter(getChildFragmentManager());
         String firstDateName = dateFormat.format(new Date(firstDate));
         String tabFirstName = getString(R.string.trains_first_tab_name, firstDateName);
-        viewPagerAdapter.addFragment(TrainsResultListFragment.getInstance(stationFromCode, stationToCode, firstDate), tabFirstName);
+        viewPagerAdapter.addFragment(TrainsListFragment.getInstance(stationFromCode, stationToCode, firstDate), tabFirstName);
         if (isGoingBack) {
             String secondDateName = dateFormat.format(new Date(secondDate));
             String tabSecondName = getString(R.string.trains_second_tab_name, secondDateName);
-            viewPagerAdapter.addFragment(TrainsResultListFragment.getInstance(stationToCode, stationFromCode, secondDate), tabSecondName);
+            viewPagerAdapter.addFragment(TrainsListFragment.getInstance(stationToCode, stationFromCode, secondDate), tabSecondName);
         }
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.addOnPageChangeListener(this);
@@ -67,8 +67,8 @@ public class  SelectTrainFragment extends Fragment implements ViewPager.OnPageCh
     /*
     second date here is date for return back option, in api there is date2 with other meaning
      */
-    public static SelectTrainFragment getInstance(long stationFromCode, long stationToCode, long firstDate, long secondDate) {
-        SelectTrainFragment fragment = new SelectTrainFragment();
+    public static TabbedTrainFragment getInstance(long stationFromCode, long stationToCode, long firstDate, long secondDate) {
+        TabbedTrainFragment fragment = new TabbedTrainFragment();
         Bundle args = new Bundle();
         args.putLong("stationFromCode", stationFromCode);
         args.putLong("stationToCode", stationToCode);

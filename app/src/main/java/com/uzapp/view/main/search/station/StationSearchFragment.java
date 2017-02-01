@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.uzapp.R;
 import com.uzapp.pojo.route.Station;
-import com.uzapp.util.CommonUtils;
+import com.uzapp.view.BaseFragment;
 import com.uzapp.view.common.VerticalDividerItemDecoration;
 import com.uzapp.view.main.MainActivity;
 
@@ -34,7 +34,7 @@ import butterknife.Unbinder;
 /**
  * Created by vika on 13.07.16.
  */
-public class StationSearchFragment extends Fragment implements StationsSearchResultAdapter.OnStationClickListener, SearchEditText.ContentChangedListener, StationSearchPresenter.StationSearchView {
+public class StationSearchFragment extends BaseFragment implements StationsSearchResultAdapter.OnStationClickListener, SearchEditText.ContentChangedListener, StationSearchPresenter.StationSearchView {
     @BindView(R.id.cityEditText) SearchEditText cityEditText;
     @BindView(R.id.searchProgress) ProgressBar searchProgress;
     @BindView(R.id.stationsList) RecyclerView stationsList;
@@ -170,8 +170,4 @@ public class StationSearchFragment extends Fragment implements StationsSearchRes
         searchProgress.setVisibility(isLoading ? View.VISIBLE : View.GONE);
     }
 
-    @Override
-    public void showError(String error) {
-        CommonUtils.showSnackbar(getView(), error);
-    }
 }

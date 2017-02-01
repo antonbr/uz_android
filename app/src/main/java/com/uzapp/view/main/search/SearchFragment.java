@@ -21,12 +21,13 @@ import com.uzapp.R;
 import com.uzapp.pojo.route.RouteHistoryItem;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.util.Constants;
+import com.uzapp.view.BaseFragment;
 import com.uzapp.view.common.CheckableImageView;
 import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.search.date.PickDateFragment;
 import com.uzapp.view.main.search.station.StationSearchFragment;
 import com.uzapp.view.main.tickets.TodayTicketsFragment;
-import com.uzapp.view.main.trains.SelectTrainFragment;
+import com.uzapp.view.main.trains.TabbedTrainFragment;
 
 import java.util.Date;
 import java.util.List;
@@ -45,7 +46,7 @@ import static com.uzapp.R.id.secondDate;
 /**
  * Created by vika on 13.07.16.
  */
-public class SearchFragment extends Fragment implements DatePickerAdapter.OnDateClickListener, SearchPresenter.SearchView {
+public class SearchFragment extends BaseFragment implements DatePickerAdapter.OnDateClickListener, SearchPresenter.SearchView {
     private static final String TAG = SearchFragment.class.getName();
     protected static final int SELECT_STATION_FROM_REQUEST_CODE = 11;
     protected static final int SELECT_STATION_TO_REQUEST_CODE = 12;
@@ -90,6 +91,11 @@ public class SearchFragment extends Fragment implements DatePickerAdapter.OnDate
         SearchFragment fragment = new SearchFragment();
         fragment.setArguments(SearchPresenter.getArgs(routeHistoryItem));
         return fragment;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @OnClick(R.id.useLocationBtn)
@@ -204,7 +210,7 @@ public class SearchFragment extends Fragment implements DatePickerAdapter.OnDate
 
     @Override
     public void showSelectTrainFragment(long stationFromCode, long stationToCode, long firstDate, long secondDate) {
-        Fragment fragment = SelectTrainFragment.getInstance(stationFromCode, stationToCode, firstDate, secondDate);
+        Fragment fragment = TabbedTrainFragment.getInstance(stationFromCode, stationToCode, firstDate, secondDate);
         ((MainActivity) getActivity()).replaceFragment(fragment, true);
     }
 
@@ -349,11 +355,6 @@ public class SearchFragment extends Fragment implements DatePickerAdapter.OnDate
     @Override
     public void showProgress(boolean isLoading) {
 
-    }
-
-    @Override
-    public void showError(String error) {
-        CommonUtils.showSnackbar(getView(), error);
     }
 
     @Override

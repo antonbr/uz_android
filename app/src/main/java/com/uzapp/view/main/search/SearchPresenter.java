@@ -73,12 +73,8 @@ class SearchPresenter implements GoogleApiClient.ConnectionCallbacks, GoogleApiC
         googleApiClient = new GoogleApiClient.Builder(view.getContext(), this, this).addApi(LocationServices.API).build();
         googleApiClient.connect();
         api = ApiManager.getApi(view.getContext());
-        if (fromStation != null) {
-            view.setPathFromText(fromStation.getName());
-        }
-        if (toStation != null) {
-            view.setPathToText(toStation.getName());
-        }
+        view.setPathFromText(fromStation == null ? null : fromStation.getName());
+        view.setPathToText(toStation == null ? null: toStation.getName());
         initDates();
         checkAllFieldsFilled();
     }
@@ -91,7 +87,7 @@ class SearchPresenter implements GoogleApiClient.ConnectionCallbacks, GoogleApiC
     }
 
     void onDateViewReady() {
-        if (firstDate!=null && secondDate != null) {
+        if (firstDate != null && secondDate != null) {
             view.setSelectedDateLayoutVisible(firstDate, secondDate, monthFormatter.format(firstDate), monthFormatter.format(secondDate));
         } else if (firstDate != null && !firstDate.equals(dates.get(dates.size() - 1))) {
             view.setBackRouteToggleEnabled(true);

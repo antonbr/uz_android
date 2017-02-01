@@ -54,7 +54,7 @@ public class TrainsListAdapter extends RecyclerView.Adapter<TrainsListAdapter.Tr
     }
 
     public void addTrains(List<Train> trainList) {
-        this.trainList.addAll(trainList);
+        this.trainList = trainList;
         notifyDataSetChanged();
     }
 

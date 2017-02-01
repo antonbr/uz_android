@@ -9,16 +9,16 @@ import java.util.List;
 /**
  * Created by vika on 27.07.16.
  */
-public class TrainWaysViewPagerAdapter extends FragmentPagerAdapter {
-    private final List<TrainsResultListFragment> fragmentList = new ArrayList<>();
+public class TrainTabViewPagerAdapter extends FragmentPagerAdapter {
+    private final List<TrainsListFragment> fragmentList = new ArrayList<>();
     private final List<String> fragmentTitleList = new ArrayList<>();
 
-    public TrainWaysViewPagerAdapter(FragmentManager manager) {
+    public TrainTabViewPagerAdapter(FragmentManager manager) {
         super(manager);
     }
 
     @Override
-    public TrainsResultListFragment getItem(int position) {
+    public TrainsListFragment getItem(int position) {
         return fragmentList.get(position);
     }
 
@@ -27,7 +27,7 @@ public class TrainWaysViewPagerAdapter extends FragmentPagerAdapter {
         return fragmentList.size();
     }
 
-    public void addFragment(TrainsResultListFragment fragment, String title) {
+    public void addFragment(TrainsListFragment fragment, String title) {
         fragmentList.add(fragment);
         fragmentTitleList.add(title);
     }

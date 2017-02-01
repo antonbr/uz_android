@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.uzapp.R;
-import com.uzapp.util.CommonUtils;
+import com.uzapp.view.BaseFragment;
 import com.uzapp.view.main.MainActivity;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import butterknife.Unbinder;
 /**
  * Created by vika on 19.07.16.
  */
-public class PickDateFragment extends Fragment implements CalendarDaysAdapter.OnDateSelectedListener, PickDatePresenter.PickDateView {
+public class PickDateFragment extends BaseFragment implements CalendarDaysAdapter.OnDateSelectedListener, PickDatePresenter.PickDateView {
     @BindView(R.id.toolbarTitle) TextView toolbarTitle;
     @BindView(R.id.dateTextField) EditText dateTextField;
     @BindView(R.id.tomorrowDate) TextView tomorrowDateView;
@@ -148,11 +148,6 @@ public class PickDateFragment extends Fragment implements CalendarDaysAdapter.On
     @Override
     public void showProgress(boolean isLoading) {
 
-    }
-
-    @Override
-    public void showError(String error) {
-        CommonUtils.showSnackbar(getView(), error);
     }
 
     @Override
