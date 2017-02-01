@@ -23,8 +23,8 @@ public class TrainPlace {
     int sideTop;
     @SerializedName("total")
     int total;
-    @SerializedName("class_name")
-    WagonClass className;
+    @SerializedName("class_code")
+    WagonClass classCode;
     @SerializedName("cost_currency")
     String costCurrency;
     @SerializedName("cost")
@@ -82,12 +82,12 @@ public class TrainPlace {
         this.total = total;
     }
 
-    public WagonClass getClassName() {
-        return className;
+    public WagonClass getClassCode() {
+        return classCode;
     }
 
-    public void setClassName(WagonClass className) {
-        this.className = className;
+    public void setClassCode(WagonClass classCode) {
+        this.classCode = classCode;
     }
 
     public String getCostCurrency() {

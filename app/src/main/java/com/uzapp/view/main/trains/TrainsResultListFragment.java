@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.uzapp.R;
 import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.network.ApiManager;
+import com.uzapp.pojo.WagonType;
 import com.uzapp.pojo.prices.Prices;
 import com.uzapp.pojo.trains.Train;
 import com.uzapp.pojo.trains.TrainSearchResult;
@@ -158,20 +159,27 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
     }
 
     @Override
-    public void onWagonItemClicked(Train train, String wagonType, String wagonClass) {
+    public void onWagonItemClicked(Train train, WagonType wagonType, String wagonClass) {
         departureDate = (int) train.getDepartureDate();
         arrivalDate = (int) train.getArrivalDate();
-        Call<Prices> call = ApiManager.getApi(getActivity()).getPrices(stationFromCode, stationToCode, train.getNumber(),  (long) (date* Constants.MILI));
-        call.enqueue(pricesCallback);
+        Call<Prices> call = ApiManager.getApi(getActivity()).getPrices(stationFromCode, stationToCode, train.getNumber(), (long) (date * Constants.MILI));
+        call.enqueue(new PriceCallback(wagonType));
     }
 
-    private Callback<Prices> pricesCallback = new Callback<Prices>() {
+
+    private class PriceCallback implements Callback<Prices> {
+        private WagonType wagonType;
+
+        public PriceCallback(WagonType wagonType) {
+            this.wagonType = wagonType;
+        }
+
         @Override
         public void onResponse(Call<Prices> call, Response<Prices> response) {
             if (response.isSuccessful()) {
                 Prices prices = response.body();
                 ((MainActivity) getActivity()).replaceFragment(WagonPlaceFragment
-                        .newInstance(prices, 0, departureDate, arrivalDate, date), true);
+                        .newInstance(prices, 0, departureDate, arrivalDate, date, wagonType), true);
             } else {
                 String error = ApiErrorUtil.getErrorMessage(response, getActivity());
                 CommonUtils.showSnackbar(getView(), error);
@@ -185,5 +193,5 @@ public class TrainsResultListFragment extends Fragment implements TrainsListAdap
                 CommonUtils.showSnackbar(getView(), error);
             }
         }
-    };
+    }
 }

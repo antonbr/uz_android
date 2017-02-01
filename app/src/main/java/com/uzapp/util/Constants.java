@@ -16,7 +16,7 @@ public class Constants {
     public static final int DAYS_IN_WEEK = 7;
     public static final int MAX_WEEKS_IN_CALENDAR = 6;
     public static final String DAY_MONTH_WEEK_FORMAT = "d.MM, EE";
-    public static final String HOURS_MINUTES_FORTMAT = "hh:mm";
+    public static final String HOURS_MINUTES_FORTMAT = "HH:mm";
     public static final String HOURS_MINUTES_SECONDS_FORMAT = "hh:mm:ss";
     public static final String DAY_MONTH_YEAR_FORMAT = "d.MM.yy";
     public static final int SECTION = 10;

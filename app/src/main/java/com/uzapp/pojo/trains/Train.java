@@ -29,7 +29,7 @@ public class Train {
     @SerializedName("class_name")
     String className;
     @SerializedName("class_code")
-    String classCode;
+    int classCode;
     @SerializedName("fasted_name")
     String fastedName;
     @SerializedName("fasted_code")
@@ -107,11 +107,11 @@ public class Train {
         this.className = className;
     }
 
-    public String getClassCode() {
+    public int getClassCode() {
         return classCode;
     }
 
-    public void setClassCode(String classCode) {
+    public void setClassCode(int classCode) {
         this.classCode = classCode;
     }
 

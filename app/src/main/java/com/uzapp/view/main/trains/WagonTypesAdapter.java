@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.uzapp.R;
+import com.uzapp.pojo.WagonType;
 import com.uzapp.pojo.trains.TrainPlace;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class WagonTypesAdapter extends RecyclerView.Adapter<WagonTypesAdapter.Pl
 
 
     protected interface WagonTypeClickListener {
-        void onWagonTypeClicked(String wagonType, String wagonClass);
+        void onWagonTypeClicked(WagonType wagonType, String wagonClass);
     }
 
     public WagonTypesAdapter(Context context, WagonTypeClickListener listener, List<TrainPlace> placeList) {
@@ -50,14 +51,14 @@ public class WagonTypesAdapter extends RecyclerView.Adapter<WagonTypesAdapter.Pl
                 trainPlace.getCostCurrency());
         holder.minPlacePrice.setText(price);
         String wagonType = context.getString(trainPlace.getType().getLongNameStringRes());
-        String wagonClass = context.getString(trainPlace.getClassName().getLongNameStringRes());
+        String wagonClass = context.getString(trainPlace.getClassCode().getLongNameStringRes());
         if (wagonType != null && wagonClass != null) {
             holder.placeTypeName.setText(wagonType + "\n" + wagonClass);
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onWagonTypeClicked(trainPlace.getType().getShortName(), trainPlace.getClassName().getShortName());
+                listener.onWagonTypeClicked(trainPlace.getType(), trainPlace.getClassCode().getShortName());
             }
         });
     }

@@ -11,7 +11,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.uzapp.R;
+import com.uzapp.pojo.WagonType;
 import com.uzapp.pojo.trains.Train;
+import com.uzapp.pojo.trains.TrainPlace;
 import com.uzapp.util.Constants;
 import com.uzapp.view.common.VerticalDividerItemDecoration;
 
@@ -20,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindDimen;
@@ -47,7 +50,7 @@ public class TrainsListAdapter extends RecyclerView.Adapter<TrainsListAdapter.Tr
 
         void onInfoBtnClicked(Train train);
 
-        void onWagonItemClicked(Train train, String wagonType, String wagonClass);
+        void onWagonItemClicked(Train train, WagonType wagonType, String wagonClass);
     }
 
     public void addTrains(List<Train> trainList) {
@@ -65,15 +68,17 @@ public class TrainsListAdapter extends RecyclerView.Adapter<TrainsListAdapter.Tr
     @Override
     public void onBindViewHolder(TrainHolder holder, final int position) {
         final Train train = trainList.get(position);
-        Date departureDate = new Date(train.getDepartureDate());
-        Date arrivalDate = new Date(train.getArrivalDate());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(train.getDepartureDate() * 1000);
+        Date departureDate = calendar.getTime();
+        calendar.setTimeInMillis(train.getArrivalDate() * 1000);
+        Date arrivalDate = calendar.getTime();
         holder.departureTime.setText(timeFormat.format(departureDate));
         holder.departureDay.setText(dateFormat.format(departureDate));
         holder.arrivalTime.setText(timeFormat.format(arrivalDate));
         holder.arrivalDay.setText(dateFormat.format(arrivalDate));
         Date travelTimeDate = parseDate(train.getTravelTime());
         if (travelTimeDate != null) {
-            Calendar calendar = Calendar.getInstance();
             calendar.setTime(travelTimeDate);
             int hours = calendar.get(Calendar.HOUR);
             int min = calendar.get(Calendar.MINUTE);
@@ -86,11 +91,19 @@ public class TrainsListAdapter extends RecyclerView.Adapter<TrainsListAdapter.Tr
         holder.stationTo.setText(train.getStationToName());
         final WagonTypesAdapter.WagonTypeClickListener listener = new WagonTypesAdapter.WagonTypeClickListener() {
             @Override
-            public void onWagonTypeClicked(String wagonType, String wagonClass) {
+            public void onWagonTypeClicked(WagonType wagonType, String wagonClass) {
                 onTrainClickListener.onWagonItemClicked(train, wagonType, wagonClass);
             }
         };
-        WagonTypesAdapter placeTypesAdapter = new WagonTypesAdapter(context, listener, train.getPlaces());
+        List<TrainPlace> trainPlaces = train.getPlaces();
+        Iterator<TrainPlace> iterator = trainPlaces.iterator();
+        while (iterator.hasNext()) {
+            TrainPlace trainPlace = iterator.next();
+            if (trainPlace.getTotal() == 0) {
+                iterator.remove();
+            }
+        }
+        WagonTypesAdapter placeTypesAdapter = new WagonTypesAdapter(context, listener, trainPlaces);
         holder.placeTypesList.setAdapter(placeTypesAdapter);
         holder.placeTypesList.setLayoutManager(new LinearLayoutManager(context));
         VerticalDividerItemDecoration itemDecoration = new VerticalDividerItemDecoration(context,

@@ -25,7 +25,7 @@ public class Wagon implements Parcelable {
     private String className;
     private String classCode;
     private String costCurrency;
-    private int cost;
+    private double cost;
     private String costReserveCurrency;
     private int costReserve;
     private boolean allowBonus;
@@ -131,11 +131,11 @@ public class Wagon implements Parcelable {
         this.costCurrency = costCurrency;
     }
 
-    public int getCost() {
+    public double getCost() {
         return cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(double cost) {
         this.cost = cost;
     }
 

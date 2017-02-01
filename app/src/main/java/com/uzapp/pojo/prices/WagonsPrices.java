@@ -1,6 +1,7 @@
 package com.uzapp.pojo.prices;
 
 import com.google.gson.annotations.SerializedName;
+import com.uzapp.pojo.WagonType;
 
 import org.parceler.Parcel;
 
@@ -18,7 +19,7 @@ public class WagonsPrices {
     @SerializedName("type_name")
     String typeName;
     @SerializedName("type_code")
-    String typeCode;
+    WagonType typeCode;
     @SerializedName("country_name")
     String countryName;
     @SerializedName("country_code")
@@ -36,7 +37,7 @@ public class WagonsPrices {
     @SerializedName("cost_currency")
     String costCurrency;
     @SerializedName("cost")
-    int cost;
+    double cost;
     @SerializedName("cost_reserve_currency")
     String costReserveCurrency;
     @SerializedName("cost_reserve")
@@ -76,12 +77,20 @@ public class WagonsPrices {
         this.typeName = typeName;
     }
 
-    public String getTypeCode() {
+    public WagonType getTypeCode() {
         return typeCode;
     }
 
-    public void setTypeCode(String typeCode) {
+    public void setTypeCode(WagonType typeCode) {
         this.typeCode = typeCode;
+    }
+
+    public void setClassCode(String classCode) {
+        this.classCode = classCode;
+    }
+
+    public String getClassCode() {
+        return classCode;
     }
 
     public String getCountryName() {
@@ -132,14 +141,6 @@ public class WagonsPrices {
         this.className = className;
     }
 
-    public String getClassCode() {
-        return classCode;
-    }
-
-    public void setClassCode(String classCode) {
-        this.classCode = classCode;
-    }
-
     public String getCostCurrency() {
         return costCurrency;
     }
@@ -148,11 +149,11 @@ public class WagonsPrices {
         this.costCurrency = costCurrency;
     }
 
-    public int getCost() {
+    public double getCost() {
         return cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(double cost) {
         this.cost = cost;
     }
 

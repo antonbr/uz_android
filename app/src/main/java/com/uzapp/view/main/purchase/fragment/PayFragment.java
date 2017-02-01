@@ -91,7 +91,7 @@ public class PayFragment extends Fragment {
     private ProgressCountDownTimer timer;
     private Realm realm;
 
-    private int priceTickets;
+    private double priceTickets;
     private String btnText;
     private List<Booking> listBookings;
     private List<Transportation> listTransportation;
@@ -102,10 +102,10 @@ public class PayFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static PayFragment newInstance(int priceTickets, List<Booking> listBookings, List<Transportation> listTransportation) {
+    public static PayFragment newInstance(double priceTickets, List<Booking> listBookings, List<Transportation> listTransportation) {
         PayFragment fragment = new PayFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(KEY_PRICE_TICKETS, priceTickets);
+        bundle.putDouble(KEY_PRICE_TICKETS, priceTickets);
         bundle.putParcelableArrayList(KEY_LIST_BOOKINGS, (ArrayList<? extends Parcelable>) listBookings);
         bundle.putParcelableArrayList(KEY_LIST_BAGGAGE, (ArrayList<? extends Parcelable>) listTransportation);
         fragment.setArguments(bundle);
@@ -116,7 +116,7 @@ public class PayFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            priceTickets = getArguments().getInt(KEY_PRICE_TICKETS);
+            priceTickets = getArguments().getDouble(KEY_PRICE_TICKETS);
             listBookings = getArguments().getParcelableArrayList(KEY_LIST_BOOKINGS);
             listTransportation = getArguments().getParcelableArrayList(KEY_LIST_BAGGAGE);
 

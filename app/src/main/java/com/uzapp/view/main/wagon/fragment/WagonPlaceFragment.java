@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.uzapp.R;
 import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.network.ApiManager;
+import com.uzapp.pojo.WagonType;
 import com.uzapp.pojo.placeslist.PricesPlacesList;
 import com.uzapp.pojo.placeslist.WagonsPlacesList;
 import com.uzapp.pojo.prices.Prices;
@@ -45,6 +46,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.uzapp.R.string.wagon;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -55,22 +58,22 @@ public class WagonPlaceFragment extends Fragment {
     public static final String EXTRA_TRAIN_DEPARTURE_DATE = "EXTRA_TRAIN_DEPARTURE_DATE";
     public static final String EXTRA_TRAIN_ARRIVAL_DATE = "EXTRA_TRAIN_ARRIVAL_DATE";
     public static final String EXTRA_TRAIN_DATE = "EXTRA_TRAIN_DATE";
-
+    public static final String EXTRA_WAGON_TYPE = "EXTRA_WAGON_TYPE";
     @BindView(R.id.linearLayout)
     LinearLayout linearLayout;
     @BindView(R.id.layoutWagon)
     LinearLayout layoutWagon;
     @BindView(R.id.layoutBuyReserveTicket)
     LinearLayout layoutBuyReserveTicket;
-//    @BindView(R.id.layoutFilterPlace)
+    //    @BindView(R.id.layoutFilterPlace)
 //    LinearLayout layoutFilterPlace;
     @BindView(R.id.txtWagonNumber)
     TextView txtWagonNumber;
-//    @BindView(R.id.okBtn)
+    //    @BindView(R.id.okBtn)
 //    Button btnFilter;
     @BindView(R.id.toolbarTitle)
     TextView toolbarTitle;
-//    @BindView(R.id.slidePanelFooter)
+    //    @BindView(R.id.slidePanelFooter)
 //    ImageButton slidePanelFooter;
 //    @BindView(R.id.slidingDrawer)
 //    SlidingDrawer slidingDrawer;
@@ -78,7 +81,7 @@ public class WagonPlaceFragment extends Fragment {
     RecyclerView horizontalRecyclerView;
     @BindView(R.id.listViewSelectTicket)
     ListViewMaxHeight listViewSelectTicket;
-//    @BindView(R.id.btnBuyTicket)
+    //    @BindView(R.id.btnBuyTicket)
 //    Button btnBuyTicket;
 //    @BindView(R.id.btnReserveTicket)
 //    Button btnReserveTicket;
@@ -112,11 +115,11 @@ public class WagonPlaceFragment extends Fragment {
     private List<Wagon> wagonsFilterList = null;
     private Prices prices;
     private long selectDate;
-
+    private WagonType wagonType;
     // filter
     private String titleJoinVisit, titleLocationPlaces, titleUpperLower = null;
 
-    public static WagonPlaceFragment newInstance(Prices prices, int position, int departureDate, int arrivalDate, long selectDate) {
+    public static WagonPlaceFragment newInstance(Prices prices, int position, int departureDate, int arrivalDate, long selectDate, WagonType type) {
         WagonPlaceFragment fragment = new WagonPlaceFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(EXTRA_PRICES, prices);
@@ -124,6 +127,7 @@ public class WagonPlaceFragment extends Fragment {
         bundle.putInt(EXTRA_TRAIN_DEPARTURE_DATE, departureDate);
         bundle.putInt(EXTRA_TRAIN_ARRIVAL_DATE, arrivalDate);
         bundle.putLong(EXTRA_TRAIN_DATE, selectDate);
+        bundle.putSerializable(EXTRA_WAGON_TYPE, type);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -144,7 +148,7 @@ public class WagonPlaceFragment extends Fragment {
             departureDate = getArguments().getInt(EXTRA_TRAIN_DEPARTURE_DATE);
             arrivalDate = getArguments().getInt(EXTRA_TRAIN_ARRIVAL_DATE);
             selectDate = getArguments().getLong(EXTRA_TRAIN_DATE);
-
+            wagonType = (WagonType) getArguments().getSerializable(EXTRA_WAGON_TYPE);
             if (prices != null) {
                 stationFromCode = prices.getStation_from_code();
                 stationToCode = prices.getStationToCode();
@@ -152,9 +156,18 @@ public class WagonPlaceFragment extends Fragment {
                 trainName = train + " \"" + prices.getTrain().getFastedName() + "\"";
                 stationFromName = prices.getStationFromName();
                 stationToName = prices.getStationToName();
-                wagonTypes = prices.getTrain().getWagons().get(position).getTypeCode();
-                wagonClasses = String.valueOf(prices.getTrain().getWagons().get(position).getClassCode());
-                wagonNumbers = prices.getTrain().getWagons().get(position).getNumber();
+                StringBuilder wagonTypesSb = new StringBuilder();
+                StringBuilder wagonClassesSb = new StringBuilder();
+                StringBuilder wagonNumbersSb = new StringBuilder();
+                List<WagonsPrices> wagonsPrices = prices.getTrain().getWagons();
+                for (WagonsPrices wagon : wagonsPrices) {
+                    wagonTypesSb.append(wagon.getTypeCode().getShortName()).append(",");
+                    wagonClassesSb.append(wagon.getClassCode()).append(",");
+                    wagonNumbersSb.append(wagon.getNumber()).append(",");
+                }
+                wagonTypes = wagonsPrices.size() > 0 ? wagonTypesSb.substring(0, wagonTypesSb.lastIndexOf(",")) : "";
+                wagonClasses = wagonsPrices.size() > 0 ? wagonClassesSb.substring(0, wagonClassesSb.lastIndexOf(",")) : "";
+                wagonNumbers = wagonsPrices.size() > 0 ? wagonNumbersSb.substring(0, wagonNumbersSb.lastIndexOf(",")) : "";
                 dateTrain = prices.getTrain().getDate();
             }
         }
@@ -171,6 +184,7 @@ public class WagonPlaceFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_wagon_place, container, false);
         unbinder = ButterKnife.bind(this, rootView);
+        ((MainActivity) getActivity()).hideNavigationBar();
         initUI();
         return rootView;
     }
@@ -261,8 +275,11 @@ public class WagonPlaceFragment extends Fragment {
         public void onResponse(Call<List<PricesPlacesList>> call, Response<List<PricesPlacesList>> response) {
             if (response.isSuccessful()) {
                 List<PricesPlacesList> pricesPlacesLists = response.body();
-                List<WagonsPlacesList> wagonsPlacesLists = pricesPlacesLists.get(0).getTrainPlacesList().getWagons();
-
+                //  List<WagonsPlacesList> wagonsPlacesLists = pricesPlacesLists.get(0).getTrainPlacesList().getWagons();
+                List<WagonsPlacesList> wagonsPlacesLists = new ArrayList<>();
+                for (PricesPlacesList pricePlace : pricesPlacesLists) {
+                    wagonsPlacesLists.addAll(pricePlace.getTrainPlacesList().getWagons());
+                }
                 wagonsLists = getWagonsList(prices.getTrain().getWagons(), wagonsPlacesLists);
 
                 setHorizontalWagonsAdapter(wagonsLists);
@@ -285,18 +302,19 @@ public class WagonPlaceFragment extends Fragment {
 
     /**
      * @param listWagonsPrices
-     * @param listWagonsPaces
+     * @param listWagonsPlaces
      * @return wagonArray
      * <p/>
      * Set data to Wagon object and return ArrayList
      */
-    private List<Wagon> getWagonsList(List<WagonsPrices> listWagonsPrices, List<WagonsPlacesList> listWagonsPaces) {
+    private List<Wagon> getWagonsList(List<WagonsPrices> listWagonsPrices, List<WagonsPlacesList> listWagonsPlaces) {
         List<Wagon> wagonArray = new ArrayList<>();
         for (int i = 0; i < listWagonsPrices.size(); i++) {
+            if (listWagonsPrices.get(i).getTypeCode() != wagonType) continue;
             Wagon wagon = new Wagon();
             wagon.setCharline(listWagonsPrices.get(i).getCharline());
             wagon.setNumber(listWagonsPrices.get(i).getNumber());
-            wagon.setTypeCode(listWagonsPrices.get(i).getTypeCode());
+            wagon.setTypeCode(listWagonsPrices.get(i).getTypeCode().getShortName());
             wagon.setTypeName(listWagonsPrices.get(i).getTypeName());
             wagon.setCountryName(listWagonsPrices.get(i).getCountryName());
             wagon.setCountryCode(listWagonsPrices.get(i).getCountryCode());
@@ -311,7 +329,7 @@ public class WagonPlaceFragment extends Fragment {
             wagon.setAllowBonus(listWagonsPrices.get(i).isAllowBonus());
             wagon.setServices(listWagonsPrices.get(i).getServices());
             wagon.setPlacesPrices(listWagonsPrices.get(i).getPlacesPrices());
-            wagon.setPlaces(listWagonsPaces.get(i).getPlaces());
+            wagon.setPlaces(listWagonsPlaces.get(i).getPlaces());
             wagonArray.add(wagon);
         }
         return wagonArray;
@@ -364,7 +382,7 @@ public class WagonPlaceFragment extends Fragment {
         String title = wagonsList.get(position).getTypeName();
 //                + " (" + prices.getTrain().getWagons().get(position).getPlacesPrices().getTotal() + ")";
         toolbarTitle.setText(title);
-        txtWagonNumber.setText(getString(R.string.wagon) + " №" + wagonsList.get(position).getNumber());
+        txtWagonNumber.setText(getString(wagon) + " №" + wagonsList.get(position).getNumber());
 
         List<Integer> listPlaces = wagonsList.get(position).getPlaces();
 

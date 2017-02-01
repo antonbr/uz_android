@@ -73,7 +73,7 @@ public class PreparePurchaseFragment extends Fragment {
     private String stationFromName, stationToName, trainName, train;
     private int stationFromCode, stationToCode;
     private long selectDate;
-    private int totalPrice = 0;
+    private double totalPrice = 0;
     private boolean[] emptyFieldsArray;
 
     public PreparePurchaseFragment() {

@@ -37,7 +37,7 @@ public class Booking implements Parcelable {
     @SerializedName("train_model")
     int trainModel;
     @SerializedName("train_class_code")
-    String trainClassCode;
+    int trainClassCode;
     @SerializedName("train_fasted_code")
     int trainFastedCode;
     @SerializedName("wagon_type")
@@ -65,7 +65,7 @@ public class Booking implements Parcelable {
         electronic = in.readString();
         trainNumber = in.readString();
         trainModel = in.readInt();
-        trainClassCode = in.readString();
+        trainClassCode = in.readInt();
         trainFastedCode = in.readInt();
         wagonType = in.readString();
         wagonClass = in.readInt();
@@ -173,11 +173,11 @@ public class Booking implements Parcelable {
         this.trainModel = trainModel;
     }
 
-    public String getTrainClassCode() {
+    public int getTrainClassCode() {
         return trainClassCode;
     }
 
-    public void setTrainClassCode(String trainClassCode) {
+    public void setTrainClassCode(int trainClassCode) {
         this.trainClassCode = trainClassCode;
     }
 
@@ -247,7 +247,7 @@ public class Booking implements Parcelable {
         dest.writeString(electronic);
         dest.writeString(trainNumber);
         dest.writeInt(trainModel);
-        dest.writeString(trainClassCode);
+        dest.writeInt(trainClassCode);
         dest.writeInt(trainFastedCode);
         dest.writeString(wagonType);
         dest.writeInt(wagonClass);

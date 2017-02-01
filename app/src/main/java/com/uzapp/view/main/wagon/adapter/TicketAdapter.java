@@ -50,7 +50,7 @@ public class TicketAdapter extends ArrayAdapter<Ticket> {
         txtWagonNumber.setText(ticketItem.getWagonNumber());
         txtPlaceNumber.setText(ticketItem.getPlaceNumber());
         txtUpperLowerShelf.setText(", " + ticketItem.getPlaceType());
-        txtPriceTicket.setText(Integer.toString(ticketItem.getTicketPrice()) + " "
+        txtPriceTicket.setText(Double.toString(ticketItem.getTicketPrice()) + " "
                 + context.getString(R.string.ticket_currency));
 
         imageRemoveTicket.setOnClickListener(new View.OnClickListener() {

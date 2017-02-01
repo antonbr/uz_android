@@ -20,33 +20,32 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.vk.sdk.api.model.VKApiPhotoSize.S;
-
 /**
  * Created by Vladimir on 15.09.2016.
  */
 public class WagonLuxView extends LinearLayout {
 
-//    @BindView(R.id.btnPlaceUpperSide) Button btnPlaceUpperSide;
+    //    @BindView(R.id.btnPlaceUpperSide) Button btnPlaceUpperSide;
 //    @BindView(R.id.btnPlaceLowSide) Button btnPlaceLowSide;
     @BindView(R.id.btnPlaceLowStandardLeft) Button btnPlaceLowStandardLeft;
-//    @BindView(R.id.btnPlaceUpperStandardLeft) Button btnPlaceUpperStandardLeft;
+    //    @BindView(R.id.btnPlaceUpperStandardLeft) Button btnPlaceUpperStandardLeft;
     @BindView(R.id.btnPlaceLowStandardRight) Button btnPlaceLowStandardRight;
 //    @BindView(R.id.btnPlaceUpperStandardRight) Button btnPlaceUpperStandardRight;
 
     private String type, wagonNumber;
-    private int priceTicket, departureDate, arrivalDate;
+    private double priceTicket;
+    private int departureDate, arrivalDate;
     private String wagonClasses;
     private int placeLowStandardLeft, placeUpperStandardLeft, placeLowStandardRight,
             placeUpperStandardRight, placeLowSide, placeUpperSide;
 
-    public WagonLuxView(Context context, String type, String wagonNumber, int priceTicket,
+    public WagonLuxView(Context context, String type, String wagonNumber, double priceTicket,
                         int departureDate, int arrivalDate, String wagonClasses) {
         this(context, null, type, wagonNumber, priceTicket, departureDate, arrivalDate, wagonClasses);
     }
 
-    private void newInstanceData(String type, String wagonNumber, int priceTicket,
-                         int departureDate, int arrivalDate, String wagonClasses) {
+    private void newInstanceData(String type, String wagonNumber, double priceTicket,
+                                 int departureDate, int arrivalDate, String wagonClasses) {
         this.type = type;
         this.wagonNumber = wagonNumber;
         this.priceTicket = priceTicket;
@@ -55,7 +54,7 @@ public class WagonLuxView extends LinearLayout {
         this.wagonClasses = wagonClasses;
     }
 
-    public WagonLuxView(Context context, AttributeSet attrs, String type, String wagonNumber, int priceTicket,
+    public WagonLuxView(Context context, AttributeSet attrs, String type, String wagonNumber, double priceTicket,
                         int departureDate, int arrivalDate, String wagonClasses) {
         super(context, attrs);
         newInstanceData(type, wagonNumber, priceTicket, departureDate, arrivalDate, wagonClasses);
@@ -65,7 +64,7 @@ public class WagonLuxView extends LinearLayout {
 //        }else if (type.equalsIgnoreCase(Constants.TYPE_KUPE)) {
 //            inflater.inflate(R.layout.item_fragment_kupe_redesign, this, true);
 //        } else
-            if (type.equalsIgnoreCase(Constants.TYPE_LUX)) {
+        if (type.equalsIgnoreCase(Constants.TYPE_LUX)) {
             inflater.inflate(R.layout.item_fragment_lux, this, true);
         }
         ButterKnife.bind(this);
@@ -89,13 +88,13 @@ public class WagonLuxView extends LinearLayout {
 //            setPlaceButton(btnPlaceLowSide, placeLowSide, listPlaces.size());
 //        }
         if (btnPlaceLowStandardLeft != null) {
-            setPlaceButton(btnPlaceLowStandardLeft, placeLowStandardLeft, listPlaces.size());
+            setPlaceButton(btnPlaceLowStandardLeft, placeLowStandardLeft, listPlaces);
         }
 //        if (btnPlaceUpperStandardLeft != null) {
 //            setPlaceButton(btnPlaceUpperStandardLeft, placeUpperStandardLeft, listPlaces.size());
 //        }
         if (btnPlaceLowStandardRight != null) {
-            setPlaceButton(btnPlaceLowStandardRight, placeLowStandardRight, listPlaces.size());
+            setPlaceButton(btnPlaceLowStandardRight, placeLowStandardRight, listPlaces);
         }
 //        if (btnPlaceUpperStandardRight != null) {
 //            setPlaceButton(btnPlaceUpperStandardRight, placeUpperStandardRight, listPlaces.size());
@@ -167,14 +166,12 @@ public class WagonLuxView extends LinearLayout {
     /**
      * @param button
      * @param place
-     * @param sizeFreely
-     *
-     * Set available place in wagon
+     * @param freePlaces Set available place in wagon
      */
-    private void setPlaceButton(Button button, int place, int sizeFreely) {
+    private void setPlaceButton(Button button, int place, List<Integer> freePlaces) {
         button.setText(Integer.toString(place));
         button.setTag(place);
-        if (isEnabledPlace(button, sizeFreely)) {
+        if (isEnabledPlace(button, freePlaces)) {
             button.setEnabled(true);
             button.setTextColor(CommonUtils.changeTextColorPlace(getContext(), button, android.R.color.black));
         }
@@ -182,20 +179,18 @@ public class WagonLuxView extends LinearLayout {
 
     /**
      * @param button
-     * @param sizeFreely
+     * @param freePlaces
      * @return enabled place
-     *
+     * <p>
      * Is enabled place
      */
-    private boolean isEnabledPlace(Button button, int sizeFreely) {
-        return (sizeFreely >= (int) button.getTag());
+    private boolean isEnabledPlace(Button button, List<Integer> freePlaces) {
+        return (freePlaces.contains((int) button.getTag()));
     }
 
     /**
      * @param button
-     * @param placeType
-     *
-     * Set background button (place)
+     * @param placeType Set background button (place)
      */
     private void setBackgroundBtnPlace(Button button, String placeType) {
         button.setBackground(CommonUtils.changeBackgroundPlace(getContext(), button));
@@ -212,8 +207,8 @@ public class WagonLuxView extends LinearLayout {
         fragment.setAdapter(ticket, !isRemove);
     }
 
-    private Ticket newInstanceTicket(String wagonNumber, String placeNumber, String placeType, int priceTicket,
+    private Ticket newInstanceTicket(String wagonNumber, String placeNumber, String placeType, double priceTicket,
                                      int departureDate, int arrivalDate, String wagonClasses, String typeWagon) {
-        return new Ticket(wagonNumber, placeNumber, placeType, priceTicket, departureDate, arrivalDate, wagonClasses,typeWagon);
+        return new Ticket(wagonNumber, placeNumber, placeType, priceTicket, departureDate, arrivalDate, wagonClasses, typeWagon);
     }
 }
