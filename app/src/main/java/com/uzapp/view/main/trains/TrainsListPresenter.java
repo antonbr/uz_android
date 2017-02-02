@@ -48,7 +48,13 @@ public class TrainsListPresenter {
     void attachView(TrainsListView view) {
         this.view = view;
         api = ApiManager.getApi(view.getContext());
-        loadTrains();
+        if(trains.size()==0) {
+            loadTrains();
+        } else{
+            List<Train> trainForAdapterList = prepareTrainForAdapter(trains);
+            view.showTrainsList(date, trainForAdapterList);
+            checkNoContent(trains);
+        }
     }
 
     void detachView() {
@@ -155,7 +161,7 @@ public class TrainsListPresenter {
             if (response.isSuccessful()) {
                 List<com.uzapp.pojo.trains.Train> trains = response.body().getTrains();
                 List<Train> trainForAdapterList = prepareTrainForAdapter(trains);
-                trains.addAll(response.body().getTrains());
+                TrainsListPresenter.this.trains.addAll(trains);
                 view.showTrainsList(date, trainForAdapterList);
                 checkNoContent(trains);
             } else {

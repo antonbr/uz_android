@@ -272,9 +272,9 @@ public class PreparePurchaseFragment extends Fragment {
 
             Call<Booking> call = (ticket.isBooking()) ?
                     ApiManager.getApi(getActivity()).getBooking(train, stationFromCode, stationToCode, wagonType,
-                            wagonClass, wagonNumber, selectDate, wagonPlace, gson.toJson(documentList)) :
+                            wagonClass, wagonNumber, selectDate/1000, wagonPlace, gson.toJson(documentList)) :
                     ApiManager.getApi(getActivity()).getReserve(train, stationFromCode, stationToCode, wagonType,
-                            wagonClass, wagonNumber, selectDate, wagonPlace, bedding, service, gson.toJson(documentList));
+                            wagonClass, wagonNumber, selectDate/1000, wagonPlace, bedding, service, gson.toJson(documentList));
 
             call.enqueue(new BookingCallback(i));
         }

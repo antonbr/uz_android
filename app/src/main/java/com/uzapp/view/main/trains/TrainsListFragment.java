@@ -46,7 +46,9 @@ public class TrainsListFragment extends BaseFragment implements TrainsListAdapte
         trainsList.setAdapter(trainsAdapter);
         trainsList.setLayoutManager(new LinearLayoutManager(getContext()));
         trainsList.addItemDecoration(new SpaceItemDecoration((int) getResources().getDimension(R.dimen.small_padding)));
-        presenter = new TrainsListPresenter(getArguments());
+        if (presenter == null) {
+            presenter = new TrainsListPresenter(getArguments());
+        }
         presenter.attachView(this);
         return view;
     }
