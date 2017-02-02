@@ -72,7 +72,7 @@
     <string name="train_route_stop_time">%1$s мин</string>
     <string name="train_route_distance_km">%1$s км</string>
     <string name="train_route_title">Маршрут поезда</string>
-    <string name="train_travel_time">в пути %1$d ч %2$d мин</string>
+    <string name="train_travel_time">В пути %1$d ч %2$d мин</string>
 
     // select wagon
     <string name="wagon_filter">Фильтр</string>

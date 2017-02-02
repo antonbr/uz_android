@@ -43,4 +43,6 @@
     //for segmented switch view lib
     <color name="radio_button_selected_color">#4183d7</color>
     <color name="radio_button_unselected_color">@android:color/transparent</color>
+
+    <color name="divider">#c8c8c8</color>
 </resources>

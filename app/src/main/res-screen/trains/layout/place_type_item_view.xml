@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@android:color/white"
+              android:background="?attr/selectableItemBackground"
               android:gravity="center"
               android:orientation="horizontal"
               android:padding="@dimen/trains_padding_inside">
@@ -12,20 +12,21 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textAllCaps="true"
         android:text="ПЛАЦКАРТ"
-        android:textColor="@color/textColorDark"
-        android:textSize="@dimen/text_size_small"/>
+        android:textAllCaps="false"
+        android:textColor="@color/textColorGrey"
+        android:textSize="14sp"/>
 
     <TextView
         android:id="@+id/minPlacePrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:gravity="right"
         android:text="от 127 грн"
-        android:textSize="16sp"/>
+        android:textColor="@color/accentColor"
+        android:textSize="14sp"/>
 
     <TextView
         android:id="@+id/availablePlaceCount"
@@ -37,8 +38,12 @@
         android:minWidth="40dp"
         android:padding="6dp"
         android:text="555"
-        android:textColor="@color/accentColor"
-        android:textSize="14dp"/>
+        android:layout_marginRight="15dp"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"/>
 
-
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/train_wagon_next"/>
 </LinearLayout>

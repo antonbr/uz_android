@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.uzapp.R;
 import com.uzapp.util.Constants;
+import com.uzapp.view.main.MainActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -41,6 +42,7 @@ public class TabbedTrainFragment extends Fragment implements ViewPager.OnPageCha
         View view = inflater.inflate(R.layout.select_train_fragment, container, false);
         unbinder = ButterKnife.bind(this, view);
         initArguments();
+        ((MainActivity) getActivity()).showNavigationBar();
         setupViewPager();
         if (isGoingBack) {
             tabLayout.setupWithViewPager(viewPager);

@@ -19,16 +19,17 @@
         android:drawablePadding="15dp"
         android:drawableTop="@drawable/search_no_result"
         android:gravity="center"
-        android:visibility="gone"
         android:lineSpacingMultiplier="1.1"
         android:text="@string/trains_no_places"
-        android:textSize="18sp"/>
+        android:textSize="18sp"
+        android:visibility="gone"/>
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:layout_marginTop="43dp"
-        android:layout_centerHorizontal="true"
+        android:theme="@style/AppTheme"
         android:visibility="gone"/>
 </RelativeLayout>

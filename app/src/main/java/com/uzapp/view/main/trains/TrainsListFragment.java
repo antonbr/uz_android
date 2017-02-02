@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.uzapp.R;
 import com.uzapp.pojo.WagonType;
 import com.uzapp.pojo.prices.Prices;
-import com.uzapp.pojo.trains.Train;
 import com.uzapp.view.BaseFragment;
 import com.uzapp.view.common.SpaceItemDecoration;
 import com.uzapp.view.main.MainActivity;
@@ -85,7 +84,7 @@ public class TrainsListFragment extends BaseFragment implements TrainsListAdapte
     }
 
     @Override
-    public void showRouteFragment(Train train, long stationFromCode, long stationToCode, long date) {
+    public void showRouteFragment(com.uzapp.pojo.trains.Train train, long stationFromCode, long stationToCode, long date) {
         RouteFragment fragment = RouteFragment.getInstance(train, stationFromCode, stationToCode, date);
         ((MainActivity) getActivity()).addFragment(fragment, R.anim.slide_up, R.anim.slide_down);
     }
@@ -97,13 +96,13 @@ public class TrainsListFragment extends BaseFragment implements TrainsListAdapte
     }
 
     @Override
-    public void onWagonItemClicked(Train train, WagonType wagonType, String wagonClass) {
+    public void onWagonItemClicked(Train train, WagonType wagonType) {
         presenter.onWagonItemClicked(train, wagonType);
     }
 
     @Override
     public void showTrainsList(long date, List<Train> trains) {
-        trainsAdapter.addTrains(trains);
+        trainsAdapter.showTrains(trains);
         Fragment parentFragment = getParentFragment();
         if (parentFragment != null && parentFragment instanceof TabbedTrainFragment) {
             ((TabbedTrainFragment) parentFragment).onTrainsLoaded(date, trainsAdapter.getItemCount());

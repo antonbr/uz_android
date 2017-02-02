@@ -9,118 +9,34 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@drawable/divider_hint_color_horizontal"
         android:orientation="vertical"
         android:showDividers="middle">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/trains_padding_inside">
-
-            <TextView
-                android:id="@+id/departureTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:text="04:20"
-                android:textSize="22sp"/>
-
-            <TextView
-                android:id="@+id/departureDay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/departureTime"
-                android:fontFamily="sans-serif-medium"
-                android:text="21.06, СБ"
-                android:textAllCaps="true"
-                android:textSize="@dimen/text_size_small"/>
-
-            <TextView
-                android:id="@+id/travelTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/departureDay"
-                android:text="@string/train_travel_time"
-                android:textColor="@color/textColorHint"
-                android:textSize="@dimen/text_size_small"/>
-
-            <ImageView
-                android:id="@+id/arrowTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/departureTime"
-                android:layout_alignTop="@+id/departureTime"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_toRightOf="@+id/departureTime"
-                android:src="@drawable/arrow"/>
-
-            <TextView
-                android:id="@+id/arrivalTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/arrowTime"
-                android:layout_alignTop="@+id/arrowTime"
-                android:layout_toRightOf="@+id/arrowTime"
-                android:gravity="center_vertical"
-                android:text="23:45"
-                android:textSize="14sp"/>
-
-            <TextView
-                android:id="@+id/arrivalDay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/arrivalTime"
-                android:layout_below="@+id/arrivalTime"
-                android:text="21.06, СБ"
-                android:textAllCaps="true"
-                android:textSize="@dimen/text_size_small"/>
-
-            <!--<ImageView-->
-                <!--android:id="@+id/ticketTypeImage"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignParentRight="true"-->
-                <!--android:layout_alignTop="@+id/departureTime"-->
-                <!--android:src="@drawable/qrcode"/>-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/ticketTypeText"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignBottom="@+id/travelTime"-->
-                <!--android:layout_alignParentRight="true"-->
-                <!--android:gravity="right"-->
-                <!--android:text="@string/trains_eticket"-->
-                <!--android:textAllCaps="true"-->
-                <!--android:textColor="@color/accentColor"-->
-                <!--android:textSize="@dimen/text_size_small"/>-->
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/trains_padding_inside"
-            android:paddingLeft="@dimen/trains_padding_inside"
-            android:paddingRight="1dp"
-            android:paddingTop="@dimen/trains_padding_inside">
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="7dp"
+            android:paddingTop="3dp">
 
             <TextView
                 android:id="@+id/trainName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="3dp"
-                android:fontFamily="sans-serif-medium"
+                android:layout_alignBottom="@+id/infoButton"
+                android:layout_alignTop="@+id/infoButton"
+                android:gravity="center_vertical"
                 android:text="143 Л «Галичина»"
-                android:textSize="14sp"/>
+                android:textColor="@color/textColorGrey"
+                android:textSize="16sp"/>
 
             <ImageButton
                 android:id="@+id/infoButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
+                android:layout_marginLeft="2dp"
+                android:layout_toRightOf="@+id/trainName"
                 android:background="?attr/selectableItemBackground"
                 android:padding="8dp"
                 android:src="@drawable/info"/>
@@ -129,45 +45,157 @@
                 android:id="@+id/shareButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/infoButton"
+                android:layout_alignParentRight="true"
                 android:background="?attr/selectableItemBackground"
                 android:padding="8dp"
                 android:src="@drawable/share"/>
+
 
             <TextView
                 android:id="@+id/stationFrom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/trainName"
+                android:layout_marginTop="0dp"
                 android:text="ИВАНО-ФРАНКОВСК"
-                android:textAllCaps="true"
-                android:textSize="14sp"/>
+                android:textAllCaps="false"
+                android:textSize="16sp"/>
 
-            <ImageView
+            <TextView
                 android:id="@+id/arrowStations"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/stationFrom"
+                android:layout_alignBaseline="@+id/stationFrom"
                 android:layout_alignTop="@+id/stationFrom"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_toRightOf="@+id/stationFrom"
-                android:src="@drawable/arrow"/>
+                android:text="—"/>
 
             <TextView
                 android:id="@+id/stationTo"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/stationFrom"
                 android:layout_below="@+id/trainName"
-                android:layout_toLeftOf="@+id/shareButton"
                 android:layout_toRightOf="@+id/arrowStations"
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:text="Киев"
-                android:textAllCaps="true"
-                android:textSize="14sp"/>
+                android:textAllCaps="false"
+                android:textSize="16sp"/>
         </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorHintDivider"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/stationFrom"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="13dp"
+            android:weightSum="1">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4">
+
+                <TextView
+                    android:id="@+id/departureTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ticket_departure"
+                    android:textColor="@color/textColorGrey"
+                    android:textSize="@dimen/button_text_size"/>
+
+                <TextView
+                    android:id="@+id/departureTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/departureTitle"
+                    android:layout_marginTop="3dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="15:53"
+                    android:textAllCaps="true"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/departureDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/departureTime"
+                    android:text="Пт, 17 авг"
+                    android:textSize="@dimen/button_text_size"/>
+
+                <ImageView
+                    android:id="@+id/arrowDates"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/departureTime"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@+id/departureTime"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_toRightOf="@+id/departureTime"
+                    android:src="@drawable/arrow"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6">
+
+                <TextView
+                    android:id="@+id/arrivalTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ticket_arrival"
+                    android:textColor="@color/textColorGrey"
+                    android:textSize="@dimen/button_text_size"/>
+
+                <TextView
+                    android:id="@+id/arrivalTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/arrivalTitle"
+                    android:layout_marginTop="3dp"
+                    android:text="15:53"
+                    android:fontFamily="sans-serif-light"
+                    android:textAllCaps="true"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/arrivalDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/arrivalTime"
+                    android:text="Пт, 17 авг"
+                    android:textSize="@dimen/button_text_size"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/travelTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/departureDay"
+            android:paddingBottom="20dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="13dp"
+            android:text="@string/train_travel_time"
+            android:textSize="@dimen/button_text_size"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorHintDivider"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/placeTypesList"
