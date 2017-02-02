@@ -11,9 +11,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.uzapp.R;
+import com.uzapp.util.Constants;
 import com.uzapp.util.PrefsUtil;
 import com.uzapp.view.BaseActivity;
 import com.uzapp.view.login.LoginFlowActivity;
+import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.profile.ProfileFragment;
 
 import butterknife.BindView;
@@ -21,25 +23,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class MenuFragment extends Fragment {
-
     @BindView(R.id.btnLoginYourAccount)
     Button btnLoginYourAccount;
-
     private Unbinder unbinder;
-
-    public MenuFragment() {
-        // Required empty public constructor
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
@@ -53,6 +44,11 @@ public class MenuFragment extends Fragment {
         } else {
             ((BaseActivity) getActivity()).replaceFragment(new ProfileFragment(), true);
         }
+    }
+
+    @OnClick(R.id.menuRootView)
+    void onBackgroundClick() {
+        ((MainActivity) getActivity()).getBottomNavigationBar().setCurrentItem(Constants.BOTTOM_NAVIGATION_MENU, true);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.uzapp.view.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -53,9 +54,10 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
     }
 
     private void removeMenuFromStack() {
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(MenuFragment.class.getName());
+        Fragment fragment = fragmentManager.findFragmentByTag(MenuFragment.class.getName());
         if (fragment instanceof MenuFragment && fragment.isVisible()) {
-            getSupportFragmentManager().popBackStackImmediate();
+            fragmentManager.popBackStack(fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount()-1).getId(),
+                    FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
     }
 

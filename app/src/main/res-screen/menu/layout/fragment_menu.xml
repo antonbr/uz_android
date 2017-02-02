@@ -5,6 +5,7 @@
                 android:layout_marginBottom="@dimen/bottomBarHeight"
                 android:background="@color/fragmentDimBackground"
                 android:clickable="true"
+                android:id="@+id/menuRootView"
                 tools:context="com.uzapp.view.main.menu.MenuFragment">
 
     <LinearLayout
