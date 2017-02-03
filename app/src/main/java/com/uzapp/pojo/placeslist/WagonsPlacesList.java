@@ -14,6 +14,8 @@ import java.util.List;
 public class WagonsPlacesList {
     @SerializedName("charline")
     String charline;
+    @SerializedName("place_count")
+    int placeCount;
     @SerializedName("number")
     String number;
     @SerializedName("type_name")
@@ -49,32 +51,12 @@ public class WagonsPlacesList {
     @SerializedName("places")
     List<Integer> places;
 
-    public WagonsPlacesList() {
-
+    public int getPlaceCount() {
+        return placeCount;
     }
 
-    public WagonsPlacesList(String charline, String number, String typeName, String typeCode, String countryName,
-                            String countryCode, String railwayName, String railwayCode, boolean sitting, String className,
-                            String classCode, String costCurrency, int cost, String costReserveCurrency, int costReserve,
-                            boolean allowBonus, List<ServicesPrices> services, List<Integer> places) {
-        this.charline = charline;
-        this.number = number;
-        this.typeName = typeName;
-        this.typeCode = typeCode;
-        this.countryName = countryName;
-        this.countryCode = countryCode;
-        this.railwayName = railwayName;
-        this.railwayCode = railwayCode;
-        this.sitting = sitting;
-        this.className = className;
-        this.classCode = classCode;
-        this.costCurrency = costCurrency;
-        this.cost = cost;
-        this.costReserveCurrency = costReserveCurrency;
-        this.costReserve = costReserve;
-        this.allowBonus = allowBonus;
-        this.services = services;
-        this.places = places;
+    public void setPlaceCount(int placeCount) {
+        this.placeCount = placeCount;
     }
 
     public String getCharline() {

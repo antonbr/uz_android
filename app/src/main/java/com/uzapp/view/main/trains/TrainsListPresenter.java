@@ -48,9 +48,9 @@ public class TrainsListPresenter {
     void attachView(TrainsListView view) {
         this.view = view;
         api = ApiManager.getApi(view.getContext());
-        if(trains.size()==0) {
+        if (trains.size() == 0) {
             loadTrains();
-        } else{
+        } else {
             List<Train> trainForAdapterList = prepareTrainForAdapter(trains);
             view.showTrainsList(date, trainForAdapterList);
             checkNoContent(trains);
@@ -103,7 +103,7 @@ public class TrainsListPresenter {
         List<Train> trainForAdapters = new ArrayList<>(trains.size());
         for (int i = 0; i < trains.size(); i++) {
             com.uzapp.pojo.trains.Train train = trains.get(i);
-            Train trainForAdapter = new Train(this.trains.size() + i);
+            Train trainForAdapter = new Train(i);
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(train.getDepartureDate() * 1000);
             Date departureDate = calendar.getTime();
@@ -160,8 +160,8 @@ public class TrainsListPresenter {
             if (view == null) return;
             if (response.isSuccessful()) {
                 List<com.uzapp.pojo.trains.Train> trains = response.body().getTrains();
-                List<Train> trainForAdapterList = prepareTrainForAdapter(trains);
                 TrainsListPresenter.this.trains.addAll(trains);
+                List<Train> trainForAdapterList = prepareTrainForAdapter(trains);
                 view.showTrainsList(date, trainForAdapterList);
                 checkNoContent(trains);
             } else {

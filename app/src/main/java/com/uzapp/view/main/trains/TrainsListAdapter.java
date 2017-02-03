@@ -99,7 +99,7 @@ public class TrainsListAdapter extends RecyclerView.Adapter<TrainsListAdapter.Tr
         return trainList.size();
     }
 
-    public class TrainHolder extends RecyclerView.ViewHolder {
+    class TrainHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.departureTime) TextView departureTime;
         @BindView(departureDate) TextView departureDay;
         @BindView(R.id.arrivalTime) TextView arrivalTime;
@@ -115,7 +115,7 @@ public class TrainsListAdapter extends RecyclerView.Adapter<TrainsListAdapter.Tr
         @BindView(R.id.placeTypesList) RecyclerView placeTypesList;
         @BindDimen(R.dimen.trains_padding_inside) int padding;
 
-        public TrainHolder(View view) {
+        TrainHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }

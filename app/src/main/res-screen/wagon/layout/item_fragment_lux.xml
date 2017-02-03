@@ -1,58 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--android:orientation="vertical"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content">-->
-
-<RelativeLayout android:layout_width="match_parent"
-    android:layout_height="132dp"
-    android:background="@drawable/ic_sector_lux"
-    android:paddingLeft="50dp"
-    android:paddingRight="50dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:paddingTop="10dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btnPlaceLowStandardLeft"
-                    android:layout_width="190dp"
-                    android:layout_height="wrap_content"
-                    android:enabled="false"
-                    android:textColor="@android:color/darker_gray"
-                    android:background="@drawable/border_button_place"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="132dp"
+                android:background="@drawable/ic_sector_lux"
                 android:paddingBottom="10dp"
-                android:orientation="horizontal">
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                android:paddingTop="10dp">
 
-                <Button
-                    android:id="@+id/btnPlaceLowStandardRight"
-                    android:layout_width="190dp"
-                    android:layout_height="wrap_content"
-                    android:enabled="false"
-                    android:textColor="@android:color/darker_gray"
-                    android:background="@drawable/border_button_place"/>
+    <Button
+        android:id="@+id/btnPlaceLowStandardLeft"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        style="@style/PlaceButtonStyle"/>
 
-            </RelativeLayout>
+    <Button
+        android:id="@+id/btnPlaceLowStandardRight"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        style="@style/PlaceButtonStyle"/>
 
-        </RelativeLayout>
-
-    </RelativeLayout>
-
-<!--</LinearLayout>-->
+</RelativeLayout>

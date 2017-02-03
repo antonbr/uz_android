@@ -90,7 +90,7 @@ public class TicketAdapter extends ArrayAdapter<Ticket> {
         Ticket ticketItem = getTicketItem(position);
         FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
         WagonPlaceFragment fragment = (WagonPlaceFragment) manager.findFragmentById(R.id.fragmentContainer);
-        fragment.ticketPlaceRemoveView(Integer.parseInt(ticketItem.getPlaceNumber()), ticketItem.getWagonNumber());
+      //  fragment.ticketPlaceRemoveView(Integer.parseInt(ticketItem.getPlaceNumber()), ticketItem.getWagonNumber());
     }
 
     /**

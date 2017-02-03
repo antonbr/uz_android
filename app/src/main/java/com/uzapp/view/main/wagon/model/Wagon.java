@@ -1,8 +1,5 @@
 package com.uzapp.view.main.wagon.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.uzapp.pojo.prices.PlacesPrices;
 import com.uzapp.pojo.prices.ServicesPrices;
 
@@ -11,8 +8,7 @@ import java.util.List;
 /**
  * Created by Vladimir on 16.08.2016.
  */
-public class Wagon implements Parcelable {
-
+public class Wagon {
     private String charline;
     private String number;
     private String typeName;
@@ -31,9 +27,16 @@ public class Wagon implements Parcelable {
     private boolean allowBonus;
     private List<ServicesPrices> services;
     private PlacesPrices placesPrices;
-    private List<Integer> places;
+    private List<Integer> availablePlaces;
+    private int placesCount;
 
-    public Wagon() {}
+    public int getPlacesCount() {
+        return placesCount;
+    }
+
+    public void setPlacesCount(int placesCount) {
+        this.placesCount = placesCount;
+    }
 
     public String getCharline() {
         return charline;
@@ -179,21 +182,12 @@ public class Wagon implements Parcelable {
         this.placesPrices = placesPrices;
     }
 
-    public List<Integer> getPlaces() {
-        return places;
+    public List<Integer> getAvailablePlaces() {
+        return availablePlaces;
     }
 
-    public void setPlaces(List<Integer> places) {
-        this.places = places;
+    public void setAvailablePlaces(List<Integer> availablePlaces) {
+        this.availablePlaces = availablePlaces;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
-    }
 }

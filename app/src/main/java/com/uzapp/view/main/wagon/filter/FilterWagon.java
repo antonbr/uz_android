@@ -39,9 +39,9 @@ public class FilterWagon extends Filter {
                 Wagon itemList = iterator.next();
                 for (int i = 0; i < 10; i++) {
                     for (int j = (1 + (i * 2)); j < (3 + (i * 2)); j++)
-                        if (itemList.getPlaces().size() >= j) {
-                            if (itemList.getPlaces().get(j - 1) == j) {
-                                placesSection.add(j - 1, itemList.getPlaces().get(j - 1));
+                        if (itemList.getAvailablePlaces().size() >= j) {
+                            if (itemList.getAvailablePlaces().get(j - 1) == j) {
+                                placesSection.add(j - 1, itemList.getAvailablePlaces().get(j - 1));
                             }
                             if (placesSection.size() == 2) {
                                 places.addAll(placesSection);
@@ -61,9 +61,9 @@ public class FilterWagon extends Filter {
                 } else {
                     for (int i = 0; i < 10; i++) {
                         for (int j = (1 + (i * 4)); j < (5 + (i * 4)); j++)
-                            if (itemList.getPlaces().size() >= j) {
-                                if (itemList.getPlaces().get(j - 1) == j) {
-                                    placesSection.add(j - 1, itemList.getPlaces().get(j - 1));
+                            if (itemList.getAvailablePlaces().size() >= j) {
+                                if (itemList.getAvailablePlaces().get(j - 1) == j) {
+                                    placesSection.add(j - 1, itemList.getAvailablePlaces().get(j - 1));
                                 }
                                 if (placesSection.size() == 4) {
                                     places.addAll(placesSection);
@@ -89,9 +89,9 @@ public class FilterWagon extends Filter {
         if (valueFilter.equalsIgnoreCase(context.getString(R.string.filter_standard))) {
             while (iterator.hasNext()) {
                 Wagon itemList = iterator.next();
-                for (int i = 0; i < itemList.getPlaces().size(); i++)
-                    if (itemList.getPlaces().get(i) < 40) {
-                        places.add(itemList.getPlaces().get(i));
+                for (int i = 0; i < itemList.getAvailablePlaces().size(); i++)
+                    if (itemList.getAvailablePlaces().get(i) < 40) {
+                        places.add(itemList.getAvailablePlaces().get(i));
                     }
                 if (places.isEmpty()) {
                     iterator.remove();
@@ -105,9 +105,9 @@ public class FilterWagon extends Filter {
                         || itemList.getTypeCode().equalsIgnoreCase(Constants.TYPE_LUX)) {
                     iterator.remove();
                 } else {
-                    for (int i = 0; i < itemList.getPlaces().size(); i++)
-                        if (itemList.getPlaces().get(i) > 40) {
-                            places.add(itemList.getPlaces().get(i));
+                    for (int i = 0; i < itemList.getAvailablePlaces().size(); i++)
+                        if (itemList.getAvailablePlaces().get(i) > 40) {
+                            places.add(itemList.getAvailablePlaces().get(i));
                         }
                     if (places.isEmpty()) {
                         iterator.remove();
@@ -128,9 +128,9 @@ public class FilterWagon extends Filter {
         if (valueFilter.equalsIgnoreCase(context.getString(R.string.filter_bottom))) {
             while (iterator.hasNext()) {
                 Wagon itemList = iterator.next();
-                for (int i = 0; i < itemList.getPlaces().size(); i++)
-                    if (CommonUtils.isOdd(itemList.getPlaces().get(i))) {
-                        places.add(itemList.getPlaces().get(i));
+                for (int i = 0; i < itemList.getAvailablePlaces().size(); i++)
+                    if (CommonUtils.isOdd(itemList.getAvailablePlaces().get(i))) {
+                        places.add(itemList.getAvailablePlaces().get(i));
                     }
                 if (places.isEmpty()) {
                     iterator.remove();
@@ -143,9 +143,9 @@ public class FilterWagon extends Filter {
                 if (itemList.getTypeCode().equalsIgnoreCase(Constants.TYPE_LUX)) {
                     iterator.remove();
                 } else {
-                    for (int i = 0; i < itemList.getPlaces().size(); i++)
-                        if (!CommonUtils.isOdd(itemList.getPlaces().get(i))) {
-                            places.add(itemList.getPlaces().get(i));
+                    for (int i = 0; i < itemList.getAvailablePlaces().size(); i++)
+                        if (!CommonUtils.isOdd(itemList.getAvailablePlaces().get(i))) {
+                            places.add(itemList.getAvailablePlaces().get(i));
                         }
                     if (places.isEmpty()) {
                         iterator.remove();

@@ -21,8 +21,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:leftImageRes="@drawable/back_blue"
-                app:title=""
-                app:showLeftImageBtn="true"/>
+                app:showLeftImageBtn="true"
+                app:title=""/>
 
             <TextView
                 android:id="@+id/txtWagonNumber"
@@ -38,13 +38,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <!--<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
-    <!--android:id="@+id/containerTopLayout"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_below="@+id/layoutToolbar"-->
-    <!--card_view:cardBackgroundColor="@android:color/white"-->
-    <!--card_view:cardElevation="5dp">-->
 
     <LinearLayout
         android:id="@+id/layoutBuyReserveTicket"
@@ -57,91 +50,16 @@
 
     </LinearLayout>
 
-    <!--</android.support.v7.widget.CardView>-->
 
-    <!--<RelativeLayout-->
-    <!--android:id="@+id/containerTopLayout"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_below="@+id/layoutToolbar">-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/wagonRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/cardViewWagon"
+        android:layout_below="@+id/layoutBuyReserveTicket"
+        android:layout_marginBottom="1dp"
+        android:background="@color/backgroundColor"/>
 
-    <!--<LinearLayout-->
-    <!--android:id="@+id/layoutBuyReserveTicket"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:visibility="gone">-->
-
-    <!--<include layout="@layout/include_buy_reserve" />-->
-
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-    <!--android:id="@+id/layoutFilterPlace"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:background="@android:color/white"-->
-    <!--android:visibility="gone">-->
-
-    <!--<include layout="@layout/include_filter_wagon" />-->
-
-    <!--</LinearLayout>-->
-
-    <!--</RelativeLayout>-->
-
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/scrollView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/cardViewWagon"
-                android:layout_below="@+id/layoutBuyReserveTicket"
-                android:layout_marginBottom="1dp"
-                android:background="@color/backgroundColor"
-                android:fillViewport="true">
-
-        <LinearLayout
-            android:id="@+id/layoutWagon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingTop="15dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:gravity="center_horizontal"
-                    android:src="@drawable/ic_head_lux"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/ic_footer_lux"/>
-
-            </LinearLayout>
-        </LinearLayout>
-
-    </ScrollView>
 
     <ProgressBar
         android:id="@+id/progressBar"

@@ -80,7 +80,7 @@ public class WagonTypeAdapter extends BaseAdapter implements View.OnClickListene
 
         if (view == null) {
             if (typeWagon.equalsIgnoreCase(Constants.TYPE_ECONOMY)) {
-                view = layoutInflater.inflate(R.layout.item_fragment_econom_redesign, parent, false);
+                view = layoutInflater.inflate(R.layout.item_fragment_platskart, parent, false);
                 placeLowStandardLeft = 1 + (position * 4);
                 placeUpperStandardLeft = 2 + (position * 4);
                 placeLowStandardRight = 3 + (position * 4);
@@ -88,7 +88,7 @@ public class WagonTypeAdapter extends BaseAdapter implements View.OnClickListene
                 placeLowSide = 59 - (position * 2);
                 placeUpperSide = 60 - (position * 2);
             } else if (typeWagon.equalsIgnoreCase(Constants.TYPE_KUPE)) {
-                view = layoutInflater.inflate(R.layout.item_fragment_kupe_redesign, parent, false);
+                view = layoutInflater.inflate(R.layout.item_fragment_kupe, parent, false);
                 placeLowStandardLeft = 1 + (position * 4);
                 placeUpperStandardLeft = 2 + (position * 4);
                 placeLowStandardRight = 3 + (position * 4);

@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 
 import com.uzapp.R;
 import com.uzapp.util.CommonUtils;
-import com.uzapp.util.Constants;
 import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.wagon.fragment.WagonPlaceFragment;
 import com.uzapp.view.main.wagon.model.Ticket;
@@ -24,9 +23,6 @@ import butterknife.OnClick;
  * Created by Vladimir on 15.09.2016.
  */
 public class WagonKupeView extends LinearLayout {
-
-    //    @BindView(R.id.btnPlaceUpperSide) Button btnPlaceUpperSide;
-//    @BindView(R.id.btnPlaceLowSide) Button btnPlaceLowSide;
     @BindView(R.id.btnPlaceLowStandardLeft) Button btnPlaceLowStandardLeft;
     @BindView(R.id.btnPlaceUpperStandardLeft) Button btnPlaceUpperStandardLeft;
     @BindView(R.id.btnPlaceLowStandardRight) Button btnPlaceLowStandardRight;
@@ -37,16 +33,15 @@ public class WagonKupeView extends LinearLayout {
     private int departureDate, arrivalDate;
     private String wagonClasses;
     private int placeLowStandardLeft, placeUpperStandardLeft, placeLowStandardRight,
-            placeUpperStandardRight, placeLowSide, placeUpperSide;
+            placeUpperStandardRight;
 
-    public WagonKupeView(Context context, String type, String wagonNumber, double priceTicket,
+    public WagonKupeView(Context context, String wagonNumber, double priceTicket,
                          int departureDate, int arrivalDate, String wagonClasses) {
-        this(context, null, type, wagonNumber, priceTicket, departureDate, arrivalDate, wagonClasses);
+        this(context, null, wagonNumber, priceTicket, departureDate, arrivalDate, wagonClasses);
     }
 
-    private void newInstanceData(String type, String wagonNumber, double priceTicket,
+    private void newInstanceData( String wagonNumber, double priceTicket,
                                  int departureDate, int arrivalDate, String wagonClasses) {
-        this.type = type;
         this.wagonNumber = wagonNumber;
         this.priceTicket = priceTicket;
         this.departureDate = departureDate;
@@ -54,43 +49,17 @@ public class WagonKupeView extends LinearLayout {
         this.wagonClasses = wagonClasses;
     }
 
-    public WagonKupeView(Context context, AttributeSet attrs, String type, String wagonNumber, double priceTicket,
+    public WagonKupeView(Context context, AttributeSet attrs, String wagonNumber, double priceTicket,
                          int departureDate, int arrivalDate, String wagonClasses) {
         super(context, attrs);
-        newInstanceData(type, wagonNumber, priceTicket, departureDate, arrivalDate, wagonClasses);
+        newInstanceData(wagonNumber, priceTicket, departureDate, arrivalDate, wagonClasses);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        if (type.equalsIgnoreCase(Constants.TYPE_ECONOMY)) {
-//            inflater.inflate(R.layout.item_fragment_econom_redesign, this, true);
-//        }else
-        if (type.equalsIgnoreCase(Constants.TYPE_KUPE)) {
-            inflater.inflate(R.layout.item_fragment_kupe_redesign, this, true);
-        }
-//    else
-//            if (type.equalsIgnoreCase(Constants.TYPE_LUX)) {
-//            inflater.inflate(R.layout.item_fragment_lux, this, true);
-//        }
+            inflater.inflate(R.layout.item_fragment_kupe, this, true);
         ButterKnife.bind(this);
-//        setCardBackgroundColor(Color.WHITE);
     }
 
     public void initView(List<Integer> listPlaces, int position) {
-//        if (type.equalsIgnoreCase(Constants.TYPE_ECONOMY)) {
-//            initPlaceEconomy(position);
-//        } else
-        if (type.equalsIgnoreCase(Constants.TYPE_KUPE)) {
             initPlaceKupe(position);
-        }
-//    else
-//        if (type.equalsIgnoreCase(Constants.TYPE_LUX)) {
-//            initPlaceLux(position);
-//        }
-
-//        if (btnPlaceUpperSide != null) {
-//            setPlaceButton(btnPlaceUpperSide, placeUpperSide, listPlaces.size());
-//        }
-//        if (btnPlaceLowSide != null) {
-//            setPlaceButton(btnPlaceLowSide, placeLowSide, listPlaces.size());
-//        }
         if (btnPlaceLowStandardLeft != null) {
             setPlaceButton(btnPlaceLowStandardLeft, placeLowStandardLeft, listPlaces);
         }
@@ -104,16 +73,6 @@ public class WagonKupeView extends LinearLayout {
             setPlaceButton(btnPlaceUpperStandardRight, placeUpperStandardRight, listPlaces);
         }
     }
-
-//    @OnClick(R.id.btnPlaceUpperSide)
-//    void onClickPlaceUpperSideBtn() {
-//        onClickPlace(btnPlaceUpperSide);
-//    }
-//
-//    @OnClick(R.id.btnPlaceLowSide)
-//    void onClickPlaceLowSideBtn() {
-//        onClickPlace(btnPlaceLowSide);
-//    }
 
     @OnClick(R.id.btnPlaceLowStandardLeft)
     void onClickPlaceLowStandardLeftBtn() {
@@ -135,15 +94,6 @@ public class WagonKupeView extends LinearLayout {
         onClickPlace(btnPlaceUpperStandardRight);
     }
 
-    //    private void initPlaceEconomy(int position) {
-//        placeLowStandardLeft = 1 + (position * 4);
-//        placeUpperStandardLeft = 2 + (position * 4);
-//        placeLowStandardRight = 3 + (position * 4);
-//        placeUpperStandardRight = 4 + (position * 4);
-//        placeLowSide = 59 - (position * 2);
-//        placeUpperSide = 60 - (position * 2);
-//    }
-//
     private void initPlaceKupe(int position) {
         placeLowStandardLeft = 1 + (position * 4);
         placeUpperStandardLeft = 2 + (position * 4);
@@ -151,19 +101,9 @@ public class WagonKupeView extends LinearLayout {
         placeUpperStandardRight = 4 + (position * 4);
     }
 
-//    private void initPlaceLux(int position) {
-//        placeLowStandardLeft = 1 + (position * 2);
-//        placeLowStandardRight = 2 + (position * 2);
-//    }
-
     public void onClickPlace(Button buttonPlace) {
-        String filterString;
-        if (type.equalsIgnoreCase(Constants.TYPE_LUX)) {
-            filterString = getContext().getString(R.string.filter_bottom);
-        } else {
-            filterString = (CommonUtils.isOdd((int) buttonPlace.getTag()))
+        String filterString = (CommonUtils.isOdd((int) buttonPlace.getTag()))
                     ? getContext().getString(R.string.filter_bottom) : getContext().getString(R.string.filter_top);
-        }
         setBackgroundBtnPlace(buttonPlace, filterString);
     }
 
@@ -176,15 +116,10 @@ public class WagonKupeView extends LinearLayout {
         }
     }
 
-
     private boolean isEnabledPlace(Button button, List<Integer> freePlaces) {
         return (freePlaces.contains((int) button.getTag()));
     }
 
-    /**
-     * @param button
-     * @param placeType Set background button (place)
-     */
     private void setBackgroundBtnPlace(Button button, String placeType) {
         button.setBackground(CommonUtils.changeBackgroundPlace(getContext(), button));
         button.setTextColor(CommonUtils.changeTextColorPlace(getContext(), button, android.R.color.black));

@@ -24,20 +24,14 @@ import butterknife.OnClick;
  * Created by Vladimir on 15.09.2016.
  */
 public class WagonLuxView extends LinearLayout {
-
-    //    @BindView(R.id.btnPlaceUpperSide) Button btnPlaceUpperSide;
-//    @BindView(R.id.btnPlaceLowSide) Button btnPlaceLowSide;
     @BindView(R.id.btnPlaceLowStandardLeft) Button btnPlaceLowStandardLeft;
-    //    @BindView(R.id.btnPlaceUpperStandardLeft) Button btnPlaceUpperStandardLeft;
     @BindView(R.id.btnPlaceLowStandardRight) Button btnPlaceLowStandardRight;
-//    @BindView(R.id.btnPlaceUpperStandardRight) Button btnPlaceUpperStandardRight;
 
     private String type, wagonNumber;
     private double priceTicket;
     private int departureDate, arrivalDate;
     private String wagonClasses;
-    private int placeLowStandardLeft, placeUpperStandardLeft, placeLowStandardRight,
-            placeUpperStandardRight, placeLowSide, placeUpperSide;
+    private int placeLowStandardLeft,placeLowStandardRight;
 
     public WagonLuxView(Context context, String type, String wagonNumber, double priceTicket,
                         int departureDate, int arrivalDate, String wagonClasses) {
@@ -59,93 +53,35 @@ public class WagonLuxView extends LinearLayout {
         super(context, attrs);
         newInstanceData(type, wagonNumber, priceTicket, departureDate, arrivalDate, wagonClasses);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        if (type.equalsIgnoreCase(Constants.TYPE_ECONOMY)) {
-//            inflater.inflate(R.layout.item_fragment_econom_redesign, this, true);
-//        }else if (type.equalsIgnoreCase(Constants.TYPE_KUPE)) {
-//            inflater.inflate(R.layout.item_fragment_kupe_redesign, this, true);
-//        } else
         if (type.equalsIgnoreCase(Constants.TYPE_LUX)) {
             inflater.inflate(R.layout.item_fragment_lux, this, true);
         }
         ButterKnife.bind(this);
-//        setCardBackgroundColor(Color.WHITE);
     }
 
     public void initView(List<Integer> listPlaces, int position) {
-//        if (type.equalsIgnoreCase(Constants.TYPE_ECONOMY)) {
-//            initPlaceEconomy(position);
-//        } else if (type.equalsIgnoreCase(Constants.TYPE_KUPE)) {
-//            initPlaceKupe(position);
-//        } else
         if (type.equalsIgnoreCase(Constants.TYPE_LUX)) {
             initPlaceLux(position);
         }
 
-//        if (btnPlaceUpperSide != null) {
-//            setPlaceButton(btnPlaceUpperSide, placeUpperSide, listPlaces.size());
-//        }
-//        if (btnPlaceLowSide != null) {
-//            setPlaceButton(btnPlaceLowSide, placeLowSide, listPlaces.size());
-//        }
         if (btnPlaceLowStandardLeft != null) {
             setPlaceButton(btnPlaceLowStandardLeft, placeLowStandardLeft, listPlaces);
         }
-//        if (btnPlaceUpperStandardLeft != null) {
-//            setPlaceButton(btnPlaceUpperStandardLeft, placeUpperStandardLeft, listPlaces.size());
-//        }
         if (btnPlaceLowStandardRight != null) {
             setPlaceButton(btnPlaceLowStandardRight, placeLowStandardRight, listPlaces);
         }
-//        if (btnPlaceUpperStandardRight != null) {
-//            setPlaceButton(btnPlaceUpperStandardRight, placeUpperStandardRight, listPlaces.size());
-//        }
     }
 
-//    @OnClick(R.id.btnPlaceUpperSide)
-//    void onClickPlaceUpperSideBtn() {
-//        onClickPlace(btnPlaceUpperSide);
-//    }
-//
-//    @OnClick(R.id.btnPlaceLowSide)
-//    void onClickPlaceLowSideBtn() {
-//        onClickPlace(btnPlaceLowSide);
-//    }
 
     @OnClick(R.id.btnPlaceLowStandardLeft)
     void onClickPlaceLowStandardLeftBtn() {
         onClickPlace(btnPlaceLowStandardLeft);
     }
 
-//    @OnClick(R.id.btnPlaceUpperStandardLeft)
-//    void onClickPlaceUpperStandardLeftBtn() {
-//        onClickPlace(btnPlaceUpperStandardLeft);
-//    }
-
     @OnClick(R.id.btnPlaceLowStandardRight)
     void onClickPlaceLowStandardRightBtn() {
         onClickPlace(btnPlaceLowStandardRight);
     }
-
-//    @OnClick(R.id.btnPlaceUpperStandardRight)
-//    void onClickPlaceUpperStandardRightBtn() {
-//        onClickPlace(btnPlaceUpperStandardRight);
-//    }
-
-//    private void initPlaceEconomy(int position) {
-//        placeLowStandardLeft = 1 + (position * 4);
-//        placeUpperStandardLeft = 2 + (position * 4);
-//        placeLowStandardRight = 3 + (position * 4);
-//        placeUpperStandardRight = 4 + (position * 4);
-//        placeLowSide = 59 - (position * 2);
-//        placeUpperSide = 60 - (position * 2);
-//    }
-//
-//    private void initPlaceKupe(int position) {
-//        placeLowStandardLeft = 1 + (position * 4);
-//        placeUpperStandardLeft = 2 + (position * 4);
-//        placeLowStandardRight = 3 + (position * 4);
-//        placeUpperStandardRight = 4 + (position * 4);
-//    }
 
     private void initPlaceLux(int position) {
         placeLowStandardLeft = 1 + (position * 2);

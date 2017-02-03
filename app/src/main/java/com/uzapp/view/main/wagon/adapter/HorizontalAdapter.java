@@ -47,7 +47,7 @@ public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.Vi
         void onClickLayoutCountWagons() {
             FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
             WagonPlaceFragment wagonPlaceFragment = (WagonPlaceFragment) manager.findFragmentById(R.id.fragmentContainer);
-            wagonPlaceFragment.addWagonView(listWagon, getAdapterPosition());
+            wagonPlaceFragment.showWagon(listWagon, getAdapterPosition());
 
             selectedPosition = getAdapterPosition();
             notifyDataSetChanged();
