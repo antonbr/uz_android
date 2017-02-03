@@ -1,11 +1,11 @@
 package com.uzapp.view.main.wagon.fragment;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,19 +23,18 @@ import com.uzapp.pojo.placeslist.WagonsPlacesList;
 import com.uzapp.pojo.prices.Prices;
 import com.uzapp.pojo.prices.WagonsPrices;
 import com.uzapp.util.CommonUtils;
-import com.uzapp.util.Constants;
 import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.purchase.fragment.PreparePurchaseFragment;
-import com.uzapp.view.main.wagon.adapter.HorizontalAdapter;
+import com.uzapp.view.main.wagon.adapter.WagonsListAdapter;
+import com.uzapp.view.main.wagon.adapter.LyingWagonBaseAdapter;
 import com.uzapp.view.main.wagon.adapter.TicketAdapter;
-import com.uzapp.view.main.wagon.adapter.WagonKupeAdapter;
-import com.uzapp.view.main.wagon.adapter.WagonLuxAdapter;
-import com.uzapp.view.main.wagon.adapter.WagonPlatskartAdapter;
+import com.uzapp.view.main.wagon.adapter.WagonAdapterFactory;
 import com.uzapp.view.main.wagon.model.Ticket;
 import com.uzapp.view.main.wagon.model.Wagon;
 import com.uzapp.view.main.wagon.view.ListViewMaxHeight;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -50,7 +49,7 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WagonPlaceFragment extends Fragment {
+public class WagonPlaceFragment extends Fragment implements LyingWagonBaseAdapter.OnPlaceSelectionListener, TicketAdapter.RemoveTicketListener, WagonsListAdapter.WagonListener {
 
     public static final String EXTRA_PRICES = "EXTRA_PRICES";
     public static final String EXTRA_PRICES_POSITION = "EXTRA_PRICES_POSITION";
@@ -76,11 +75,12 @@ public class WagonPlaceFragment extends Fragment {
     ProgressBar progressBar;
     private Unbinder unbinder;
 
-    private int stationFromCode, stationToCode, dateTrain, departureDate, arrivalDate, position;
+    private int stationFromCode, stationToCode, dateTrain, departureDate, arrivalDate, selectedWagonPosition;
     private String train, wagonTypes, wagonClasses, wagonNumbers, trainName, stationFromName, stationToName;
     private boolean isBooking = true;
     private boolean isReserve = false;
     private List<Ticket> listTickets = new ArrayList<>();
+    private HashMap<Wagon, SparseBooleanArray> selectedPlaces;
     private List<Wagon> wagonsLists;
     private Prices prices;
     private long selectDate;
@@ -99,7 +99,6 @@ public class WagonPlaceFragment extends Fragment {
         return fragment;
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -123,7 +122,7 @@ public class WagonPlaceFragment extends Fragment {
     private void setDataFromArgument() {
         if (getArguments() != null) {
             prices = getArguments().getParcelable(EXTRA_PRICES);
-            position = getArguments().getInt(EXTRA_PRICES_POSITION);
+            selectedWagonPosition = getArguments().getInt(EXTRA_PRICES_POSITION);
             departureDate = getArguments().getInt(EXTRA_TRAIN_DEPARTURE_DATE);
             arrivalDate = getArguments().getInt(EXTRA_TRAIN_ARRIVAL_DATE);
             selectDate = getArguments().getLong(EXTRA_TRAIN_DATE);
@@ -158,9 +157,16 @@ public class WagonPlaceFragment extends Fragment {
         showWagonLayout(false);
         wagonRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         ((SimpleItemAnimator) wagonRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
-        Call<List<PricesPlacesList>> call = ApiManager.getApi(getActivity()).getPlacesList(stationFromCode,
-                stationToCode, train, wagonTypes, wagonClasses, wagonNumbers, dateTrain);
-        call.enqueue(listPlacesCallback);
+        if (wagonsLists == null) {
+            Call<List<PricesPlacesList>> call = ApiManager.getApi(getActivity()).getPlacesList(stationFromCode,
+                    stationToCode, train, wagonTypes, wagonClasses, wagonNumbers, dateTrain);
+            call.enqueue(listPlacesCallback);
+        } else {
+            setHorizontalWagonsAdapter(wagonsLists);
+            onWagonSelected(0);
+            showProgress(false);
+            showWagonLayout(true);
+        }
         if (listTickets != null && listTickets.size() > 0) {
             layoutBuyReserveTicket.setVisibility(View.VISIBLE);
             setAdapter(null, false);
@@ -208,10 +214,9 @@ public class WagonPlaceFragment extends Fragment {
                     wagonsPlacesLists.addAll(pricePlace.getTrainPlacesList().getWagons());
                 }
                 wagonsLists = getWagonsList(prices.getTrain().getWagons(), wagonsPlacesLists);
-
+                selectedPlaces = new HashMap<>();
                 setHorizontalWagonsAdapter(wagonsLists);
-                showWagon(wagonsLists, 0);
-
+                onWagonSelected(0);
                 showProgress(false);
                 showWagonLayout(true);
             } else {
@@ -268,7 +273,7 @@ public class WagonPlaceFragment extends Fragment {
      * @param isRemoveItem Set adapter for list items wagon
      */
     public void setAdapter(Ticket ticket, boolean isRemoveItem) {
-        TicketAdapter adapter = new TicketAdapter(getActivity(), listTickets);
+        TicketAdapter adapter = new TicketAdapter(getActivity(), listTickets, this);
         if (isRemoveItem) {
             Iterator<Ticket> it = listTickets.iterator();
             while (it.hasNext()) {
@@ -293,132 +298,55 @@ public class WagonPlaceFragment extends Fragment {
     }
 
     /**
-     * @param wagonsList
-     * @param position   Generated wagon with places
-     */
-    public void showWagon(List<Wagon> wagonsList, int position) {
-        Wagon wagon = wagonsList.get(position);
-        this.position = position;
-
-        String title = wagon.getTypeName();
-//                + " (" + prices.getTrain().getWagons().get(position).getPlacesPrices().getTotal() + ")";
-        toolbarTitle.setText(title);
-        txtWagonNumber.setText(getString(R.string.wagon) + " №" + wagon.getNumber());
-
-        List<Integer> listPlaces = wagon.getAvailablePlaces();
-        if (wagon.getTypeCode().equalsIgnoreCase(Constants.TYPE_KUPE)) {
-            WagonKupeAdapter adapter = new WagonKupeAdapter(wagon, listPlaces, getActivity());
-            wagonRecyclerView.setAdapter(adapter);
-        } else if(wagon.getTypeCode().equalsIgnoreCase(Constants.TYPE_LUX)){
-            WagonLuxAdapter adapter = new WagonLuxAdapter(wagon, listPlaces, getActivity());
-            wagonRecyclerView.setAdapter(adapter);
-        } else if(wagon.getTypeCode().equalsIgnoreCase(Constants.TYPE_ECONOMY)){
-            WagonPlatskartAdapter adapter = new WagonPlatskartAdapter(wagon, listPlaces, getActivity());
-            wagonRecyclerView.setAdapter(adapter);
-        }
-//
-//
-//        for (int i = 0; i < Constants.SECTION; i++) {
-//            if (wagon.getTypeCode().equalsIgnoreCase(Constants.TYPE_LUX)) {
-//                WagonLuxView wagonLuxView = new WagonLuxView(getContext(), wagonsList.get(position).getTypeCode(),
-//                        wagon.getNumber(), wagonsList.get(position).getCost(), departureDate, arrivalDate,
-//                        wagon.getClassCode());
-//                linearLayout.addView(wagonLuxView);
-//                wagonLuxView.initView(listPlaces, i);
-//            } else if (wagon.getTypeCode().equalsIgnoreCase(Constants.TYPE_KUPE)) {
-//                WagonKupeView wagonKupeView = new WagonKupeView(getContext(),
-//                        wagonsList.get(position).getNumber(), wagonsList.get(position).getCost(), departureDate, arrivalDate,
-//                        wagonsList.get(position).getClassCode());
-//                linearLayout.addView(wagonKupeView);
-//                wagonKupeView.initView(listPlaces, i);
-//            }
-//        }
-
-//        if (listTickets != null) {
-//            ticketPlaceCheckedView(listTickets, wagonsList.get(position).getNumber());
-//        }
-    }
-
-//    /**
-//     * @param place
-//     * @param wagonNumber Remove place in wagon
-//     */
-//    public void ticketPlaceRemoveView(int place, String wagonNumber) {
-//        Button placesBtn = ((Button) findPlaceInWagonView(place));
-//        if (placesBtn != null) {
-//            String currentNumber = (wagonsFilterList == null) ? wagonsLists.get(position).getNumber()
-//                    : wagonsFilterList.get(position).getNumber();
-//            if (placesBtn.getTag() == Integer.valueOf(place) &&
-//                    wagonNumber.equals(currentNumber)) {
-//                placesBtn.setBackground(CommonUtils.changeBackgroundPlace(getActivity(), placesBtn));
-//                placesBtn.setTextColor(CommonUtils.changeTextColorPlace(getActivity(), placesBtn, android.R.color.black));
-//            }
-//        }
-//    }
-
-//    /**
-//     * @param places
-//     * @param wagonNumber Select place in wagon
-//     */
-//    public void ticketPlaceCheckedView(List<Ticket> places, String wagonNumber) {
-//        for (int i = 0; i < places.size(); ++i) {
-//            int placeNumber = Integer.parseInt(places.get(i).getPlaceNumber());
-//            Button placesBtn = ((Button) findPlaceInWagonView(placeNumber));
-//            if (placesBtn != null) {
-//                if (placesBtn.getTag() == Integer.valueOf(placeNumber) && places.get(i).getWagonNumber().equals(wagonNumber)) {
-//                    placesBtn.setBackground(CommonUtils.changeBackgroundPlace(getActivity(), placesBtn));
-//                    placesBtn.setTextColor(CommonUtils.changeTextColorPlace(getActivity(), placesBtn, android.R.color.black));
-//                }
-//            }
-//        }
-//    }
-//
-//    /**
-//     * @param place
-//     * @return Get view button - fragment_wagon_places.layout
-//     */
-//    public View findPlaceInWagonView(int place) {
-//        for (int i = 0; i < Constants.SECTION; i++) {
-//            // content in view
-//            for (int index = 0; index < (linearLayout).getChildCount(); ++index) {
-//                LinearLayout linearLayoutChildAt = (LinearLayout) linearLayout.getChildAt(index);
-//                for (int index2 = 0; index2 < linearLayoutChildAt.getChildCount(); ++index2) {
-//                    RelativeLayout relativeLayoutChildAt = (RelativeLayout) linearLayoutChildAt.getChildAt(index2);
-//                    for (int index3 = 0; index3 < relativeLayoutChildAt.getChildCount(); ++index3) {
-//                        RelativeLayout relativeLayoutChildAt2 = (RelativeLayout) relativeLayoutChildAt.getChildAt(index3);
-//                        for (int index4 = 0; index4 < relativeLayoutChildAt2.getChildCount(); ++index4) {
-//                            View viewChildAt2 = relativeLayoutChildAt2.getChildAt(index4);
-//                            if (viewChildAt2 instanceof Button) {
-//                                if (viewChildAt2.getTag() == Integer.valueOf(place)) {
-//                                    return viewChildAt2;
-//                                }
-//                            } else {
-//                                for (int index5 = 0; index5 < relativeLayoutChildAt2.getChildCount(); ++index5) {
-//                                    RelativeLayout linearLayoutChildAt2 = (RelativeLayout) relativeLayoutChildAt2.getChildAt(index5);
-//                                    for (int index6 = 0; index6 < linearLayoutChildAt2.getChildCount(); ++index6) {
-//                                        View viewChildAt3 = linearLayoutChildAt2.getChildAt(index6);
-//                                        if (viewChildAt3.getTag() == Integer.valueOf(place)) {
-//                                            return viewChildAt3;
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        return null;
-//    }
-
-    /**
      * @param wagonsList Set adapter for list wagon in bottom slide menu
      */
     private void setHorizontalWagonsAdapter(List<Wagon> wagonsList) {
-        HorizontalAdapter horizontalAdapter = new HorizontalAdapter(getActivity(), wagonsList);
+        WagonsListAdapter horizontalAdapter = new WagonsListAdapter(getActivity(), wagonsList, this);
         LinearLayoutManager linearLayoutManager
                 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         horizontalRecyclerView.setLayoutManager(linearLayoutManager);
         horizontalRecyclerView.setAdapter(horizontalAdapter);
+    }
+
+    @Override
+    public void onItemSelected(SparseBooleanArray selectedItems, Wagon wagon, int placeNumber, String placeType) {
+        Ticket ticket = new Ticket(wagon.getNumber(), placeNumber + "",
+                placeType, wagon.getCost(), departureDate, arrivalDate, wagon.getClassCode(), wagon.getTypeCode());
+        setAdapter(ticket, !selectedItems.get(placeNumber));
+        selectedPlaces.put(wagon, selectedItems);
+    }
+
+    @Override
+    public void onTicketRemove(int placeNumber, String wagonNumber) {
+        Wagon selectedWagon = null;
+        for (int i = 0; i < wagonsLists.size(); i++) {
+            if (wagonsLists.get(i).getNumber().equals(wagonNumber)) {
+                selectedWagon = wagonsLists.get(i);
+                break;
+            }
+        }
+        if (selectedWagon == null) return;
+        SparseBooleanArray selectedPlaces = this.selectedPlaces.get(selectedWagon);
+        if (selectedPlaces != null) {
+            selectedPlaces.delete(placeNumber);
+        }
+        if (selectedWagon == wagonsLists.get(selectedWagonPosition)) {
+            ((LyingWagonBaseAdapter) wagonRecyclerView.getAdapter()).setSelectedItems(selectedPlaces);
+        }
+    }
+
+    @Override
+    public void onWagonSelected(int position) {
+        Wagon wagon = wagonsLists.get(position);
+        this.selectedWagonPosition = position;
+
+        String title = wagon.getTypeName();
+        toolbarTitle.setText(title);
+        txtWagonNumber.setText(getString(R.string.wagon) + " №" + wagon.getNumber());
+
+        List<Integer> listPlaces = wagon.getAvailablePlaces();
+        LyingWagonBaseAdapter adapter = WagonAdapterFactory.getWagonAdapter(wagon, listPlaces, getActivity(), this);
+        wagonRecyclerView.setAdapter(adapter);
+        adapter.setSelectedItems(selectedPlaces.get(wagon));
     }
 }

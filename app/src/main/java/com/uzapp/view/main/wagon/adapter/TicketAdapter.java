@@ -1,7 +1,7 @@
 package com.uzapp.view.main.wagon.adapter;
 
 import android.content.Context;
-import android.support.v4.app.FragmentManager;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.uzapp.R;
 import com.uzapp.view.main.MainActivity;
-import com.uzapp.view.main.wagon.fragment.WagonPlaceFragment;
 import com.uzapp.view.main.wagon.model.Ticket;
 
 import java.util.List;
@@ -24,13 +23,20 @@ public class TicketAdapter extends ArrayAdapter<Ticket> {
 
     private final Context context;
     private final List<Ticket> list;
+    private RemoveTicketListener listener;
 
-    public TicketAdapter(Context context, List<Ticket> list) {
+    public interface RemoveTicketListener {
+        void onTicketRemove(int placeNumber, String wagonNumber);
+    }
+
+    public TicketAdapter(Context context, List<Ticket> list, RemoveTicketListener listener) {
         super(context, -1, list);
         this.context = context;
         this.list = list;
+        this.listener = listener;
     }
 
+    @NonNull
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context
@@ -68,9 +74,7 @@ public class TicketAdapter extends ArrayAdapter<Ticket> {
     }
 
     /**
-     * @param position
-     *
-     * Remove item from ticket list
+     * @param position Remove item from ticket list
      */
     private void removeItem(int position) {
         removeItemBtn(position);
@@ -82,15 +86,11 @@ public class TicketAdapter extends ArrayAdapter<Ticket> {
     }
 
     /**
-     * @param position
-     *
-     * Remove selected place in wagon
+     * @param position Remove selected place in wagon
      */
     private void removeItemBtn(int position) {
         Ticket ticketItem = getTicketItem(position);
-        FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
-        WagonPlaceFragment fragment = (WagonPlaceFragment) manager.findFragmentById(R.id.fragmentContainer);
-      //  fragment.ticketPlaceRemoveView(Integer.parseInt(ticketItem.getPlaceNumber()), ticketItem.getWagonNumber());
+        listener.onTicketRemove(Integer.parseInt(ticketItem.getPlaceNumber()), ticketItem.getWagonNumber());
     }
 
     /**

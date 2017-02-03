@@ -2,7 +2,6 @@ package com.uzapp.view.main.wagon.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,8 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.uzapp.R;
-import com.uzapp.view.main.MainActivity;
-import com.uzapp.view.main.wagon.fragment.WagonPlaceFragment;
 import com.uzapp.view.main.wagon.model.Wagon;
 
 import java.util.List;
@@ -25,12 +22,17 @@ import butterknife.OnClick;
 /**
  * Created by Vladimir on 01.08.2016.
  */
-public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.ViewHolder> {
+public class WagonsListAdapter extends RecyclerView.Adapter<WagonsListAdapter.ViewHolder> {
 
     private Context context;
     private List<Wagon> listWagon;
-//    private int oldPosition = 0;
+    //    private int oldPosition = 0;
     private int selectedPosition = 0;
+    private WagonListener listener;
+
+    public interface WagonListener {
+        void onWagonSelected(int position);
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -45,18 +47,16 @@ public class HorizontalAdapter extends RecyclerView.Adapter<HorizontalAdapter.Vi
 
         @OnClick(R.id.layoutCountWagons)
         void onClickLayoutCountWagons() {
-            FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
-            WagonPlaceFragment wagonPlaceFragment = (WagonPlaceFragment) manager.findFragmentById(R.id.fragmentContainer);
-            wagonPlaceFragment.showWagon(listWagon, getAdapterPosition());
-
+            listener.onWagonSelected(getAdapterPosition());
             selectedPosition = getAdapterPosition();
             notifyDataSetChanged();
         }
     }
 
-    public HorizontalAdapter(Context context, List<Wagon> listWagon) {
+    public WagonsListAdapter(Context context, List<Wagon> listWagon, WagonListener listener) {
         this.context = context;
         this.listWagon = listWagon;
+        this.listener = listener;
     }
 
     @Override

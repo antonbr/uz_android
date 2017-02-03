@@ -124,7 +124,7 @@ public class WagonKupeView extends LinearLayout {
         button.setBackground(CommonUtils.changeBackgroundPlace(getContext(), button));
         button.setTextColor(CommonUtils.changeTextColorPlace(getContext(), button, android.R.color.black));
 
-        Ticket ticket = newInstanceTicket(wagonNumber, button.getText().toString(),
+        Ticket ticket = new Ticket(wagonNumber, button.getText().toString(),
                 placeType, priceTicket, departureDate, arrivalDate, wagonClasses, type);
 
         boolean isRemove = (CommonUtils.isSelectedPlace(button, ContextCompat
@@ -135,8 +135,4 @@ public class WagonKupeView extends LinearLayout {
         fragment.setAdapter(ticket, !isRemove);
     }
 
-    private Ticket newInstanceTicket(String wagonNumber, String placeNumber, String placeType, double priceTicket,
-                                     int departureDate, int arrivalDate, String wagonClasses, String typeWagon) {
-        return new Ticket(wagonNumber, placeNumber, placeType, priceTicket, departureDate, arrivalDate, wagonClasses, typeWagon);
-    }
 }
