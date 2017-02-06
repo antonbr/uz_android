@@ -6,19 +6,23 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.uzapp.R;
 import com.uzapp.view.main.wagon.model.Wagon;
 
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
  * Created by viktoria on 2/3/17.
  */
-
-public abstract class LyingWagonBaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+/*
+wagon with header and footer
+ */
+public abstract class SimpleWagonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     protected final int HEADER_VIEW_TYPE = 0, USUAL_VIEW_TYPE = 1, FOOTER_VIEW_TYPE = 2;
     protected Wagon wagon;
     protected List<Integer> availablePlaces;
@@ -30,7 +34,7 @@ public abstract class LyingWagonBaseAdapter extends RecyclerView.Adapter<Recycle
         void onItemSelected(SparseBooleanArray selectedItems, Wagon wagon, int placeNumber, String placeType);
     }
 
-    public LyingWagonBaseAdapter(Wagon wagon, List<Integer> availablePlaces, Context context, OnPlaceSelectionListener listener) {
+    public SimpleWagonAdapter(Wagon wagon, List<Integer> availablePlaces, Context context, OnPlaceSelectionListener listener) {
         this.wagon = wagon;
         this.availablePlaces = availablePlaces;
         this.context = context;
@@ -62,7 +66,7 @@ public abstract class LyingWagonBaseAdapter extends RecyclerView.Adapter<Recycle
     }
 
     public void setSelectedItems(SparseBooleanArray selectedItems) {
-        if(selectedItems==null) return;
+        if (selectedItems == null) return;
         this.selectedItems = selectedItems;
         notifyDataSetChanged();
     }
@@ -74,11 +78,11 @@ public abstract class LyingWagonBaseAdapter extends RecyclerView.Adapter<Recycle
 
         switch (viewType) {
             case HEADER_VIEW_TYPE:
-                View v1 = inflater.inflate(R.layout.kupe_header, parent, false);
+                View v1 = inflater.inflate(R.layout.header, parent, false);
                 viewHolder = new HeaderItemHolder(v1);
                 break;
             case FOOTER_VIEW_TYPE:
-                View v2 = inflater.inflate(R.layout.kupe_footer, parent, false);
+                View v2 = inflater.inflate(R.layout.footer, parent, false);
                 viewHolder = new FooterItemHolder(v2);
                 break;
         }
@@ -105,17 +109,19 @@ public abstract class LyingWagonBaseAdapter extends RecyclerView.Adapter<Recycle
         return USUAL_VIEW_TYPE;
     }
 
-    private class HeaderItemHolder extends RecyclerView.ViewHolder {
+    protected class HeaderItemHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.header) ImageView header;
 
-        public HeaderItemHolder(View itemView) {
+        protected HeaderItemHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
 
-    private class FooterItemHolder extends RecyclerView.ViewHolder {
+    protected class FooterItemHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.footer) ImageView footer;
 
-        public FooterItemHolder(View itemView) {
+        protected FooterItemHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

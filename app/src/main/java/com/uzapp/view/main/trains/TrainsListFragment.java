@@ -12,6 +12,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.uzapp.R;
+import com.uzapp.pojo.TrainModel;
+import com.uzapp.pojo.WagonClass;
 import com.uzapp.pojo.WagonType;
 import com.uzapp.pojo.prices.Prices;
 import com.uzapp.view.BaseFragment;
@@ -92,14 +94,15 @@ public class TrainsListFragment extends BaseFragment implements TrainsListAdapte
     }
 
     @Override
-    public void showWagonPlaceFragment(Prices prices, int position, int departureDate, int arrivalDate, long selectDate, WagonType type) {
+    public void showWagonPlaceFragment(Prices prices, int position, int departureDate, int arrivalDate, long selectDate, WagonType type,
+                                       WagonClass wagonClass, TrainModel trainModel) {
         ((MainActivity) getActivity()).replaceFragment(WagonPlaceFragment
-                .newInstance(prices, 0, departureDate, arrivalDate, selectDate, type), true);
+                .newInstance(prices, 0, departureDate, arrivalDate, selectDate, type, wagonClass, trainModel), true);
     }
 
     @Override
-    public void onWagonItemClicked(Train train, WagonType wagonType) {
-        presenter.onWagonItemClicked(train, wagonType);
+    public void onWagonItemClicked(Train train, WagonType wagonType, WagonClass wagonClass) {
+        presenter.onWagonItemClicked(train, wagonType, wagonClass);
     }
 
     @Override

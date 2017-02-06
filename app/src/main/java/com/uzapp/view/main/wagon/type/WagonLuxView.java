@@ -54,7 +54,7 @@ public class WagonLuxView extends LinearLayout {
         newInstanceData(type, wagonNumber, priceTicket, departureDate, arrivalDate, wagonClasses);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (type.equalsIgnoreCase(Constants.TYPE_LUX)) {
-            inflater.inflate(R.layout.item_fragment_lux, this, true);
+            inflater.inflate(R.layout.item_lux, this, true);
         }
         ButterKnife.bind(this);
     }

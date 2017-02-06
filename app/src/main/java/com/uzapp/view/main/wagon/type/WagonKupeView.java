@@ -54,7 +54,7 @@ public class WagonKupeView extends LinearLayout {
         super(context, attrs);
         newInstanceData(wagonNumber, priceTicket, departureDate, arrivalDate, wagonClasses);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            inflater.inflate(R.layout.item_fragment_kupe, this, true);
+            inflater.inflate(R.layout.item_kupe, this, true);
         ButterKnife.bind(this);
     }
 

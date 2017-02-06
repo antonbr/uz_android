@@ -20,7 +20,7 @@ import butterknife.OnClick;
  * Created by viktoria on 2/3/17.
  */
 
-public class WagonLuxAdapter extends LyingWagonBaseAdapter {
+public class WagonLuxAdapter extends SimpleWagonAdapter {
     private final int PLACES_IN_LUX = 2;
 
     public WagonLuxAdapter(Wagon wagon, List<Integer> availablePlaces, Context context, OnPlaceSelectionListener listener) {
@@ -32,7 +32,7 @@ public class WagonLuxAdapter extends LyingWagonBaseAdapter {
         RecyclerView.ViewHolder viewHolder;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         if (viewType == USUAL_VIEW_TYPE) {
-            View view =inflater.inflate(R.layout.item_fragment_lux, parent, false);
+            View view =inflater.inflate(R.layout.item_lux, parent, false);
             viewHolder = new LuxItemHolder(view);
         } else {
             viewHolder = super.onCreateViewHolder(parent, viewType);

@@ -17,6 +17,8 @@ import android.widget.TextView;
 import com.uzapp.R;
 import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.network.ApiManager;
+import com.uzapp.pojo.TrainModel;
+import com.uzapp.pojo.WagonClass;
 import com.uzapp.pojo.WagonType;
 import com.uzapp.pojo.placeslist.PricesPlacesList;
 import com.uzapp.pojo.placeslist.WagonsPlacesList;
@@ -25,10 +27,10 @@ import com.uzapp.pojo.prices.WagonsPrices;
 import com.uzapp.util.CommonUtils;
 import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.purchase.fragment.PreparePurchaseFragment;
-import com.uzapp.view.main.wagon.adapter.WagonsListAdapter;
-import com.uzapp.view.main.wagon.adapter.LyingWagonBaseAdapter;
+import com.uzapp.view.main.wagon.adapter.SimpleWagonAdapter;
 import com.uzapp.view.main.wagon.adapter.TicketAdapter;
 import com.uzapp.view.main.wagon.adapter.WagonAdapterFactory;
+import com.uzapp.view.main.wagon.adapter.WagonsListAdapter;
 import com.uzapp.view.main.wagon.model.Ticket;
 import com.uzapp.view.main.wagon.model.Wagon;
 import com.uzapp.view.main.wagon.view.ListViewMaxHeight;
@@ -49,7 +51,7 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WagonPlaceFragment extends Fragment implements LyingWagonBaseAdapter.OnPlaceSelectionListener, TicketAdapter.RemoveTicketListener, WagonsListAdapter.WagonListener {
+public class WagonPlaceFragment extends Fragment implements SimpleWagonAdapter.OnPlaceSelectionListener, TicketAdapter.RemoveTicketListener, WagonsListAdapter.WagonListener {
 
     public static final String EXTRA_PRICES = "EXTRA_PRICES";
     public static final String EXTRA_PRICES_POSITION = "EXTRA_PRICES_POSITION";
@@ -57,6 +59,8 @@ public class WagonPlaceFragment extends Fragment implements LyingWagonBaseAdapte
     public static final String EXTRA_TRAIN_ARRIVAL_DATE = "EXTRA_TRAIN_ARRIVAL_DATE";
     public static final String EXTRA_TRAIN_DATE = "EXTRA_TRAIN_DATE";
     public static final String EXTRA_WAGON_TYPE = "EXTRA_WAGON_TYPE";
+    public static final String EXTRA_TRAIN_MODEL = "EXTRA_TRAIN_MODEL";
+    public static final String EXTRA_WAGON_CLASS = "EXTRA_WAGON_CLASS";
     @BindView(R.id.wagonRecyclerView)
     RecyclerView wagonRecyclerView;
     @BindView(R.id.layoutBuyReserveTicket)
@@ -85,8 +89,11 @@ public class WagonPlaceFragment extends Fragment implements LyingWagonBaseAdapte
     private Prices prices;
     private long selectDate;
     private WagonType wagonType;
+    private WagonClass wagonClass;
+    private TrainModel trainModel;
 
-    public static WagonPlaceFragment newInstance(Prices prices, int position, int departureDate, int arrivalDate, long selectDate, WagonType type) {
+    public static WagonPlaceFragment newInstance(Prices prices, int position, int departureDate, int arrivalDate, long selectDate, WagonType type
+            , WagonClass wagonClass, TrainModel trainModel) {
         WagonPlaceFragment fragment = new WagonPlaceFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(EXTRA_PRICES, prices);
@@ -95,6 +102,8 @@ public class WagonPlaceFragment extends Fragment implements LyingWagonBaseAdapte
         bundle.putInt(EXTRA_TRAIN_ARRIVAL_DATE, arrivalDate);
         bundle.putLong(EXTRA_TRAIN_DATE, selectDate);
         bundle.putSerializable(EXTRA_WAGON_TYPE, type);
+        bundle.putSerializable(EXTRA_TRAIN_MODEL, trainModel);
+        bundle.putSerializable(EXTRA_WAGON_CLASS, wagonClass);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -127,6 +136,8 @@ public class WagonPlaceFragment extends Fragment implements LyingWagonBaseAdapte
             arrivalDate = getArguments().getInt(EXTRA_TRAIN_ARRIVAL_DATE);
             selectDate = getArguments().getLong(EXTRA_TRAIN_DATE);
             wagonType = (WagonType) getArguments().getSerializable(EXTRA_WAGON_TYPE);
+            trainModel = (TrainModel) getArguments().getSerializable(EXTRA_TRAIN_MODEL);
+            wagonClass = (WagonClass) getArguments().getSerializable(EXTRA_WAGON_CLASS);
             if (prices != null) {
                 stationFromCode = prices.getStation_from_code();
                 stationToCode = prices.getStationToCode();
@@ -140,7 +151,7 @@ public class WagonPlaceFragment extends Fragment implements LyingWagonBaseAdapte
                 List<WagonsPrices> wagonsPrices = prices.getTrain().getWagons();
                 for (WagonsPrices wagon : wagonsPrices) {
                     wagonTypesSb.append(wagon.getTypeCode().getShortName()).append(",");
-                    wagonClassesSb.append(wagon.getClassCode()).append(",");
+                    wagonClassesSb.append(wagon.getClassCode().getShortName()).append(",");
                     wagonNumbersSb.append(wagon.getNumber()).append(",");
                 }
                 wagonTypes = wagonsPrices.size() > 0 ? wagonTypesSb.substring(0, wagonTypesSb.lastIndexOf(",")) : "";
@@ -243,6 +254,7 @@ public class WagonPlaceFragment extends Fragment implements LyingWagonBaseAdapte
         List<Wagon> wagonArray = new ArrayList<>();
         for (int i = 0; i < listWagonsPrices.size(); i++) {
             if (listWagonsPrices.get(i).getTypeCode() != wagonType) continue;
+            if (listWagonsPrices.get(i).getClassCode() != wagonClass) continue;
             Wagon wagon = new Wagon();
             wagon.setCharline(listWagonsPrices.get(i).getCharline());
             wagon.setNumber(listWagonsPrices.get(i).getNumber());
@@ -254,7 +266,7 @@ public class WagonPlaceFragment extends Fragment implements LyingWagonBaseAdapte
             wagon.setRailwayName(listWagonsPrices.get(i).getRailwayName());
             wagon.setSitting(listWagonsPrices.get(i).isSitting());
             wagon.setClassName(listWagonsPrices.get(i).getClassName());
-            wagon.setClassCode(listWagonsPrices.get(i).getClassCode());
+            wagon.setClassCode(listWagonsPrices.get(i).getClassCode().getShortName());
             wagon.setCostCurrency(listWagonsPrices.get(i).getCostCurrency());
             wagon.setCost(listWagonsPrices.get(i).getCost());
             wagon.setCostReserve(listWagonsPrices.get(i).getCostReserve());
@@ -331,7 +343,7 @@ public class WagonPlaceFragment extends Fragment implements LyingWagonBaseAdapte
             selectedPlaces.delete(placeNumber);
         }
         if (selectedWagon == wagonsLists.get(selectedWagonPosition)) {
-            ((LyingWagonBaseAdapter) wagonRecyclerView.getAdapter()).setSelectedItems(selectedPlaces);
+            ((SimpleWagonAdapter) wagonRecyclerView.getAdapter()).setSelectedItems(selectedPlaces);
         }
     }
 
@@ -339,14 +351,16 @@ public class WagonPlaceFragment extends Fragment implements LyingWagonBaseAdapte
     public void onWagonSelected(int position) {
         Wagon wagon = wagonsLists.get(position);
         this.selectedWagonPosition = position;
-
+//todo
         String title = wagon.getTypeName();
         toolbarTitle.setText(title);
         txtWagonNumber.setText(getString(R.string.wagon) + " №" + wagon.getNumber());
 
         List<Integer> listPlaces = wagon.getAvailablePlaces();
-        LyingWagonBaseAdapter adapter = WagonAdapterFactory.getWagonAdapter(wagon, listPlaces, getActivity(), this);
-        wagonRecyclerView.setAdapter(adapter);
-        adapter.setSelectedItems(selectedPlaces.get(wagon));
+        SimpleWagonAdapter adapter = WagonAdapterFactory.getWagonAdapter(wagon, trainModel, listPlaces, getActivity(), this);
+        if (adapter != null) {
+            wagonRecyclerView.setAdapter(adapter);
+            adapter.setSelectedItems(selectedPlaces.get(wagon));
+        }
     }
 }

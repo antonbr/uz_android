@@ -7,6 +7,8 @@ import com.uzapp.R;
 import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.network.ApiInterface;
 import com.uzapp.network.ApiManager;
+import com.uzapp.pojo.TrainModel;
+import com.uzapp.pojo.WagonClass;
 import com.uzapp.pojo.WagonType;
 import com.uzapp.pojo.prices.Prices;
 import com.uzapp.pojo.trains.TrainSearchResult;
@@ -23,6 +25,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.uzapp.pojo.WagonType.SEATING;
 
 /**
  * Created by viktoria on 2/1/17.
@@ -90,13 +94,13 @@ public class TrainsListPresenter {
         view.showRouteFragment(selectedTrain, stationFromCode, stationToCode, date);
     }
 
-    void onWagonItemClicked(Train train, WagonType wagonType) {
+    void onWagonItemClicked(Train train, WagonType wagonType, WagonClass wagonClass) {
         com.uzapp.pojo.trains.Train selectedTrain = trains.get(train.getPosition());
         departureDate = (int) selectedTrain.getDepartureDate();
         arrivalDate = (int) selectedTrain.getArrivalDate();
         view.showProgress(true);
         Call<Prices> call = api.getPrices(stationFromCode, stationToCode, selectedTrain.getNumber(), (long) (date * Constants.MILI));
-        call.enqueue(new PriceCallback(wagonType));
+        call.enqueue(new PriceCallback(wagonType, wagonClass, selectedTrain.getModel()));
     }
 
     private List<Train> prepareTrainForAdapter(List<com.uzapp.pojo.trains.Train> trains) {
@@ -113,6 +117,7 @@ public class TrainsListPresenter {
             trainForAdapter.setDepartureDate(dateFormat.format(departureDate));
             trainForAdapter.setArrivalDate(dateFormat.format(arrivalDate));
             trainForAdapter.setArrivalTime(timeFormat.format(arrivalDate));
+
 
             Date travelTimeDate = parseDate(train.getTravelTime());
             if (travelTimeDate != null) {
@@ -139,8 +144,23 @@ public class TrainsListPresenter {
             String availablePlaceCount = String.valueOf(trainPlace.getTotal());
             String minPrice = view.getContext().getString(R.string.trains_place_min_price, Math.round(trainPlace.getCost()),
                     trainPlace.getCostCurrency());
-            String wagonTypeStr = view.getContext().getString(trainPlace.getType().getLongNameStringRes());
-            trainPlaceList.add(new TrainPlace(availablePlaceCount, minPrice, wagonTypeStr, trainPlace.getType()));
+            String wagonTypeStr = "";
+            if (trainPlace.getType() == SEATING) {
+                switch (trainPlace.getClassCode()) {
+                    case FIRST_SEATING:
+                        wagonTypeStr = view.getContext().getString(R.string.wagon_seating_type_class_1);
+                        break;
+                    case SECOND_SEATING:
+                        wagonTypeStr = view.getContext().getString(R.string.wagon_seating_type_class_2);
+                        break;
+                    case THIRD_SEATING:
+                        wagonTypeStr = view.getContext().getString(R.string.wagon_seating_type_class_3);
+                        break;
+                }
+            } else {
+                wagonTypeStr = view.getContext().getString(trainPlace.getType().getLongNameStringRes());
+            }
+            trainPlaceList.add(new TrainPlace(availablePlaceCount, minPrice, wagonTypeStr, trainPlace.getType(), trainPlace.getClassCode()));
         }
         return trainPlaceList;
     }
@@ -185,9 +205,13 @@ public class TrainsListPresenter {
 
     private class PriceCallback implements Callback<Prices> {
         private WagonType wagonType;
+        private WagonClass wagonClass;
+        private TrainModel trainModel;
 
-        PriceCallback(WagonType wagonType) {
+        public PriceCallback(WagonType wagonType, WagonClass wagonClass, TrainModel trainModel) {
             this.wagonType = wagonType;
+            this.wagonClass = wagonClass;
+            this.trainModel = trainModel;
         }
 
         @Override
@@ -197,7 +221,7 @@ public class TrainsListPresenter {
             if (response.isSuccessful()) {
                 Prices prices = response.body();
                 //todo move call to wagon place fragment, refactor position and other params
-                view.showWagonPlaceFragment(prices, 0, departureDate, arrivalDate, date, wagonType);
+                view.showWagonPlaceFragment(prices, 0, departureDate, arrivalDate, date, wagonType, wagonClass, trainModel);
             } else {
                 String error = ApiErrorUtil.getErrorMessage(response, view.getContext());
                 view.showError(error);
@@ -222,6 +246,7 @@ public class TrainsListPresenter {
 
         void showRouteFragment(com.uzapp.pojo.trains.Train train, long stationFromCode, long stationToCode, long date);
 
-        void showWagonPlaceFragment(Prices prices, int position, int departureDate, int arrivalDate, long selectDate, WagonType type);
+        void showWagonPlaceFragment(Prices prices, int position, int departureDate, int arrivalDate, long selectDate, WagonType type,
+                                    WagonClass wagonClass, TrainModel trainModel);
     }
 }

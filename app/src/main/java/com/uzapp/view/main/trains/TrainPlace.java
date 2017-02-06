@@ -1,5 +1,6 @@
 package com.uzapp.view.main.trains;
 
+import com.uzapp.pojo.WagonClass;
 import com.uzapp.pojo.WagonType;
 
 /**
@@ -11,13 +12,14 @@ public class TrainPlace {
     private String minPrice;
     private String wagonTypeStr;
     private WagonType wagonType;
+    private WagonClass wagonClass;
 
-
-    public TrainPlace(String availablePlaceCount, String minPrice, String wagonTypeStr, WagonType wagonType) {
+    public TrainPlace(String availablePlaceCount, String minPrice, String wagonTypeStr, WagonType wagonType, WagonClass wagonClass) {
         this.availablePlaceCount = availablePlaceCount;
         this.minPrice = minPrice;
         this.wagonTypeStr = wagonTypeStr;
         this.wagonType = wagonType;
+        this.wagonClass = wagonClass;
     }
 
     public String getAvailablePlaceCount() {
@@ -50,5 +52,13 @@ public class TrainPlace {
 
     public void setWagonType(WagonType wagonType) {
         this.wagonType = wagonType;
+    }
+
+    public WagonClass getWagonClass() {
+        return wagonClass;
+    }
+
+    public void setWagonClass(WagonClass wagonClass) {
+        this.wagonClass = wagonClass;
     }
 }

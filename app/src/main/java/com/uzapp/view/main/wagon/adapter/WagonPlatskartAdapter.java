@@ -21,7 +21,7 @@ import butterknife.OnClick;
  * Created by viktoria on 2/3/17.
  */
 
-public class WagonPlatskartAdapter extends LyingWagonBaseAdapter {
+public class WagonPlatskartAdapter extends SimpleWagonAdapter {
     private final int PLACES_IN_PLATSKART_SECTION_MAIN = 4;
     private final int PLACES_IN_PLATSKART_SECTION_SIDE = 2;
 
@@ -34,7 +34,7 @@ public class WagonPlatskartAdapter extends LyingWagonBaseAdapter {
         RecyclerView.ViewHolder viewHolder;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         if (viewType == USUAL_VIEW_TYPE) {
-            View view = inflater.inflate(R.layout.item_fragment_platskart, parent, false);
+            View view = inflater.inflate(R.layout.item_platskart, parent, false);
             viewHolder = new PlatskartItemHolder(view);
         } else {
             viewHolder = super.onCreateViewHolder(parent, viewType);

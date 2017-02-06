@@ -21,7 +21,7 @@ import butterknife.OnClick;
  * Created by viktoria on 2/2/17.
  */
 
-public class WagonKupeAdapter extends LyingWagonBaseAdapter {
+public class WagonKupeAdapter extends SimpleWagonAdapter {
     private final int PLACES_IN_KUPE = 4;
 
     public WagonKupeAdapter(Wagon wagon, List<Integer> availablePlaces, Context context, OnPlaceSelectionListener listener) {
@@ -33,7 +33,7 @@ public class WagonKupeAdapter extends LyingWagonBaseAdapter {
         RecyclerView.ViewHolder viewHolder;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         if (viewType == USUAL_VIEW_TYPE) {
-            View view = inflater.inflate(R.layout.item_fragment_kupe, parent, false);
+            View view = inflater.inflate(R.layout.item_kupe, parent, false);
             viewHolder = new KupeItemHolder(view);
         } else {
             viewHolder = super.onCreateViewHolder(parent, viewType);

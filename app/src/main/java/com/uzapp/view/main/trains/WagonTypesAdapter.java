@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.uzapp.R;
+import com.uzapp.pojo.WagonClass;
 import com.uzapp.pojo.WagonType;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class WagonTypesAdapter extends RecyclerView.Adapter<WagonTypesAdapter.Pl
 
 
     interface WagonTypeClickListener {
-        void onWagonTypeClicked(WagonType wagonType);
+        void onWagonTypeClicked(WagonType wagonType, WagonClass wagonClass);
     }
 
     WagonTypesAdapter(Context context, WagonTypeClickListener listener, List<TrainPlace> placeList) {
@@ -51,7 +52,7 @@ public class WagonTypesAdapter extends RecyclerView.Adapter<WagonTypesAdapter.Pl
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onWagonTypeClicked(trainPlace.getWagonType());
+                listener.onWagonTypeClicked(trainPlace.getWagonType(), trainPlace.getWagonClass());
             }
         });
     }

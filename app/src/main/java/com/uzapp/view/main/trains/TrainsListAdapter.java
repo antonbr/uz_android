@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.uzapp.R;
+import com.uzapp.pojo.WagonClass;
 import com.uzapp.pojo.WagonType;
 import com.uzapp.view.common.VerticalDividerItemDecoration;
 
@@ -41,7 +42,7 @@ public class TrainsListAdapter extends RecyclerView.Adapter<TrainsListAdapter.Tr
 
         void onInfoBtnClicked(Train train);
 
-        void onWagonItemClicked(Train train, WagonType wagonType);
+        void onWagonItemClicked(Train train, WagonType wagonType, WagonClass wagonClass);
     }
 
     void showTrains(List<Train> trainList) {
@@ -71,8 +72,8 @@ public class TrainsListAdapter extends RecyclerView.Adapter<TrainsListAdapter.Tr
 
         final WagonTypesAdapter.WagonTypeClickListener listener = new WagonTypesAdapter.WagonTypeClickListener() {
             @Override
-            public void onWagonTypeClicked(WagonType wagonType) {
-                onTrainClickListener.onWagonItemClicked(train, wagonType);
+            public void onWagonTypeClicked(WagonType wagonType, WagonClass wagonClass) {
+                onTrainClickListener.onWagonItemClicked(train, wagonType, wagonClass);
             }
         };
 

@@ -303,7 +303,9 @@
     <string name="wagon_class_1">1-й клас</string>
     <string name="wagon_class_2">2-й клас</string>
     <string name="wagon_class_3">3-й клас</string>
-
+    <string name="wagon_seating_type_class_1">Сидячий 1-ого класу</string>
+    <string name="wagon_seating_type_class_2">Сидячий 2-ого класу</string>
+    <string name="wagon_seating_type_class_3">Сидячий 3-ого класу</string>
     // payment
     <string name="thank_you_for_your_purchase">Спасибо за покупку!</string>
     <string name="tickets_sent_to_your_email">Билеты высланы на ваш email</string>

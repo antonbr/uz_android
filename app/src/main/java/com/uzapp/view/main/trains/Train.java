@@ -98,4 +98,9 @@ public class Train {
     public void setTrainPlaces(List<TrainPlace> trainPlaces) {
         this.trainPlaces = trainPlaces;
     }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
 }

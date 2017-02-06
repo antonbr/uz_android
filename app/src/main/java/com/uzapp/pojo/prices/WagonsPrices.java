@@ -1,6 +1,7 @@
 package com.uzapp.pojo.prices;
 
 import com.google.gson.annotations.SerializedName;
+import com.uzapp.pojo.WagonClass;
 import com.uzapp.pojo.WagonType;
 
 import org.parceler.Parcel;
@@ -33,7 +34,7 @@ public class WagonsPrices {
     @SerializedName("class_name")
     String className;
     @SerializedName("class_code")
-    String classCode;
+    WagonClass classCode;
     @SerializedName("cost_currency")
     String costCurrency;
     @SerializedName("cost")
@@ -85,12 +86,12 @@ public class WagonsPrices {
         this.typeCode = typeCode;
     }
 
-    public void setClassCode(String classCode) {
-        this.classCode = classCode;
+    public WagonClass getClassCode() {
+        return classCode;
     }
 
-    public String getClassCode() {
-        return classCode;
+    public void setClassCode(WagonClass classCode) {
+        this.classCode = classCode;
     }
 
     public String getCountryName() {

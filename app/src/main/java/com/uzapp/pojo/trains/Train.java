@@ -1,6 +1,8 @@
 package com.uzapp.pojo.trains;
 
 import com.google.gson.annotations.SerializedName;
+import com.uzapp.pojo.TrainCategory;
+import com.uzapp.pojo.TrainModel;
 
 import org.parceler.Parcel;
 
@@ -15,9 +17,9 @@ public class Train {
     @SerializedName("number")
     String number;
     @SerializedName("model")
-    int model;
+    TrainModel model;
     @SerializedName("category")
-    int category;
+    TrainCategory category;
     @SerializedName("station_from_name")
     String stationFromName;
     @SerializedName("station_from_code")
@@ -51,19 +53,19 @@ public class Train {
         this.number = number;
     }
 
-    public int getModel() {
+    public TrainModel getModel() {
         return model;
     }
 
-    public void setModel(int model) {
+    public void setModel(TrainModel model) {
         this.model = model;
     }
 
-    public int getCategory() {
+    public TrainCategory getCategory() {
         return category;
     }
 
-    public void setCategory(int category) {
+    public void setCategory(TrainCategory category) {
         this.category = category;
     }
 
