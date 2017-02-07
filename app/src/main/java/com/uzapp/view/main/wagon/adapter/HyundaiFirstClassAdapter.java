@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.uzapp.R;
-import com.uzapp.util.CommonUtils;
 import com.uzapp.view.main.wagon.model.Wagon;
 
 import java.util.List;
@@ -60,7 +59,7 @@ public class HyundaiFirstClassAdapter extends SimpleWagonAdapter {
             headerItemHolder.header.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_head_hyundai_c1));
         } else if (holder.getItemViewType() == FOOTER_VIEW_TYPE) {
             FooterItemHolder footerItemHolder = (FooterItemHolder) holder;
-            footerItemHolder.footer.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_footer_hyundai));
+            footerItemHolder.footer.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_footer_hyundai_toilet));
         }
     }
 
@@ -82,9 +81,7 @@ public class HyundaiFirstClassAdapter extends SimpleWagonAdapter {
         @OnClick({R.id.firstPlace, R.id.secondPlace, R.id.thirdPlace, R.id.fourthPlace})
         void onClickPlaceBtn(Button button) {
             int placeNumber = Integer.valueOf(button.getText().toString());
-            String placeType = (CommonUtils.isOdd(placeNumber))
-                    ? context.getString(R.string.filter_bottom) : context.getString(R.string.filter_top);
-            toggleSelection(placeNumber, getAdapterPosition(), placeType); //todo
+            toggleSelection(placeNumber, getAdapterPosition(), null); //todo
         }
     }
 }

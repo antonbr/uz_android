@@ -2,6 +2,7 @@ package com.uzapp.view.main.wagon.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,11 @@ public class TicketAdapter extends ArrayAdapter<Ticket> {
 
         txtWagonNumber.setText(ticketItem.getWagonNumber());
         txtPlaceNumber.setText(ticketItem.getPlaceNumber());
-        txtUpperLowerShelf.setText(", " + ticketItem.getPlaceType());
+        if(!TextUtils.isEmpty(ticketItem.getPlaceType())) {
+            txtUpperLowerShelf.setText(", " + ticketItem.getPlaceType());
+        }else{
+            txtUpperLowerShelf.setText("");
+        }
         txtPriceTicket.setText(Double.toString(ticketItem.getTicketPrice()) + " "
                 + context.getString(R.string.ticket_currency));
 

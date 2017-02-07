@@ -30,7 +30,7 @@ public class Ticket implements Serializable {
                   int departureDate, int arrivalDate, String wagonClasses, String wagonType) {
         this.wagonNumber = wagonNumber;
         this.placeNumber = placeNumber;
-        this.placeType = placeType;
+        this.placeType = placeType==null?"":placeType;
         this.ticketPrice = ticketPrice;
         this.departureDate = departureDate;
         this.arrivalDate = arrivalDate;

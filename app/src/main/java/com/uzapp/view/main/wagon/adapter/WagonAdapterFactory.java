@@ -29,7 +29,21 @@ public class WagonAdapterFactory {
             //todo create other factory
             if (wagon.getClassCode().equalsIgnoreCase(WagonClass.FIRST_SEATING.getShortName())) {
                 adapter = new HyundaiFirstClassAdapter(wagon, availablePlaces, context, listener);
+            } else {
+                int wagonNumber = Integer.valueOf(wagon.getNumber());
+                //todo
+                if(wagonNumber==4 || wagonNumber==6 || wagonNumber==7){
+                    adapter = new HyundaiSecondClassAdapter(wagon, availablePlaces, context, listener);
+                } else if(wagonNumber==3){
+                    adapter = new HyundaiSecondClassKafeAdapter(wagon, availablePlaces, context, listener);
+                } else if(wagonNumber==9){
+                    adapter = new HyundaiSecondClassLastWagonAdapter(wagon, availablePlaces, context, listener);
+                }else if(wagonNumber==1){
+                    adapter = new HyundaiSecondClassFirstWagonAdapter(wagon, availablePlaces, context, listener);
+                }
+
             }
+
         }
         return adapter;
     }

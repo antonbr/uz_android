@@ -358,8 +358,8 @@ public class WagonPlaceFragment extends Fragment implements SimpleWagonAdapter.O
 
         List<Integer> listPlaces = wagon.getAvailablePlaces();
         SimpleWagonAdapter adapter = WagonAdapterFactory.getWagonAdapter(wagon, trainModel, listPlaces, getActivity(), this);
+        wagonRecyclerView.setAdapter(adapter);
         if (adapter != null) {
-            wagonRecyclerView.setAdapter(adapter);
             adapter.setSelectedItems(selectedPlaces.get(wagon));
         }
     }
