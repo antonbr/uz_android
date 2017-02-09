@@ -95,7 +95,7 @@ public class ApiManager {
         };
     }
 
-    //add language header to request, add access token as query param
+    //add language tarpan_head_c2 to request, add access token as query param
     private static Request getRequestWithHeadersAndToken(Context context, Request request) {
         Request.Builder requestBuilder = request.newBuilder();
         String accessToken = PrefsUtil.getStringPreference(context, PrefsUtil.USER_ACCESS_TOKEN);

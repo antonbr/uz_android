@@ -18,8 +18,8 @@ repositories {
 
 
 String APK_NAME = "UZ"
-String VERSION_NAME = "0.0.7"
-int VERSION_CODE = 8
+String VERSION_NAME = "0.0.9"
+int VERSION_CODE = 9
 
 android {
     compileSdkVersion 25

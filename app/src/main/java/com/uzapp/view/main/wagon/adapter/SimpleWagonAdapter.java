@@ -1,11 +1,13 @@
 package com.uzapp.view.main.wagon.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.uzapp.R;
@@ -20,7 +22,7 @@ import butterknife.ButterKnife;
  * Created by viktoria on 2/3/17.
  */
 /*
-wagon with header and footer
+wagon with tarpan_head_c2 and footer
  */
 public abstract class SimpleWagonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     protected final int HEADER_VIEW_TYPE = 0, USUAL_VIEW_TYPE = 1, FOOTER_VIEW_TYPE = 2;
@@ -39,6 +41,12 @@ public abstract class SimpleWagonAdapter extends RecyclerView.Adapter<RecyclerVi
         this.availablePlaces = availablePlaces;
         this.context = context;
         this.listener = listener;
+    }
+
+    public void initPlaceButton(Button placeBtn, int placeNumber) {
+        placeBtn.setText(String.valueOf(placeNumber));
+        placeBtn.setEnabled(availablePlaces.contains(placeNumber));
+        placeBtn.setSelected(selectedItems.get(placeNumber));
     }
 
     public void toggleSelection(int placeNumber, int parentPosition, String placeType) {
@@ -78,12 +86,9 @@ public abstract class SimpleWagonAdapter extends RecyclerView.Adapter<RecyclerVi
 
         switch (viewType) {
             case HEADER_VIEW_TYPE:
-                View v1 = inflater.inflate(R.layout.header, parent, false);
-                viewHolder = new HeaderItemHolder(v1);
-                break;
             case FOOTER_VIEW_TYPE:
-                View v2 = inflater.inflate(R.layout.footer, parent, false);
-                viewHolder = new FooterItemHolder(v2);
+                View v1 = inflater.inflate(R.layout.item_image, parent, false);
+                viewHolder = new ImageItemHolder(v1);
                 break;
         }
         return viewHolder;
@@ -93,8 +98,12 @@ public abstract class SimpleWagonAdapter extends RecyclerView.Adapter<RecyclerVi
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch (holder.getItemViewType()) {
             case HEADER_VIEW_TYPE:
+                ImageItemHolder headerItemHolder = (ImageItemHolder) holder;
+                bindImageHolder(headerItemHolder, R.drawable.ic_head_lux);
                 break;
             case FOOTER_VIEW_TYPE:
+                ImageItemHolder footerItemHolder = (ImageItemHolder) holder;
+                bindImageHolder(footerItemHolder, R.drawable.ic_footer_lux);
                 break;
         }
     }
@@ -109,21 +118,27 @@ public abstract class SimpleWagonAdapter extends RecyclerView.Adapter<RecyclerVi
         return USUAL_VIEW_TYPE;
     }
 
-    protected class HeaderItemHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.header) ImageView header;
+    public void bindImageHolder(ImageItemHolder imageItemHolder, int drawableRes) {
+        imageItemHolder.image.setImageDrawable(ContextCompat.getDrawable(context, drawableRes));
+    }
 
-        protected HeaderItemHolder(View itemView) {
+    protected class ImageItemHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.image) public ImageView image;
+
+        public ImageItemHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
 
-    protected class FooterItemHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.footer) ImageView footer;
-
-        protected FooterItemHolder(View itemView) {
+    public abstract class UsualItemHolder extends RecyclerView.ViewHolder {
+        public UsualItemHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+        }
+
+        public void passClickButton(Button button) {
+            int placeNumber = Integer.valueOf(button.getText().toString());
+            toggleSelection(placeNumber, getAdapterPosition(), null); //todo
         }
     }
 }

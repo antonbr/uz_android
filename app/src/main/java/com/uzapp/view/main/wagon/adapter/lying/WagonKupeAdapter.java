@@ -1,4 +1,4 @@
-package com.uzapp.view.main.wagon.adapter;
+package com.uzapp.view.main.wagon.adapter.lying;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.uzapp.R;
 import com.uzapp.util.CommonUtils;
+import com.uzapp.view.main.wagon.adapter.SimpleWagonAdapter;
 import com.uzapp.view.main.wagon.model.Wagon;
 
 import java.util.List;

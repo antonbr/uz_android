@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.uzapp.R;
 import com.uzapp.network.ApiErrorUtil;
 import com.uzapp.network.ApiManager;
@@ -48,9 +47,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class WagonPlaceFragment extends Fragment implements SimpleWagonAdapter.OnPlaceSelectionListener, TicketAdapter.RemoveTicketListener, WagonsListAdapter.WagonListener {
 
     public static final String EXTRA_PRICES = "EXTRA_PRICES";

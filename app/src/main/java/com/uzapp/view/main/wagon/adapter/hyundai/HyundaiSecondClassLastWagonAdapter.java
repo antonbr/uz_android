@@ -1,4 +1,4 @@
-package com.uzapp.view.main.wagon.adapter;
+package com.uzapp.view.main.wagon.adapter.hyundai;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -44,9 +44,7 @@ public class HyundaiSecondClassLastWagonAdapter extends HyundaiSecondClassAdapte
         for (int i = 0; i < size; i++) {
             Button placeBtn = itemHolder.buttonsList.get(i);
             int placeNumber = (getItemCount() - position - 3) * size + LAST_SECTION_PLACES_COUNT+(size-i);
-            placeBtn.setText(String.valueOf(placeNumber));
-            placeBtn.setEnabled(availablePlaces.contains(placeNumber));
-            placeBtn.setSelected(selectedItems.get(placeNumber));
+            initPlaceButton(placeBtn, placeNumber);
         }
     }
 
@@ -60,9 +58,7 @@ public class HyundaiSecondClassLastWagonAdapter extends HyundaiSecondClassAdapte
                 continue;
             }
             int placeNumber = ++lastPlaceNumber;
-            placeBtn.setText(String.valueOf(placeNumber));
-            placeBtn.setEnabled(availablePlaces.contains(placeNumber));
-            placeBtn.setSelected(selectedItems.get(placeNumber));
+            initPlaceButton(placeBtn, placeNumber);
         }
     }
 
@@ -72,9 +68,7 @@ public class HyundaiSecondClassLastWagonAdapter extends HyundaiSecondClassAdapte
         for (int i = 0; i < size; i++) {
             Button placeBtn = itemHolder.buttonsList.get(i);
             int placeNumber = (getItemCount() - position - 3) * (PLACES_LEFT+PLACES_RIGHT) + LAST_SECTION_PLACES_COUNT+(size-i);
-            placeBtn.setText(String.valueOf(placeNumber));
-            placeBtn.setEnabled(availablePlaces.contains(placeNumber));
-            placeBtn.setSelected(selectedItems.get(placeNumber));
+            initPlaceButton(placeBtn, placeNumber);
         }
     }
 

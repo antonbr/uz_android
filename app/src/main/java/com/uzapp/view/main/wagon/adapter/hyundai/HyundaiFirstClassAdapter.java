@@ -1,7 +1,6 @@
-package com.uzapp.view.main.wagon.adapter;
+package com.uzapp.view.main.wagon.adapter.hyundai;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.uzapp.R;
+import com.uzapp.view.main.wagon.adapter.SimpleWagonAdapter;
 import com.uzapp.view.main.wagon.model.Wagon;
 
 import java.util.List;
@@ -50,16 +50,16 @@ public class HyundaiFirstClassAdapter extends SimpleWagonAdapter {
             for (int i = 1; i <= itemHolder.buttonsList.size(); i++) {
                 Button placeBtn = itemHolder.buttonsList.get(i-1);
                 int placeNumber = i + (position-1) * size;
-                placeBtn.setText(String.valueOf(placeNumber));
-                placeBtn.setEnabled(availablePlaces.contains(placeNumber));
-                placeBtn.setSelected(selectedItems.get(placeNumber));
+                initPlaceButton(placeBtn, placeNumber);
             }
         } else if (holder.getItemViewType() == HEADER_VIEW_TYPE) {
-            HeaderItemHolder headerItemHolder = (HeaderItemHolder) holder;
-            headerItemHolder.header.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_head_hyundai_c1));
+            ImageItemHolder headerItemHolder = (ImageItemHolder) holder;
+            bindImageHolder(headerItemHolder, R.drawable.ic_head_hyundai_c1);
         } else if (holder.getItemViewType() == FOOTER_VIEW_TYPE) {
-            FooterItemHolder footerItemHolder = (FooterItemHolder) holder;
-            footerItemHolder.footer.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_footer_hyundai_toilet));
+            ImageItemHolder footerItemHolder = (ImageItemHolder) holder;
+            bindImageHolder(footerItemHolder, R.drawable.ic_footer_hyundai_toilet);
+        } else{
+            super.onBindViewHolder(holder, position);
         }
     }
 
@@ -69,7 +69,7 @@ public class HyundaiFirstClassAdapter extends SimpleWagonAdapter {
         return wagon.getPlacesCount() / (PLACES_LEFT + PLACES_RIGHT) + 2;
     }
 
-    class HyundaiFirstClassItemHolder extends RecyclerView.ViewHolder {
+    class HyundaiFirstClassItemHolder extends UsualItemHolder {
         @BindViews({R.id.firstPlace, R.id.secondPlace, R.id.thirdPlace, R.id.fourthPlace})
         List<Button> buttonsList;
 
@@ -80,8 +80,7 @@ public class HyundaiFirstClassAdapter extends SimpleWagonAdapter {
 
         @OnClick({R.id.firstPlace, R.id.secondPlace, R.id.thirdPlace, R.id.fourthPlace})
         void onClickPlaceBtn(Button button) {
-            int placeNumber = Integer.valueOf(button.getText().toString());
-            toggleSelection(placeNumber, getAdapterPosition(), null); //todo
+            passClickButton(button);
         }
     }
 }

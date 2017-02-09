@@ -1,7 +1,6 @@
-package com.uzapp.view.main.wagon.adapter;
+package com.uzapp.view.main.wagon.adapter.hyundai;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,23 +49,22 @@ public class HyundaiSecondClassFirstWagonAdapter extends HyundaiSecondClassAdapt
             HyundaiDisabledSecondClassItemHolder itemHolder = (HyundaiDisabledSecondClassItemHolder) holder;
             bindDisabledSection(itemHolder, position);
         } else if (holder.getItemViewType() == HEADER_VIEW_TYPE) {
-            SimpleWagonAdapter.HeaderItemHolder headerItemHolder = (SimpleWagonAdapter.HeaderItemHolder) holder;
-            headerItemHolder.header.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_header_hyundai_disabled));
+            ImageItemHolder headerItemHolder = (ImageItemHolder) holder;
+            bindImageHolder(headerItemHolder, R.drawable.ic_header_hyundai_disabled);
         } else if (holder.getItemViewType() == FOOTER_VIEW_TYPE) {
-            SimpleWagonAdapter.FooterItemHolder footerItemHolder = (SimpleWagonAdapter.FooterItemHolder) holder;
-            footerItemHolder.footer.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_footer_hyundai_no_toilet));
+            ImageItemHolder footerItemHolder = (ImageItemHolder) holder;
+            bindImageHolder(footerItemHolder, R.drawable.ic_footer_hyundai_no_toilet );
         } else {
             super.onBindViewHolder(holder, position);
         }
     }
 
+
     private void bindDisabledSection(HyundaiDisabledSecondClassItemHolder holder, int position) {
         for (int i = 1; i <= holder.buttonsList.size(); i++) {
             Button placeBtn = holder.buttonsList.get(i - 1);
             int placeNumber = (position - 1) * DISABLED_PLACE_COUNT_IN_SECTION + i;
-            placeBtn.setText(String.valueOf(placeNumber));
-            placeBtn.setEnabled(availablePlaces.contains(placeNumber));
-            placeBtn.setSelected(selectedItems.get(placeNumber));
+            initPlaceButton(placeBtn, placeNumber);
         }
     }
 
@@ -76,9 +74,7 @@ public class HyundaiSecondClassFirstWagonAdapter extends HyundaiSecondClassAdapt
         for (int i = 1; i <= itemHolder.buttonsList.size(); i++) {
             Button placeBtn = itemHolder.buttonsList.get(i - 1);
             int placeNumber = i + (position - 3) * size + DISABLED_PLACE_COUNT_IN_SECTION * 2;
-            placeBtn.setText(String.valueOf(placeNumber));
-            placeBtn.setEnabled(availablePlaces.contains(placeNumber));
-            placeBtn.setSelected(selectedItems.get(placeNumber));
+            initPlaceButton(placeBtn, placeNumber);
         }
     }
 
@@ -87,9 +83,7 @@ public class HyundaiSecondClassFirstWagonAdapter extends HyundaiSecondClassAdapt
         for (int i = 1; i <= itemHolder.buttonsList.size(); i++) {
             Button placeBtn = itemHolder.buttonsList.get(i - 1);
             int placeNumber = i + (position - 3) * (PLACES_LEFT + PLACES_RIGHT) + DISABLED_PLACE_COUNT_IN_SECTION * 2;
-            placeBtn.setText(String.valueOf(placeNumber));
-            placeBtn.setEnabled(availablePlaces.contains(placeNumber));
-            placeBtn.setSelected(selectedItems.get(placeNumber));
+            initPlaceButton(placeBtn, placeNumber);
         }
     }
 
@@ -109,7 +103,7 @@ public class HyundaiSecondClassFirstWagonAdapter extends HyundaiSecondClassAdapt
         return (totalPlacesCount - LUGGAGE_SECTION_PLACES - DISABLED_PLACE_COUNT_IN_SECTION * 2) / (PLACES_LEFT + PLACES_RIGHT) + 5;
     }
 
-    class HyundaiDisabledSecondClassItemHolder extends RecyclerView.ViewHolder {
+    class HyundaiDisabledSecondClassItemHolder extends UsualItemHolder {
         @BindViews({R.id.firstPlace, R.id.secondPlace})
         List<Button> buttonsList;
 
@@ -120,8 +114,7 @@ public class HyundaiSecondClassFirstWagonAdapter extends HyundaiSecondClassAdapt
 
         @OnClick({R.id.firstPlace, R.id.secondPlace})
         void onClickPlaceBtn(Button button) {
-            int placeNumber = Integer.valueOf(button.getText().toString());
-            toggleSelection(placeNumber, getAdapterPosition(), null); //todo
+            passClickButton(button);
         }
     }
 }

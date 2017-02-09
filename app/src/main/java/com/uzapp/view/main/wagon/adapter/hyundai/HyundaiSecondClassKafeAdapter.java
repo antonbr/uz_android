@@ -1,7 +1,6 @@
-package com.uzapp.view.main.wagon.adapter;
+package com.uzapp.view.main.wagon.adapter.hyundai;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
@@ -16,7 +15,7 @@ import java.util.List;
 
 public class HyundaiSecondClassKafeAdapter extends HyundaiSecondClassAdapter {
 
-    public HyundaiSecondClassKafeAdapter(Wagon wagon, List<Integer> availablePlaces, Context context, SimpleWagonAdapter.OnPlaceSelectionListener listener) {
+    public HyundaiSecondClassKafeAdapter(Wagon wagon, List<Integer> availablePlaces, Context context, OnPlaceSelectionListener listener) {
         super(wagon, availablePlaces, context, listener);
         LAST_SECTION_NOT_VISIBLE_ID = R.id.secondPlace;
     }
@@ -29,8 +28,8 @@ public class HyundaiSecondClassKafeAdapter extends HyundaiSecondClassAdapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder.getItemViewType() == FOOTER_VIEW_TYPE) {
-            SimpleWagonAdapter.FooterItemHolder footerItemHolder = (SimpleWagonAdapter.FooterItemHolder) holder;
-            footerItemHolder.footer.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_footer_hyunai_cafe));
+            ImageItemHolder footerItemHolder = (ImageItemHolder) holder;
+            bindImageHolder(footerItemHolder, R.drawable.ic_footer_hyunai_cafe);
         } else {
             super.onBindViewHolder(holder, position);
         }

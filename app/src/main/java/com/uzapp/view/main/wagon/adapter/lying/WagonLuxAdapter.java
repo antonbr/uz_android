@@ -1,4 +1,4 @@
-package com.uzapp.view.main.wagon.adapter;
+package com.uzapp.view.main.wagon.adapter.lying;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.uzapp.R;
+import com.uzapp.view.main.wagon.adapter.SimpleWagonAdapter;
 import com.uzapp.view.main.wagon.model.Wagon;
 
 import java.util.List;
@@ -72,7 +73,7 @@ public class WagonLuxAdapter extends SimpleWagonAdapter {
         }
 
         @OnClick({R.id.btnPlaceLowStandardLeft, R.id.btnPlaceLowStandardRight})
-        void onClickPlaceLowStandardLeftBtn(Button button) {
+        void onClickPlaceBtn(Button button) {
             toggleSelection(Integer.valueOf(button.getText().toString()), getAdapterPosition(), context.getString(R.string.filter_bottom)); //todo
         }
 
