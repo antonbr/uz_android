@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/tarpan_sector"/>
+
+    <LinearLayout
+        android:id="@+id/placesLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/background"
+        android:layout_alignLeft="@+id/background"
+        android:layout_alignRight="@+id/background"
+        android:layout_alignTop="@+id/background"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:weightSum="4.5">
+
+        <Button
+            android:id="@+id/firstPlace"
+            style="@style/PlaceButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/secondPlace"
+            style="@style/PlaceButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"/>
+
+        <Button
+            android:id="@+id/thirdPlace"
+            style="@style/PlaceButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
