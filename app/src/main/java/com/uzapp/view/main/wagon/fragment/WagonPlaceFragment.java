@@ -28,7 +28,7 @@ import com.uzapp.view.main.MainActivity;
 import com.uzapp.view.main.purchase.fragment.PreparePurchaseFragment;
 import com.uzapp.view.main.wagon.adapter.SimpleWagonAdapter;
 import com.uzapp.view.main.wagon.adapter.TicketAdapter;
-import com.uzapp.view.main.wagon.adapter.WagonAdapterFactory;
+import com.uzapp.view.main.wagon.factories.WagonAdapterFactory;
 import com.uzapp.view.main.wagon.adapter.WagonsListAdapter;
 import com.uzapp.view.main.wagon.model.Ticket;
 import com.uzapp.view.main.wagon.model.Wagon;

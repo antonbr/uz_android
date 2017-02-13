@@ -13,7 +13,7 @@ import com.uzapp.view.main.wagon.model.Wagon;
 
 import java.util.List;
 
-import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -44,15 +44,11 @@ public class WagonLuxAdapter extends SimpleWagonAdapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder.getItemViewType() == USUAL_VIEW_TYPE) {
-            int placeLowStandardLeft = 1 + (position - 1) * PLACES_IN_LUX;
-            int placeLowStandardRight = 2 + (position - 1) * PLACES_IN_LUX;
-            LuxItemHolder luxItemHolder = (LuxItemHolder) holder;
-            luxItemHolder.btnPlaceLowStandardLeft.setText(Integer.toString(placeLowStandardLeft));
-            luxItemHolder.btnPlaceLowStandardRight.setText(Integer.toString(placeLowStandardRight));
-            luxItemHolder.btnPlaceLowStandardLeft.setEnabled(availablePlaces.contains(placeLowStandardLeft));
-            luxItemHolder.btnPlaceLowStandardRight.setEnabled(availablePlaces.contains(placeLowStandardRight));
-            luxItemHolder.btnPlaceLowStandardLeft.setSelected(selectedItems.get(placeLowStandardLeft));
-            luxItemHolder.btnPlaceLowStandardRight.setSelected(selectedItems.get(placeLowStandardRight));
+            List<Button> buttonList = ((LuxItemHolder) holder).buttonList;
+            for (int i = 1; i <= buttonList.size(); i++) {
+                int placeNumber = (position - 1) * PLACES_IN_LUX + i;
+                initPlaceButton(buttonList.get(i-1), placeNumber);
+            }
         } else{
             super.onBindViewHolder(holder, position);
         }
@@ -64,8 +60,8 @@ public class WagonLuxAdapter extends SimpleWagonAdapter {
     }
 
     class LuxItemHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.btnPlaceLowStandardLeft) Button btnPlaceLowStandardLeft;
-        @BindView(R.id.btnPlaceLowStandardRight) Button btnPlaceLowStandardRight;
+        @BindViews({R.id.btnPlaceLowStandardLeft, R.id.btnPlaceLowStandardRight})
+        List<Button> buttonList;
 
         public LuxItemHolder(View itemView) {
             super(itemView);
@@ -74,7 +70,7 @@ public class WagonLuxAdapter extends SimpleWagonAdapter {
 
         @OnClick({R.id.btnPlaceLowStandardLeft, R.id.btnPlaceLowStandardRight})
         void onClickPlaceBtn(Button button) {
-            toggleSelection(Integer.valueOf(button.getText().toString()), getAdapterPosition(), context.getString(R.string.filter_bottom)); //todo
+            toggleSelection(Integer.valueOf(button.getText().toString()), getAdapterPosition(), context.getString(R.string.filter_bottom));
         }
 
     }

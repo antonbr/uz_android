@@ -291,7 +291,7 @@
     <string name="wagon_type_suite">Люкс</string>
     <string name="wagon_type_soft">М\'який</string>
     <string name="wagon_type_coupe">Купе</string>
-    <string name="wagon_type_berth">Плацкарт</string>
+    <string name="wagon_type_platskart">Плацкарт</string>
     <string name="wagon_type_seating">Сидячий</string>
     <string name="wagon_type_common">Загальний</string>
 

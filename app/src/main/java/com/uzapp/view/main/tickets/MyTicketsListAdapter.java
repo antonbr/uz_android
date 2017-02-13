@@ -260,7 +260,7 @@ public class MyTicketsListAdapter extends RecyclerView.Adapter<MyTicketsListAdap
             String placeTypeString = "";
             if (ticket.wagonType.ordinal() == WagonType.SUITE.ordinal()) {
                 placeTypeString = context.getString(R.string.filter_bottom);
-            } else if (ticket.wagonType.ordinal() == WagonType.COUPE.ordinal() || ticket.wagonType.ordinal() == WagonType.BERTH.ordinal()) {
+            } else if (ticket.wagonType.ordinal() == WagonType.COUPE.ordinal() || ticket.wagonType.ordinal() == WagonType.PLATSKART.ordinal()) {
                 placeTypeString = (CommonUtils.isOdd((int) ticket.place))
                         ? context.getString(R.string.filter_bottom) : context.getString(R.string.filter_top);
             }

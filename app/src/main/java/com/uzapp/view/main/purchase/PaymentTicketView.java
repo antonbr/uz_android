@@ -94,7 +94,7 @@ public class PaymentTicketView extends CardView {
 
         String wagonType;
         if (ticket.getWagonType().equalsIgnoreCase(Constants.TYPE_ECONOMY)) {
-            wagonType = getContext().getString(R.string.wagon_type_berth);
+            wagonType = getContext().getString(R.string.wagon_type_platskart);
         } else if (ticket.getWagonType().equalsIgnoreCase(Constants.TYPE_KUPE)) {
             wagonType = getContext().getString(R.string.wagon_type_coupe);
         } else {

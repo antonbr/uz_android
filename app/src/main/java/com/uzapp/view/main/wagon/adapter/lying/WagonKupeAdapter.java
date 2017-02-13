@@ -14,7 +14,7 @@ import com.uzapp.view.main.wagon.model.Wagon;
 
 import java.util.List;
 
-import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -45,23 +45,11 @@ public class WagonKupeAdapter extends SimpleWagonAdapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder.getItemViewType() == USUAL_VIEW_TYPE) {
-            int placeLowStandardLeft = 1 + (position - 1) * PLACES_IN_KUPE;
-            int placeUpperStandardLeft = 2 + (position - 1) * PLACES_IN_KUPE;
-            int placeLowStandardRight = 3 + (position - 1) * PLACES_IN_KUPE;
-            int placeUpperStandardRight = 4 + (position - 1) * PLACES_IN_KUPE;
-            KupeItemHolder kupeItemHolder = (KupeItemHolder) holder;
-            kupeItemHolder.btnPlaceLowStandardLeft.setText(Integer.toString(placeLowStandardLeft));
-            kupeItemHolder.btnPlaceUpperStandardLeft.setText(Integer.toString(placeUpperStandardLeft));
-            kupeItemHolder.btnPlaceLowStandardRight.setText(Integer.toString(placeLowStandardRight));
-            kupeItemHolder.btnPlaceUpperStandardRight.setText(Integer.toString(placeUpperStandardRight));
-            kupeItemHolder.btnPlaceLowStandardLeft.setEnabled(availablePlaces.contains(placeLowStandardLeft));
-            kupeItemHolder.btnPlaceUpperStandardLeft.setEnabled(availablePlaces.contains(placeUpperStandardLeft));
-            kupeItemHolder.btnPlaceLowStandardRight.setEnabled(availablePlaces.contains(placeLowStandardRight));
-            kupeItemHolder.btnPlaceUpperStandardRight.setEnabled(availablePlaces.contains(placeUpperStandardRight));
-            kupeItemHolder.btnPlaceLowStandardLeft.setSelected(selectedItems.get(placeLowStandardLeft));
-            kupeItemHolder.btnPlaceUpperStandardLeft.setSelected(selectedItems.get(placeUpperStandardLeft));
-            kupeItemHolder.btnPlaceLowStandardRight.setSelected(selectedItems.get(placeLowStandardRight));
-            kupeItemHolder.btnPlaceUpperStandardRight.setSelected(selectedItems.get(placeUpperStandardRight));
+            List<Button> buttonList = ((KupeItemHolder) holder).buttonList;
+            for (int i = 1; i <= buttonList.size(); i++) {
+                int placeNumber = (position - 1) * PLACES_IN_KUPE + i;
+                initPlaceButton(buttonList.get(i-1), placeNumber);
+            }
         } else {
             super.onBindViewHolder(holder, position);
         }
@@ -72,11 +60,9 @@ public class WagonKupeAdapter extends SimpleWagonAdapter {
         return wagon.getPlacesCount() / PLACES_IN_KUPE + 2;
     }
 
-    class KupeItemHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.btnPlaceLowStandardLeft) Button btnPlaceLowStandardLeft;
-        @BindView(R.id.btnPlaceUpperStandardLeft) Button btnPlaceUpperStandardLeft;
-        @BindView(R.id.btnPlaceLowStandardRight) Button btnPlaceLowStandardRight;
-        @BindView(R.id.btnPlaceUpperStandardRight) Button btnPlaceUpperStandardRight;
+    class KupeItemHolder extends UsualItemHolder {
+        @BindViews({R.id.btnPlaceLowStandardLeft, R.id.btnPlaceUpperStandardLeft, R.id.btnPlaceLowStandardRight, R.id.btnPlaceUpperStandardRight})
+        List<Button> buttonList;
 
         public KupeItemHolder(View itemView) {
             super(itemView);
@@ -88,7 +74,7 @@ public class WagonKupeAdapter extends SimpleWagonAdapter {
             int placeNumber = Integer.valueOf(button.getText().toString());
             String placeType = (CommonUtils.isOdd(placeNumber))
                     ? context.getString(R.string.filter_bottom) : context.getString(R.string.filter_top);
-            toggleSelection(placeNumber, getAdapterPosition(), placeType); //todo
+            toggleSelection(placeNumber, getAdapterPosition(), placeType);
         }
     }
 }

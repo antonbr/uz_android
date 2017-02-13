@@ -14,7 +14,7 @@ public enum WagonType {
     @SerializedName("К")
     COUPE("К", R.string.wagon_type_coupe),
     @SerializedName("П")
-    BERTH("П", R.string.wagon_type_berth),
+    PLATSKART("П", R.string.wagon_type_platskart),
     @SerializedName("С")
     SEATING("С", R.string.wagon_type_seating),
     @SerializedName("О")
