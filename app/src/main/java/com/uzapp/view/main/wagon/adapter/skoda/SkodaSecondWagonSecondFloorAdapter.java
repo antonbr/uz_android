@@ -13,7 +13,6 @@ import com.uzapp.view.main.wagon.model.Wagon;
 
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -25,16 +24,11 @@ import butterknife.OnClick;
 public class SkodaSecondWagonSecondFloorAdapter extends SimpleWagonAdapter {
     protected final int STAIRS_LEFT_VIEW_TYPE = 3;
     protected final int STAIRS_RIGHT_VIEW_TYPE = 4;
-    protected final int THREE_PLACES_LEFT_VIEW_TYPE = 5;
-    protected final int THREE_PLACES_RIGHT_VIEW_TYPE = 6;
-    protected final int ONE_PLACE_LEFT_VIEW_TYPE = 7;
-    protected final int ONE_PLACE_RIGHT_VIEW_TYPE = 8;
-    private int onePlaceRowPlacesCount = 1;
-    private int threePlaceRowPlacesCount = 3;
-    private int onePlaceRowsCount = 4;
-    private int threePlaceRowsCount = 6;
+    protected final int HEADER_PLACES_VIEW_TYPE = 5;
+    protected final int FOOTER_PLACES_VIEW_TYPE = 6;
     private int placesCount = 62;
     private int usualRowPlacesCount = 4;
+    private int headerFooterRowPlacesCount = 11;
 
     public SkodaSecondWagonSecondFloorAdapter(Wagon wagon, List<Integer> availablePlaces, Context context, OnPlaceSelectionListener listener) {
         super(wagon, availablePlaces, context, listener);
@@ -55,21 +49,13 @@ public class SkodaSecondWagonSecondFloorAdapter extends SimpleWagonAdapter {
                 view = inflater.inflate(R.layout.item_tarpan_c1, parent, false);
                 viewHolder = new UsualRowItemHolder(view);
                 break;
-            case THREE_PLACES_LEFT_VIEW_TYPE:
-                view = inflater.inflate(R.layout.item_skoda_three_places_right, parent, false);
-                viewHolder = new ThreePlacesRowItemHolder(view);
+            case FOOTER_PLACES_VIEW_TYPE:
+                view = inflater.inflate(R.layout.item_skoda_second_floor_footer_places, parent, false);
+                viewHolder = new HeaderFooterPlacesRowItemHolder(view);
                 break;
-            case THREE_PLACES_RIGHT_VIEW_TYPE:
-                view = inflater.inflate(R.layout.item_skoda_three_places_left, parent, false);
-                viewHolder = new ThreePlacesRowItemHolder(view);
-                break;
-            case ONE_PLACE_RIGHT_VIEW_TYPE:
-                view = inflater.inflate(R.layout.item_skoda_one_place_right, parent, false);
-                viewHolder = new OnePlaceRowItemHolder(view);
-                break;
-            case ONE_PLACE_LEFT_VIEW_TYPE:
-                view = inflater.inflate(R.layout.item_skoda_one_place_left, parent, false);
-                viewHolder = new OnePlaceRowItemHolder(view);
+            case HEADER_PLACES_VIEW_TYPE:
+                view = inflater.inflate(R.layout.item_skoda_second_floor_header_places, parent, false);
+                viewHolder = new HeaderFooterPlacesRowItemHolder(view);
                 break;
             default:
                 viewHolder = super.onCreateViewHolder(parent, viewType);
@@ -97,13 +83,9 @@ public class SkodaSecondWagonSecondFloorAdapter extends SimpleWagonAdapter {
             case USUAL_VIEW_TYPE:
                 bindUsualPlacesRow((UsualRowItemHolder) holder, position);
                 break;
-            case ONE_PLACE_LEFT_VIEW_TYPE:
-            case ONE_PLACE_RIGHT_VIEW_TYPE:
-                bindOnePlaceRow((OnePlaceRowItemHolder) holder, position);
-                break;
-            case THREE_PLACES_LEFT_VIEW_TYPE:
-            case THREE_PLACES_RIGHT_VIEW_TYPE:
-                bindThreePlacesRow((ThreePlacesRowItemHolder) holder, position);
+            case FOOTER_PLACES_VIEW_TYPE:
+            case HEADER_PLACES_VIEW_TYPE:
+                bindHeaderFooter((HeaderFooterPlacesRowItemHolder) holder, position);
                 break;
             default:
                 super.onBindViewHolder(holder, position);
@@ -114,43 +96,31 @@ public class SkodaSecondWagonSecondFloorAdapter extends SimpleWagonAdapter {
         int size = itemHolder.buttonsList.size();
         for (int i = 1; i <= itemHolder.buttonsList.size(); i++) {
             Button placeBtn = itemHolder.buttonsList.get(i - 1);
-            int placeNumber = size - i + getPlacesBefore(position);
+            int placeNumber = size - i + getPlacesBefore(position)+1;
             initPlaceButton(placeBtn, placeNumber);
         }
     }
 
-    private void bindThreePlacesRow(ThreePlacesRowItemHolder itemHolder, int position) {
-        if (position - 2 < 6) {
-            int size = itemHolder.buttonsList.size();
-            for (int i = 1; i <= itemHolder.buttonsList.size(); i++) {
-                Button placeBtn = itemHolder.buttonsList.get(i - 1);
-                int placeNumber = size - i;
-                if (i < 2) {
-                    placeNumber += placeNumber + 5;
-                }
-                initPlaceButton(placeBtn, placeNumber);
-            }
+    private void bindHeaderFooter(HeaderFooterPlacesRowItemHolder itemHolder, int position) {
+        for (int i = 1; i <= itemHolder.buttonsList.size(); i++) {
+            Button placeBtn = itemHolder.buttonsList.get(i - 1);
+            int placeNumber = getPlacesBefore(position) + i;
+            initPlaceButton(placeBtn, placeNumber);
         }
     }
 
-    private void bindOnePlaceRow(OnePlaceRowItemHolder itemHolder, int position) {
-        if (position - 2 < 6) {
-            initPlaceButton(itemHolder.firstPlaceBtn, position - 1);
+    private int getPlacesBefore(int position) {
+        if (position < 3) {
+            return 0;
         } else {
-
+            return headerFooterRowPlacesCount + (position - 3) * usualRowPlacesCount;
         }
-    }
-
-    int getPlacesBefore(int position) {
-        int lastPlace = 0;
-        lastPlace = (position - 2) * usualRowPlacesCount + 1;
-        return lastPlace;
     }
 
     @Override
     public int getItemCount() {
-        return (placesCount - onePlaceRowsCount * onePlaceRowPlacesCount - threePlaceRowPlacesCount * threePlaceRowsCount) / usualRowPlacesCount
-                + 4 + onePlaceRowsCount + threePlaceRowsCount;
+        return (placesCount - headerFooterRowPlacesCount * 2) / usualRowPlacesCount
+                + 4 + 2;
     }
 
     @Override
@@ -159,14 +129,10 @@ public class SkodaSecondWagonSecondFloorAdapter extends SimpleWagonAdapter {
             return STAIRS_LEFT_VIEW_TYPE;
         } else if (position == getItemCount() - 2) {
             return STAIRS_RIGHT_VIEW_TYPE;
-        } else if (position == 2 || position == 4 || position == 5) {
-            return THREE_PLACES_LEFT_VIEW_TYPE;
-        } else if (position == 3 || position == 6) {
-            return ONE_PLACE_RIGHT_VIEW_TYPE;
-        } else if (position == getItemCount() - 3 || position == getItemCount() - 5 || position == getItemCount() - 6) {
-            return THREE_PLACES_RIGHT_VIEW_TYPE;
-        } else if (position == getItemCount() - 4 || position == getItemCount() - 7) {
-            return ONE_PLACE_LEFT_VIEW_TYPE;
+        } else if (position == 2) {
+            return HEADER_PLACES_VIEW_TYPE;
+        } else if (position == getItemCount() - 3) {
+            return FOOTER_PLACES_VIEW_TYPE;
         } else return super.getItemViewType(position);
     }
 
@@ -185,31 +151,18 @@ public class SkodaSecondWagonSecondFloorAdapter extends SimpleWagonAdapter {
         }
     }
 
-    class ThreePlacesRowItemHolder extends UsualItemHolder {
-        @BindViews({R.id.firstPlace, R.id.secondPlace, R.id.thirdPlace})
+    class HeaderFooterPlacesRowItemHolder extends UsualItemHolder {
+        @BindViews({R.id.firstPlace, R.id.secondPlace, R.id.thirdPlace, R.id.fourthPlace, R.id.fifthPlace, R.id.sixthPlace,
+                R.id.seventhPlace, R.id.eighthPlace, R.id.ninethPlace, R.id.tenthPlace, R.id.eleventhPlace})
         List<Button> buttonsList;
 
-        public ThreePlacesRowItemHolder(View itemView) {
+        public HeaderFooterPlacesRowItemHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        @OnClick({R.id.firstPlace, R.id.secondPlace, R.id.thirdPlace})
-        void onClickPlaceBtn(Button button) {
-            passClickButton(button);
-        }
-    }
-
-    class OnePlaceRowItemHolder extends UsualItemHolder {
-        @BindView(R.id.firstPlace)
-        Button firstPlaceBtn;
-
-        public OnePlaceRowItemHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-
-        @OnClick(R.id.firstPlace)
+        @OnClick({R.id.firstPlace, R.id.secondPlace, R.id.thirdPlace, R.id.fourthPlace, R.id.fifthPlace, R.id.sixthPlace,
+                R.id.seventhPlace, R.id.eighthPlace, R.id.ninethPlace, R.id.tenthPlace, R.id.eleventhPlace})
         void onClickPlaceBtn(Button button) {
             passClickButton(button);
         }

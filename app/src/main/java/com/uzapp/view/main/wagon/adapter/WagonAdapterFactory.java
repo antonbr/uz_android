@@ -7,7 +7,7 @@ import com.uzapp.util.Constants;
 import com.uzapp.view.main.wagon.adapter.lying.WagonKupeAdapter;
 import com.uzapp.view.main.wagon.adapter.lying.WagonLuxAdapter;
 import com.uzapp.view.main.wagon.adapter.lying.WagonPlatskartAdapter;
-import com.uzapp.view.main.wagon.adapter.skoda.SkodaSecondWagonSecondFloorAdapter;
+import com.uzapp.view.main.wagon.adapter.skoda.SkodaFirstLastWagonSecondFloorAdapter;
 import com.uzapp.view.main.wagon.model.Wagon;
 
 import java.util.List;
@@ -61,8 +61,11 @@ public class WagonAdapterFactory {
 //                    adapter = new TarpanSecondClassCafeAdapter(wagon, availablePlaces, context, listener);
 //                }
 //            }
-        } else {
-            adapter = new SkodaSecondWagonSecondFloorAdapter(wagon, availablePlaces, context, listener);
+        } else{
+        //else if(trainModel ==TrainModel.SKODA){
+//            int wagonNumber = Integer.valueOf(wagon.getNumber());
+//            if(wagonNumber == )
+            adapter = new SkodaFirstLastWagonSecondFloorAdapter(wagon, availablePlaces, context, listener);
         }
         return adapter;
     }

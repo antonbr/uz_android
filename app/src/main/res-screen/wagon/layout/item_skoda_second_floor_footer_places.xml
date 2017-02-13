@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/backgroundFirstRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/tarpan_sector"/>
+
+    <LinearLayout
+        android:id="@+id/placesLayoutFirstRow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/backgroundFirstRow"
+        android:layout_alignLeft="@+id/backgroundFirstRow"
+        android:layout_alignRight="@+id/backgroundFirstRow"
+        android:layout_alignTop="@+id/backgroundFirstRow"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:weightSum="4.5">
+
+        <Button
+            android:id="@+id/seventhPlace"
+            style="@style/PlaceButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="32dp"
+            android:layout_weight="1"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3.5"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/backgroundSecondRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/backgroundFirstRow"
+        android:adjustViewBounds="true"
+        android:src="@drawable/tarpan_sector"/>
+
+    <LinearLayout
+        android:id="@+id/placesLayoutSecondRow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/backgroundSecondRow"
+        android:layout_alignLeft="@+id/backgroundSecondRow"
+        android:layout_alignRight="@+id/backgroundSecondRow"
+        android:layout_alignTop="@+id/backgroundSecondRow"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:weightSum="4.5">
+
+        <Button
+            android:id="@+id/eighthPlace"
+            style="@style/PlaceButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"/>
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"/>
+
+        <Button
+            android:id="@+id/secondPlace"
+            style="@style/PlaceButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/firstPlace"
+            style="@style/PlaceButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/backgroundThirdRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/backgroundSecondRow"
+        android:adjustViewBounds="true"
+        android:src="@drawable/tarpan_sector"/>
+
+    <LinearLayout
+        android:id="@+id/placesLayoutThirdRow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/backgroundThirdRow"
+        android:layout_alignLeft="@+id/backgroundThirdRow"
+        android:layout_alignRight="@+id/backgroundThirdRow"
+        android:layout_alignTop="@+id/backgroundThirdRow"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:weightSum="4.5">
+
+        <Button
+            android:id="@+id/ninethPlace"
+            style="@style/PlaceButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"/>
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"/>
+
+        <Button
+            android:id="@+id/fourthPlace"
+            style="@style/PlaceButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/thirdPlace"
+            style="@style/PlaceButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/backgroundFourthRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/backgroundThirdRow"
+        android:adjustViewBounds="true"
+        android:src="@drawable/tarpan_sector"/>
+
+    <LinearLayout
+        android:id="@+id/placesLayoutFourthRow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/backgroundFourthRow"
+        android:layout_alignLeft="@+id/backgroundFourthRow"
+        android:layout_alignRight="@+id/backgroundFourthRow"
+        android:layout_alignTop="@+id/backgroundFourthRow"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:weightSum="4.5">
+
+        <Button
+            android:id="@+id/tenthPlace"
+            style="@style/PlaceButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="32dp"
+            android:layout_weight="1"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3.5"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/backgroundFifthRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/backgroundFourthRow"
+        android:adjustViewBounds="true"
+        android:src="@drawable/tarpan_sector"/>
+
+    <LinearLayout
+        android:id="@+id/placesLayoutFifthRow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/backgroundFifthRow"
+        android:layout_alignLeft="@+id/backgroundFifthRow"
+        android:layout_alignRight="@+id/backgroundFifthRow"
+        android:layout_alignTop="@+id/backgroundFifthRow"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:weightSum="4.5">
+
+        <Button
+            android:id="@+id/eleventhPlace"
+            style="@style/PlaceButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"/>
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"/>
+
+        <Button
+            android:id="@+id/sixthPlace"
+            style="@style/PlaceButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/fifthPlace"
+            style="@style/PlaceButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+</RelativeLayout>
